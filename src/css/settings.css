@@ -1,48 +1,167 @@
 .settings {
     text-align: center;
     flex: 1;
-    z-index: -100;
+    z-index: 500;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
   }
   
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
-  }
-  
   .settings-header {
-    background-color: #282c34;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
     z-index: -100;
+
+    background-color: #F5F5F5;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    height: 83vh;
+    width: 80%;
+    margin-top: 6%;
+    margin-left: 15%
+  }
+
+  .nodesTable {
+    width: 50%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border: 1px solid #6168ED;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 7%;
+    top: 16%;
   }
   
-  .App-link {
-    color: #61dafb;
+  .nodesTable th {
+    background-color: #6168ED;
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    border: 1px solid #6168ED;
   }
   
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  .nodesTable td {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #6168ED;
   }
+  
+  .nodesTable tr:hover {
+    background-color: #F5F5F5;
+    color: black;
+    border: 1px solid #6168ED;
+  }
+  
+  .nodesTable tr:hover td {
+    border: 1px solid #6168ED;
+  }
+  
+  .settings-form{
+    width:25%;
+    height:80vh;
+    position: absolute;
+    left: 16%;
+    color: #6168ED;
+  }
+
+  .settings-form h1{
+    font-size: 24px;
+    position:absolute;
+    left: 0;
+    top:-3%;
+  }
+
+  .telegram-id{
+    font-size: 24px;
+    position:absolute;
+    left: 0;
+    padding-top:50px;
+
+  }
+
+  .bot-token{
+    font-size: 24px;
+    position:absolute;
+    left: 0;
+    padding-top:170px;
+
+  }
+
+  .setting-info{
+    left:5%;
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: #000000;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    color: #ff0000;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type='number'] {
+    width: 100%;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+  }
+  
+  button[type='submit'] {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #6168ED;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  button[type='submit']:hover {
+    background-color: #4b51cc;
+  }
+  
   
   @media (max-width: 768px) {
     .settings {

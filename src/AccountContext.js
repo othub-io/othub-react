@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react'
 
 export const AccountContext = createContext({
   account: '',
-  chain: '',
+  chain_id: '',
   setAccount: () => {},
   setChain: () => {}
 })
