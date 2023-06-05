@@ -17,8 +17,8 @@ function NavBar () {
   }
 
   const connectionStyle = {
-    color: chain_id === 'Unsupported Chain' ? 'red' : '#13B785'
-    // Other inline styles as needed
+    color: chain_id === 'Unsupported Chain' ? 'red' : '#13B785',
+    fontSize: '18px'
   }
 
   return (

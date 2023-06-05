@@ -3,7 +3,7 @@
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     width: 200px;
     padding: 10px 0 40px;
-    z-index: 8999;
+    z-index: 9700;
     font-family: "OCR A Std", monospace;
     height:calc(100vh - 130px);
   }

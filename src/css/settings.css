@@ -1,11 +1,10 @@
 .settings {
     text-align: center;
-    flex: 1;
-    z-index: 500;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 10%;
     width: 100%;
+    font-family: 'Roboto', sans-serif;
   }
   
   .settings-header {
@@ -14,26 +13,28 @@
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    z-index: -100;
-
+    z-index: 2;
+    color: #6168ED;
     background-color: #F5F5F5;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     height: 83vh;
     width: 80%;
     margin-top: 6%;
-    margin-left: 15%
+    margin-left: 5%
   }
 
   .nodesTable {
     width: 50%;
+    max-height:77vh;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     border: 1px solid #6168ED;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     position: absolute;
-    right: 7%;
+    left: 34%;
     top: 16%;
+    font-family: 'Roboto', sans-serif;
   }
   
   .nodesTable th {
@@ -53,7 +54,7 @@
   
   .nodesTable tr:hover {
     background-color: #F5F5F5;
-    color: black;
+    color: 6168ED;
     border: 1px solid #6168ED;
   }
   
@@ -65,7 +66,7 @@
     width:25%;
     height:80vh;
     position: absolute;
-    left: 16%;
+    left: 6%;
     color: #6168ED;
   }
 
@@ -74,12 +75,13 @@
     position:absolute;
     left: 0;
     top:-3%;
+    text-decoration: underline;
   }
 
   .telegram-id{
     font-size: 24px;
     position:absolute;
-    left: 0;
+    padding-left: 20px;;
     padding-top:50px;
 
   }
@@ -88,12 +90,87 @@
     font-size: 24px;
     position:absolute;
     left: 0;
-    padding-top:170px;
-
+    padding-top:150px;
+    padding-left: 20px;;
   }
 
-  .setting-info{
-    left:5%;
+  .settings-info{
+    padding-top:5px;
+    font-size: 20px;
+    position: absolute;
+    color: #6168ED;
+    font-weight: bold;
+  /* text-shadow: 0 0 10px #13B785, 0 0 20px #13B785, 0 0 30px #13B785, 0 0 40px #13B785, 0 0 50px #13B785, 0 0 60px #13B785, 0 0 70px #13B785;
+  animation: glowing 4s infinite; */
+  }
+
+  /* @keyframes glowing {
+    0% { text-shadow: 0 0 10px #13B785, 0 0 20px #13B785, 0 0 30px #13B785, 0 0 40px #13B785, 0 0 50px #13B785, 0 0 60px #13B785, 0 0 70px #13B785; }
+    50% { text-shadow: none; }
+    100% { text-shadow: 0 0 10px #13B785, 0 0 20px #13B785, 0 0 30px #13B785, 0 0 40px #13B785, 0 0 50px #13B785, 0 0 60px #13B785, 0 0 70px #13B785; }
+  } */
+
+  .star {
+    position: absolute;
+    transform-style: preserve-3d;
+    animation: rotate 5s linear infinite;
+    width: 80px;
+    height: 80px;
+    margin-top:50%;
+    margin-left:45%;
+  }
+  
+  @keyframes rotate {
+    0% { transform: rotateY(0); }
+    100% { transform: rotateY(1turn); }
+  }
+
+  .join-form input{
+    display:none;
+  }
+
+  .leave-form input{
+    display:none;
+  }
+
+  .join-button{
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #6168ED;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: levitate 2s infinite ease-in-out;
+    margin-top:60%;
+    margin-left:5%;
+    font-weight: bold;
+  }
+
+  .join-button:hover {
+    background-color: #6168ED;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .leave-button{
+    background-color:#F5F5F5;
+    border:none;
+    position: absolute;
+    margin-top:70%;
+    margin-left:-6%;
+  }
+
+  .leave-button:hover{
+    background-color:#F5F5F5;
+    border:none;
+    position: absolute;
+    margin-top:70%;
+    margin-left:-6%;
+    cursor: pointer;
   }
 
   .popup-overlay {
@@ -162,7 +239,22 @@
     background-color: #4b51cc;
   }
   
-  
+  @media(max-width:1620px){
+    .nodesTable {
+      width: 50%;
+      max-height:77vh;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      border: 1px solid #6168ED;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      left: 10%;
+      top: 46%;
+      font-family: 'Roboto', sans-serif;
+    }
+  }
+
   @media (max-width: 768px) {
     .settings {
       text-align: center;
@@ -185,5 +277,19 @@
       color: white;
       z-index: -100;
       position:relative;
+    }
+  }
+
+  @keyframes rotate {
+    0% { transform: rotateY(0); }
+    100% { transform: rotateY(1turn); }
+  }
+
+  @keyframes levitate {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
     }
   }

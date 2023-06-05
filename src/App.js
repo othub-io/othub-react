@@ -5,7 +5,7 @@ import NavBar from './navigation/NavBar'
 import SideBar from './navigation/SideBar'
 import Footer from './navigation/Footer'
 import Home from './pages/home'
-import NodeSettings from './pages/settings.js'
+import NodeSettings from './pages/myNodes/settings.js'
 import NotFound from './pages/notFound'
 
 function App () {

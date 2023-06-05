@@ -32,6 +32,9 @@ const MetamaskButton = () => {
             }
 
             setChain(readable_chain_id)
+          } else {
+            setAccount('')
+            setChain('')
           }
 
           // Subscribe to account change events
