@@ -6,6 +6,7 @@ import SideBar from './navigation/SideBar'
 import Footer from './navigation/Footer'
 import Home from './pages/home'
 import NodeSettings from './pages/myNodes/settings.js'
+import AllianceMembers from './pages/alliance/members.js'
 import NotFound from './pages/notFound'
 
 function App () {
@@ -16,7 +17,8 @@ function App () {
         <SideBar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/settings' element={<NodeSettings />} />
+          <Route path='/myNodes/settings' element={<NodeSettings />} />
+          <Route path='/alliance/members' element={<AllianceMembers />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />

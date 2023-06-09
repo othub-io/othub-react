@@ -8,17 +8,21 @@ let connection_string
 
 function NavBar () {
   const { account, chain_id } = useContext(AccountContext)
+  const isMobile = window.matchMedia('(max-width: 360px)').matches
   connection_string = ''
 
   if (account) {
     front_admin_key = account.substring(0, 6)
     back_admin_key = account.substring(account.length - 6)
-    connection_string = ` | ${front_admin_key}...${back_admin_key} - ${chain_id}`
+    connection_string = ` [ ${front_admin_key}...${back_admin_key} ]  [ ${chain_id} ]`
   }
 
   const connectionStyle = {
     color: chain_id === 'Unsupported Chain' ? 'red' : '#13B785',
-    fontSize: '18px'
+    fontSize: '20px',
+    ...(isMobile && {
+      fontSize: '12px'
+    })
   }
 
   return (

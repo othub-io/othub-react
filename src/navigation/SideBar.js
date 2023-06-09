@@ -22,8 +22,8 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/star.png',
       isOpen: true,
       submenu: [
-        { id: 4, title: 'nodeDashboard' },
-        { id: 5, title: 'settings' }
+        { id: 4, title: '/myNodes/nodeDashboard', header: 'Dashboard' },
+        { id: 5, title: '/myNodes/settings', header: 'Settings' }
       ]
     },
     {
@@ -32,20 +32,16 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/handshake.png',
       isOpen: true,
       submenu: [
-        { id: 7, title: 'allianceDashboard' },
-        { id: 8, title: 'Members' },
-        { id: 9, title: 'Vote' }
+        { id: 7, title: '/alliance/members', header: 'Members' },
+        { id: 8, title: '/alliance/statistics', header: 'Statistics' },
+        { id: 9, title: '/alliance/vote', header: 'Vote' }
       ]
     },
     {
       id: 10,
       title: 'Reports',
       icon: 'https://img.icons8.com/ios/50/000000/line-chart.png',
-      isOpen: true,
-      submenu: [
-        { id: 11, title: 'Assets' },
-        { id: 12, title: 'Nodes' }
-      ]
+      isOpen: true
     },
     {
       id: 14,
@@ -53,9 +49,9 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/settings.png',
       isOpen: true,
       submenu: [
-        { id: 15, title: 'Get' },
-        { id: 16, title: 'Publish' },
-        { id: 17, title: 'Update' }
+        { id: 15, title: '/dkgTools/get', header: 'Get' },
+        { id: 16, title: '/dkgTools/publish', header: 'Publish' },
+        { id: 17, title: '/dkgTools/update', header: 'Update' }
       ]
     },
     {
@@ -64,8 +60,8 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/map.png',
       isOpen: true,
       submenu: [
-        { id: 19, title: 'walletMapping' },
-        { id: 20, title: 'nodeInstall' }
+        { id: 19, title: '/guides/walletMapping', header: 'Wallet Mapping' },
+        { id: 20, title: '/guides/nodeInstall', header: 'Node Install' }
       ]
     },
     {
@@ -74,8 +70,8 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/api.png',
       isOpen: true,
       submenu: [
-        { id: 19, title: 'generateKeys' },
-        { id: 20, title: 'Docs' }
+        { id: 19, title: '/api/generateKeys', header: 'API Keys' },
+        { id: 20, title: '/api/docs', header: 'Docs' }
       ]
     }
     // Rest of the menu items
@@ -101,7 +97,7 @@ function SideBar () {
                 {item.submenu.map(subitem => (
                   <li key={subitem.id}>
                     <a href={subitem.title} className='sub-title'>
-                      {subitem.title}
+                      {subitem.header}
                     </a>
                   </li>
                 ))}

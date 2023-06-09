@@ -5,7 +5,7 @@ const footer = () => {
   return (
     <div className='footer'>
       <header className='footer-header'>
-        <p>&copy; 2023 otnode.com. All rights reserved.</p>
+        <p>Built by the Origintrail Community. Open Sourced on Github.</p>
       </header>
     </div>
   )

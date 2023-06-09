@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import '../../css/settings.css'
+import '../../css/allianceMembers.css'
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 import axios from 'axios'
@@ -116,24 +116,6 @@ const NodeSettings = () => {
     }
   }
 
-  let telegramID
-  let botToken
-  let nodeGroup
-
-  console.log(data.operatorRecord)
-  if (data) {
-    if (data.operatorRecord.toString().trim() === '') {
-    } else {
-      telegramID = data.operatorRecord[0].telegramID
-      nodeGroup = data.operatorRecord[0].nodeGroup
-
-      botToken = 'Not Set'
-      if (data.operatorRecord[0].botToken) {
-        botToken = data.operatorRecord[0].botToken.substring(0, 20) + '...'
-      }
-    }
-  }
-
   if (!account) {
     return (
       <div className='settings'>
@@ -203,7 +185,9 @@ const NodeSettings = () => {
                 ></img>
               </button>
               <br></br>
-              <div className='settings-info'>{telegramID}</div>
+              <div className='settings-info'>
+                {data.operatorRecord[0].telegramID}
+              </div>
             </div>
             <div className='bot-token'>
               Bot Token
@@ -216,9 +200,11 @@ const NodeSettings = () => {
                 ></img>
               </button>
               <br></br>
-              <div className='settings-info'>{botToken}</div>
+              <div className='settings-info'>
+                {data.operatorRecord[0].botToken.substring(0, 20)}...
+              </div>
             </div>
-            {nodeGroup === 'Alliance' ? (
+            {data.operatorRecord[0].nodeGroup === 'Alliance' ? (
               <div>
                 <div className='star'>
                   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
