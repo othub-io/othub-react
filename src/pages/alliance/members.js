@@ -4,23 +4,18 @@ import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 import axios from 'axios'
 
-const NodeSettings = () => {
+const AllianceMembers = () => {
   const { account } = useContext(AccountContext)
   const [data, setData] = useState('')
-  const [isOpenTelegram, setIsOpenTelegram] = useState(false)
-  const [isOpenBot, setIsOpenBot] = useState(false)
-  const [inputValue, setInputValue] = useState('')
   const isMobile = window.matchMedia('(max-width: 360px)').matches
 
   useEffect(() => {
     async function fetchData () {
       try {
-        if (account) {
-          const response = await axios.get(
-            `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}`
-          )
-          setData(response.data)
-        }
+        const response = await axios.get(
+          `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members`
+        )
+        setData(response.data)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -28,75 +23,12 @@ const NodeSettings = () => {
 
     setData('')
     fetchData()
-  }, [account])
-
-  const openPopupTelegram = () => {
-    setIsOpenTelegram(true)
-  }
-
-  const closePopupTelegram = () => {
-    setIsOpenTelegram(false)
-  }
-
-  const handleInputChangeTelegram = e => {
-    setInputValue(e.target.value)
-  }
-
-  const handleSubmitTelegram = async e => {
-    e.preventDefault()
-    // Perform the POST request using the entered value
-    try {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&telegramID=${inputValue}`
-          )
-          setData(response.data)
-        } catch (error) {
-          console.error('Error fetching data:', error)
-        }
-      }
-
-      fetchData()
-    } catch (error) {
-      console.error(error) // Handle the error case
-    }
-    setIsOpenTelegram(false)
-    setInputValue('')
-  }
-
-  const openPopupBotToken = () => {
-    setIsOpenBot(true)
-  }
-
-  const closePopupBotToken = () => {
-    setIsOpenBot(false)
-  }
-
-  const handleInputChangeBotToken = e => {
-    setInputValue(e.target.value)
-  }
-
-  const handleSubmitBotToken = async e => {
-    e.preventDefault()
-    // Perform the POST request using the entered value
-    try {
-      const response = await axios.get(
-        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&botToken=${inputValue}`
-      )
-
-      setData(response.data)
-    } catch (error) {
-      console.error(error) // Handle the error case
-    }
-    setIsOpenBot(false)
-    setInputValue('')
-  }
+  }, [])
 
   const LeaveAlliance = async () => {
     try {
       const response = await axios.get(
-        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&group=Solo`
+        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Solo`
       )
       setData(response.data)
     } catch (error) {
@@ -107,7 +39,7 @@ const NodeSettings = () => {
   const JoinAlliance = async () => {
     try {
       const response = await axios.get(
-        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&group=Alliance`
+        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Alliance`
       )
 
       setData(response.data)
@@ -116,97 +48,76 @@ const NodeSettings = () => {
     }
   }
 
-  if (!account) {
-    return (
-      <div className='settings'>
-        <header className='settings-header'>
-          Please connect your admin wallet to view your nodes.
-        </header>
-      </div>
-    )
+  let allianceNodes
+  let allianceOperators
+  let allianceStats
+  let v_nodes
+  let nodeCount
+  let totalNodes
+  let alliance
+
+  if (data) {
+    allianceNodes = data.allianceNodes
+    allianceOperators = data.allianceOperators
+    allianceStats = data.allianceStats
+    v_nodes = data.v_nodes
+
+    nodeCount = Number(allianceNodes.length)
+    totalNodes = Number(v_nodes.length)
+
+    alliance = allianceOperators.filter(obj => obj.adminKey === account)[0]
   }
 
+  console.log(data)
   return (
-    <div className='settings'>
-      {isOpenTelegram && (
-        <div className='popup-overlay'>
-          <div className='popup-content'>
-            <button className='close-button' onClick={closePopupTelegram}>
-              X
-            </button>
-            <form onSubmit={handleSubmitTelegram}>
-              <label>
-                Enter your Telegram ID:
-                <input
-                  type='text'
-                  value={inputValue}
-                  onChange={handleInputChangeTelegram}
-                  maxLength='50'
-                />
-              </label>
-              <button type='submit'>Apply</button>
-            </form>
-          </div>
-        </div>
-      )}
-      {isOpenBot && (
-        <div className='popup-overlay'>
-          <div className='popup-content'>
-            <button className='close-button' onClick={closePopupBotToken}>
-              X
-            </button>
-            <form onSubmit={handleSubmitBotToken}>
-              <label>
-                Enter your Bot Token:
-                <input
-                  type='text'
-                  value={inputValue}
-                  onChange={handleInputChangeBotToken}
-                  maxLength='50'
-                />
-              </label>
-              <button type='submit'>Apply</button>
-            </form>
-          </div>
-        </div>
-      )}
-      {data ? (
-        <header className='settings-header'>
-          <div className='settings-form'>
-            <h1>Account Settings</h1>
-            <div className='telegram-id'>
-              Telegram ID
-              <button onClick={openPopupTelegram}>
-                <img
-                  src='https://img.icons8.com/ios/50/000000/pencil.png'
-                  alt='pencil'
-                  width='12'
-                  height='12'
-                ></img>
-              </button>
+    <div className='alliance-members'>
+      {data && data.allianceNodes.toString().trim() !== '' ? (
+        <header className='alliance-members-header'>
+          <div className='alliance-members-form'>
+            <h1>Alliance KPIs</h1>
+            <div className='min-ask'>
+              Minimum Ask
               <br></br>
-              <div className='settings-info'>
-                {data.operatorRecord[0].telegramID}
+              <div className='alliance-members-info'>
+                {process.env.REACT_APP_MINIMUM_ASK}
               </div>
             </div>
-            <div className='bot-token'>
-              Bot Token
-              <button onClick={openPopupBotToken}>
-                <img
-                  src='https://img.icons8.com/ios/50/000000/pencil.png'
-                  alt='pencil'
-                  width='12'
-                  height='12'
-                ></img>
-              </button>
+            <div className='avg-ask'>
+              Avg Ask
               <br></br>
-              <div className='settings-info'>
-                {data.operatorRecord[0].botToken.substring(0, 20)}...
+              <div className='alliance-members-info'>
+                {allianceStats.avgAsk.toFixed(2)}
               </div>
             </div>
-            {data.operatorRecord[0].nodeGroup === 'Alliance' ? (
+            <div className='nodes'>
+              Nodes
+              <br></br>
+              <div className='alliance-members-info'>{nodeCount}</div>
+            </div>
+            <div className='participation'>
+              Participation
+              <br></br>
+              <div className='alliance-members-info'>
+                {((nodeCount / totalNodes) * 100).toFixed(2)}%
+              </div>
+            </div>
+            <div className='avg-stake'>
+              Avg Stake
+              <br></br>
+              <div className='alliance-members-info'>
+                {allianceStats.avgStake}
+              </div>
+            </div>
+            <div className='total-stake'>
+              Total Stake
+              <br></br>
+              <div className='alliance-members-info'>
+                {allianceStats.totalStake}
+              </div>
+            </div>
+            {alliance ? (
               <div>
-                <div className='star'>
+                <div className='star-alliance'>
                   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
                     <polygon
                       fill='gold'
@@ -214,12 +125,15 @@ const NodeSettings = () => {
                     />
                   </svg>
                 </div>
-                <button onClick={LeaveAlliance} className='leave-button'>
+                <button
+                  onClick={LeaveAlliance}
+                  className='leave-button-alliance'
+                >
                   Leave Alliance
                 </button>
               </div>
-            ) : !isMobile ? (
-              <button onClick={JoinAlliance} className='join-button'>
+            ) : !isMobile && account ? (
+              <button onClick={JoinAlliance} className='join-button-alliance'>
                 Join Alliance
               </button>
             ) : (
@@ -227,54 +141,135 @@ const NodeSettings = () => {
             )}
           </div>
           {isMobile ? (
-            <table className='nodesTable'>
+            <table className='membersTable'>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Node ID</th>
                   <th>Name</th>
-                  <th>Payouts</th>
-                  <th>Pending</th>
+                  <th>Stake</th>
+                  <th>Ask</th>
                 </tr>
               </thead>
               <tbody>
-                {data.nodeRecords.map(record => (
+                {data.allianceNodes.map(record => (
                   <tr key={record.nodeId}>
                     <td>{record.nodeId}</td>
                     <td>{record.tokenName}</td>
-                    <td>{record.cumulativePayouts.toFixed(2)}</td>
-                    <td>{record.cumulativeEstimatedEarnings.toFixed(2)}</td>
+                    <td>{record.nodeStake.toFixed(2)}</td>
+                    <td>{record.ask}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <table className='nodesTable'>
+            <table className='membersTable'>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Node ID</th>
                   <th>Name</th>
                   <th>Network ID</th>
                   <th>Stake</th>
-                  <th>Payouts</th>
-                  <th>Pending</th>
                   <th>Ask</th>
                 </tr>
               </thead>
               <tbody>
-                {data.nodeRecords.map(record => (
+                {data.allianceNodes.map(record => (
                   <tr key={record.nodeId}>
                     <td>{record.nodeId}</td>
                     <td>{record.tokenName}</td>
                     <td>{record.networkId}</td>
-                    <td>{record.nodeStake.toFixed(2) + ' TRAC'}</td>
-                    <td>{record.cumulativePayouts.toFixed(2) + ' TRAC'}</td>
-                    <td>
-                      {record.cumulativeEstimatedEarnings.toFixed(2) + ' TRAC'}
-                    </td>
-                    <td>{record.Ask}</td>
+                    <td>{record.nodeStake.toFixed(2)}</td>
+                    <td>{record.ask}</td>
                   </tr>
                 ))}
               </tbody>
+            </table>
+          )}
+        </header>
+      ) : data && data.allianceNodes.toString().trim() === '' ? (
+        <header className='alliance-members-header'>
+          <div className='alliance-members-form'>
+            <h1>Alliance KPIs</h1>
+            <div className='min-ask'>
+              Minimum Ask
+              <br></br>
+              <div className='alliance-members-info'></div>
+            </div>
+            <div className='avg-ask'>
+              Avg Ask
+              <br></br>
+              <div className='alliance-members-info'></div>
+            </div>
+            <div className='nodes'>
+              Nodes
+              <br></br>
+              <div className='alliance-members-info'></div>
+            </div>
+            <div className='participation'>
+              Participation
+              <br></br>
+              <div className='alliance-members-info'></div>
+            </div>
+            <div className='avg-stake'>
+              Avg Stake
+              <br></br>
+              <div className='alliance-members-info'></div>
+            </div>
+            <div className='total-stake'>
+              Total Stake
+              <br></br>
+              <div className='alliance-members-info'></div>
+            </div>
+            {alliance ? (
+              <div>
+                <div className='star-alliance'>
+                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+                    <polygon
+                      fill='gold'
+                      points='256,8 314.395,195.472 503.526,186.513 354.931,301.528 413.326,489 256,396.542 98.674,489 157.069,301.528 8.474,186.513 197.605,195.472'
+                    />
+                  </svg>
+                </div>
+                <button
+                  onClick={LeaveAlliance}
+                  className='leave-button-alliance'
+                >
+                  Leave Alliance
+                </button>
+              </div>
+            ) : !isMobile ? (
+              <button onClick={JoinAlliance} className='join-button-alliance'>
+                Join Alliance
+              </button>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          {isMobile ? (
+            <table className='membersTable'>
+              <thead>
+                <tr>
+                  <th>Node ID</th>
+                  <th>Name</th>
+                  <th>Network ID</th>
+                  <th>Stake</th>
+                  <th>Ask</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          ) : (
+            <table className='membersTable'>
+              <thead>
+                <tr>
+                  <th>Node ID</th>
+                  <th>Name</th>
+                  <th>Network ID</th>
+                  <th>Stake</th>
+                  <th>Ask</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
             </table>
           )}
         </header>
@@ -285,4 +280,4 @@ const NodeSettings = () => {
   )
 }
 
-export default NodeSettings
+export default AllianceMembers

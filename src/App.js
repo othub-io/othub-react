@@ -5,8 +5,10 @@ import NavBar from './navigation/NavBar'
 import SideBar from './navigation/SideBar'
 import Footer from './navigation/Footer'
 import Home from './pages/home'
+import Nodes from './pages/nodes'
 import NodeSettings from './pages/myNodes/settings.js'
 import AllianceMembers from './pages/alliance/members.js'
+import Keys from './pages/api/keys.js'
 import NotFound from './pages/notFound'
 
 function App () {
@@ -17,8 +19,10 @@ function App () {
         <SideBar />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/nodes' element={<Nodes />} />
           <Route path='/myNodes/settings' element={<NodeSettings />} />
           <Route path='/alliance/members' element={<AllianceMembers />} />
+          <Route path='/api/keys' element={<Keys />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />

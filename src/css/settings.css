@@ -35,6 +35,7 @@
     left: 31%;
     top: 18%;
     font-family: 'Roboto', sans-serif;
+    overflow: 'auto';
   }
   
   .nodesTable th {
@@ -106,10 +107,10 @@
     position: absolute;
     transform-style: preserve-3d;
     animation: rotate 5s linear infinite;
-    width: 80px;
-    height: 80px;
-    margin-top:50%;
-    margin-left:30%;
+    width: 30px;
+    height: 30px;
+    margin-top:-2%;
+    margin-left:42%;
   }
   
   @keyframes rotate {
@@ -152,16 +153,17 @@
     background-color:#F5F5F5;
     border:none;
     position: absolute;
-    margin-top:75%;
-    margin-left:-21%;
+    margin-top:150%;
+    margin-left:-50%;
+    cursor: pointer;
   }
 
   .leave-button:hover{
     background-color:#F5F5F5;
     border:none;
     position: absolute;
-    margin-top:75%;
-    margin-left:-21%;
+    margin-top:150%;
+    margin-left:-50%;
     cursor: pointer;
   }
 
@@ -268,6 +270,7 @@
       left: 40%;
       top: 19%;
       font-family: 'Roboto', sans-serif;
+      overflow: 'auto';
     }
     
     .nodesTable th {
@@ -339,10 +342,10 @@
       position: absolute;
       transform-style: preserve-3d;
       animation: rotate 5s linear infinite;
-      width: 70px;
-      height: 70px;
-      margin-top:45%;
-      margin-left:50%;
+      width: 30px;
+      height: 30px;
+      margin-top:0%;
+      margin-left:62%;
     }
     
     @keyframes rotate {
@@ -385,8 +388,8 @@
       background-color:#F5F5F5;
       border:none;
       position: absolute;
-      margin-top:65%;
-      margin-left:-2%;
+      margin-top:120%;
+      margin-left:-20%;
     }
   
     .leave-button:hover{
@@ -439,6 +442,7 @@
       top: 40%;
       font-family: 'Roboto', sans-serif;
       z-index:600;
+      overflow: 'auto';
     }
     
     .nodesTable th {

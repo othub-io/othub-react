@@ -41,6 +41,7 @@
     height: 40px;
     display: flex;
     align-items: center;
+    text-decoration: none;
   }
   
   .sidebar .sub-menu {

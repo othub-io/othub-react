@@ -120,7 +120,7 @@ const NodeSettings = () => {
   let botToken
   let nodeGroup
 
-  console.log(data.operatorRecord)
+  console.log(data)
   if (data) {
     if (data.operatorRecord.toString().trim() === '') {
     } else {
@@ -285,7 +285,7 @@ const NodeSettings = () => {
                     <td>
                       {record.cumulativeEstimatedEarnings.toFixed(2) + ' TRAC'}
                     </td>
-                    <td>{record.Ask}</td>
+                    <td>{record.ask}</td>
                   </tr>
                 ))}
               </tbody>
