@@ -23,7 +23,7 @@
     margin-left: 12%;
   }
 
-  .table-container {
+  .allnodes-table-container {
     margin-top: 1%;
     margin-left:3%;
     height: 95%;
@@ -95,7 +95,7 @@
         margin-left: 18%;
       }
     
-      .table-container {
+      .allnodes-table-container {
         margin-top: 1%;
         margin-left:2.5%;
         height: 95%;
@@ -169,7 +169,7 @@
         background-color: none;
       }
 
-      .table-container {
+      .allnodes-table-container {
         margin-top: 1%;
         margin-left:15%;
         height: 95%;

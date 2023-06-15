@@ -140,51 +140,53 @@ const AllianceMembers = () => {
               <div></div>
             )}
           </div>
-          {isMobile ? (
-            <table className='membersTable'>
-              <thead>
-                <tr>
-                  <th>Node ID</th>
-                  <th>Name</th>
-                  <th>Stake</th>
-                  <th>Ask</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.allianceNodes.map(record => (
-                  <tr key={record.nodeId}>
-                    <td>{record.nodeId}</td>
-                    <td>{record.tokenName}</td>
-                    <td>{record.nodeStake.toFixed(2)}</td>
-                    <td>{record.ask}</td>
+          <div className='alliance-table-container'>
+            {isMobile ? (
+              <table className='membersTable'>
+                <thead>
+                  <tr>
+                    <th>Node ID</th>
+                    <th>Name</th>
+                    <th>Stake</th>
+                    <th>Ask</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <table className='membersTable'>
-              <thead>
-                <tr>
-                  <th>Node ID</th>
-                  <th>Name</th>
-                  <th>Network ID</th>
-                  <th>Stake</th>
-                  <th>Ask</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.allianceNodes.map(record => (
-                  <tr key={record.nodeId}>
-                    <td>{record.nodeId}</td>
-                    <td>{record.tokenName}</td>
-                    <td>{record.networkId}</td>
-                    <td>{record.nodeStake.toFixed(2)}</td>
-                    <td>{record.ask}</td>
+                </thead>
+                <tbody>
+                  {data.allianceNodes.map(record => (
+                    <tr key={record.nodeId}>
+                      <td>{record.nodeId}</td>
+                      <td>{record.tokenName}</td>
+                      <td>{record.nodeStake.toFixed(2)}</td>
+                      <td>{record.ask}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <table className='membersTable'>
+                <thead>
+                  <tr>
+                    <th>Node ID</th>
+                    <th>Name</th>
+                    <th>Network ID</th>
+                    <th>Stake</th>
+                    <th>Ask</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                </thead>
+                <tbody>
+                  {data.allianceNodes.map(record => (
+                    <tr key={record.nodeId}>
+                      <td>{record.nodeId}</td>
+                      <td>{record.tokenName}</td>
+                      <td>{record.networkId}</td>
+                      <td>{record.nodeStake.toFixed(2)}</td>
+                      <td>{record.ask}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </header>
       ) : data && data.allianceNodes.toString().trim() === '' ? (
         <header className='alliance-members-header'>
@@ -245,33 +247,35 @@ const AllianceMembers = () => {
               <div></div>
             )}
           </div>
-          {isMobile ? (
-            <table className='membersTable'>
-              <thead>
-                <tr>
-                  <th>Node ID</th>
-                  <th>Name</th>
-                  <th>Network ID</th>
-                  <th>Stake</th>
-                  <th>Ask</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          ) : (
-            <table className='membersTable'>
-              <thead>
-                <tr>
-                  <th>Node ID</th>
-                  <th>Name</th>
-                  <th>Network ID</th>
-                  <th>Stake</th>
-                  <th>Ask</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          )}
+          <div className='alliance-table-container'>
+            {isMobile ? (
+              <table className='membersTable'>
+                <thead>
+                  <tr>
+                    <th>Node ID</th>
+                    <th>Name</th>
+                    <th>Network ID</th>
+                    <th>Stake</th>
+                    <th>Ask</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            ) : (
+              <table className='membersTable'>
+                <thead>
+                  <tr>
+                    <th>Node ID</th>
+                    <th>Name</th>
+                    <th>Network ID</th>
+                    <th>Stake</th>
+                    <th>Ask</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            )}
+          </div>
         </header>
       ) : (
         <Loading />

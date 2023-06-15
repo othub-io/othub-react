@@ -31,7 +31,7 @@ const Nodes = () => {
       {data ? (
         <header className='allnodes-header'>
           {isMobile ? (
-            <div className='table-container'>
+            <div className='allnodes-table-container'>
               <table className='allnodesTable'>
                 <thead>
                   <tr>
@@ -52,7 +52,7 @@ const Nodes = () => {
               </table>
             </div>
           ) : (
-            <div className='table-container'>
+            <div className='allnodes-table-container'>
               <table className='allnodesTable'>
                 <thead>
                   <tr>

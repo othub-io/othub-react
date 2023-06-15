@@ -23,6 +23,14 @@
     margin-left: 12.75%;
   }
 
+  .alliance-table-container {
+    margin-top: 1%;
+    margin-left:15%;
+    height: 95%;
+    width: 100%;
+    overflow: auto;
+  }
+
   .membersTable {
     width: 50%;
     max-height:77vh;
@@ -285,6 +293,14 @@
         margin-left: 18%;
       }
     
+      .alliance-table-container {
+        margin-top: 1%;
+        margin-left:15%;
+        height: 50%;
+        width: 100%;
+        overflow: auto;
+      }
+
       .membersTable {
         width: 50%;
         max-height:77vh;
@@ -549,6 +565,14 @@
         background-color: none;
       }
     
+      .alliance-table-container {
+        margin-top: 1%;
+        margin-left:15%;
+        height: 95%;
+        width: 100%;
+        overflow: auto;
+      }
+
       .membersTable {
         width: 83%;
         max-height:77vh;
