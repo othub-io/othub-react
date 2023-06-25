@@ -1,0 +1,11 @@
+[Unit]
+Description=othub.io front end
+
+[Service]
+Type=simple
+WorkingDirectory=/root/othub-react
+ExecStart=/root/othub-react/othub-react.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
