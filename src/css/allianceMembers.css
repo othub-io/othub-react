@@ -25,25 +25,21 @@
 
   .alliance-table-container {
     margin-top: 1%;
-    margin-left:15%;
-    height: 95%;
-    width: 100%;
+    margin-left:30%;
+    width: 67%;
     overflow: auto;
+    background-color:#ff0000;
   }
 
   .membersTable {
-    width: 50%;
-    max-height:77vh;
+    width: 100%;
+    height:100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     border: 1px solid #6168ED;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    left: 46%;
-    top: 17%;
     font-family: 'Roboto', sans-serif;
-    overflow: 'auto';
   }
   
   .membersTable th {
@@ -53,6 +49,8 @@
     text-align: left;
     font-size: 16px;
     border: 1px solid #6168ED;
+    position: sticky;
+    top: 0;
   }
   
   .membersTable td {
@@ -188,7 +186,7 @@
     background-color:#F5F5F5;
     border:none;
     position: absolute;
-    margin-top:91%;
+    margin-top:92%;
     margin-left:-52%;
   }
 
@@ -196,7 +194,7 @@
     background-color:#F5F5F5;
     border:none;
     position: absolute;
-    margin-top:91%;
+    margin-top:92%;
     margin-left:-52%;
     cursor: pointer;
   }
@@ -295,25 +293,21 @@
     
       .alliance-table-container {
         margin-top: 1%;
-        margin-left:15%;
-        height: 50%;
-        width: 100%;
+        margin-left:24%;
+        height: 95%;
+        width: 72%;
         overflow: auto;
       }
 
       .membersTable {
-        width: 50%;
-        max-height:77vh;
+        width: 100%;
+        height:100%;
         border-collapse: collapse;
         font-family: Arial, sans-serif;
         background-color: #ffffff;
         border: 1px solid #6168ED;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        position: absolute;
-        left: 45%;
-        top: 17%;
         font-family: 'Roboto', sans-serif;
-        overflow: 'auto';
       }
       
       .membersTable th {
@@ -323,6 +317,8 @@
         text-align: left;
         font-size: 16px;
         border: 1px solid #6168ED;
+        position: sticky;
+        top: 0;
       }
       
       .membersTable td {
@@ -351,7 +347,7 @@
       }
     
       .alliance-members-form h1{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         left: 0;
         top:-3%;
@@ -359,50 +355,50 @@
       }
     
       .min-ask{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 20px;;
         padding-top:50px;
       }
     
       .avg-ask{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
-        padding-left: 200px;;
+        padding-left: 160px;;
         padding-top:50px;
       }
     
       .nodes{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 20px;;
         padding-top:140px;
       }
     
       .participation{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
-        padding-left: 200px;;
+        padding-left: 160px;;
         padding-top:140px;
       }
     
       .avg-stake{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 20px;;
         padding-top:240px;
       }
     
       .total-stake{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
-        padding-left: 200px;
+        padding-left: 160px;
         padding-top:240px;
       }
     
       .alliance-members-info{
         padding-top:5px;
-        font-size: 30px;
+        font-size: 25px;
         position: absolute;
         color: #6168ED;
         font-weight: bold;
@@ -415,7 +411,7 @@
         width: 30px;
         height: 30px;
         margin-top:-2%;
-        margin-left:24%;
+        margin-left:20%;
       }
       
       @keyframes rotate {
@@ -458,8 +454,8 @@
         background-color:#F5F5F5;
         border:none;
         position: absolute;
-        margin-top:115%;
         margin-left:-52%;
+        bottom:0;
       }
     
       .leave-button-alliance:hover{
@@ -547,6 +543,7 @@
         width: 360px;
         height:100%;
         font-family: 'Roboto', sans-serif;
+     
       }
       
       .alliance-members-header {
@@ -566,26 +563,24 @@
       }
     
       .alliance-table-container {
-        margin-top: 1%;
-        margin-left:15%;
-        height: 95%;
-        width: 100%;
+        margin-top: 75%;
+        margin-left:4%;
+        height: 50%;
+        width: 95%;
         overflow: auto;
+        background-color:#ff0000;
+        z-index: 90;
       }
 
       .membersTable {
-        width: 83%;
-        max-height:77vh;
+        width: 100%;
+        height:100%;
         border-collapse: collapse;
         font-family: Arial, sans-serif;
         background-color: #ffffff;
         border: 1px solid #6168ED;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        position: absolute;
-        left: 16%;
-        margin-top: 80%;
         font-family: 'Roboto', sans-serif;
-        overflow: 'auto';
       }
       
       .membersTable th {
@@ -595,10 +590,6 @@
         text-align: left;
         font-size: 12px;
         border: 1px solid #6168ED;
-        max-width: 100px; /* Set your desired maximum width */
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
       
       .membersTable td {
@@ -640,50 +631,50 @@
       }
     
       .min-ask{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 30px;;
         padding-top:60px;
       }
     
       .avg-ask{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 200px;;
         padding-top:60px;
       }
     
       .nodes{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 30px;;
-        padding-top:150px;
+        padding-top:130px;
       }
     
       .participation{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 200px;;
-        padding-top:150px;
+        padding-top:130px;
       }
     
       .avg-stake{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 30px;;
-        padding-top:250px;
+        padding-top:205px;
       }
     
       .total-stake{
-        font-size: 20px;
+        font-size: 15px;
         position:absolute;
         padding-left: 200px;
-        padding-top:250px;
+        padding-top:205px;
       }
     
       .alliance-members-info{
         padding-top:5px;
-        font-size: 26px;
+        font-size: 20px;
         position: absolute;
         color: #6168ED;
       }

@@ -23,19 +23,22 @@
     margin-left: 12.75%;
   }
 
+  .nodesTable-container {
+    margin-top: -41%;
+    margin-left:30%;
+    width: 67%;
+    background-color:#ff0000;
+  }
+
   .nodesTable {
-    width: 65%;
-    max-height:77vh;
+    width: 100%;
+    height: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     border: 1px solid #6168ED;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    left: 31%;
-    top: 18%;
     font-family: 'Roboto', sans-serif;
-    overflow: 'auto';
   }
   
   .nodesTable th {
@@ -45,6 +48,8 @@
     text-align: left;
     font-size: 16px;
     border: 1px solid #6168ED;
+    position: sticky;
+    top: 0;
   }
   
   .nodesTable td {
@@ -52,7 +57,7 @@
     font-size: 14px;
     border: 1px solid #6168ED;
   }
-  
+
   .nodesTable tr:hover {
     background-color: #F5F5F5;
     color: 6168ED;
@@ -258,19 +263,21 @@
       margin-left: 18%
     }
   
+    .nodesTable-container {
+      margin-left:30%;
+      width: 67%;
+      background-color:#ff0000;
+    }
+
     .nodesTable {
-      width: 55%;
-      max-height:77vh;
+      width: 100%;
+      height:100%;
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       border: 1px solid #6168ED;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      position: absolute;
-      left: 40%;
-      top: 19%;
       font-family: 'Roboto', sans-serif;
-      overflow: 'auto';
     }
     
     .nodesTable th {
@@ -388,7 +395,7 @@
       background-color:#F5F5F5;
       border:none;
       position: absolute;
-      margin-top:120%;
+      bottom:0;
       margin-left:-20%;
     }
   
@@ -396,7 +403,7 @@
       background-color:#F5F5F5;
       border:none;
       position: absolute;
-      margin-top:65%;
+      bottom:0;
       margin-left:-2%;
       cursor: pointer;
     }
@@ -429,20 +436,23 @@
       background-color: none;
     }
   
+    .nodesTable-container {
+      margin-left:5%;
+      margin-top:5%;
+      width: 90%;
+      background-color:#ff0000;
+      z-index:600;
+    }
+
     .nodesTable {
-      width: 83%;
-      max-height:77vh;
+      width: 100%;
+      height:100%;
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       border: 1px solid #6168ED;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      position: absolute;
-      left: 16%;
-      top: 40%;
       font-family: 'Roboto', sans-serif;
-      z-index:600;
-      overflow: 'auto';
     }
     
     .nodesTable th {
