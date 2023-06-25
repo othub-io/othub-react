@@ -27,6 +27,7 @@ const AllianceMembers = () => {
 
   const LeaveAlliance = async () => {
     try {
+      setData('')
       const response = await axios.get(
         `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Solo`
       )
@@ -38,6 +39,7 @@ const AllianceMembers = () => {
 
   const JoinAlliance = async () => {
     try {
+      setData('')
       const response = await axios.get(
         `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Alliance`
       )
@@ -148,7 +150,6 @@ const AllianceMembers = () => {
                     <th>Node ID</th>
                     <th>Name</th>
                     <th>Stake</th>
-                    <th>Ask</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -157,7 +158,6 @@ const AllianceMembers = () => {
                       <td>{record.nodeId}</td>
                       <td>{record.tokenName}</td>
                       <td>{record.nodeStake.toFixed(2)}</td>
-                      <td>{record.ask}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -254,9 +254,7 @@ const AllianceMembers = () => {
                   <tr>
                     <th>Node ID</th>
                     <th>Name</th>
-                    <th>Network ID</th>
                     <th>Stake</th>
-                    <th>Ask</th>
                   </tr>
                 </thead>
                 <tbody></tbody>

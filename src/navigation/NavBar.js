@@ -32,7 +32,7 @@ function NavBar () {
       <div className='navbar'>
         <h1>
           <a href='/' className='logo-text'>
-            otnode.io
+            othub.io
           </a>
         </h1>
         {account ? (

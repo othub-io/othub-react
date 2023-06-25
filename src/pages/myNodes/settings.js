@@ -155,6 +155,7 @@ const NodeSettings = () => {
             <form onSubmit={handleSubmitTelegram}>
               <label>
                 Enter your Telegram ID:
+                <br></br>
                 <input
                   type='text'
                   value={inputValue}
@@ -176,6 +177,7 @@ const NodeSettings = () => {
             <form onSubmit={handleSubmitBotToken}>
               <label>
                 Enter your Bot Token:
+                <br></br>
                 <input
                   type='text'
                   value={inputValue}
@@ -240,6 +242,7 @@ const NodeSettings = () => {
               <div></div>
             )}
           </div>
+          <div className='nodesTable-container'>
           {isMobile ? (
             <table className='nodesTable'>
               <thead>
@@ -291,6 +294,7 @@ const NodeSettings = () => {
               </tbody>
             </table>
           )}
+          </div>
         </header>
       ) : (
         <Loading />

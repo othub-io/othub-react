@@ -44,7 +44,7 @@ const Nodes = () => {
                   {data.v_nodes.map(node => (
                     <tr key={node.nodeId}>
                       <td width='10'>{node.nodeId}</td>
-                      <td>{node.TokenName}</td>
+                      <td>{node.tokenName}</td>
                       <td>{Number(node.nodeStake).toFixed(2)}</td>
                     </tr>
                   ))}
@@ -68,9 +68,9 @@ const Nodes = () => {
                   {data.v_nodes.map(node => (
                     <tr key={node.nodeId}>
                       <td>{node.nodeId}</td>
-                      <td>{node.NetworkId}</td>
-                      <td>{node.TokenName}</td>
-                      <td>{node.TokenSymbol}</td>
+                      <td>{node.networkId}</td>
+                      <td>{node.tokenName}</td>
+                      <td>{node.tokenSymbol}</td>
                       <td>{Number(node.nodeStake).toFixed(2)}</td>
                       <td>{node.nodeGroup}</td>
                     </tr>
