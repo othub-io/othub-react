@@ -3,6 +3,12 @@ import '../../css/allianceMembers.css'
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 import axios from 'axios'
+let ext
+
+ext = 'http'
+if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
+  ext = 'https'
+}
 
 const AllianceMembers = () => {
   const { account } = useContext(AccountContext)
@@ -13,7 +19,7 @@ const AllianceMembers = () => {
     async function fetchData () {
       try {
         const response = await axios.get(
-          `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members`
         )
         setData(response.data)
       } catch (error) {
@@ -29,7 +35,7 @@ const AllianceMembers = () => {
     try {
       setData('')
       const response = await axios.get(
-        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Solo`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Solo`
       )
       setData(response.data)
     } catch (error) {
@@ -41,7 +47,7 @@ const AllianceMembers = () => {
     try {
       setData('')
       const response = await axios.get(
-        `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Alliance`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Alliance`
       )
 
       setData(response.data)
