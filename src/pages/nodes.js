@@ -3,6 +3,12 @@ import '../css/nodes.css'
 import Loading from '../Loading'
 import axios from 'axios'
 let orderby
+let ext
+
+ext = 'http'
+if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
+  ext = 'https'
+}
 
 const Nodes = () => {
   const [data, setData] = useState('')
@@ -13,7 +19,7 @@ const Nodes = () => {
       try {
         orderby = 'nodeStake'
         const response = await axios.get(
-          `http://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/nodes?orderby=${orderby}`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/nodes?orderby=${orderby}`
         )
         setData(response.data)
       } catch (error) {
