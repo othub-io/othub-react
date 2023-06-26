@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './css/index.css'
 import App from './App'
-import NavBar from './navigation/NavBar.js'
-import SideBar from './navigation/SideBar.js'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
