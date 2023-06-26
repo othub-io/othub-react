@@ -19,7 +19,7 @@ const Nodes = () => {
       try {
         orderby = 'nodeStake'
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/nodes?orderby=${orderby}`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes?orderby=${orderby}`
         )
         setData(response.data)
       } catch (error) {

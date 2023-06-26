@@ -19,7 +19,7 @@ const AllianceMembers = () => {
     async function fetchData () {
       try {
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/alliance/members`
         )
         setData(response.data)
       } catch (error) {
@@ -35,7 +35,7 @@ const AllianceMembers = () => {
     try {
       setData('')
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Solo`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/alliance/members?admin_key=${account}&group=Solo`
       )
       setData(response.data)
     } catch (error) {
@@ -47,7 +47,7 @@ const AllianceMembers = () => {
     try {
       setData('')
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/alliance/members?admin_key=${account}&group=Alliance`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/alliance/members?admin_key=${account}&group=Alliance`
       )
 
       setData(response.data)

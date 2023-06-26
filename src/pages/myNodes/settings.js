@@ -23,7 +23,7 @@ const NodeSettings = () => {
       try {
         if (account) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}`
           )
           setData(response.data)
         }
@@ -55,7 +55,7 @@ const NodeSettings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&telegramID=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&telegramID=${inputValue}`
           )
           setData(response.data)
         } catch (error) {
@@ -88,7 +88,7 @@ const NodeSettings = () => {
     // Perform the POST request using the entered value
     try {
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&botToken=${inputValue}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&botToken=${inputValue}`
       )
 
       setData(response.data)
@@ -102,7 +102,7 @@ const NodeSettings = () => {
   const LeaveAlliance = async () => {
     try {
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&group=Solo`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&group=Solo`
       )
       setData(response.data)
     } catch (error) {
@@ -113,7 +113,7 @@ const NodeSettings = () => {
   const JoinAlliance = async () => {
     try {
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}:${process.env.REACT_APP_RUNTIME_PORT}/myNodes/settings?admin_key=${account}&group=Alliance`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&group=Alliance`
       )
 
       setData(response.data)
