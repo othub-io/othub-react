@@ -46,19 +46,19 @@ const Home = () => {
               Trac Spent
               <br></br>
               <div className='home-stats-info'>
-                {data.tracSpent.toFixed(2)}
+                {data.tracSpent}
               </div>
             </div>
             <div className='assets-24h'>
               Assets 24h
               <br></br>
-              <div className='home-stats-info'>{data.v_pubs_stats_24h.totalPubs}</div>
+              <div className='home-stats-info'>{data.totalPubs_24h}</div>
             </div>
             <div className='trac-spent-24h'>
               Spent 24h
               <br></br>
               <div className='home-stats-info'>
-              {data.v_pubs_stats_24h.totalTracSpent.toFixed(2)}
+              {data.tracSpent_24h}
               </div>
             </div>
             <div className='home-nodes'>
@@ -72,7 +72,7 @@ const Home = () => {
               Total Stake
               <br></br>
               <div className='home-stats-info'>
-                {Number(data.totalStake).toFixed(2)}
+                {data.totalStake}
               </div>
             </div>
           </div>
