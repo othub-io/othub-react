@@ -1,6 +1,6 @@
 # OTHub React
 
-OTHub React is a community managed React frontend built to work in tandem with the [othub-runtime](https://github.com/othub-io/othub-runtime) and [otp-sync](https://github.com/othub-io/othub-runtime) repositories.
+OTHub React is a community managed React frontend built to work in tandem with the [othub-runtime](https://github.com/othub-io/othub-runtime) and [otp-sync](https://github.com/othub-io/othub-runtime) repositories. It is the front end of [OTHub](othub.io). With the right UX, the othub-react repository could be a streamline channel to get new and experienced web3 enthusiasts into the world of verifiable Knowledge Assets.
 
 ### OTHub React is:
 - A full service web application that provides greater insight into the activity and health of the DKG;
@@ -14,9 +14,6 @@ OTHub React is a community managed React frontend built to work in tandem with t
 - Q2 2024 - OTHub UI improvements and overhaul and Knowledge Asset catalog
 - Q3 2024 - Further UI improvement with Node Operator DKG Voting (experimental)
 - Q4 2024+ - Transition to a more stability focused approach with improved code performance. 
-
-### Expected Impact
-OTHub React is the frontend of [OTHub](othub.io). With the right UX, the othub-react repository could be a streamline channel to get new and experienced web3 enthusiasts into the world of verifiable Knowledge Assets.
 
 ### Instructions
 > **Warning**
