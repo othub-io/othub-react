@@ -16,7 +16,7 @@ const NodeSettings = () => {
   const [isOpenTelegram, setIsOpenTelegram] = useState(false)
   const [isOpenBot, setIsOpenBot] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const isMobile = window.matchMedia('(max-width: 360px)').matches
+  const isMobile = window.matchMedia('(max-width: 600px)').matches
 
   useEffect(() => {
     async function fetchData () {

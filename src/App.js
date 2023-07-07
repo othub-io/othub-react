@@ -22,7 +22,7 @@ function App () {
           <Route path='/nodes' element={<Nodes />} />
           <Route path='/myNodes/settings' element={<NodeSettings />} />
           <Route path='/alliance/members' element={<AllianceMembers />} />
-          <Route path='/api/keys-disabled' element={<Keys />} />
+          <Route path='/api/keys' element={<Keys />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
