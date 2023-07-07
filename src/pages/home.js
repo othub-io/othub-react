@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../css/home.css'
 import Loading from '../Loading'
+import HomeChart from '../homeChart'
 import axios from 'axios'
 let ext
 
@@ -74,6 +75,9 @@ const Home = () => {
               <div className='home-stats-info'>
                 {data.totalStake}
               </div>
+            </div>
+            <div className='home-chart'>
+              <HomeChart data={JSON.stringify(data.v_pubs_stats)}/>
             </div>
           </div>
         </header>
