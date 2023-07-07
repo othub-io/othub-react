@@ -67,7 +67,6 @@ const Nodes = () => {
                     <th>Token Name</th>
                     <th>Token Symbol</th>
                     <th>Stake</th>
-                    <th>Group</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -78,7 +77,6 @@ const Nodes = () => {
                       <td>{node.tokenName}</td>
                       <td>{node.tokenSymbol}</td>
                       <td>{Number(node.nodeStake).toFixed(2)}</td>
-                      <td>{node.nodeGroup}</td>
                     </tr>
                   ))}
                 </tbody>
