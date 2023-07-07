@@ -73,7 +73,7 @@ function SideBar () {
         { id: 19, path: '/api/keys', title: 'API Keys' },
         {
           id: 20,
-          path: 'https://www.postman.com/crimson-crescent-721757/workspace/otnode-api/overview',
+          path: 'https://www.postman.com/crimson-crescent-721757/workspace/othub-api',
           title: 'Docs'
         }
       ]
