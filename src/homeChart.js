@@ -29,7 +29,6 @@ const HomeChart = ({ data }) => {
   const labels = data.map((item) => moment(item.date).format('DD MMM'));
   const pubCounts = data.map((item) => item.totalPubs);
   
-
   console.group(pubCounts)
   const formattedData = {
     labels: labels,
