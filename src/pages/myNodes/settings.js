@@ -84,6 +84,7 @@ const NodeSettings = () => {
   }
 
   const handleSubmitBotToken = async e => {
+    setIsOpenBot(false)
     e.preventDefault()
     // Perform the POST request using the entered value
     try {
@@ -95,7 +96,6 @@ const NodeSettings = () => {
     } catch (error) {
       console.error(error) // Handle the error case
     }
-    setIsOpenBot(false)
     setInputValue('')
   }
 
