@@ -186,7 +186,7 @@ const AllianceMembers = () => {
                       <td>{record.tokenName}</td>
                       <td>{record.networkId}</td>
                       <td>{record.nodeStake.toFixed(2)}</td>
-                      <td>{record.ask}</td>
+                      <td>{record.nodeAsk}</td>
                     </tr>
                   ))}
                 </tbody>
