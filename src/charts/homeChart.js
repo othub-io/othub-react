@@ -1,5 +1,5 @@
 import React from 'react'
-import { Line } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 import moment from 'moment';
 
 import {
@@ -34,7 +34,7 @@ const HomeChart = ({ data }) => {
     labels: labels,
     datasets: [
       {
-        label: 'Publication Count',
+        label: 'OTP Publication',
         data: pubCounts,
         fill: false,
         borderColor: '#6168ED',
@@ -50,7 +50,7 @@ const HomeChart = ({ data }) => {
     },
   };
 
-  return <Line data={formattedData} options={options} />;
+  return <Line data={formattedData} options={options} width="3200" height="950"/>;
 };
 
 export default HomeChart

@@ -10,7 +10,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
   ext = 'https'
 }
 
-const NodeSettings = () => {
+const Settings = () => {
   const { account } = useContext(AccountContext)
   const [data, setData] = useState('')
   const [isOpenTelegram, setIsOpenTelegram] = useState(false)
@@ -309,4 +309,4 @@ const NodeSettings = () => {
   )
 }
 
-export default NodeSettings
+export default Settings

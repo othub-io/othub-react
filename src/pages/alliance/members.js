@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import '../../css/allianceMembers.css'
+import '../../css/members.css'
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 import axios from 'axios'
