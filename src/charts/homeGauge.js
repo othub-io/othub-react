@@ -6,8 +6,7 @@ Chart.register(ArcElement);
 const GaugeChart = ({ data, maxValue }) => {
     maxValue = 5000
     data = JSON.parse(data)
-    const pubCounts = data.map((item) => item.totalPubs);
-    const count = Number(pubCounts.length)
+    const count = Number(data)
     
     const gauge_data = {
         labels: ['OTP Pubs'],
