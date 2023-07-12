@@ -78,7 +78,7 @@ const Home = () => {
               </div>
             </div>
             <div className='home-gauge'>
-              <HomeGauge data={JSON.stringify(data.v_pubs_stats)}/>
+              <HomeGauge data={JSON.stringify(data.totalPubs_24h)}/>
               <span className="gauge-max">5,000</span>
             </div>
             <div className="pub-o-meter">Pub-o-Meter</div>
