@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import '../css/home.css'
 import Loading from '../Loading'
-import HomeChart from '../homeChart'
+import HomeChart from '../charts/homeChart'
+import HomeGauge from '../charts/homeGauge'
 import axios from 'axios'
 let ext
 
@@ -43,6 +44,20 @@ const Home = () => {
                 {data.pub_count}
               </div>
             </div>
+            <div className='home-total-stake'>
+              Total Stake
+              <br></br>
+              <div className='home-stats-info'>
+                {data.totalStake}
+              </div>
+            </div>
+            <div className='home-nodes'>
+              Nodes
+              <br></br>
+              <div className='home-stats-info'>
+              {data.v_nodes.length}
+              </div>
+            </div>
             <div className='trac-spent'>
               Trac Spent
               <br></br>
@@ -56,28 +71,19 @@ const Home = () => {
               <div className='home-stats-info'>{data.totalPubs_24h}</div>
             </div>
             <div className='trac-spent-24h'>
-              Spent 24h
+              Trac Spent 24h
               <br></br>
               <div className='home-stats-info'>
               {data.tracSpent_24h}
               </div>
             </div>
-            <div className='home-nodes'>
-              Nodes
-              <br></br>
-              <div className='home-stats-info'>
-              {data.v_nodes.length}
-              </div>
+            <div className='home-gauge'>
+              <HomeGauge data={JSON.stringify(data.v_pubs_stats)}/>
+              <span className="gauge-max">5,000</span>
             </div>
-            <div className='home-total-stake'>
-              Total Stake
-              <br></br>
-              <div className='home-stats-info'>
-                {data.totalStake}
-              </div>
-            </div>
+            <div className="pub-o-meter">Pub-o-Meter</div>
             <div className='home-chart'>
-              <HomeChart data={JSON.stringify(data.v_pubs_stats)}/>
+              <HomeChart data={JSON.stringify(data.v_pubs_stats)} width="1500" height="100"/>
             </div>
           </div>
         </header>

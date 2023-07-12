@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import '../css/nodes.css'
 import Loading from '../Loading'
 import axios from 'axios'
-let orderby
 let ext
 
 ext = 'http'
@@ -17,9 +16,8 @@ const Nodes = () => {
   useEffect(() => {
     async function fetchData () {
       try {
-        orderby = 'nodeStake'
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes?orderby=${orderby}`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`
         )
         setData(response.data)
       } catch (error) {

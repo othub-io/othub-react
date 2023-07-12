@@ -6,6 +6,7 @@ function SideBar () {
     {
       id: 1,
       title: 'Assets',
+      path: '/assets',
       icon: 'https://img.icons8.com/ios/50/000000/safe.png',
       isOpen: true
     },
@@ -22,8 +23,8 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/star.png',
       isOpen: true,
       submenu: [
-        { id: 4, path: '/myNodes/nodeDashboard', title: 'Dashboard' },
-        { id: 5, path: '/myNodes/settings', title: 'Settings' }
+        { id: 4, path: '/mynodes/dashboard', title: 'Dashboard' },
+        { id: 5, path: '/mynodes/settings', title: 'Settings' }
       ]
     },
     {
@@ -33,13 +34,13 @@ function SideBar () {
       isOpen: true,
       submenu: [
         { id: 7, path: '/alliance/members', title: 'Members' },
-        { id: 8, path: '/alliance/statistics', title: 'Statistics' },
         { id: 9, path: '/alliance/vote', title: 'Vote' }
       ]
     },
     {
       id: 10,
       title: 'Charts',
+      path: '/charts',
       icon: 'https://img.icons8.com/ios/50/000000/line-chart.png',
       isOpen: true
     },
@@ -49,9 +50,9 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/settings.png',
       isOpen: true,
       submenu: [
-        { id: 15, path: '/dkgTools/get', title: 'Get' },
-        { id: 16, path: '/dkgTools/publish', title: 'Publish' },
-        { id: 17, path: '/dkgTools/update', title: 'Update' }
+        { id: 15, path: '/dkgtools/get', title: 'Get' },
+        { id: 16, path: '/dkgtools/publish', title: 'Publish' },
+        { id: 17, path: '/dkgtools/update', title: 'Update' }
       ]
     },
     {
