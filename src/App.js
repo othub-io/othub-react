@@ -26,7 +26,7 @@ function App () {
         <SideBar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/assets-dev' element={<Assets />} />
+          <Route path='/assets/' element={<Assets />}/>
           <Route path='/nodes' element={<Nodes />} />
           <Route path='/mynodes/settings' element={<Settings />} />
           <Route path='/mynodes/dashboard-dev' element={<NodeDashboard />} />
