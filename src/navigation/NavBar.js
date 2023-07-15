@@ -9,7 +9,7 @@ let chain
 
 function NavBar () {
   const { account, chain_id } = useContext(AccountContext)
-  const isMobile = window.matchMedia('(max-width: 360px)').matches
+  const isMobile = window.matchMedia('(max-width: 600px)').matches
 
   if (account) {
     front_admin_key = account.substring(0, 6)

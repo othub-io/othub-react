@@ -1,64 +1,100 @@
-import React, { useState, useEffect } from 'react'
-import Loading from './Loading'
+import React, { useContext } from 'react'
 import './css/Asset.css' // Import the CSS file for styling (see Step 3)
-import axios from 'axios'
-let ext
+import { AccountContext } from './AccountContext'
+import moment from 'moment';
+let asset_data
+let sub_scan_link
+let link_type
 
-ext = 'http'
-if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
-  ext = 'https'
-}
+const Asset = (on_chain) => {
+  const { chain_id } = useContext(AccountContext)
+  let winners
+  asset_data = on_chain.data
+  winners = JSON.parse(asset_data.winners)
 
-const Asset = (on_chain,chain_id) => {
-  const [data, setData] = useState('')
-  //on_chain = JSON.parse(on_chain)
-  let dkg_data
-  let payload
+  sub_scan_link = 'https://'
+  link_type = 'origintrail'
 
-  useEffect(() => {
-    async function fetchData () {
-      try {
-        console.log(`1: ${JSON.parse(on_chain)}`, `2: ${JSON.stringify(chain_id)}`)
-        if(on_chain){
-            payload = await axios.get(
-                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/dkg/get?ual=${on_chain.UAL}&chain=${chain_id}`
-              )
+  if(chain_id === 'Origintrail Parachain Testnet'){
+    link_type =  'origintrail-testnet'
+  }
+  sub_scan_link = sub_scan_link + link_type + '.subscan.io'
 
-            dkg_data = {
-                payload: payload
-            }
-    
-            setData(dkg_data)
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
+  const days_to_expire = Number(asset_data.epochs_number) * Number(asset_data.epoch_length_days) * 24 * 60 * 60 * 1000
 
-    setData('')
-    fetchData()
-  }, [])
+  const date = new Date(asset_data.block_ts_hour);
+  const mint_date = date.getTime();
+  const mint_date_fancy = new Date(mint_date).toISOString();
+  const formatted_mint_date_fancy = moment.utc(mint_date_fancy).format('MM/DD/YYYY')
+
+  const expire_date = mint_date + days_to_expire
+  const expire_date_fancy = new Date(expire_date).toISOString();
+  const formatted_expire_date_fancy = moment.utc(expire_date_fancy).format('MM/DD/YYYY')
+
 
   return ( 
     <div className='asset-data'>
-        {data ? (
-            <div>
-                <span>Assertion ID:{on_chain.assertion_id}</span><br></br>
-                <span>Keywords:{on_chain.keyword}</span><br></br>
-                <span>UAL: {on_chain.UAL}</span><br></br>
-                <span>Size: {on_chain.size}kb</span><br></br>
-                <span>Triples: {on_chain.triples_number}</span><br></br>
-                <span>Epochs: {on_chain.epochs_number}</span><br></br>
-                <span>Days: {Number(on_chain.epochs_number) * Number(on_chain.epoch_length_days)}</span><br></br>
-                <span>Payment: {on_chain.token_amount}</span><br></br>
-                <span>Bid: {on_chain.bid}</span><br></br>
-                <span>Txn Hash: {on_chain.transaction_hash}</span><br></br>
-                <span>Minted: {on_chain.block_ts_hour}</span><br></br>
-                <span>State: {on_chain.state}</span><br></br>
-                <span>Publisher: {on_chain.from}</span><br></br>
-                <span>Winners: {on_chain.winners}</span>
-                <span>Payload: {data.payload}</span>
-            </div>) : (<Loading />)}
+        <div className='minted'>
+            <span>Minted on {formatted_mint_date_fancy}</span>
+        </div>
+        <div className='token'>
+            <span>Asset {asset_data.token_id}</span>
+        </div>
+        <div className='size'>
+            <div className='size-header'>Size</div>
+            <div className='size-value'>{asset_data.size}kb</div>
+        </div>
+        <div className='epochs'>
+            <div className='epochs-header'>Epochs</div>
+            <div className='epochs-value'>{asset_data.epochs_number}</div>
+        </div>
+        <div className='triples'>
+            <div className='triples-header'>Triples</div>
+            <div className='triples-value'>{asset_data.triples_number}</div>
+        </div>
+        <div className='payment'>
+            <div className='triples-header'>Payment</div>
+            <div className='triples-value'>{asset_data.token_amount.toFixed(4)}</div>
+        </div>
+        <div className='bid'>
+            <div className='bid-header'>Bid</div>
+            <div className='bid-value'>{asset_data.bid.toFixed(4)}</div>
+        </div>
+        <div className='expires'>
+            <div className='expires-header'>Expires</div>
+            <div className='expires-value'>{formatted_expire_date_fancy}</div>
+        </div>
+        <div className='meta-data'>
+            <div className='ual'>
+                <div className='ual-header'>UAL</div>
+                <div className='ual-value'><a href={`https://dkg.origintrail.io/explore?ual=${asset_data.UAL}`} target='_blank' rel="noreferrer">{asset_data.UAL}</a></div>
+            </div>
+            <div className='state'>
+                <div className='state-header'>State</div>
+                <div className='state-value'>{asset_data.state}</div>
+            </div>
+            <div className='txn-hash'>
+                <div className='txn-hash-header'>Txn Hash</div>
+                <div className='txn-hash-value'><a href={sub_scan_link+'/tx/'+ asset_data.transaction_hash} target='_blank' rel="noreferrer">{asset_data.transaction_hash}</a></div>
+            </div>
+            <div className='keywords'>
+                <div className='keywords-header'>Keywords</div>
+                <div className='keywords-value'>{asset_data.keyword}</div>
+            </div>
+            <div className='publisher'>
+                <div className='publisher-header'>Publisher</div>
+                <div className='publisher-value'><a href={`https://dkg.origintrail.io/profile?wallet=${asset_data.publisher}`} target='_blank' rel="noreferrer">{asset_data.publisher}</a></div>
+            </div>
+        </div>
+        <div className='winning-nodes'>
+            <span>Winning Nodes</span>
+        </div>
+        {winners ? (<div>{winners.map((group, index) => (
+            <div className='winners' key={index}>
+                <div className='winners-header'>Epoch {index +1}</div>
+                <div className='winners-value'>{group.winners}</div>
+            </div>
+        ))}</div>) : (<div></div>)}
     </div>
   )
 }

@@ -138,14 +138,14 @@ const Keys = () => {
           <div className="container">
           Basic Access:
           <br></br>
-            <div className="box">Rate:<br></br>Up to 1 API Key<br></br>1 request per 5m</div>
-            <div className="box">Networks:<br></br>OTP Testnet<br></br>OTP Mainnet</div>
+            <div className="box">Rate:<br></br>Up to 1 API Key<br></br>1 request per 30m</div>
+            <div className="box">Networks:<br></br>OTP Testnet #soon<br></br>OTP Mainnet</div>
           </div>
           <div className="container2">
           Premium Access:
           <br></br>
-            <div className="box2">Rate:<br></br>Up to 2 API Key<br></br>1 request per 30s</div>
-            <div className="box2">Networks:<br></br>OTP Testnet<br></br>OTP Mainnet</div>
+            <div className="box2">Rate:<br></br>Up to 2 API Key<br></br>1 request per 1s</div>
+            <div className="box2">Networks:<br></br>OTP Testnet #soon<br></br>OTP Mainnet</div>
           </div>
             <div className='create-form'>
               <div className='key-text'>

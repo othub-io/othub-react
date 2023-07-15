@@ -1,0 +1,745 @@
+.asset-data{
+    margin-top:10px;
+    width:100%;
+    height:100%;
+    white-space: normal;
+    overflow: hidden;
+    text-align:left;
+    overflow: auto;
+    padding-right:10px;
+  }
+
+  .minted{
+    color:#6168ED;
+    margin-bottom:10px;
+  }
+
+  .token{
+    width:99.5%;
+    height:6%;
+    border: 1px solid #6168ED;
+    border-radius: 10px 10px 10px 10px;
+    text-align:center;
+    padding-top:10px;
+    margin-bottom:20px;
+  }
+
+  .token span{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:32px;
+  }
+
+  .size{
+    width:20%;
+    height:6%;
+    border-radius: 10px 10px 10px 10px;
+    text-align:left;
+    display: inline-block;
+    margin-left:5%;
+  }
+
+  .size-header{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:24px;
+    margin-bottom:5px;
+  }
+
+  .size-value{
+    color:#6168ED;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .epochs{
+    width:20%;
+    height:6%;
+    border-radius: 10px 10px 10px 10px;
+    text-align:left;
+    display: inline-block;
+    margin-left: 80px;
+  }
+
+  .epochs-header{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:24px;
+    margin-bottom:5px;
+  }
+
+  .epochs-value{
+    color:#6168ED;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .triples{
+    width:20%;
+    height:6%;
+    border-radius: 10px 10px 10px 10px;
+    text-align:left;
+    display: inline-block;
+    margin-left: 80px;
+  }
+
+  .triples-header{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:24px;
+    margin-bottom:5px;
+  }
+
+  .triples-value{
+    color:#6168ED;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .payment{
+    width:20%;
+    height:6%;
+    border-radius: 10px 10px 10px 10px;
+    text-align:left;
+    margin-top:10%;
+    margin-left:5%;
+    display: inline-block;
+  }
+
+  .payment-header{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:24px;
+    margin-bottom:5px;
+  }
+
+  .payment-value{
+    color:#6168ED;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .bid{
+    width:20%;
+    height:6%;
+    border-radius: 10px 10px 10px 10px;
+    text-align:left;
+    display: inline-block;
+    margin-left: 80px;
+  }
+
+  .bid-header{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:24px;
+    margin-bottom:5px;
+  }
+
+  .bid-value{
+    color:#6168ED;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .expires{
+    width:20%;
+    height:6%;
+    border-radius: 10px 10px 10px 10px;
+    text-align:left;
+    display: inline-block;
+    margin-left: 80px;
+  }
+
+  .expires-header{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:24px;
+    margin-bottom:5px;
+  }
+
+  .expires-value{
+    color:#6168ED;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .meta-data{
+    margin-top:8%;
+    z-index: 10;
+    width:99.5%;
+    color: #6168ED;
+    font-size:16px;
+    background-color: #F5F5F5;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .ual{
+    text-align:left;
+    margin-left:2.5%;
+    padding-top:1.5%;
+    margin-bottom:1.5%;
+  }
+
+  .ual-header{
+    color:#6168ED;
+    font-size: 16px;
+    margin-bottom:5px;
+    font-weight:bold;
+    text-decoration: underline;
+  }
+
+  .ual-value{
+    color:#6168ED;
+    font-size: 15px;
+    word-wrap: break-word;
+  }
+
+  .state{
+    text-align:left;
+    margin-left:2.5%;
+    padding-top:1.5%;
+    margin-bottom:1.5%;
+  }
+
+  .state-header{
+    color:#6168ED;
+    font-size: 16px;
+    margin-bottom:5px;
+    font-weight:bold;
+    text-decoration: underline;
+  }
+
+  .state-value{
+    color:#6168ED;
+    font-size: 15px;
+    word-wrap: break-word;
+  }
+
+  .txn-hash{
+    text-align:left;
+    margin-left:2.5%;
+    padding-top:1.5%;
+    margin-bottom:1.5%;
+  }
+
+  .txn-hash-header{
+    color:#6168ED;
+    font-size: 16px;
+    margin-bottom:5px;
+    font-weight:bold;
+    text-decoration: underline;
+  }
+
+  .txn-hash-value{
+    color:#6168ED;
+    font-size: 15px;
+    word-wrap: break-word;
+  }
+
+  .keywords{
+    text-align:left;
+    margin-left:2.5%;
+    padding-top:1.5%;
+    margin-bottom:1.5%;
+  }
+
+  .keywords-header{
+    color:#6168ED;
+    font-size: 16px;
+    margin-bottom:5px;
+    font-weight:bold;
+    text-decoration: underline;
+  }
+
+  .keywords-value{
+    color:#6168ED;
+    font-size: 15px;
+    word-wrap: break-word;
+  }
+
+  .publisher{
+    text-align:left;
+    margin-left:2.5%;
+    padding-top:1.5%;
+    margin-bottom:1.5%;
+    padding-bottom:1.5%;
+  }
+
+  .publisher-header{
+    color:#6168ED;
+    font-size: 16px;
+    margin-bottom:5px;
+    font-weight:bold;
+    text-decoration: underline;
+  }
+
+  .publisher-value{
+    color:#6168ED;
+    font-size: 15px;
+    word-wrap: break-word;
+  }
+
+  .winners{
+    text-align:left;
+    margin-left:2.5%;
+    padding-top:1.5%;
+    margin-bottom:1.5%;
+    padding-bottom:1.5%;
+    display: inline-block;
+    padding-right: 30px;
+  }
+
+  .winners-header{
+    color:#6168ED;
+    font-size: 16px;
+    margin-bottom:5px;
+    font-weight:bold;
+  }
+
+  .winners-value{
+    color:#6168ED;
+    font-size: 15px;
+  }
+
+  .winning-nodes{
+    margin-top:5%;
+    font-size: 16px;
+    font-weight:bold;
+    color:#6168ED;
+    text-decoration: underline;
+  }
+
+  @media(max-width:1366px){
+    .token{
+        width:99.5%;
+        height:6%;
+        border: 1px solid #6168ED;
+        border-radius: 10px 10px 10px 10px;
+        text-align:center;
+        padding-top:10px;
+        margin-bottom:20px;
+      }
+
+      .token span{
+        color:#6168ED;
+        font-size:28px;
+      }
+
+      .size{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left:5%;
+      }
+    
+      .size-header{
+        color:#6168ED;
+        font-size: 20px;
+        font-size:20px;
+        margin-bottom:5px;
+      }
+    
+      .size-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .epochs{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .epochs-header{
+        color:#6168ED;
+        font-size: 20px;
+        margin-bottom:5px;
+      }
+    
+      .epochs-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .triples{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .triples-header{
+        color:#6168ED;
+        font-size: 20px;
+        font-size:20px;
+        margin-bottom:5px;
+      }
+    
+      .triples-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .payment{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        margin-top:10%;
+        margin-left:5%;
+        display: inline-block;
+      }
+    
+      .payment-header{
+        color:#6168ED;
+        font-size: 20px;
+        margin-bottom:5px;
+      }
+    
+      .payment-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .bid{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .bid-header{
+        color:#6168ED;
+        font-size: 20px;
+        font-size:20px;
+        margin-bottom:5px;
+      }
+    
+      .bid-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .expires{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .expires-header{
+        color:#6168ED;
+        font-size: 20px;
+        margin-bottom:5px;
+      }
+    
+      .expires-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+  }
+
+  @media(max-width:415px){
+    .token{
+      width:99.5%;
+      height:6%;
+      border: 1px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      text-align:center;
+      padding-top:5px;
+      margin-bottom:20px;
+    }
+
+    .token span{
+      color:#6168ED;
+      font-size:28px;
+    }
+
+    .size{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left:5%;
+    }
+  
+    .size-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .size-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .epochs{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 55px;
+    }
+  
+    .epochs-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .epochs-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .triples{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .triples-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .triples-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      margin-top:10%;
+      margin-left:5%;
+      display: inline-block;
+    }
+  
+    .payment-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .payment-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .bid{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 55px;
+    }
+  
+    .bid-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .bid-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .expires{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .expires-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .expires-value{
+      color:#6168ED;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  @media(max-width:360px){
+    .token{
+      width:99.5%;
+      height:6%;
+      border: 1px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      text-align:center;
+      padding-top:5px;
+      margin-bottom:20px;
+    }
+
+    .token span{
+      color:#6168ED;
+      font-size:28px;
+    }
+
+    .size{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left:5%;
+    }
+  
+    .size-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .size-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .epochs{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .epochs-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .epochs-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .triples{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 40px;
+    }
+  
+    .triples-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .triples-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      margin-top:10%;
+      margin-left:5%;
+      display: inline-block;
+    }
+  
+    .payment-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .payment-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .bid{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .bid-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .bid-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .expires{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 40px;
+    }
+  
+    .expires-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .expires-value{
+      color:#6168ED;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
