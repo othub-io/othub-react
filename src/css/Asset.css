@@ -455,3 +455,291 @@
         font-weight: bold;
       }
   }
+
+  @media(max-width:415px){
+    .token{
+      width:99.5%;
+      height:6%;
+      border: 1px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      text-align:center;
+      padding-top:5px;
+      margin-bottom:20px;
+    }
+
+    .token span{
+      color:#6168ED;
+      font-size:28px;
+    }
+
+    .size{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left:5%;
+    }
+  
+    .size-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .size-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .epochs{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 55px;
+    }
+  
+    .epochs-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .epochs-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .triples{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .triples-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .triples-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      margin-top:10%;
+      margin-left:5%;
+      display: inline-block;
+    }
+  
+    .payment-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .payment-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .bid{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 55px;
+    }
+  
+    .bid-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .bid-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .expires{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .expires-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .expires-value{
+      color:#6168ED;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  @media(max-width:360px){
+    .token{
+      width:99.5%;
+      height:6%;
+      border: 1px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      text-align:center;
+      padding-top:5px;
+      margin-bottom:20px;
+    }
+
+    .token span{
+      color:#6168ED;
+      font-size:28px;
+    }
+
+    .size{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left:5%;
+    }
+  
+    .size-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .size-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .epochs{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .epochs-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .epochs-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .triples{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 40px;
+    }
+  
+    .triples-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .triples-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      margin-top:10%;
+      margin-left:5%;
+      display: inline-block;
+    }
+  
+    .payment-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .payment-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .bid{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .bid-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .bid-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .expires{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 40px;
+    }
+  
+    .expires-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .expires-value{
+      color:#6168ED;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }

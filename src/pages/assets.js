@@ -147,7 +147,6 @@ const Assets = () => {
                     />
                 </div>
                 <div className="radios">
-                    Sort by<br></br>
                     <input type="radio" name="order" value='block_ts_hour' onChange={handleFilterInput} maxLength='100'/>Mint Date<br></br>
                     <input type="radio" name="order" value='epochs_number' onChange={handleFilterInput} maxLength='100'/>Expire Date<br></br>
                     <input type="radio" name="order" value='size' onChange={handleFilterInput} maxLength='100'/>Size<br></br>
