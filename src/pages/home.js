@@ -40,7 +40,7 @@ const Home = () => {
           </div>
 
           <div className='home-gauge'>
-              <HomeGauge data={JSON.stringify(data.totalPubs_24h)} />
+              <HomeGauge data={JSON.stringify(data.totalPubs_24h)}/>
             </div>
             <div className="pub-o-meter">Pub-o-Meter</div>
             <div className="gauge-max">5,000</div>

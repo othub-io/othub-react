@@ -41,7 +41,7 @@ const GaugeChart = ({ data, maxValue }) => {
     },
   };
 
-  return <Doughnut data={gauge_data} options={options}/>;
+  return <Doughnut data={gauge_data} options={options} width="200" height="200"/>;
 };
 
 export default GaugeChart;
