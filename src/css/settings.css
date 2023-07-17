@@ -482,33 +482,28 @@
         position: absolute;
         top: 0;
         left: 0%;
-        width: 360px;
-        height:100vh;
+        width: 100%;
+        height:100%;
         font-family: 'Roboto', sans-serif;
     }
     
     .settings-header {
-      display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         font-size: calc(10px + 2vmin);
         z-index: 2;
         color: #6168ED;
-        height: 83%;
-        width: 95%;
-        margin-left: 17%;
+        height: 95%;
+        width: 100%;
         background-color: none;
-        padding-top:2%;
+        margin-left:0%;
     }
   
     .nodesTable-container {
-        margin-left:3%;
-        margin-top:30%;
-        max-height: 65%;
-        width: 95%;
+        margin-left:16%;
+        max-height: 55%;
+        width: 80%;
         overflow: auto;
         z-index: 600;
+        margin-top:320px;
     }
 
     .nodesTable {
@@ -547,11 +542,11 @@
     }
     
     .settings-form{
-      width:90%;
+      width:75%;
+      margin-top:70px;
       height:240px;
       position: absolute;
-      left: 15%;
-      margin-top:-75%;
+      left: 12%;
       color: #6168ED;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -593,10 +588,10 @@
       position: absolute;
       transform-style: preserve-3d;
       animation: rotate 5s linear infinite;
-      width: 30px;
-      height: 30px;
-      margin-top:6%;
-      margin-left:55%;
+      width: 20px;
+      height: 20px;
+      margin-top:4%;
+      margin-left:47.5%;
     }
     
     @keyframes rotate {
@@ -667,33 +662,28 @@
         position: absolute;
         top: 0;
         left: 0%;
-        width: 360px;
-        height:100vh;
+        width: 100%;
+        height:100%;
         font-family: 'Roboto', sans-serif;
     }
     
     .settings-header {
-      display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         font-size: calc(10px + 2vmin);
         z-index: 2;
         color: #6168ED;
-        height: 83%;
-        width: 95%;
-        margin-left: 17%;
+        height: 95%;
+        width: 100%;
         background-color: none;
-        padding-top:2%;
+        margin-left:0%;
     }
   
     .nodesTable-container {
-        margin-top:70%;
+        margin-left:16%;
         max-height: 65%;
-        width: 85%;
+        width: 80%;
         overflow: auto;
         z-index: 600;
-        margin-left:-15%;
+        margin-top:340px;
     }
 
     .nodesTable {
@@ -732,11 +722,11 @@
     }
     
     .settings-form{
-      width:71%;
+      width:75%;
+      margin-top:70px;
       height:240px;
       position: absolute;
-      left: 15%;
-      margin-top:-40%;
+      left: 12%;
       color: #6168ED;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -778,10 +768,10 @@
       position: absolute;
       transform-style: preserve-3d;
       animation: rotate 5s linear infinite;
-      width: 30px;
-      height: 30px;
-      margin-top:6%;
-      margin-left:55%;
+      width: 20px;
+      height: 20px;
+      margin-top:4%;
+      margin-left:54%;
     }
     
     @keyframes rotate {
