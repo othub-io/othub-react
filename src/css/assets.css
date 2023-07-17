@@ -261,7 +261,7 @@
         color: #6168ED;
         font-weight: bold;
         font-size:10px;
-        padding-top:15%;
+        padding-top:10%;
       }
 
       .card-image{
@@ -456,13 +456,36 @@
       height:2rem;
       width:90%;
       margin-left:5%;
+      font-size:11px;
     }
 
-    .card-cost{
+    .card-size{
+      padding-top:5%;
       color: #6168ED;
       font-size:11px;
       text-align:left;
       margin-left:5%;
+  }
+
+  .card-cost{
+      color: #6168ED;
+      font-size:11px;
+      text-align:left;
+      margin-left:5%;
+  }
+
+    .card-token{
+      color: #6168ED;
+      font-size:12px;
+      text-align:left;
+      font-weight: bold;
+  }
+
+  .card-expires{
+    color: #6168ED;
+    font-weight: bold;
+    font-size:9px;
+    padding-top:10%;
   }
 
     .radios{
