@@ -177,7 +177,7 @@
         height: 94%;
         width: 75%;
         overflow: auto;
-        padding-left:1%;
+        padding-left:0%;
         outline: 2px solid #6168ED;
         border-radius: 10px 10px 10px 10px;
       }
@@ -215,7 +215,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height:100vh;
+        height:100%;
         font-family: 'Roboto', sans-serif;
       }
       
@@ -224,9 +224,10 @@
         font-size: calc(10px + 2vmin);
         z-index: 10;
         color: #6168ED;
-        height: 100%;
+        height: 95%;
         width: 82%;
-        margin-top: 23%;
+        margin-top: 0%;
+        padding-top:23%;
         margin-left: 15.5%;
         position: relative;
       }
@@ -246,8 +247,9 @@
         margin-bottom:3%;
         margin-right:1%;
         margin-left:2%;
-        height: 45%;
+        height: 55%;
         width: 90%;
+        padding-top:1%;
         overflow: auto;
         padding-right:3%;
         outline: 1px solid #6168ED;
@@ -255,9 +257,48 @@
         position: absolute;
       }
 
+      .card-expires{
+        color: #6168ED;
+        font-weight: bold;
+        font-size:10px;
+        padding-top:15%;
+      }
+
+      .card-image{
+        color: #6168ED;
+        outline: .5px solid #6168ED;
+        height:3rem;
+        width:90%;
+        margin-left:5%;
+        padding-top:10%;
+      }
+
+      .card-token{
+        color: #6168ED;
+        font-size:15px;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    .card-size{
+        padding-top:5%;
+        color: #6168ED;
+        font-size:12px;
+        text-align:left;
+        margin-left:5%;
+    }
+
+    .card-cost{
+        color: #6168ED;
+        font-size:12px;
+        text-align:left;
+        margin-left:5%;
+    }
+
+
       .radios{
-        margin-left:60%;
-        margin-top:-70%;
+        margin-left:55%;
+        margin-top:-250px;
         margin-bottom:5%;
       }
 
@@ -286,11 +327,11 @@
     
       .asset-card,
     .asset-card:focus {
-      height:5rem;
-      width:3.25rem;
+      height:8.5rem;
+      width:27%;
       float:left;
-      margin-left:3%;
-      margin-bottom:3%;
+      margin-left:5%;
+      margin-bottom:4%;
       border-radius: 10px;
       outline: 2px solid #6168ED;
       font-family: OCR A Std, monospace;
@@ -300,11 +341,11 @@
     
     .asset-card:hover,
     .asset-card:focus:hover {
-      height:5rem;
-      width:3.25rem;
+      height:8.5rem;
+      width:27%;
       float:left;
-      margin-left:3%;
-      margin-bottom:3%;
+      margin-left:5%;
+      margin-bottom:4%;
       border-radius: 10px;
       outline: 3px solid #6168ED;
       font-family: OCR A Std, monospace;
@@ -315,7 +356,7 @@
     
     .assets-result-count{
         margin-left:38.5%;
-        margin-top:70%;
+        margin-top:290px;
         outline: 2px solid #6168ED;
         position: absolute;
         border-radius: 2px;
@@ -323,45 +364,7 @@
         font-size:10px;
     }
     
-    .card-token{
-        color: #6168ED;
-        font-size:10px;
-        margin-top:0%;
-        padding-bottom:5%;
-        text-align:left;
-        font-weight: bold;
-    }
     
-    .card-image{
-        color: #6168ED;
-        outline: .5px solid #6168ED;
-        height:30%;
-        width:90%;
-        margin-left:5%;
-        font-size:9px;
-    }
-    
-    .card-size{
-        padding-top:5%;
-        color: #6168ED;
-        font-size:8px;
-        text-align:left;
-        margin-left:5%;
-    }
-    
-    .card-cost{
-        color: #6168ED;
-        font-size:8px;
-        text-align:left;
-        margin-left:5%;
-    }
-    
-    .card-expires{
-        color: #6168ED;
-        font-weight: bold;
-        font-size:6px;
-        padding-top:20%;
-    }
     
       .assets-popup-content{
         width:80%;
@@ -387,9 +390,8 @@
       font-size: calc(10px + 2vmin);
       z-index: 10;
       color: #6168ED;
-      height: 100%;
+      height: 97%;
       width: 82%;
-      margin-top: 23%;
       margin-left: 15.5%;
       position: relative;
     }
@@ -410,7 +412,7 @@
       padding-bottom:10px;
       margin-right:1%;
       margin-left:3%;
-      height: 45%;
+      height: 40%;
       width: 90%;
       overflow: auto;
       padding-right:3%;
@@ -418,6 +420,50 @@
       border-radius: 10px 10px 10px 10px;
       position: absolute;
     }
+
+    .asset-card,
+    .asset-card:focus {
+      height:7.5rem;
+      width:27%;
+      float:left;
+      margin-left:5%;
+      margin-bottom:4%;
+      border-radius: 10px;
+      outline: 2px solid #6168ED;
+      font-family: OCR A Std, monospace;
+      background-color: #FFFFFF;
+      border: none;
+    }
+    
+    .asset-card:hover,
+    .asset-card:focus:hover {
+      height:7.5rem;
+      width:27%;
+      float:left;
+      margin-left:5%;
+      margin-bottom:4%;
+      border-radius: 10px;
+      outline: 3px solid #6168ED;
+      font-family: OCR A Std, monospace;
+      cursor: pointer;
+      border: none;
+      background-color: #F5F5F5;
+    }
+
+    .card-image{
+      color: #6168ED;
+      outline: .5px solid #6168ED;
+      height:2rem;
+      width:90%;
+      margin-left:5%;
+    }
+
+    .card-cost{
+      color: #6168ED;
+      font-size:11px;
+      text-align:left;
+      margin-left:5%;
+  }
 
     .radios{
       margin-left:50%;
@@ -448,35 +494,6 @@
       font-weight:bold;
     }
   
-    .asset-card,
-  .asset-card:focus {
-    height:4.5rem;
-    width:2.75rem;
-    float:left;
-    margin-left:3%;
-    margin-bottom:3%;
-    border-radius: 10px;
-    outline: 2px solid #6168ED;
-    font-family: OCR A Std, monospace;
-    background-color: #FFFFFF;
-    border: none;
-  }
-  
-  .asset-card:hover,
-  .asset-card:focus:hover {
-    height:4.5rem;
-    width:2.75rem;
-    float:left;
-    margin-left:3%;
-    margin-bottom:3%;
-    border-radius: 10px;
-    outline: 3px solid #6168ED;
-    font-family: OCR A Std, monospace;
-    cursor: pointer;
-    border: none;
-    background-color: #F5F5F5;
-  }
-  
   .assets-result-count{
       margin-left:39%;
       margin-top:290px;
@@ -485,46 +502,6 @@
       border-radius: 2px;
       background-color: #FFFFFF;
       font-size:10px;
-  }
-  
-  .card-token{
-      color: #6168ED;
-      font-size:10px;
-      margin-top:0%;
-      padding-bottom:5%;
-      text-align:left;
-      font-weight: bold;
-  }
-  
-  .card-image{
-      color: #6168ED;
-      outline: .5px solid #6168ED;
-      height:30%;
-      width:90%;
-      margin-left:5%;
-      font-size:9px;
-  }
-  
-  .card-size{
-      padding-top:5%;
-      color: #6168ED;
-      font-size:8px;
-      text-align:left;
-      margin-left:5%;
-  }
-  
-  .card-cost{
-      color: #6168ED;
-      font-size:8px;
-      text-align:left;
-      margin-left:5%;
-  }
-  
-  .card-expires{
-      color: #6168ED;
-      font-weight: bold;
-      font-size:6px;
-      margin-top:-25%;
   }
   
     .assets-popup-content{
