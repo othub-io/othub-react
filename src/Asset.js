@@ -31,6 +31,14 @@ const Asset = (on_chain) => {
   const expire_date_fancy = new Date(expire_date).toISOString();
   const formatted_expire_date_fancy = moment.utc(expire_date_fancy).format('MM/DD/YYYY')
 
+  const handleCopyLink = async (link) => {
+    try {
+      await navigator.clipboard.writeText(link); // Replace with your desired link
+      console.log('Link copied to clipboard!');
+    } catch (error) {
+      console.log('Failed to copy link to clipboard:', error);
+    }
+  };
 
   return ( 
     <div className='asset-data'>
@@ -38,7 +46,12 @@ const Asset = (on_chain) => {
             <span>Minted on {formatted_mint_date_fancy}</span>
         </div>
         <div className='token'>
-            <span>Asset {asset_data.token_id}</span>
+            <span>
+                Asset {asset_data.token_id}
+                <button onClick={() => handleCopyLink(`https://www.othub.io/assets?ual=${asset_data.UAL}`)}>
+                    <img class='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
+                </button>
+            </span>
         </div>
         <div className='size'>
             <div className='size-header'>Size</div>

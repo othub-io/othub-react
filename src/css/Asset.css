@@ -35,6 +35,23 @@
     font-size:32px;
   }
 
+  .token button{
+    background: none;
+    border: none;
+  }
+
+  .copy-icon {
+    height: 20px;
+    width: 20px;
+    color: #6168ED;
+    fill:#6168ED;
+    cursor: pointer;
+  }
+
+  .copy-icon:active {
+    transform: scale(0.95);
+  }
+
   .size{
     width:20%;
     height:6%;
