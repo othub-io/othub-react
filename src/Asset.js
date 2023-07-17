@@ -91,7 +91,7 @@ const Asset = (on_chain) => {
         </div>
         {winners ? (<div>{winners.map((group, index) => (
             <div className='winners' key={index}>
-                <div className='winners-header'>Epoch {index +1}</div>
+                <div className='winners-header'>Epoch {index}</div>
                 <div className='winners-value'>{group.winners}</div>
             </div>
         ))}</div>) : (<div></div>)}
