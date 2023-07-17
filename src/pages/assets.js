@@ -106,7 +106,7 @@ const Assets = () => {
     <div className='assets'>
         {isAssetOpen && (
         <div className='popup-overlay'>
-          <div className='popup-content'>
+          <div className='assets-popup-content'>
             <button className='close-button' onClick={closeAssetPopup}>
                     X
             </button>
@@ -117,9 +117,6 @@ const Assets = () => {
       {data ? (
         <header className='assets-header'>
             <div className="assets-form">
-                <div className="assets-result-count">
-                {data.v_pubs.length} results
-                </div>
                 <form onSubmit={handleFilterSubmit}>
                 <div>
                     UAL<br></br>
@@ -147,6 +144,7 @@ const Assets = () => {
                     />
                 </div>
                 <div className="radios">
+                  Sort:<br></br>
                     <input type="radio" name="order" value='block_ts_hour' onChange={handleFilterInput} maxLength='100'/>Mint Date<br></br>
                     <input type="radio" name="order" value='epochs_number' onChange={handleFilterInput} maxLength='100'/>Expire Date<br></br>
                     <input type="radio" name="order" value='size' onChange={handleFilterInput} maxLength='100'/>Size<br></br>
@@ -154,6 +152,9 @@ const Assets = () => {
                 </div>
                 <button type='submit'>Apply</button>
                 </form>
+            </div>
+            <div className="assets-result-count">
+                {data.v_pubs.length} results
             </div>
             <div className="asset-card-container">
             {data.v_pubs.map((pub) => (

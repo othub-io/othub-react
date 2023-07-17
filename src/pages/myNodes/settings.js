@@ -15,17 +15,20 @@ const Settings = () => {
   const [data, setData] = useState('')
   const [isOpenTelegram, setIsOpenTelegram] = useState(false)
   const [isOpenBot, setIsOpenBot] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const isMobile = window.matchMedia('(max-width: 600px)').matches
+  const isMobile = window.matchMedia('(max-width: 480px)').matches
 
   useEffect(() => {
     async function fetchData () {
       try {
+        setIsLoading(true)
         if (account) {
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}`
           )
           setData(response.data)
+          setIsLoading(false)
         }
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -54,10 +57,12 @@ const Settings = () => {
     try {
       const fetchData = async () => {
         try {
+          setIsLoading(true)
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&telegramID=${inputValue}`
           )
           setData(response.data)
+          setIsLoading(false)
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -101,10 +106,12 @@ const Settings = () => {
 
   const LeaveAlliance = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&group=Solo`
       )
       setData(response.data)
+      setIsLoading(false)
     } catch (error) {
       console.error(error) // Handle the error case
     }
@@ -112,11 +119,13 @@ const Settings = () => {
 
   const JoinAlliance = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&group=Alliance`
       )
 
       setData(response.data)
+      setIsLoading(false)
     } catch (error) {
       console.error(error) // Handle the error case
     }
@@ -147,6 +156,12 @@ const Settings = () => {
           Please connect your admin wallet to view your nodes.
         </header>
       </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <Loading />
     )
   }
 

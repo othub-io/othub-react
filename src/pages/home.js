@@ -34,9 +34,17 @@ const Home = () => {
   return (
     <div className='home'>
       {data ? (
-        <header className='home-header'>
+        <header>
+          <div className='header'>
+          Network Statistics
+          </div>
+
+          <div className='home-gauge'>
+              <HomeGauge data={JSON.stringify(data.totalPubs_24h)} />
+            </div>
+            <div className="pub-o-meter">Pub-o-Meter</div>
+            <div className="gauge-max">5,000</div>
           <div className='home-form'>
-            <h1>Network Statistics</h1>
             <div className='total-assets'>
               Total Assets
               <br></br>
@@ -59,7 +67,7 @@ const Home = () => {
               </div>
             </div>
             <div className='trac-spent'>
-              Trac Spent
+              Total Trac Spent
               <br></br>
               <div className='home-stats-info'>
                 {data.tracSpent}
@@ -77,11 +85,6 @@ const Home = () => {
               {data.tracSpent_24h}
               </div>
             </div>
-            <div className='home-gauge'>
-              <HomeGauge data={JSON.stringify(data.totalPubs_24h)}/>
-              <span className="gauge-max">5,000</span>
-            </div>
-            <div className="pub-o-meter">Pub-o-Meter</div>
             <div className='home-chart'>
               <HomeChart data={JSON.stringify(data.v_pubs_stats)} width="1500" height="100"/>
             </div>

@@ -15,8 +15,8 @@
     font-size: calc(10px + 2vmin);
     z-index: 10;
     color: #6168ED;
-    background-color: #F5F5F5;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid #6168ED;
+    border-radius: 10px 10px 10px 10px;
     height: 85vh;
     width: 87%;
     margin-top: 5%;
@@ -87,8 +87,8 @@
         font-size: calc(10px + 2vmin);
         z-index: 10;
         color: #6168ED;
-        background-color: #F5F5F5;
-        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+        border: 2px solid #6168ED;
+        border-radius: 10px 10px 10px 10px;
         height: 84vh;
         width: 83%;
         margin-top: 7%;
@@ -142,14 +142,14 @@
       }
   }
 
-  @media (max-width: 415px) {
+  @media (max-width: 480px) {
     .allnodes {
         text-align: center;
         position: absolute;
         top: 0;
         left: 0%;
         width: 360px;
-        height:100%;
+        height:100vh;
         font-family: 'Roboto', sans-serif;
       }
       
@@ -161,7 +161,7 @@
         font-size: calc(10px + 2vmin);
         z-index: 2;
         color: #6168ED;
-        height: calc(100% - 120px);
+        height: 83%;
         width: 95%;
         margin-top: 25%;
         margin-left: 17%;
@@ -231,7 +231,7 @@
         top: 0;
         left: 0%;
         width: 360px;
-        height:100%;
+        height:100vh;
         font-family: 'Roboto', sans-serif;
       }
       
@@ -243,10 +243,10 @@
         font-size: calc(10px + 2vmin);
         z-index: 2;
         color: #6168ED;
-        height: calc(100% - 120px);
+        height: 80%;
         width: 81%;
         margin-top: 25%;
-        margin-left: 17%;
+        margin-left: 16%;
         box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
         background-color: none;
       }
@@ -293,16 +293,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-      }
-      
-      .membersTable tr:hover {
-        background-color: #F5F5F5;
-        color: 6168ED;
-        border: 1px solid #6168ED;
-      }
-      
-      .membersTable tr:hover td {
-        border: 1px solid #6168ED;
       }
   }
 
