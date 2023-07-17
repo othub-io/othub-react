@@ -30,7 +30,7 @@ function App () {
           <Route path='/nodes' element={<Nodes />} />
           <Route path='/mynodes/settings' element={<Settings />} />
           <Route path='/mynodes/dashboard-dev' element={<NodeDashboard />} />
-          <Route path='/alliance/members-dev' element={<AllianceMembers />} />
+          <Route path='/alliance/members' element={<AllianceMembers />} />
           <Route path='/alliance/vote-dev' element={<AllianceVote />} />
           <Route path='/charts-dev' element={<Charts />} />
           <Route path='/dkgtools/get-dev' element={<DKGGet />} />
