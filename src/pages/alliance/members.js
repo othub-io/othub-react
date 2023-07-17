@@ -87,7 +87,7 @@ const AllianceMembers = () => {
               Minimum Ask
               <br></br>
               <div className='alliance-members-info'>
-                {process.env.REACT_APP_MINIMUM_ASK}
+                Pending...
               </div>
             </div>
             <div className='avg-ask'>

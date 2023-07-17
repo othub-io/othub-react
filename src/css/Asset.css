@@ -7,6 +7,11 @@
     text-align:left;
     overflow: auto;
     padding-right:10px;
+    background-color: #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom:10px;
   }
 
   .minted{
@@ -456,7 +461,7 @@
       }
   }
 
-  @media(max-width:415px){
+  @media(max-width:480px){
     .token{
       width:99.5%;
       height:6%;
@@ -595,7 +600,7 @@
   
     .expires-value{
       color:#6168ED;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
     }
   }
@@ -739,7 +744,7 @@
   
     .expires-value{
       color:#6168ED;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
     }
   }

@@ -1,42 +1,44 @@
 .sidebar {
-    background-color: #F5F5F5;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-    width: 200px;
-    padding: 80px 0 40px;
-    font-family: "OCR A Std", monospace;
-    height:calc(100vh - 120px);
-    position: absolute;
-    z-index:9700;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .sidebar li:hover {
-    background-color: #ECECEC;
-    cursor: pointer;
-  }
-  
-  .sidebar .icon {
-    margin-right: 10px;
-    margin-left: 25px;
-    height: 20px;
-    width: 20px;
-  }
+  background-color: #6168ED;;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  padding: 0px 0 0px;
+  font-family: "OCR A Std", monospace;
+  height:100vh;
+  position: absolute;
+  z-index:9700;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding-top: 40%;
+  margin-left:-10%;
+}
+
+.sidebar li {
+  padding-top:10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom:10px;
+}
+
+.sidebar li:hover {
+  cursor: pointer;
+}
+
+.sidebar .icon {
+  height: 30px;
+  width: 30px;
+  padding-left:-20px;
+  padding-right:0px;
+  filter: brightness(0) invert(1);
+}
   
   .sidebar .title {
     font-size: 18px;
     font-weight: bold;
-    color: #6168ED;
+    color: #FFFFFF;
     margin-left: 10px;
     height: 40px;
     display: flex;
@@ -55,14 +57,13 @@
     display: none;
     list-style-type: none;
     width: 100%;
-    z-index: 10; /* Ensure submenu appears above other elements */
+    z-index: 10;  
     color: #6168ED;
     text-decoration: none;
   }
   
   .sidebar li:hover .sub-menu {
     display: block;
-    background-color: #F5F5F5;
   }
   
   .sidebar .sub-menu li {
@@ -80,96 +81,15 @@
   }
 
   .sidebar .sub-menu li:first-child {
-    margin-top: 10px; /* Add margin-top only to the first submenu item */
-  }
-  
-  @media (max-width: 1280px) {
-    .sidebar {
-        background-color: #F5F5F5;
-        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-        width: 200px;
-        padding: 0px 0 40px;
-        font-family: "OCR A Std", monospace;
-        height:calc(100vh - 120px);
-        position: absolute;
-        z-index:9700;
-      }
-      
-      .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-      }
-      
-      .sidebar li {
-        position: relative;
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      
-      .sidebar li:hover {
-        background-color: #ECECEC;
-        cursor: pointer;
-      }
-      
-      .sidebar .icon {
-        margin-right: 10px;
-        margin-left: 25px;
-        height: 20px;
-        width: 20px;
-      }
-      
-      .sidebar .title {
-        font-size: 18px;
-        font-weight: bold;
-        color: #6168ED;
-        margin-left: 10px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-      }
-      
-      .sidebar .sub-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-left: 80px;
-        padding: 10px 0;
-        background-color: #FFFFFF;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-        display: none;
-        list-style-type: none;
-        width: 100%;
-        z-index: 10; /* Ensure submenu appears above other elements */
-        color: #6168ED;
-        text-decoration: none;
-      }
-      
-      .sidebar li:hover .sub-menu {
-        display: block;
-        background-color: #F5F5F5;
-      }
-      
-      .sidebar .sub-menu li {
-        color: #6168ED;
-        margin-top: 0px;
-        margin-left: 10px;
-        padding: 0 10px;
-        font-size: 18px;
-        height:40px;
-      }
-    
-      .sub-title{
-        color: #6168ED;
-        text-decoration: none;
-      }
-    
-      .sidebar .sub-menu li:first-child {
-        margin-top: 10px; /* Add margin-top only to the first submenu item */
-      }
+    margin-top: 10px; 
   }
 
-  @media (max-width: 600px) {
+  .sidebar .sub-menu li:hover {
+    background-color: #F5F5F5
+  }
+  
+
+  @media (max-width: 480px) {
     .sidebar {
       width: 50px;
       display: flex;
@@ -177,54 +97,53 @@
       align-items: center;
       z-index: 800; /* Ensure submenu appears above other elements */
       color: #ffffff;
-      height:calc(100% - 140px);
-      padding: 20px 0 40px;
+      height:100%;
       z-index:9700;
+      background-color: #6168ED;
+      padding-top: 0%;
     }
   
     .sidebar .icon {
-        margin-right: 10px;
-        margin-left: 10px;
-        height: 20px;
-        width: 20px;
+        height: 25px;
+        width: 25px;
+        margin-left:-12px;
+        filter: brightness(0) invert(1);
       }
 
     .sidebar .title {
       display: none;
+      font-weight: bold;
     }
   
     .sidebar li {
-      margin-bottom: 20px;
+      margin-bottom: -2px;
+      margin-top: 0px;
       height: 40px;
     }
   
     .sidebar .sub-menu {
         position: absolute;
-        top: 100%;
-        left: 0;
-        margin-left: 25px;
-        padding: 10px 0;
         background-color: #FFFFFF;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
         display: none;
-        list-style-type: none;
-        width: 100%;
+        list-style-type: none; 
+        width:150px;
         z-index: 9000; /* Ensure submenu appears above other elements */
-      }
-      
-      .sidebar li:hover .sub-menu {
-        display: block;
-        width:175px;
+        margin-left:10px;
+        margin-top:-20px;
       }
       
       .sidebar .sub-menu li {
         color: #6168ED;
         margin-top: 0px;
-        margin-left: 10px;
-        padding: 0 10px;
+        padding-left: -10%;
         font-size: 18px;
-        /*height:40px;*/
         text-decoration: none;
+        z-index: 9001;
+      }
+
+      .sidebar .sub-menu li:hover {
+        background-color: #F5F5F5
       }
       
       .sidebar .sub-menu li:first-child {
@@ -234,64 +153,7 @@
 
   @media (max-width: 360px) {
     .sidebar {
-      width: 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 800; /* Ensure submenu appears above other elements */
-      color: #ffffff;
-      height:calc(100% - 140px);
-      padding: 20px 0 40px;
-      z-index:9700;
+      height:100%;
     }
-  
-    .sidebar .icon {
-        margin-right: 10px;
-        margin-left: 10px;
-        height: 20px;
-        width: 20px;
-      }
-
-    .sidebar .title {
-      display: none;
-    }
-  
-    .sidebar li {
-      margin-bottom: 20px;
-      height: 40px;
-    }
-  
-    .sidebar .sub-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-left: 25px;
-        padding: 10px 0;
-        background-color: #FFFFFF;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-        display: none;
-        list-style-type: none;
-        width: 100%;
-        z-index: 9000; /* Ensure submenu appears above other elements */
-      }
-      
-      .sidebar li:hover .sub-menu {
-        display: block;
-        width:175px;
-      }
-      
-      .sidebar .sub-menu li {
-        color: #6168ED;
-        margin-top: 0px;
-        margin-left: 10px;
-        padding: 0 10px;
-        font-size: 18px;
-        /*height:40px;*/
-        text-decoration: none;
-      }
-      
-      .sidebar .sub-menu li:first-child {
-        margin-top: 10px; /* Add margin-top only to the first submenu item */
-      }
   }
   

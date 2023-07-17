@@ -11,7 +11,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
 
 const Nodes = () => {
   const [data, setData] = useState('')
-  const isMobile = window.matchMedia('(max-width: 600px)').matches
+  const isMobile = window.matchMedia('(max-width: 480px)').matches
 
   useEffect(() => {
     async function fetchData () {

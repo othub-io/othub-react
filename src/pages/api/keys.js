@@ -15,7 +15,7 @@ const Keys = () => {
   const [data, setData] = useState('')
   const [isOpenDeleteKey, setIsDeleteKey] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const isMobile = window.matchMedia('(max-width: 600px)').matches
+  const isMobile = window.matchMedia('(max-width: 480px)').matches
 
   useEffect(() => {
     async function fetchData () {
@@ -119,8 +119,8 @@ const Keys = () => {
     <div className='keys'>
       {isOpenDeleteKey && (
         <div className='popup-overlay'>
-          <div className='popup-content'>
-            <button className='close-button' onClick={closePopupDeleteKey}>
+          <div className='keys-popup-content'>
+            <button className='keys-close-button' onClick={closePopupDeleteKey}>
               X
             </button>
             <form onSubmit={handleDeleteKey}>

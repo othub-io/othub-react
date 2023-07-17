@@ -95,10 +95,12 @@ function SideBar () {
       <ul>
         {menuItems.map(item => (
           <li key={item.id} onClick={() => handleNodeClick(item.id)}>
-            <img className='icon' src={item.icon} alt={item.title} />
-            <a href={item.path} className='title'>
-              {item.title}
+            <a href={item.path} className='icon' src={item.icon} alt={item.title}>
+              <img className='icon' src={item.icon} alt={item.title} />
             </a>
+            <div className='title'>
+            <a href={item.path} className='title'>{item.title}</a>
+            </div>
             {item.isOpen && item.submenu && (
               <ul className='sub-menu'>
                 {item.submenu.map(subitem => (
