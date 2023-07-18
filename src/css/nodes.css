@@ -69,6 +69,79 @@
     border: 1px solid #6168ED;
   }
   
+  @media(max-width:1536px){
+    .allnodes {
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    .allnodes-header {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      justify-content: left;
+      font-size: calc(10px + 2vmin);
+      z-index: 10;
+      color: #6168ED;
+      border: 2px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      height: 78vh;
+      width: 84%;
+      margin-top: 7%;
+      margin-left: 14.5%;
+    }
+  
+    .allnodes-table-container {
+      margin-top: 1%;
+      margin-left:1%;
+      height: 96%;
+      width: 98%;
+      overflow: auto;
+    }
+  
+    .allnodesTable {
+      width: 100%;
+      height:100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      border: 1px solid #6168ED;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    .allnodesTable th {
+      background-color: #6168ED;
+      color: #ffffff;
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+      border: 1px solid #6168ED;
+      position: sticky;
+      top: 0;
+    }
+    
+    .allnodesTable td {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #6168ED;
+    }
+    
+    .allnodesTable tr:hover {
+      background-color: #F5F5F5;
+      color: 6168ED;
+      border: 1px solid #6168ED;
+    }
+    
+    .allnodesTable tr:hover td {
+      border: 1px solid #6168ED;
+    }
+  }
+
   @media(max-width:1366px){
     .allnodes {
         text-align: center;
