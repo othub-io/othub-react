@@ -19,7 +19,7 @@ const Assets = () => {
     publisher: '',
     node_id: '',
     order: '',
-    limit: '10000'
+    limit: '100'
   })
 
   const queryParameters = new URLSearchParams(window.location.search)

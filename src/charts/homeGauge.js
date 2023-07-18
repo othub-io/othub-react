@@ -21,8 +21,8 @@ const GaugeChart = ({ data, maxValue }) => {
 
   const options = {
     type: 'doughnut',
-    cutout: '80%', // Adjust the size of the gauge by changing the cutout value
-    rotation: 82.25 * Math.PI, // Adjust the starting angle of the gauge needle
+    cutout: '70%', // Adjust the size of the gauge by changing the cutout value
+    rotation: 82 * Math.PI, // Adjust the starting angle of the gauge needle
     circumference: 65 * Math.PI, // Adjust the angle range of the gauge needle
     responsive: true,
     tooltips: { 

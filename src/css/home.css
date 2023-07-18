@@ -27,8 +27,7 @@
 }
 
 .home-gauge {
-  height:50%;
-  width: 360px;
+  width: 400px;
   margin-left:65%;
   z-index: 83;
   margin-top:-4%;
@@ -42,15 +41,15 @@
   color:#6168ED;
   font-size:24px;
   z-index: 84;
-  margin-left:70.5%;
-  margin-top:5%;
+  margin-left:72%;
+  margin-top:130px;
   position: absolute;
 }
 
 .gauge-max{
-  font-size:16px;
-  margin-left:82.5%;
-  margin-top:11%;
+  font-size:20px;
+  margin-left:83%;
+  margin-top:242px;
   font-weight:bold;
   color:#6168ED;
   z-index: 85;
@@ -307,12 +306,12 @@ button[type='submit']:hover {
     width: 280px;
     margin-left:72.5%;
     z-index: 830;
-    margin-top:-5%;
+    margin-top:-3%;
   }
   
   .pub-o-meter{
     width:20%;
-    margin-bottom:10%;
+    margin-top:120px;
     margin-left:77.5%;
     font-weight:bold;
     color:#6168ED;
@@ -320,10 +319,11 @@ button[type='submit']:hover {
   }
   
   .gauge-max{
-    font-size:16px;
+    font-size:18px;
     margin-left:90%;
     font-weight:bold;
     color:#6168ED;
+    margin-top:13.5%;
   }
   
   .home-form{
@@ -347,28 +347,28 @@ button[type='submit']:hover {
     font-size: 20px;
     position:absolute;
     padding-left: 40px;
-    padding-top:50px;
+    padding-top:40px;
   }
   
   .home-total-stake{
     font-size: 20px;
     position:absolute;
     padding-left: 320px;;
-    padding-top:50px;
+    padding-top:40px;
   }
   
   .home-nodes{
     font-size: 20px;
     position:absolute;
     padding-left: 600px;;
-    padding-top:50px;
+    padding-top:40px;
   }
   
   .trac-spent{
     font-size: 20px;
     position:absolute;
     padding-left: 40px;
-    padding-top:170px;
+    padding-top:160px;
   }
   
   .trac-paid{
@@ -382,14 +382,14 @@ button[type='submit']:hover {
     font-size: 20px;
     position:absolute;
     padding-left: 600px;;
-    padding-top:170px;
+    padding-top:160px;
   }
   
   .trac-spent-24h{
     font-size: 20px;
     position:absolute;
     padding-left: 320px;
-    padding-top:170px;
+    padding-top:160px;
   }
   
   .trac-paid-24h{
@@ -570,34 +570,32 @@ button[type='submit']:hover {
 
     .home-gauge{
       padding-left:0px;
-      margin-left: 27%;
-      width:240px;
-      height:240px;
+      margin-left: 25%;
+      width:270px;
+      height:270px;
       vertical-align: top; /* here */
     }
 
     .gauge-max{
-      font-size:12px;
+      font-size:16px;
       color:#6168ED;
       font-weight: bold;
-      margin-left:76%;
-      padding-top:30%;
+      margin-left:78%;
+      padding-top:35%;
     }
 
     .pub-o-meter{
-      font-size:16px;
+      font-size:20px;
       width:30%;
-      margin-left:45%;
-      padding-top:20%;
+      margin-left:43%;
       font-weight: bold;
       color: #6168ED;
     }
     
     .home-form{
-      width:78%;
+      width:80%;
       height:280px;
-      margin-left:5px;
-      margin-top:240px;
+      margin-top:250px;
       padding-top:0px;
       position: absolute;
       color: #6168ED;
@@ -712,20 +710,19 @@ button[type='submit']:hover {
       width:240px;
       height:240px;
       vertical-align: top; /* here */
-      margin-left: 21%;
+      margin-left: 24%;
     }
 
     .gauge-max{
       font-size:12px;
       color:#6168ED;
       font-weight: bold;
-      margin-left: 85%;
-      margin-top:23%;
+      margin-left: 81%;
     }
 
     .pub-o-meter{
-      margin-left: 44%;
-      font-size:16px;
+      margin-left: 43%;
+      font-size:18px;
       width:50%;
       font-weight: bold;
       color: #6168ED;
@@ -735,7 +732,7 @@ button[type='submit']:hover {
       width:78%;
       height:280px;
       margin-left:7px;
-      margin-top:240px;
+      margin-top:220px;
       position: absolute;
       color: #6168ED;
       z-index:0;
