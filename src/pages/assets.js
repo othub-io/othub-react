@@ -163,7 +163,7 @@ const Assets = () => {
                     <div className="card-image">
                         Images #Soon!
                     </div>
-                    <div className="card-size">{pub.size}kb</div>
+                    <div className="card-size">{pub.size}bytes</div>
                     <div className="card-cost">{pub.token_amount.toFixed(2)} Trac</div>
                     <div className="card-expires">Exp. in {Math.ceil(((new Date(pub.block_ts_hour).getTime() + (Number(pub.epochs_number)) * (Number(pub.epoch_length_days) * 24 * 60 * 60 * 1000) - Math.abs(new Date()))) / (1000 * 60 * 60 * 24))}d</div>
                 </button>
