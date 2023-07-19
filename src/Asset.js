@@ -55,7 +55,7 @@ const Asset = (on_chain) => {
         </div>
         <div className='size'>
             <div className='size-header'>Size</div>
-            <div className='size-value'>{asset_data.size}kb</div>
+            <div className='size-value'>{asset_data.size}bytes</div>
         </div>
         <div className='epochs'>
             <div className='epochs-header'>Epochs</div>
