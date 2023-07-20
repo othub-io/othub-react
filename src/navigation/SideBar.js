@@ -28,16 +28,6 @@ function SideBar () {
       ]
     },
     {
-      id: 6,
-      title: 'Alliance',
-      icon: 'https://img.icons8.com/ios/50/000000/handshake.png',
-      isOpen: true,
-      submenu: [
-        { id: 7, path: '/alliance/members', title: 'Members' },
-        { id: 9, path: '/alliance/vote', title: 'Vote' }
-      ]
-    },
-    {
       id: 10,
       title: 'Charts',
       path: '/charts',
@@ -53,6 +43,15 @@ function SideBar () {
         { id: 15, path: '/dkgtools/get', title: 'Get' },
         { id: 16, path: '/dkgtools/publish', title: 'Publish' },
         { id: 17, path: '/dkgtools/update', title: 'Update' }
+      ]
+    },
+    {
+      id: 6,
+      title: 'Vote',
+      icon: 'https://img.icons8.com/ios/50/000000/ballot.png',
+      isOpen: true,
+      submenu: [
+        { id: 9, path: '/vote', title: 'Vote' }
       ]
     },
     {

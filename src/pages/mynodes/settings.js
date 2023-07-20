@@ -15,8 +15,9 @@ const Settings = () => {
   const [data, setData] = useState('')
   const [isOpenTelegram, setIsOpenTelegram] = useState(false)
   const [isOpenBot, setIsOpenBot] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const isMobile = window.matchMedia('(max-width: 600px)').matches
+  const isMobile = window.matchMedia('(max-width: 480px)').matches
 
   useEffect(() => {
     async function fetchData () {
@@ -52,12 +53,14 @@ const Settings = () => {
     e.preventDefault()
     // Perform the POST request using the entered value
     try {
+      setIsLoading(true)
       const fetchData = async () => {
         try {
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&telegramID=${inputValue}`
           )
           setData(response.data)
+          setIsLoading(false)
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -88,50 +91,27 @@ const Settings = () => {
     e.preventDefault()
     // Perform the POST request using the entered value
     try {
+      setIsLoading(true)
       const response = await axios.get(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&botToken=${inputValue}`
       )
 
       setData(response.data)
+      setIsLoading(false)
     } catch (error) {
       console.error(error) // Handle the error case
     }
     setInputValue('')
   }
 
-  const LeaveAlliance = async () => {
-    try {
-      const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&group=Solo`
-      )
-      setData(response.data)
-    } catch (error) {
-      console.error(error) // Handle the error case
-    }
-  }
-
-  const JoinAlliance = async () => {
-    try {
-      const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&group=Alliance`
-      )
-
-      setData(response.data)
-    } catch (error) {
-      console.error(error) // Handle the error case
-    }
-  }
-
   let telegramID
   let botToken
-  let nodeGroup
 
   console.log(data)
   if (data) {
     if (data.operatorRecord.toString().trim() === '') {
     } else {
       telegramID = data.operatorRecord[0].telegramID
-      nodeGroup = data.operatorRecord[0].nodeGroup
 
       botToken = 'Not Set'
       if (data.operatorRecord[0].botToken) {
@@ -147,6 +127,12 @@ const Settings = () => {
           Please connect your admin wallet to view your nodes.
         </header>
       </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <Loading />
     )
   }
 
@@ -226,27 +212,6 @@ const Settings = () => {
               <br></br>
               <div className='settings-info'>{botToken}</div>
             </div>
-            {nodeGroup === 'Alliance' ? (
-              <div>
-                <div className='star'>
-                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
-                    <polygon
-                      fill='gold'
-                      points='256,8 314.395,195.472 503.526,186.513 354.931,301.528 413.326,489 256,396.542 98.674,489 157.069,301.528 8.474,186.513 197.605,195.472'
-                    />
-                  </svg>
-                </div>
-                <button onClick={LeaveAlliance} className='leave-button'>
-                  Leave Alliance
-                </button>
-              </div>
-            ) : !isMobile ? (
-              <button onClick={JoinAlliance} className='join-button'>
-                Join Alliance
-              </button>
-            ) : (
-              <div></div>
-            )}
           </div>
           <div className='nodesTable-container'>
           {isMobile ? (

@@ -9,8 +9,7 @@ import Assets from './pages/assets'
 import Nodes from './pages/nodes'
 import Settings from './pages/mynodes/settings.js'
 import NodeDashboard from './pages/mynodes/dashboard.js'
-import AllianceMembers from './pages/alliance/members.js'
-import AllianceVote from './pages/alliance/vote.js'
+import Vote from './pages/vote.js'
 import Charts from './pages/charts'
 import DKGGet from './pages/dkgtools/get.js'
 import DKGPublish from './pages/dkgtools/publish.js'
@@ -30,8 +29,7 @@ function App () {
           <Route path='/nodes' element={<Nodes />} />
           <Route path='/mynodes/settings' element={<Settings />} />
           <Route path='/mynodes/dashboard-dev' element={<NodeDashboard />} />
-          <Route path='/alliance/members' element={<AllianceMembers />} />
-          <Route path='/alliance/vote-dev' element={<AllianceVote />} />
+          <Route path='/vote-dev' element={<Vote />} />
           <Route path='/charts-dev' element={<Charts />} />
           <Route path='/dkgtools/get-dev' element={<DKGGet />} />
           <Route path='/dkgtools/publish-dev' element={<DKGPublish />} />
