@@ -24,30 +24,6 @@ function formatNumber (number) {
   return number.toString()
 }
 
-function getReadableTime(days) {
-  let remainingDays = days;
-
-  const years = Math.floor(remainingDays / 365);
-  remainingDays -= years * 365;
-
-  const months = Math.floor(remainingDays / 30);
-  remainingDays -= months * 30;
-
-  let result = '';
-
-  if (years > 0) {
-    result += `${years}y ${years === 1 ? '' : ''}`;
-  }
-  if (months > 0) {
-    result += `${months}mo ${months === 1 ? '' : ''} `;
-  }
-  if (remainingDays > 0) {
-    result += `${remainingDays}d ${remainingDays === 1 ? '' : ''}`;
-  }
-
-  return result;
-}
-
 const Home = () => {
   const [data, setData] = useState('')
 
@@ -67,28 +43,39 @@ const Home = () => {
     fetchData()
   }, [])
 
-  console.log(data)
   let pub_count
-  let tracSpent_24h
+  let totalTracSpent
   let totalPubs_24h
-  let tracSpent
+  let totalSpent_24h
+  let avg_size
+  let avg_epochs
+  let avg_ask
+  let avg_big
   let totalStake
 
   if(data){
     pub_count = formatNumber(parseFloat(data.pub_count))
-    tracSpent =  formatNumber(parseFloat(Number(data.totalTracSpent).toFixed(2)))
-    totalPubs_24h = formatNumber(parseFloat(data.totalPubs))
-    tracSpent_24h = formatNumber(parseFloat(data.tracSpent_24h).toFixed(2))
+    console.log('1')
+    totalTracSpent =  formatNumber(parseFloat(Number(data.totalTracSpent).toFixed(2)))
+    console.log('2')
+    totalPubs_24h = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].totalPubs))
+    console.log('3')
+    totalSpent_24h = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].totalTracSpent).toFixed(2))
+    console.log('4')
+    avg_size = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubSize).toFixed(0))
+    console.log('5')
+    avg_epochs = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgEpochsNumber).toFixed(1))
+    console.log('6')
+    avg_ask = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubPrice).toFixed(2))
+    console.log('7')
+    avg_big = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2))
+    console.log('8')
     totalStake = formatNumber(parseFloat(data.totalStake))
+    console.log('9')
   }
   
 
   const percentage = (data.pub_count / 1000000) * 100;
-  const startDate = new Date("2022-12-14");
-    const currentDate = new Date();
-    const diffTime = Math.abs(currentDate - startDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    const timeSinceStartDate = getReadableTime(diffDays);
 
   return (
     <div className='home'>
@@ -117,10 +104,10 @@ const Home = () => {
           </div>
           <div className='home-form'>
             <div className='total-assets'>
-              Age
+              Total Trac Spent
               <br></br>
               <div className='home-stats-info'>
-                {timeSinceStartDate}
+                {totalTracSpent}
               </div>
             </div>
             <div className='home-total-stake'>
@@ -134,26 +121,26 @@ const Home = () => {
               Nodes
               <br></br>
               <div className='home-stats-info'>
-              {data.v_nodes.length}
+              {data.v_nodes_length}
               </div>
             </div>
             <div className='trac-spent'>
-              Total Trac Spent
+              Assets Minted 24h
               <br></br>
               <div className='home-stats-info'>
-                {tracSpent}
+                {totalPubs_24h}
               </div>
             </div>
             <div className='assets-24h'>
-              Assets 24h
-              <br></br>
-              <div className='home-stats-info'>{totalPubs_24h}</div>
-            </div>
-            <div className='trac-spent-24h'>
               Trac Spent 24h
               <br></br>
+              <div className='home-stats-info'>{totalSpent_24h}</div>
+            </div>
+            <div className='trac-spent-24h'>
+              Avg Asset Size
+              <br></br>
               <div className='home-stats-info'>
-              {tracSpent_24h}
+              {avg_size}bytes
               </div>
             </div>
             <div className='home-chart'>
