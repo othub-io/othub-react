@@ -1,19 +1,10 @@
 # OTHub React
 
-OTHub React is a community managed React frontend built to work in tandem with the [othub-runtime](https://github.com/othub-io/othub-runtime) and [otp-sync](https://github.com/othub-io/othub-runtime) repositories. It is the front end of [OTHub](othub.io). With the right UX, the othub-react repository could be a streamline channel to get new and experienced web3 enthusiasts into the world of verifiable Knowledge Assets.
+OTHub React is a community managed React front end built to work in tandem with the [othub-runtime](https://github.com/othub-io/othub-runtime) and [otp-sync](https://github.com/othub-io/othub-runtime) repositories. It is the front end of [OTHub](othub.io). With the right UX, the OTHub-React repository could be a streamline channel to get new and experienced Web3 enthusiasts into the world of verifiable Knowledge Assets.
 
 ### OTHub React is:
 - A full service web application that provides greater insight into the activity and health of the DKG;
-- An easy-to-use interface that encourages Knowledge Asset ownership and creation without needing your own node;
-- A tool tailored to node runners to monitor node performance
-
-### Timeline
-- Q3 2023 - Core and basic implementation for all critical web pages, including crucial charts and mobile support
-- Q4 2023 - Advanced charts and reports on overall network activity, personal node runner dashboard and basic Knowledge Asset publishing through [OTHub](othub.io)
-- Q1 2024 - Further enhancement of data insights via improved charts, improved dashboards and additional features, such as bulk upload and new templates for data upload
-- Q2 2024 - OTHub UI improvements and overhaul and Knowledge Asset catalog
-- Q3 2024 - Further UI improvement with Node Operator DKG Voting (experimental)
-- Q4 2024+ - Transition to a more stability focused approach with improved code performance. 
+- A user-friendly interface that encourages Knowledge Asset ownership and creation without needing your own node.
 
 ### Instructions
 > **Warning**
