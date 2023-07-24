@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import '../css/NavBar.css'
+import '../css/navigation/NavBar.css'
 import { AccountContext } from '../AccountContext'
 import MetamaskButton from './MetamaskButton'
 let front_admin_key

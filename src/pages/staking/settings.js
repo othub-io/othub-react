@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import '../../css/settings.css'
+import '../../css/staking/settings.css'
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 import axios from 'axios'
@@ -24,7 +24,7 @@ const Settings = () => {
       try {
         if (account) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?admin_key=${account}`
           )
           setData(response.data)
         }
@@ -57,7 +57,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&telegramID=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?admin_key=${account}&telegramID=${inputValue}`
           )
           setData(response.data)
           setIsLoading(false)
@@ -93,7 +93,7 @@ const Settings = () => {
     try {
       setIsLoading(true)
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/myNodes/settings?admin_key=${account}&botToken=${inputValue}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?admin_key=${account}&botToken=${inputValue}`
       )
 
       setData(response.data)

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import './css/Asset.css' // Import the CSS file for styling (see Step 3)
-import { AccountContext } from './AccountContext'
+import '../../css/portal/Asset.css' // Import the CSS file for styling (see Step 3)
+import { AccountContext } from '../../AccountContext'
 import moment from 'moment';
 let asset_data
 let sub_scan_link

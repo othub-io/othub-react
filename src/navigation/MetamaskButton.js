@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AccountContext } from '../AccountContext'
 import detectEthereumProvider from '@metamask/detect-provider'
-import '../css/metamaskButton.css'
+import '../css/navigation/metamaskButton.css'
 let readable_chain_id
 
 const MetamaskButton = () => {

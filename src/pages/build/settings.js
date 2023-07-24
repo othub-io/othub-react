@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import '../../css/keys.css'
+import '../../css/build/settings.css'
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 import axios from 'axios'
@@ -10,7 +10,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
   ext = 'https'
 }
 
-const Keys = () => {
+const Settings = () => {
   const { account } = useContext(AccountContext)
   const [data, setData] = useState('')
   const [isOpenDeleteKey, setIsDeleteKey] = useState(false)
@@ -22,7 +22,7 @@ const Keys = () => {
       try {
         if (account) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/api/keys?admin_key=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?admin_key=${account}`
           )
           console.log(response.data)
           setData(response.data)
@@ -47,7 +47,7 @@ const Keys = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/api/keys?admin_key=${account}&app_name=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?admin_key=${account}&app_name=${inputValue}`
           )
           setData(response.data)
         } catch (error) {
@@ -78,7 +78,7 @@ const Keys = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/api/keys?admin_key=${account}&deleteKey=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?admin_key=${account}&deleteKey=${inputValue}`
           )
           setData(response.data)
         } catch (error) {
@@ -99,7 +99,7 @@ const Keys = () => {
     return (
       <div className='keys'>
         <header className='keys-header'>
-          Please connect your wallet to view your API keys.
+          Please connect your wallet to open your developer settings.
         </header>
       </div>
     )
@@ -185,7 +185,7 @@ const Keys = () => {
             <div className='help'>
               Need some help?
               <br></br>
-              <a href="https://t.me/OriginTrailClub" target='_blank' rel="noreferrer">Join Our Telegram</a>
+              <a href="https://t.me/+MJOwwoosHCdhMWVh" target='_blank' rel="noreferrer">Join Our Telegram</a>
             </div>
           </div>
           {isMobile ? (
@@ -226,4 +226,4 @@ const Keys = () => {
   )
 }
 
-export default Keys
+export default Settings

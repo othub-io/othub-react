@@ -1,0 +1,571 @@
+.request-data{
+    margin-top:-20px;
+    width:100%;
+    height:100%;
+    white-space: normal;
+    overflow: hidden;
+    text-align:left;
+    overflow: auto;
+    padding-right:10px;
+    background-color: #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+
+  .requested{
+    color:#6168ED;
+    margin-bottom:10px;
+    padding-bottom:15px;
+  }
+
+  .txn{
+    width:99.5%;
+    height:6%;
+    border: 1px solid #6168ED;
+    border-radius: 10px 10px 10px 10px;
+    text-align:center;
+    padding-top:10px;
+    margin-bottom:20px;
+  }
+
+  .txn span{
+    color:#6168ED;
+    font-size: 20px;
+    font-size:32px;
+  }
+
+  .txn button{
+    background: none;
+    border: none;
+  }
+
+  .copy-icon {
+    height: 20px;
+    width: 20px;
+    color: #6168ED;
+    fill:#6168ED;
+    cursor: pointer;
+  }
+
+  .copy-icon:active {
+    transform: scale(0.95);
+  }
+
+  .progress{
+  }
+
+  .progress-header{
+    color:#6168ED;
+  }
+
+  .progress-value{
+    color:#6168ED;
+  }
+
+  .request-epochs{
+  }
+
+  .request-epochs-header{
+    color:#6168ED;
+  }
+
+  .request-epochs-value{
+    color:#6168ED;
+  }
+
+  .request-keywords{
+  }
+
+  .request-keywords-header{
+    color:#6168ED;
+  }
+
+  .request-keywords-value{
+    color:#6168ED;
+  }
+
+  .data{
+  }
+
+  .data-header{
+    color:#6168ED;
+  }
+
+  .data-value{
+    color:#6168ED;
+  }
+
+  .description{
+  }
+
+  .description-header{
+    color:#6168ED;
+  }
+
+  .description-value{
+    color:#6168ED;
+  }
+
+  .app-name{
+  }
+
+  .app-name-header{
+    color:#6168ED;
+  }
+
+  .app-name-value{
+    color:#6168ED;
+  }
+
+  @media(max-width:1366px){
+    .token{
+        width:99.5%;
+        height:6%;
+        border: 1px solid #6168ED;
+        border-radius: 10px 10px 10px 10px;
+        text-align:center;
+        padding-top:10px;
+        margin-bottom:20px;
+      }
+
+      .token span{
+        color:#6168ED;
+        font-size:28px;
+      }
+
+      .size{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left:5%;
+      }
+    
+      .size-header{
+        color:#6168ED;
+        font-size: 20px;
+        font-size:20px;
+        margin-bottom:5px;
+      }
+    
+      .size-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .epochs{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .epochs-header{
+        color:#6168ED;
+        font-size: 20px;
+        margin-bottom:5px;
+      }
+    
+      .epochs-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .triples{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .triples-header{
+        color:#6168ED;
+        font-size: 20px;
+        font-size:20px;
+        margin-bottom:5px;
+      }
+    
+      .triples-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .payment{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        margin-top:10%;
+        margin-left:5%;
+        display: inline-block;
+      }
+    
+      .payment-header{
+        color:#6168ED;
+        font-size: 20px;
+        margin-bottom:5px;
+      }
+    
+      .payment-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .bid{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .bid-header{
+        color:#6168ED;
+        font-size: 20px;
+        font-size:20px;
+        margin-bottom:5px;
+      }
+    
+      .bid-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .expires{
+        width:20%;
+        height:6%;
+        border-radius: 10px 10px 10px 10px;
+        text-align:left;
+        display: inline-block;
+        margin-left: 65px;
+      }
+    
+      .expires-header{
+        color:#6168ED;
+        font-size: 20px;
+        margin-bottom:5px;
+      }
+    
+      .expires-value{
+        color:#6168ED;
+        font-size: 20px;
+        font-weight: bold;
+      }
+  }
+
+  @media(max-width:480px){
+    .asset-data{
+      width:100%;
+      height:100%;
+      white-space: normal;
+      overflow: hidden;
+      text-align:left;
+      overflow: auto;
+      padding-right:10px;
+      background-color: #FFFFFF;
+      border-radius: 10px 10px 10px 10px;
+      padding-left:10px;
+      padding-top:10px;
+      margin-top:20px;
+      padding-bottom:10px;
+    }
+    
+    .token{
+      width:99.5%;
+      height:6%;
+      border: 1px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      text-align:center;
+      padding-top:5px;
+      margin-bottom:20px;
+    }
+
+    .token span{
+      color:#6168ED;
+      font-size:28px;
+    }
+
+    .size{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left:5%;
+    }
+  
+    .size-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .size-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .epochs{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 55px;
+    }
+  
+    .epochs-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .epochs-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .triples{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .triples-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .triples-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      margin-top:10%;
+      margin-left:5%;
+      display: inline-block;
+    }
+  
+    .payment-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .payment-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .bid{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 55px;
+    }
+  
+    .bid-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .bid-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .expires{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .expires-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .expires-value{
+      color:#6168ED;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  @media(max-width:360px){
+    .token{
+      width:99.5%;
+      height:6%;
+      border: 1px solid #6168ED;
+      border-radius: 10px 10px 10px 10px;
+      text-align:center;
+      padding-top:5px;
+      margin-bottom:20px;
+    }
+
+    .token span{
+      color:#6168ED;
+      font-size:28px;
+    }
+
+    .size{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left:5%;
+    }
+  
+    .size-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .size-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .epochs{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .epochs-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .epochs-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .triples{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 40px;
+    }
+  
+    .triples-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .triples-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      margin-top:10%;
+      margin-left:5%;
+      display: inline-block;
+    }
+  
+    .payment-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .payment-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .bid{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 45px;
+    }
+  
+    .bid-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .bid-value{
+      color:#6168ED;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .expires{
+      width:20%;
+      height:6%;
+      border-radius: 10px 10px 10px 10px;
+      text-align:left;
+      display: inline-block;
+      margin-left: 40px;
+    }
+  
+    .expires-header{
+      color:#6168ED;
+      font-size: 18px;
+      margin-bottom:5px;
+    }
+  
+    .expires-value{
+      color:#6168ED;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }

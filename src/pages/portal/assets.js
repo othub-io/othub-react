@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import '../css/assets.css'
-import Loading from '../Loading'
-import Asset from '../Asset'
+import '../../css/portal/assets.css'
+import Loading from '../../Loading'
+import Asset from './Asset'
 import axios from 'axios'
 let ext
 
@@ -29,7 +29,7 @@ const Assets = () => {
     async function fetchData () {
       try {
         const pubs_response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/pubs`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets`
         )
         await setData(pubs_response.data)
 
@@ -43,7 +43,7 @@ const Assets = () => {
             }else{
                 console.log(provided_ual)
                 const ual_response = await axios.get(
-                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/pubs?ual=${provided_ual}`
+                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}`
                   )
                     
                   console.log(`UAL RESP: ${JSON.stringify(ual_response)}`)
@@ -87,7 +87,7 @@ const Assets = () => {
             console.log(filterInput)
 
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/pubs?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}`
           )
           setData(response.data)
         } catch (error) {
