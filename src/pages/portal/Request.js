@@ -3,7 +3,9 @@ import '../../css/portal/Asset.css' // Import the CSS file for styling (see Step
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
 const { ethers } = require("ethers"); 
-const DKG = require('dkg.js');
+import { DKG } from 'dkg.js';
+window.Buffer = window.Buffer || require("buffer").Buffer;
+
 
 const testnet_node_options = {
   endpoint: process.env.REACT_APP_OTNODE_HOST,
@@ -27,8 +29,8 @@ const Request = (txn) => {
   const handleSubmit = async (txn) => {
     try {
         console.log(txn)
-        if(account.toUpperCase() !== txn.admin_key.toUpperCase()){
-            console.log(`${account} attempted to sign a txn meant for ${txn.admin_key}`)
+        if(account.toUpperCase() !== txn.public_address.toUpperCase()){
+            console.log(`${account} attempted to sign a txn meant for ${txn.public_address}`)
             return;
         }
 
@@ -56,8 +58,7 @@ const Request = (txn) => {
                 keywords: txn.keywords,
                 blockchain : {
                     name: txn.network,
-                },
-                contentType: 'all'
+                }
             }
           }else{
             publishOptions= {
@@ -68,24 +69,24 @@ const Request = (txn) => {
                 keywords: txn.keywords,
                 blockchain : {
                     name: txn.network,
-                },
-                contentType: 'all'
+                }
             }
           }
+
+        let dkg_txn_data = JSON.parse(txn.txn_data);
+
+        if(!dkg_txn_data['@context']){
+            dkg_txn_data['@context'] = 'https://schema.org'
+        }
+
+        console.log(dkg_txn_data)
+        console.log(publishOptions)
 
         window.DkgClient = new DKG(options);
         console.log("client initialized")
 
-        let txn_data = JSON.parse(txn.txn_data);
-
-        if(!txn_data['@context']){
-            txn_data['@context'] = 'https://schema.org'
-        }
-
-        console.log(txn_data)
-
-        await window.DkgClient.asset.create({
-          public: txn_data,
+        await DkgClient.asset.create({
+          public: dkg_txn_data,
         },publishOptions)
             .then(result => {
                 console.log({ assertionId: result.assertionId, UAL: result.UAL })
