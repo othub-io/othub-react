@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react'
 import '../../css/portal/Asset.css' // Import the CSS file for styling (see Step 3)
 import { AccountContext } from '../../AccountContext'
 import Loading from '../../Loading'
-const { ethers } = require("ethers"); 
-import { DKG } from 'dkg.js';
+import DKG from 'dkg.js';
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 
@@ -79,13 +78,16 @@ const Request = (txn) => {
             dkg_txn_data['@context'] = 'https://schema.org'
         }
 
+        console.log('Asset Data:')
         console.log(dkg_txn_data)
+
+        console.log('Publish Options:')
         console.log(publishOptions)
 
         window.DkgClient = new DKG(options);
         console.log("client initialized")
 
-        await DkgClient.asset.create({
+        await window.DkgClient.asset.create({
           public: dkg_txn_data,
         },publishOptions)
             .then(result => {
