@@ -18,22 +18,24 @@
     color:#6168ED;
     margin-bottom:10px;
     padding-bottom:15px;
+    font-weight: bold;
   }
 
   .txn{
     width:99.5%;
-    height:6%;
-    border: 1px solid #6168ED;
+    height:40px;
+    border: 2px solid #6168ED;
     border-radius: 10px 10px 10px 10px;
     text-align:center;
-    padding-top:10px;
+    padding-top:15px;
     margin-bottom:20px;
+    font-weight: bold;
   }
 
   .txn span{
     color:#6168ED;
-    font-size: 20px;
-    font-size:32px;
+    font-size:20px;
+    padding-top:5px;
   }
 
   .txn button{
@@ -53,6 +55,18 @@
     transform: scale(0.95);
   }
 
+  .mint-button{
+    padding-top:40px;
+    margin-left:30%;
+    font-size:18px;
+    margin-right:20px;
+  }
+
+  .cancel-button{
+    padding-top:40px;
+    font-size:18px;
+  }
+
   .progress{
   }
 
@@ -65,6 +79,10 @@
   }
 
   .request-epochs{
+    padding-top:20px;
+    font-weight: bold;
+    margin-left:5%;
+    padding-bottom: 30px;
   }
 
   .request-epochs-header{
@@ -76,10 +94,13 @@
   }
 
   .request-keywords{
+    padding-top:30px;
+    margin-left:5%;
   }
 
   .request-keywords-header{
     color:#6168ED;
+    font-weight: bold;
   }
 
   .request-keywords-value{
@@ -90,22 +111,40 @@
   }
 
   .data-header{
+    padding-top:20px;
     color:#6168ED;
+    font-weight: bold;
+    margin-left:5%;
   }
 
   .data-value{
+    margin-left:5%;
     color:#6168ED;
+    border: 1px solid #6168ED;
+    border-radius: 10px 10px 10px 10px;
+    width:90%;
+    height:200px;
+    overflow: auto;
   }
 
   .description{
-  }
-
-  .description-header{
+    padding-top:20px;
+    padding-bottom:20px;
+    margin-top:40px;
+    margin-left:5%;
+    padding-left:10px;
     color:#6168ED;
+    width: 88%;
+    overflow: auto;
+    word-wrap: break-word;
+    position: relative;
+    height:100px;
+    background-color: #F5F5F5;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   }
 
   .description-value{
-    color:#6168ED;
+    
   }
 
   .app-name{
@@ -117,6 +156,33 @@
 
   .app-name-value{
     color:#6168ED;
+  }
+
+  .reject-popup-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    color: #6168ED;
+    font-weight: bold;
+  }
+  
+  .reject-popup-content button{
+    margin-left:44%;
+    font-weight: bold;
+  }
+
+  .reject-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: #6168ED;
+    font-weight: bold;
+    cursor: pointer;
   }
 
   @media(max-width:1366px){

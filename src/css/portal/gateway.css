@@ -28,17 +28,30 @@
     width: 55%;
     overflow: auto;
     padding-left:.5%;
-    outline: .5px solid #6168ED;
-    border-radius: 10px 10px 10px 10px;
+    position: relative;
+  }
+
+  .gateway-nav{
+    width:15%;
+    font-family: OCR A Std, monospace;
+    height: 20%;
+    margin-top:32%;
+    position: absolute;
+    margin-left:-1%;
+  }
+
+  .gateway-nav button{
+    width:250px;
+    font-size:20px;
   }
 
   .gateway-form {
     width:15%;
-    height:60%;
-    margin-top: 1%;
+    height:70%;
     margin-left: 0%;
     margin-right: 0%;
     padding-left: 1%;
+    margin-top:1%;
     text-align:left;
     font-size:18px;
     font-weight: bold;
@@ -58,6 +71,22 @@
     margin-bottom:3%;
   }
 
+  .gateway-close-button{
+    color: #6168ED;
+    font-weight: bold;
+    border: none;
+    background: none;
+    font-size:20px;
+    margin-top:-15px;
+    width:100%;
+    text-align: right;
+    margin-right:-10px;
+  }
+
+  .gateway-close-button{
+    cursor: pointer;
+  }
+
   .gateway-form button{
     margin-left:30%;
     font-weight:bold;
@@ -65,7 +94,7 @@
 
   .gateway-txn-record,
 .gateway-txn-record:focus {
-  height:5rem;
+  min-height:60px;
   width:98%;
   float:left;
   margin-left:0%;
@@ -76,11 +105,12 @@
   background-color: #FFFFFF;
   border: none;
   transition: all 0.4s ease;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .gateway-txn-record:hover,
 .gateway-txn-record:focus:hover {
-  height:10rem;
+  min-height:240px;
   width:98%;
   float:left;
   margin-left:0%;
@@ -90,7 +120,66 @@
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: #F5F5F5;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.PENDING-progress{
+  color:rgb(243, 243, 13);
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-17px;
+  margin-left:80px;
+}
+
+.gateway-txn-record:hover .PENDING-progress{
+  color:rgb(243, 243, 13);
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-17px;
+  margin-left:80px;
+}
+
+.COMPLETE-progress{
+  color:#13B785;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-17px;
+  margin-left:80px;
+}
+
+.REJECTED-progress{
+  color: rgb(216, 98, 98);
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-17px;
+  margin-left:80px;
+}
+
+.request{
+  font-size:16px;
+  background-color: #6168ED;
+  color:white;
+  position: absolute;
+  width: 10%;
+  height: 20px;
+  margin-top:-17px;
+  margin-left:-5px;
+  border-radius: 10px 0px 10px 0px;
+  font-weight: bold;
 }
 
 .gateway-txn-result-count{
@@ -103,10 +192,8 @@
     background-color: #FFFFFF;font-size: 16px;
 }
 
-.gateway-stats{
+.gateway-activity{
   width:30%;
-  border-radius: 10px;
-  outline: 1px solid #6168ED;
   font-family: OCR A Std, monospace;
   height: 96%;
   margin-right:0%;
@@ -124,8 +211,73 @@
 }
 
 .request-popup-content{
-  width:40%;
+  width:30%;
   height:85%;
   background-color: #FFFFFF;
   border-radius: 10px 10px 10px 10px;
+}
+
+.txn-created-at{
+  color: #6168ED;
+  font-weight: bold;
+  font-size:14px;
+  text-align: right;
+  position: relative;
+  margin-top:-30px;
+}
+
+.txn-summary{
+  color: #6168ED;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:5%;
+  padding-top:0px;
+  position: absolute;
+}
+
+.txn-description{
+  display:none;
+}
+
+.gateway-txn-record:hover .txn-created-at{
+  color: #6168ED;
+  font-weight: bold;
+  font-size:14px;
+  text-align: right;
+  position: relative;
+  margin-top:-120px;
+  transition: all 0.4s ease;
+}
+
+.gateway-txn-record:hover .txn-summary{
+  color: #6168ED;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:5%;
+  padding-top:10px;
+  position: absolute;
+  transition: all 0.4s ease;
+}
+
+.gateway-txn-record:hover .txn-description {
+  display: block;
+  color: #6168ED;
+  font-weight: bold;
+  background-color: #F5F5F5;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  min-height:5vh;
+  max-height:15vh;
+  width:90%;
+  margin-left:2%;
+  margin-top:50px;
+  text-align: left;
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:20px;
+  padding-right:20px;
+  overflow: auto;
+  word-wrap: break-word;
+  position: absolute;
 }

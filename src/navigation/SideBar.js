@@ -5,7 +5,7 @@ function SideBar () {
   const [menuItems, setMenuItems] = useState([
     {
       id: 1,
-      title: 'Asset Portal',
+      title: 'Portal',
       icon: 'https://img.icons8.com/ios/50/000000/portal.png',
       isOpen: true,
       submenu: [
@@ -29,7 +29,9 @@ function SideBar () {
       icon: 'https://img.icons8.com/ios/50/000000/block.png',
       isOpen: true,
       submenu: [
-        { id: 19, path: '/build/settings', title: 'Settings' },
+        { id: 19, 
+          path: '/build/settings', 
+          title: 'Settings' },
         {
           id: 20,
           path: 'https://www.postman.com/crimson-crescent-721757/workspace/othub-api',
@@ -107,7 +109,7 @@ function SideBar () {
               <ul className='sub-menu'>
                 {item.submenu.map(subitem => (
                   <li key={subitem.id}>
-                    <a href={subitem.path} className='sub-title' target='_blank' rel="noreferrer">
+                    <a href={subitem.path} className='sub-title'>
                       {subitem.title}
                     </a>
                   </li>
