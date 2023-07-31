@@ -1,0 +1,13 @@
+.apps-list{
+    outline: 2px solid #6168ED;
+    width:20%;
+    height: 600px;
+    position: absolute;
+}
+
+.app-list-item{
+    outline: 2px solid #6168ED;
+    width:20%;
+    height: 100px;
+    position: absolute;
+}

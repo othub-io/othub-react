@@ -55,23 +55,13 @@ const Home = () => {
 
   if(data){
     pub_count = formatNumber(parseFloat(data.pub_count))
-    console.log('1')
     totalTracSpent =  formatNumber(parseFloat(Number(data.totalTracSpent).toFixed(2)))
-    console.log('2')
     totalPubs_24h = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].totalPubs))
-    console.log('3')
     totalSpent_24h = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].totalTracSpent).toFixed(2))
-    console.log('4')
     avg_size = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubSize).toFixed(0))
-    console.log('5')
     avg_epochs = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgEpochsNumber).toFixed(1))
-    console.log('6')
     avg_ask = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubPrice).toFixed(2))
-    console.log('7')
     avg_big = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2))
-    console.log('8')
-    totalStake = formatNumber(parseFloat(data.totalStake))
-    console.log('9')
   }
   
 

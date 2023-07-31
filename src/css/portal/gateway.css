@@ -47,7 +47,7 @@
 
   .gateway-form {
     width:15%;
-    height:70%;
+    height:72.5%;
     margin-left: 0%;
     margin-right: 0%;
     padding-left: 1%;
@@ -81,9 +81,6 @@
     width:100%;
     text-align: right;
     margin-right:-10px;
-  }
-
-  .gateway-close-button{
     cursor: pointer;
   }
 
@@ -126,24 +123,13 @@
 }
 
 .PENDING-progress{
-  color:rgb(243, 243, 13);
+  color: #ffff00;
   font-weight: bold;
   font-size:18px;
   text-align: left;
   padding-left:10px;
   position: relative;
-  margin-top:-17px;
-  margin-left:80px;
-}
-
-.gateway-txn-record:hover .PENDING-progress{
-  color:rgb(243, 243, 13);
-  font-weight: bold;
-  font-size:18px;
-  text-align: left;
-  padding-left:10px;
-  position: relative;
-  margin-top:-17px;
+  margin-top:-16px;
   margin-left:80px;
 }
 
@@ -159,7 +145,7 @@
 }
 
 .REJECTED-progress{
-  color: rgb(216, 98, 98);
+  color: #d86262;
   font-weight: bold;
   font-size:18px;
   text-align: left;
@@ -212,9 +198,15 @@
 
 .request-popup-content{
   width:30%;
-  height:85%;
-  background-color: #FFFFFF;
+  background-color: none;
   border-radius: 10px 10px 10px 10px;
+}
+
+.request-popup-content-app-settings{
+  width:50%;
+  height:80%;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #FFFFFF;
 }
 
 .txn-created-at{
@@ -231,12 +223,52 @@
   font-weight: bold;
   font-size:18px;
   text-align: left;
-  padding-left:5%;
+  padding-left:2%;
   padding-top:0px;
   position: absolute;
 }
 
+.txn-details span{
+  display:none;
+}
+
+.txn-ual{
+  display:none;
+}
+
 .txn-description{
+  display:none;
+}
+
+.txn-cost{
+  display:none;
+}
+
+.txn-epochs{
+  display:none;
+}
+
+.txn-Mint-receiver{
+  display:none;
+}
+
+.txn-Update-receiver{
+  display:none;
+}
+
+.txn-Transfer-receiver{
+  display:none;
+}
+
+.txn-Mint-epochs{
+  display:none;
+}
+
+.txn-Update-epochs{
+  display:none;
+}
+
+.txn-Transfer-epochs{
   display:none;
 }
 
@@ -246,7 +278,7 @@
   font-size:14px;
   text-align: right;
   position: relative;
-  margin-top:-120px;
+  margin-top:-110px;
   transition: all 0.4s ease;
 }
 
@@ -255,10 +287,81 @@
   font-weight: bold;
   font-size:18px;
   text-align: left;
-  padding-left:5%;
+  padding-left:2%;
   padding-top:10px;
   position: absolute;
   transition: all 0.4s ease;
+}
+
+.gateway-txn-record:hover .txn-details{
+  margin-top:10px;
+  margin-top:40px;
+}
+
+.gateway-txn-record:hover .txn-ual{
+  display: block;
+  color: #6168ED;
+  font-weight: bold;
+  width:90%;
+  font-size: 14px;
+  margin-left:4%;
+  margin-top:50px;
+  text-align: left;
+  position: absolute;
+  border-radius: 5px;
+  outline: 1px solid #6168ED;
+  text-align:center;
+  height:20px;
+  padding-top:5px;
+}
+
+.gateway-txn-record:hover .txn-cost{
+  display: inline-block;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  position: relative;
+}
+
+.gateway-txn-record:hover .txn-Transfer-receiver{
+  display:inline-block;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  margin-left:-50px;
+  margin-right:200px;
+  position: relative;
+}
+.gateway-txn-record:hover .txn-Transfer-receiver span{
+  color: #6168ED;
+  font-weight:100;
+}
+
+.gateway-txn-record:hover .txn-Mint-epochs{
+  display: inline-block;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  padding-left:-100px;
+  position: relative;
+  
+}
+
+.gateway-txn-record:hover .txn-Update-epochs{
+  display: inline-block;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  padding-left:-100px;
+  position: relative;
 }
 
 .gateway-txn-record:hover .txn-description {
@@ -267,11 +370,10 @@
   font-weight: bold;
   background-color: #F5F5F5;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-  min-height:5vh;
-  max-height:15vh;
+  height:50px;
   width:90%;
   margin-left:2%;
-  margin-top:50px;
+  margin-top:20px;
   text-align: left;
   padding-top:10px;
   padding-bottom:10px;

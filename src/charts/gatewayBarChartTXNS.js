@@ -19,28 +19,27 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ data }) => {
+const BarChartTXNS = ({ data }) => {
   // Extract labels and data from the dataset
-  const labels = ['Mints', 'Updates', 'Transfers'];
+  const labels = ['COMPLETE', 'PENDING', 'REJECTED'];
 
-  let mint_count = 0
-  let update_count = 0
-  let transfer_count = 0
+  let complete_count = 0
+  let pending_count = 0
+  let rejected_count = 0
 
   for(let i = 0; i < data.length;i++){
-    if(data[i].request === 'Mint'){
-        mint_count = mint_count + 1
+    if(data[i].progress === 'COMPLETE'){
+        complete_count = complete_count + 1
     }
-
-    if(data[i].request === 'Update'){
-        update_count = update_count + 1
+    if(data[i].progress === 'PENDING'){
+        pending_count = pending_count + 1
     }
-    if(data[i].request === 'Transfer'){
-        transfer_count = transfer_count + 1
+    if(data[i].progress === 'REJECTED'){
+        rejected_count = rejected_count + 1
     }
   }
 
-  const counts = [mint_count,update_count,transfer_count]
+  const counts = [complete_count,pending_count,rejected_count]
   
   const formattedData = {
     labels: labels,
@@ -48,14 +47,8 @@ const BarChart = ({ data }) => {
       {
         data: counts,
         fill: false,
-        backgroundColor: ['#6168ED','#6168ED','#6168ED'],
+        backgroundColor: ['#13B785','#ffff00','#d86262'],
       },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
     ],
   };
 
@@ -70,7 +63,7 @@ const BarChart = ({ data }) => {
     plugins: {
       legend: {
         display: false,
-        position: 'right'
+        position: 'right',
       },
       title: {
         display: false,
@@ -82,5 +75,5 @@ const BarChart = ({ data }) => {
   return <Bar data={formattedData} options={options} width="2200" height="950"/>;
 };
 
-export default BarChart
+export default BarChartTXNS
 

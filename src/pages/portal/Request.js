@@ -65,7 +65,7 @@ const Request = (txn) => {
 
       let epochs = txn.epochs;
       if (Number(inputValue)) {
-        epochs = txn.inputValue;
+        epochs = inputValue;
       }
 
       let publishOptions;
@@ -187,19 +187,20 @@ const Request = (txn) => {
         </div>
       )}
       <div className="requested">
-        <span>
-          {txn.progress} request at {txn.created_at}
-        </span>
+        <span className={`request-${txn.progress}-progress`}>{txn.progress}</span> <strong>{txn.request}</strong> queued at {txn.created_at}
+        
       </div>
       <div className="txn">
-        <span>
-          {txn.app_name} | {txn.txn_id}
-        </span>
+        <span>{txn.app_name} {'('+txn.txn_id+')'}</span>
       </div>
       {(txn.request === "Mint" || txn.request === "Update") && (
+        
         <div className="data">
+          <div className="request-ual">
+            <strong>UAL: </strong>{txn.ual}
+          </div>
           <div className="data-header">Data</div>
-          <div className="data-value">
+          <div className="data-value-pub">
             <pre>{JSON.stringify(JSON.parse(txn.txn_data), null, 2)}</pre>
           </div>
         </div>
@@ -207,8 +208,15 @@ const Request = (txn) => {
       {txn.request === "Transfer" && (
         <div className="data">
           <div className="data-header"></div>
-          <div className="data-value">
-            Send {txn.ual} to {txn.txn_data.receiver}?
+          <div className="data-value-transfer">
+          <br></br>
+          <span>Send </span><br></br>
+            <br></br>
+            {txn.ual}<br></br>
+            <br></br>
+            <span>to </span><br></br>
+            <br></br>
+            {JSON.parse(txn.txn_data).receiver}
           </div>
         </div>
       )}
@@ -224,7 +232,7 @@ const Request = (txn) => {
           <div className="request-epochs">
             <form className="request-epochs-header">
               <label>
-                Epochs:
+                Epochs: 
                 <input
                   type="text"
                   value={txn.epochs}
@@ -237,6 +245,9 @@ const Request = (txn) => {
       )}
       {txn.progress !== "REJECTED" && (txn.request === "Mint" || txn.request === "Update") && (
         <div>
+          <div className="estimated-cost-pub">
+            Estimated Cost:
+          </div>
           <button
             onClick={() => handleSubmit(txn)}
             type="submit"
@@ -255,10 +266,13 @@ const Request = (txn) => {
       )}
       {(txn.progress !== "REJECTED" && txn.request === "Transfer") && (
         <div>
+          <div className="estimated-cost-transfer">
+            Estimated Cost:
+          </div>
           <button
             onClick={() => handleSubmit(txn)}
             type="submit"
-            className="mint-button"
+            className="transfer-button"
           >
             <strong>Transfer Asset</strong>
           </button>

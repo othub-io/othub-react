@@ -5,6 +5,7 @@ import Loading from "../../Loading";
 import Request from "./Request";
 import AppSettings from "./AppSettings";
 import BarChart from "../../charts/gatewayBarChart";
+import BarChartTXNS from "../../charts/gatewayBarChartTXNS";
 import axios from "axios";
 let ext;
 
@@ -17,6 +18,7 @@ const Gateway = () => {
   const [data, setData] = useState("");
   const { chain_id, account } = useContext(AccountContext);
   const [isRequestOpen, setIsRequestOpen] = useState(false);
+  const [isAppSettingsOpen, setIsAppSettingsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",
@@ -33,7 +35,7 @@ const Gateway = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        if (account) {
+        if (account && (chain_id ==='Origintrail Parachain Testnet' || chain_id ==='Origintrail Parachain Mainnet')) {
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
           );
@@ -61,17 +63,22 @@ const Gateway = () => {
 
   if (!account) {
     return (
-      <div className="keys">
-        <header className="keys-header">
-          <img
-            className="icon"
-            src="https://img.icons8.com/ios/50/000000/door.png"
-            alt="Gates"
-          />
+      <div className="gateway">
+        <header className="gateway-header">
           Please connect your wallet to unlock your portal.
         </header>
       </div>
     );
+  }
+
+  if(chain_id !=='Origintrail Parachain Testnet' && chain_id !=='Origintrail Parachain Mainnet'){
+    return (
+    <div className="gateway">
+        <header className="gateway-header">
+          Connected with an unsupported chain. Please switch to Origintrail Parachain Testnet or Mainnet.
+        </header>
+      </div>
+    )
   }
 
   const openRequestPopup = (txn) => {
@@ -82,6 +89,14 @@ const Gateway = () => {
   const closeRequestPopup = () => {
     setIsRequestOpen(false);
     setInputValue("");
+  };
+
+  const openAppSettings = () => {
+    setIsAppSettingsOpen(true)
+  };
+
+  const closeSettingsPopup = () => {
+    setIsAppSettingsOpen(false);
   };
 
   const handleFilterInput = (e) => {
@@ -100,10 +115,9 @@ const Gateway = () => {
         try {
           console.log(filterInput);
 
-          const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&ual=${filterInput.ual}&txn_id=${filterInput.txn_id}&app_name=${filterInput.app_name}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
+          await axios.get(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${filterInput.apps}`
           );
-          setData(response.data);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -121,10 +135,7 @@ const Gateway = () => {
     //window.open(`${process.env.WEB_HOST}/portal/gateway/inventory`, '_blank');
   };
 
-  const openSettings = () => {
-    //<AppSettings/>
-  };
-
+  console.log(data)
   return (
     <div className="gateway">
       {isRequestOpen && (
@@ -137,6 +148,19 @@ const Gateway = () => {
               X
             </button>
             <Request data={JSON.stringify(inputValue)} />
+          </div>
+        </div>
+      )}
+      {isAppSettingsOpen && (
+        <div className="popup-overlay">
+          <div className="request-popup-content-app-settings">
+            <button
+              className="gateway-close-button"
+              onClick={closeSettingsPopup}
+            >
+              X
+            </button>
+            <AppSettings data={data} />
           </div>
         </div>
       )}
@@ -268,7 +292,7 @@ const Gateway = () => {
               <strong>Asset Inventory</strong>
             </button>
             <br></br>
-            <button type="submit" onClick={openSettings()}>
+            <button type="submit" onClick={openAppSettings}>
               <strong>App Settings</strong>
             </button>
           </div>
@@ -290,6 +314,18 @@ const Gateway = () => {
                 <div className="txn-summary">
                 {`${txn.app_name}(${txn.txn_id})`}
                 </div>
+                <div className="txn-ual">
+                  {txn.ual}
+                </div>
+                <div className={`txn-${txn.request}-receiver`}>
+                  Receiver:<span>{JSON.parse(txn.txn_data).receiver}</span>
+                </div>
+                <div className={`txn-${txn.request}-epochs`}>
+                  Epochs: {txn.epochs}
+                </div>
+                <div className="txn-cost">
+                  Estimated Cost: {txn.trac_fee}
+                </div>
                 <div className="txn-description">
                   <span>{txn.txn_description}</span>
                 </div>
@@ -299,6 +335,8 @@ const Gateway = () => {
           <div className="gateway-activity">
             Activity
             <BarChart data={data.raw_txn_header} />
+            <br></br>
+            <BarChartTXNS data={data.raw_txn_header} />
           </div>
         </header>
       ) : (
