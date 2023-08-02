@@ -37,7 +37,7 @@ const Gateway = () => {
       try {
         if (account && (chain_id ==='Origintrail Parachain Testnet' || chain_id ==='Origintrail Parachain Mainnet')) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}`
           );
           console.log(response.data);
           await setData(response.data);
@@ -116,7 +116,7 @@ const Gateway = () => {
           console.log(filterInput);
 
           await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${filterInput.apps}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=${filterInput.apps}`
           );
         } catch (error) {
           console.error("Error fetching data:", error);

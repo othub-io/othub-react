@@ -22,7 +22,7 @@ const Settings = () => {
       try {
         if (account) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?admin_key=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}`
           )
           console.log(response.data)
           setData(response.data)
@@ -47,7 +47,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?admin_key=${account}&app_name=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&app_name=${inputValue}`
           )
           setData(response.data)
         } catch (error) {
@@ -78,7 +78,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?admin_key=${account}&deleteKey=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&deleteKey=${inputValue}`
           )
           setData(response.data)
         } catch (error) {

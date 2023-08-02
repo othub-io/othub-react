@@ -44,7 +44,7 @@ const AppSettings = (app_data) => {
       const applyFormData = async () => {
         setIsLoading(true)
           await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${JSON.stringify(formData)}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=${JSON.stringify(formData)}`
           );
       };
 
