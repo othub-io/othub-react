@@ -102,7 +102,17 @@ const Settings = () => {
       console.error(error) // Handle the error case
     }
     setInputValue('')
-  }
+    }
+
+    const submitSettings = async () => {
+        try {
+            await axios.get(
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?public_address=${account}&sendScript=yes`
+            )
+        } catch (error) {
+            console.error(error) // Handle the error case
+        }
+    }
 
   let telegramID
   let botToken
@@ -140,8 +150,8 @@ const Settings = () => {
     <div className='settings'>
       {isOpenTelegram && (
         <div className='popup-overlay'>
-          <div className='popup-content'>
-            <button className='close-button' onClick={closePopupTelegram}>
+          <div className='settings-popup-content'>
+            <button className='settings-close-button' onClick={closePopupTelegram}>
               X
             </button>
             <form onSubmit={handleSubmitTelegram}>
@@ -162,9 +172,9 @@ const Settings = () => {
       )}
       {isOpenBot && (
         <div className='popup-overlay'>
-          <div className='popup-content'>
-            <button className='close-button' onClick={closePopupBotToken}>
-              X
+          <div className='settings-popup-content'>
+            <button className='settings-close-button' onClick={closePopupBotToken}>
+                  X
             </button>
             <form onSubmit={handleSubmitBotToken}>
               <label>
@@ -185,7 +195,7 @@ const Settings = () => {
       {data ? (
         <header className='settings-header'>
           <div className='settings-form'>
-            <h1>Account Settings</h1>
+            <h1>Alert Settings</h1>
             <div className='telegram-id'>
               Telegram ID
               <button onClick={openPopupTelegram}>
@@ -212,6 +222,9 @@ const Settings = () => {
               <br></br>
               <div className='settings-info'>{botToken}</div>
             </div>
+              <button onClick={submitSettings} className="submitSettings">
+              <strong>Submit</strong>
+            </button>
           </div>
           <div className='nodesTable-container'>
           {isMobile ? (
