@@ -10,46 +10,39 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
-const AppSettings = (app_data) => {
+const AppSettings = () => {
+  const [data, setData] = useState("");
   const { chain_id, account } = useContext(AccountContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState("");
+  const [appsEnabled, setAppsEnabled] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     async function fetchData() {
       try {
-        let enabled_apps = {}
-        for (let i =0;i < app_data.data.all_apps.length; i++) {
-          let app_name = app_data.data.all_apps[i].app_name
-          enabled_apps[app_name] = false;
+        if (account && (chain_id ==='Origintrail Parachain Testnet' || chain_id ==='Origintrail Parachain Mainnet')) {
+          const response = await axios.get(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
+          );
+          await setData(response.data);
         }
-
-        for (let i =0;i < app_data.data.enabled_apps.length; i++) {
-          let app_name = app_data.data.enabled_apps[i].app_name
-          enabled_apps[app_name] = true;
-        }
-
-        setFormData(enabled_apps)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-     fetchData();
-    }, [app_data.data.all_apps, app_data.data.enabled_apps]);
+    setData("");
+    fetchData();
+  }, [account]);
 
   const applyAppSettings = async () => {
     // Perform the POST request using the entered value
     try {
-      const applyFormData = async () => {
-          setIsLoading(true)
-          console.log(`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=[${JSON.stringify(formData)}]`)
-          await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=[${JSON.stringify(formData)}]`
-          );
-      };
+      setIsLoading(true)
+      const response = await axios.get(
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${JSON.stringify(appsEnabled)}`
+      );
+      await setData(response.data);
 
-      applyFormData();
       setIsLoading(false)
     } catch (error) {
       console.error(error); // Handle the error case
@@ -57,43 +50,39 @@ const AppSettings = (app_data) => {
     //setData('')
   };
 
-
   if (isLoading) {
     return <Loading />;
   }
 
   const handleInputChange = (event) => {
-    console.log(event.target)
     const { name, checked } = event.target;
-    console.log(name)
-    console.log(checked)
-    setFormData((prevFormData) => ({
+    setAppsEnabled((prevFormData) => ({
       ...prevFormData,
       [name]: checked,
     }));
-    console.log('HEYEYEY'+JSON.stringify(formData))
   };
 
   return (
     <div>
       <div className='apps-filter'></div>
-      <div className='apps-list'>
+      {data ? (<div className='apps-list'>
         <form onSubmit={applyAppSettings}>
-          {app_data.data.all_apps.map((app) => (
+          {data.apps_enabled.map((app) => (
             <div key={app.app_name}>
               <label>{app.app_name}</label>
               <input
                   type="checkbox"
                   name={app.app_name}
-                  className={`${app.app_name}-list-item`}
-                  onChange={handleInputChange}
+                  checked={app.checked}
+                  onChange={(event) => handleInputChange(event)}
                 />
             </div>
           ))}
           <br></br>
           <button type='sumbit'>Apply</button>
         </form>
-      </div>
+      </div>) :
+      (<div></div>)}
     </div>
   );
 };

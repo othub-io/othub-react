@@ -28,14 +28,14 @@ const BarChart = ({ data }) => {
   let transfer_count = 0
 
   for(let i = 0; i < data.length;i++){
-    if(data[i].request === 'Mint'){
+    if(data[i].request === 'Mint' && data[i].progress === 'COMPLETE'){
         mint_count = mint_count + 1
     }
 
-    if(data[i].request === 'Update'){
+    if(data[i].request === 'Update' && data[i].progress === 'COMPLETE'){
         update_count = update_count + 1
     }
-    if(data[i].request === 'Transfer'){
+    if(data[i].request === 'Transfer' && data[i].progress === 'COMPLETE'){
         transfer_count = transfer_count + 1
     }
   }
