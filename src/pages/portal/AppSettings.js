@@ -15,7 +15,7 @@ const AppSettings = (app_data) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState("");
 
-  useEffect(() => {
+    useEffect(() => {
     async function fetchData() {
       try {
         let enabled_apps = {}
@@ -35,16 +35,17 @@ const AppSettings = (app_data) => {
       }
     }
 
-    fetchData();
-  }, []);
+     fetchData();
+    }, [app_data.data.all_apps, app_data.data.enabled_apps]);
 
   const applyAppSettings = async () => {
     // Perform the POST request using the entered value
     try {
       const applyFormData = async () => {
-        setIsLoading(true)
+          setIsLoading(true)
+          console.log(`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=[${JSON.stringify(formData)}]`)
           await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=${JSON.stringify(formData)}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?public_address=${account}&network=${chain_id}&enable_apps=[${JSON.stringify(formData)}]`
           );
       };
 
