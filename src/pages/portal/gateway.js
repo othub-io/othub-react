@@ -115,9 +115,10 @@ const Gateway = () => {
         try {
           console.log(filterInput);
 
-          await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${filterInput.apps}`
-          );
+          const response = await axios.get(
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&ual=${filterInput.ual}&app_name=${filterInput.app_name}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
+            );
+          setData(response.data)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -195,7 +196,7 @@ const Gateway = () => {
                 <input
                   type="text"
                   name="app_name"
-                  value={filterInput.publisher}
+                  value={filterInput.app_name}
                   onChange={handleFilterInput}
                   maxLength="100"
                 />

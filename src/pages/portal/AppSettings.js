@@ -49,7 +49,7 @@ const AppSettings = () => {
     try {
       setIsLoading(true)
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${JSON.stringify(appsEnabled)}`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${appsEnabled}`
       );
       await setData(response.data);
       setIsLoading(false)
