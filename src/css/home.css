@@ -888,6 +888,17 @@ button[type='submit']:hover {
   }
 }
 
+@media (max-width: 1280px) {
+.bar-header {
+  height: 40px;
+  width: 280px;
+  border-radius: 5px;
+  margin-left: 75%;
+  position: absolute;
+  padding-top: 40px;
+  }
+}
+
 @media (max-width: 480px) {
   .home {
     text-align: left;
