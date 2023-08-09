@@ -71,19 +71,6 @@
     margin-bottom:3%;
   }
 
-  .gateway-close-button{
-    color: #6168ED;
-    font-weight: bold;
-    border: none;
-    background: none;
-    font-size:20px;
-    margin-top:-15px;
-    width:100%;
-    text-align: right;
-    margin-right:-10px;
-    cursor: pointer;
-  }
-
   .gateway-form button{
     margin-left:30%;
     font-weight:bold;
@@ -196,17 +183,52 @@
   font-size:10px;
 }
 
-.request-popup-content{
-  width:30%;
-  background-color: none;
-  border-radius: 10px 10px 10px 10px;
+.request-popup-content {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    width: 30%;
+    height:90%;
+    margin-right:10px;
 }
 
-.request-popup-content-app-settings{
-  width:50%;
-  height:80%;
-  border-radius: 10px 10px 10px 10px;
-  background-color: #FFFFFF;
+.app-settings-popup-content {
+    width: 50%;
+    height: 80%;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    color: #6168ED;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.app-settings-close-button {
+    position: absolute;
+    right:10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #000000;
+    cursor: pointer;
+    color: #6168ED;
+    font-weight: bold;
+}
+
+.request-close-button {
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #000000;
+    cursor: pointer;
+    color: #6168ED;
+    font-weight: bold;
 }
 
 .txn-created-at{

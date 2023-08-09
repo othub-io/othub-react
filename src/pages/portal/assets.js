@@ -107,7 +107,7 @@ const Assets = () => {
         {isAssetOpen && (
         <div className='popup-overlay'>
           <div className='assets-popup-content'>
-            <button className='close-button' onClick={closeAssetPopup}>
+            <button className='assets-close-button' onClick={closeAssetPopup}>
                     X
             </button>
             <Asset data={inputValue}/>

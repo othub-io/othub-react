@@ -1,11 +1,11 @@
 .apps-list{
     border: 2px solid #6168ED;
-    width:48%;
-    margin-left:1%;
+    width:70%;
     height: 600px;
     position: absolute;
     overflow: auto;
     border-radius: 10px 10px 10px 5px;
+    margin-left:25%;
 }
 
 .app-list-item{
@@ -24,7 +24,7 @@
 
   .app-list-item input[type="checkbox"]{
     width:50%;
-    cursor: 'pointer';
+    cursor: pointer;
     color: #6168ED;
   }
 

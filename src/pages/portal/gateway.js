@@ -143,7 +143,7 @@ const Gateway = () => {
         <div className="popup-overlay">
           <div className="request-popup-content">
             <button
-              className="gateway-close-button"
+              className="request-close-button"
               onClick={closeRequestPopup}
             >
               X
@@ -154,9 +154,9 @@ const Gateway = () => {
       )}
       {isAppSettingsOpen && (
         <div className="popup-overlay">
-          <div className="request-popup-content-app-settings">
+          <div className="app-settings-popup-content">
             <button
-              className="gateway-close-button"
+              className="app-settings-close-button"
               onClick={closeSettingsPopup}
             >
               X

@@ -1,16 +1,12 @@
 .request-data{
-    margin-top:-20px;
     width:100%;
-    height:100%;
+    height:95%;
     white-space: normal;
     overflow: hidden;
     text-align:left;
     overflow: auto;
     padding-right:10px;
-    background-color: #FFFFFF;
-    border-radius: 10px 10px 10px 10px;
-    padding-left:10px;
-    padding-top:10px;
+    margin-top:30px;
     padding-bottom:10px;
   }
 
@@ -105,7 +101,7 @@
 
   .request-ual{
     display:block;
-    position: absolute;
+    position: relative;
     color:#6168ED;
     width: 90%;
     font-size: 15px;
@@ -145,7 +141,7 @@
   }
 
   .data-header{
-    padding-top:40px;
+    padding-top:20px;
     color:#6168ED;
     font-weight: bold;
     margin-left:5%;
@@ -157,7 +153,7 @@
     border: 1px solid #6168ED;
     border-radius: 10px 10px 10px 10px;
     width:90%;
-    height:200px;
+    height:180px;
     overflow: auto;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   }
@@ -204,7 +200,7 @@
     overflow: auto;
     word-wrap: break-word;
     position: relative;
-    height:100px;
+    height:80px;
     background-color: #F5F5F5;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   }
