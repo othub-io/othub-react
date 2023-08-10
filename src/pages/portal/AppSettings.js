@@ -79,18 +79,18 @@ const AppSettings = () => {
           <div className='apps-list'>
           {data.apps_enabled.map((app) => (
             <div key={app.app_name} className='app-list-item'>
-              <label>{app.app_name}</label>
               <input
                   type="checkbox"
                   name={app.app_name}
                   defaultChecked={app.checked}
                   onChange={(event) => handleInputChange(event)}
                   onLoad={(event) => handleInputChange(event)}
-                />
+                  />
+                  <label>{app.app_name}</label>
             </div>
           ))}
           </div>
-          <button className="app-settings-button">Apply</button>
+          <button className="app-settings-button">Save</button>
         </form>
       </div>) :
       (<div></div>)}
