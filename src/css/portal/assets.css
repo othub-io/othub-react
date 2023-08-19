@@ -74,6 +74,7 @@
   font-family: OCR A Std, monospace;
   background-color: #FFFFFF;
   border: none;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .asset-card:hover,
@@ -89,6 +90,7 @@
   cursor: pointer;
   border: none;
   background-color: #F5F5F5;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .assets-result-count{

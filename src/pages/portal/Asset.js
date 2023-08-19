@@ -42,8 +42,8 @@ const Asset = (on_chain) => {
 
   return ( 
     <div className='asset-data'>
-        <div className='minted'>
-            <span>Minted on {formatted_mint_date_fancy}</span>
+        <div className='created'>
+            <span>Created on {formatted_mint_date_fancy}</span>
         </div>
         <div className='token'>
             <span>

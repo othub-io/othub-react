@@ -15,6 +15,7 @@ const AppSettings = () => {
   const { chain_id, account } = useContext(AccountContext);
   const [isLoading, setIsLoading] = useState(false);
   const [appsEnabled, setAppsEnabled] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -25,7 +26,6 @@ const AppSettings = () => {
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
           );
           await setData(response.data);
-          console.log('poop '+JSON.stringify(data.apps_enabled))
           for(let i = 0; i < response.data.apps_enabled.length; i++){
             setAppsEnabled((prevFormData) => ({
               ...prevFormData,
@@ -63,6 +63,21 @@ const AppSettings = () => {
     return <Loading />;
   }
 
+  const applySearch = async () => {
+    try {
+      setIsLoading(true)
+      const response = await axios.get(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings?app_search=${inputValue}`
+      );
+      console.log(`SEARCH RESULT: ${JSON.stringify(response.data)}`)
+      await setData(response.data);
+      setIsLoading(false)
+    } catch (error) {
+      console.error(error); // Handle the error case
+    }
+  };
+
+
   const handleInputChange = (event) => {
     const { name, checked } = event.target;
     setAppsEnabled((prevFormData) => ({
@@ -71,13 +86,39 @@ const AppSettings = () => {
     }));
   };
 
+  const handleSearchChange = (e) => {
+    setInputValue(e.target.value)
+  }
+
   return (
     <div>
       <div className='apps-filter'></div>
       {data ? (<div>
+        <div className='app-search'>
+        <form onSubmit={applySearch}>
+          <button type="submit" className="app-search-button">Search</button>
+          <input
+                  type="text"
+                  placeholder='Search an app...'
+                  onChange={(event) => handleSearchChange(event)}
+                  value={inputValue}
+                  />    
+          </form>
+        </div>
         <form onSubmit={applyAppSettings}>
           <div className='apps-list'>
-          {data.apps_enabled.map((app) => (
+          {data.search_result ? (<div>{data.search_result.map((result) => (
+            <div key={result.app_name} className='app-list-item'>
+              <input
+                  type="checkbox"
+                  name={result.app_name}
+                  defaultChecked={result.checked}
+                  onChange={(event) => handleInputChange(event)}
+                  onLoad={(event) => handleInputChange(event)}
+                  />
+                  <label>{result.app_name}</label>
+            </div>
+          ))}</div>) : (<div>{data.apps_enabled.map((app) => (
             <div key={app.app_name} className='app-list-item'>
               <input
                   type="checkbox"
@@ -88,7 +129,7 @@ const AppSettings = () => {
                   />
                   <label>{app.app_name}</label>
             </div>
-          ))}
+          ))}</div>)}
           </div>
           <button className="app-settings-button">Save</button>
         </form>

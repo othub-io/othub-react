@@ -229,11 +229,11 @@ const Gateway = () => {
                 <input
                   type="radio"
                   name="request"
-                  value="Mint"
+                  value="Create"
                   onChange={handleFilterInput}
                   maxLength="100"
                 />
-                Mints<br></br>
+                Creations<br></br>
                 <input
                   type="radio"
                   name="request"
@@ -283,9 +283,10 @@ const Gateway = () => {
                   onChange={handleFilterInput}
                   maxLength="100"
                 />
-                Rejected<br></br>
+                Rejected<br></br><br></br>
               </div>
               <button type="submit">Apply</button>
+              <br></br>
             </form>
           </div>
           <div className="gateway-nav">
@@ -294,7 +295,7 @@ const Gateway = () => {
             </button>
             <br></br>
             <button type="submit" onClick={openAppSettings}>
-              <strong>App Settings</strong>
+              <strong>Whitelist</strong>
             </button>
           </div>
           <div className="recent-activity"></div>
@@ -334,7 +335,7 @@ const Gateway = () => {
             ))}
           </div>
           <div className="gateway-activity">
-            Activity
+            <strong>Activity</strong>
             <BarChart data={data.raw_txn_header} />
             <br></br>
             <BarChartTXNS data={data.raw_txn_header} />

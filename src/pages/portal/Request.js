@@ -4,7 +4,6 @@ import { AccountContext } from "../../AccountContext";
 import Loading from "../../Loading";
 import DKG from "dkg.js";
 import axios from "axios";
-window.Buffer = window.Buffer || require("buffer").Buffer;
 let ext;
 
 ext = "http";
@@ -179,7 +178,7 @@ const Request = (txn) => {
             </button>
             <form onSubmit={handleRejectTxn}>
               <label>
-                Are you sure you want to permanently reject this asset mint?
+                Are you sure you want to permanently reject this asset creation?
               </label>
               <button type="submit">Yes</button>
             </form>
@@ -193,7 +192,7 @@ const Request = (txn) => {
       <div className="txn">
         <span>{txn.app_name} {'('+txn.txn_id+')'}</span>
       </div>
-      {(txn.request === "Mint" || txn.request === "Update") && (
+      {(txn.request === "Create" || txn.request === "Update") && (
         
         <div className="data">
           <div className="request-ual">
@@ -223,7 +222,7 @@ const Request = (txn) => {
       <div className="description">
         <div className="description-value">{txn.txn_description}</div>
       </div>
-      {(txn.request === "Mint" || txn.request === "Update") && (
+      {(txn.request === "Create" || txn.request === "Update") && (
         <div>
           <div className="request-keywords">
             <div className="request-keywords-header">Keywords:</div>
@@ -235,7 +234,7 @@ const Request = (txn) => {
                 Epochs: 
                 <input
                   type="text"
-                  value={txn.epochs}
+                  value={inputValue ? (inputValue) : (txn.epochs)}
                   onChange={handleEpochChange}
                 />
               </label>
@@ -243,7 +242,7 @@ const Request = (txn) => {
           </div>
         </div>
       )}
-      {txn.progress !== "REJECTED" && (txn.request === "Mint" || txn.request === "Update") && (
+      {txn.progress !== "REJECTED" && (txn.request === "Create" || txn.request === "Update") && (
         <div>
           <div className="estimated-cost-pub">
             Estimated Cost:
@@ -251,9 +250,9 @@ const Request = (txn) => {
           <button
             onClick={() => handleSubmit(txn)}
             type="submit"
-            className="mint-button"
+            className="create-button"
           >
-            <strong>Mint Asset</strong>
+            <strong>Create Asset</strong>
           </button>
           <button
             onClick={() => openPopupRejectTxn(txn)}

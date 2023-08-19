@@ -47,7 +47,7 @@ const BarChartTXNS = ({ data }) => {
       {
         data: counts,
         fill: false,
-        backgroundColor: ['#13B785','#ffff00','#d86262'],
+        backgroundColor: ['#6168ED','#6168ED','#6168ED'],
       },
     ],
   };

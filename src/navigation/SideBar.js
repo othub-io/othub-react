@@ -31,7 +31,7 @@ function SideBar () {
       submenu: [
         { id: 19, 
           path: '/build/settings', 
-          title: 'Settings' },
+          title: 'Dev Settings' },
         {
           id: 20,
           path: 'https://www.postman.com/crimson-crescent-721757/workspace/othub-api',
@@ -49,7 +49,7 @@ function SideBar () {
     {
       id: 14,
       title: 'DKG Tools',
-      icon: 'https://img.icons8.com/ios/50/000000/settings.png',
+      icon: 'https://img.icons8.com/ios/50/000000/hammer.png',
       isOpen: true,
       submenu: [
         { id: 15, path: '/dkgtools/get', title: 'Get' },
@@ -57,15 +57,15 @@ function SideBar () {
         { id: 17, path: '/dkgtools/update', title: 'Update' }
       ]
     },
-    {
-      id: 6,
-      title: 'Vote',
-      icon: 'https://img.icons8.com/ios/50/000000/ballot.png',
-      isOpen: true,
-      submenu: [
-        { id: 9, path: '/vote', title: 'Vote' }
-      ]
-    },
+    // {
+    //   id: 6,
+    //   title: 'Vote',
+    //   icon: 'https://img.icons8.com/ios/50/000000/ballot.png',
+    //   isOpen: true,
+    //   submenu: [
+    //     { id: 9, path: '/vote', title: 'Vote' }
+    //   ]
+    // },
     {
       id: 2,
       title: 'Nodes',
