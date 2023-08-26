@@ -26,7 +26,7 @@ const mainnet_node_options = {
 };
 
 const Request = (txn) => {
-  const { chain_id, account } = useContext(AccountContext);
+  const { setData, setIsRequestOpen, chain_id, account } = useContext(AccountContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -73,21 +73,25 @@ const Request = (txn) => {
         publishOptions = {
           epochsNum: epochs,
           maxNumberOfRetries: 30,
-          frequency: 1,
+          frequency: 2,
+          contentType: "all",
           keywords: txn.keywords,
           blockchain: {
-            name: txn.network,
+              name: txn.network,
+              publicKey: account
           },
         };
       } else {
         publishOptions = {
           epochsNum: epochs,
           maxNumberOfRetries: 30,
-          frequency: 1,
+          frequency: 2,
+          contentType: "all",
           //tokenAmount: ethers.utils.parseEther(txn.trac_fee),
           keywords: txn.keywords,
           blockchain: {
-            name: txn.network,
+              name: txn.network,
+              publicKey: account
           },
         };
       }
@@ -98,17 +102,9 @@ const Request = (txn) => {
         dkg_txn_data["@context"] = "https://schema.org";
       }
 
-      console.log("Asset Data:");
-      console.log(dkg_txn_data);
+      const DkgClient = new DKG(options);
 
-      console.log("Publish Options:");
-      console.log(publishOptions);
-
-      window.DkgClient = new DKG(options);
-      console.log("client initialized");
-      console.log(window.DkgClient);
-
-      await window.DkgClient.asset
+      await DkgClient.asset
         .create(
           {
             public: dkg_txn_data,
@@ -120,11 +116,110 @@ const Request = (txn) => {
           return result;
         });
 
-      setIsLoading(false);
+        const response = await axios.get(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}`
+        );
+        
+        setData(response.data);
+        setIsLoading(false);
+        setIsRequestOpen(false);
     } catch (error) {
       console.log(error);
     }
-  };
+    };
+
+    const handleTransfer = async (txn) => {
+        try {
+            console.log(txn);
+            if (account.toUpperCase() !== txn.public_address.toUpperCase()) {
+                console.log(
+                    `${account} attempted to sign a txn meant for ${txn.public_address}`
+                );
+                return;
+            }
+
+            setIsLoading(true);
+            let options;
+            if (
+                txn.network === "otp::testnet" &&
+                chain_id === "Origintrail Parachain Testnet"
+            ) {
+                options = testnet_node_options;
+            }
+
+            if (
+                txn.network === "otp::mainnet" &&
+                chain_id === "Origintrail Parachain Mainnet"
+            ) {
+                options = mainnet_node_options;
+            }
+
+            if (!options) {
+                return;
+            }
+
+            let epochs = txn.epochs;
+            if (Number(inputValue)) {
+                epochs = inputValue;
+            }
+
+            let transferOptions;
+            console.log(txn.trac_fee);
+            if (!txn.trac_fee) {
+                transferOptions = {
+                    epochsNum: epochs,
+                    maxNumberOfRetries: 30,
+                    frequency: 2,
+                    contentType: "all",
+                    keywords: txn.keywords,
+                    blockchain: {
+                        name: txn.network,
+                        publicKey: account
+                    },
+                };
+            } else {
+                transferOptions = {
+                    epochsNum: epochs,
+                    maxNumberOfRetries: 30,
+                    frequency: 2,
+                    contentType: "all",
+                    //tokenAmount: ethers.utils.parseEther(txn.trac_fee),
+                    keywords: txn.keywords,
+                    blockchain: {
+                        name: txn.network,
+                        publicKey: account
+                    },
+                };
+            }
+
+            let dkg_txn_data = JSON.parse(txn.txn_data);
+
+            if (!dkg_txn_data["@context"]) {
+                dkg_txn_data["@context"] = "https://schema.org";
+            }
+
+            const DkgClient = new DKG(options);
+
+            await DkgClient.asset
+                .transfer(
+                    txn.ual,
+                    JSON.parse(txn.txn_data).receiver,
+                    transferOptions
+                )
+                .then((result) => {
+                    console.log(result);
+                    return result;
+                });
+
+            await axios.get(
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}`
+            );
+            setIsLoading(false);
+            setIsRequestOpen(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
   const handleEpochChange = (e) => {
     setInputValue(e.target.value);
@@ -269,7 +364,7 @@ const Request = (txn) => {
             Estimated Cost:
           </div>
           <button
-            onClick={() => handleSubmit(txn)}
+            onClick={() => handleTransfer(txn)}
             type="submit"
             className="transfer-button"
           >

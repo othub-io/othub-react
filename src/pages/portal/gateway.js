@@ -15,10 +15,7 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 }
 
 const Gateway = () => {
-  const [data, setData] = useState("");
-  const { chain_id, account } = useContext(AccountContext);
-  const [isRequestOpen, setIsRequestOpen] = useState(false);
-  const [isAppSettingsOpen, setIsAppSettingsOpen] = useState(false);
+  const { isAppSettingsOpen, setIsAppSettingsOpen, setData, data, isRequestOpen, setIsRequestOpen, chain_id, account } = useContext(AccountContext);
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",

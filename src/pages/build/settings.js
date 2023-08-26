@@ -11,12 +11,11 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
 }
 
 const Settings = () => {
-  const { setAppIndex, account, chain_id, app_index } = useContext(AccountContext)
-  const [data, setData] = useState('')
+  const { isCreateAppOpen, setCreateAppPopup, data, setData, setAppIndex, account, chain_id, app_index } = useContext(AccountContext)
   const [isOpenDeleteKey, setIsDeleteKey] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const [isCreateAppOpen, setCreateAppPopup] = useState('')
   const [limit, setLimit] = useState('')
+  const [isLoading, setLoading] = useState(false)
   const [filterInput, setFilterInput] = useState({
     ual: "",
     txn_id: "",
@@ -33,7 +32,6 @@ const Settings = () => {
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}`
           )
-          console.log(response.data)
           setData(response.data)
         }
       } catch (error) {
@@ -63,7 +61,7 @@ const Settings = () => {
         try {
           e.preventDefault()
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}&new_app=${e.target.app_name.value}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}&key_count=${e.target.key_count.value}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-app?public_address=${account}&network=${chain_id}&app_name=${e.target.app_name.value}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}&key_count=${e.target.key_count.value}`
           )
           setData(response.data)
         } catch (error) {
@@ -80,12 +78,13 @@ const Settings = () => {
   const clickAppTab = async (app_name,index) => {
     try {
       const fetchData = async () => {
-        try {
-          setAppIndex(index)
+          try {
+
+          await setAppIndex(index)
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}&app_name=${app_name}&app_info=${app_name}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}&app_name=${app_name}`
           )
-          setData(response.data)
+              setData(response.data)
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -100,22 +99,19 @@ const Settings = () => {
   const handleCreateKey = async (index) => {
     // Perform the POST request using the entered value
     try {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}&app_name=${data.appRecords[index].app_name}&create_key=1`
-          )
-          setData(response.data)
-        } catch (error) {
-          console.error('Error fetching data:', error)
-        }
-      }
+      setLoading(true)
+          const fetchData = async () => {
+              const response = await axios.get(
+                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-key?public_address=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&key_count=1`
+              )
+              setData(response.data)
+              setLoading(false)
+          }
 
-      fetchData()
+        fetchData()
     } catch (error) {
       console.error(error) // Handle the error case
     }
-    setInputValue('')
   }
 
   const openPopupDeleteKey = (api_key) => {
@@ -134,7 +130,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}&delete_key=${inputValue}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-key?public_address=${account}&network=${chain_id}&delete_key=${inputValue}`
           )
           setData(response.data)
         } catch (error) {
@@ -183,6 +179,12 @@ const Settings = () => {
     //setData('')
   };
 
+    if (isLoading) {
+        return (
+            <Loading />
+        )
+    }
+
   if (!account) {
     return (
       <div className='keys'>
@@ -193,7 +195,7 @@ const Settings = () => {
     )
   }
 
-  if (data && JSON.stringify(data.appRecords) === '[]') {
+    if (data && JSON.stringify(data.appRecords) === '[]') {
     return (
       <div className='keys'>
         <header className='keys-header'>
@@ -357,7 +359,7 @@ const Settings = () => {
       )}
       {data ? (
         <header>
-          {data.appRecords.map((record,index) => (
+                  {data.appNames.map((record, index) => (
             <button 
               key={record.app_name} 
               className={`build-settings-header-${index}A`} 
@@ -548,16 +550,16 @@ const Settings = () => {
               <br></br>
               
               <div className='app-description'>
-                {data.appRecords[app_index].app_description ? (data.appRecords[app_index].app_description) : ('No description available.') } <br></br>
+                {data.appRecords[0].app_description ? (data.appRecords[0].app_description) : ('No description available.') } <br></br>
               </div>
               <div className='app-built-by'>
-                {`Built by:`} {data.appRecords[app_index].built_by ? (data.appRecords[app_index].built_by) : ('') } 
+                {`Built by:`} {data.appRecords[0].built_by ? (data.appRecords[0].built_by) : ('') } 
               </div>
               <div className='app-website'>
-                {`Website:`} {data.appRecords[app_index].website ? (data.appRecords[app_index].website) : ('') }
+                {`Website:`} {data.appRecords[0].website ? (data.appRecords[0].website) : ('') }
               </div>
               <div className='app-github'>
-                {`Github:`} {data.appRecords[app_index].github ? (data.appRecords[app_index].github) : ('') }
+                {`Github:`} {data.appRecords[0].github ? (data.appRecords[0].github) : ('') }
               </div>
             </div>
             

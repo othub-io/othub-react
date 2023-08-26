@@ -11,8 +11,7 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 }
 
 const AppSettings = () => {
-  const [data, setData] = useState("");
-  const { chain_id, account } = useContext(AccountContext);
+  const { isAppSettingsOpen, setIsAppSettingsOpen, data, setData, chain_id, account } = useContext(AccountContext);
   const [isLoading, setIsLoading] = useState(false);
   const [appsEnabled, setAppsEnabled] = useState("");
   const [inputValue, setInputValue] = useState("");
@@ -53,6 +52,7 @@ const AppSettings = () => {
       );
       await setData(response.data);
       setIsLoading(false)
+      setIsAppSettingsOpen(false)
     } catch (error) {
       console.error(error); // Handle the error case
     }

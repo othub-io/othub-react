@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\css",
+    "\\src\\css\\build",
+    "\\src\\css\\portal",
+    "\\src\\demo",
+    "\\src\\pages",
+    "\\src\\pages\\build",
+    "\\src\\pages\\portal"
+  ],
+  "SelectedNode": "\\src\\pages\\portal\\Request.js",
+  "PreviewInSolutionExplorer": false
+}
