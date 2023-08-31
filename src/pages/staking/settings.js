@@ -11,7 +11,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
 }
 
 const Settings = () => {
-  const { account } = useContext(AccountContext)
+  const { account, chain_id } = useContext(AccountContext)
   const [data, setData] = useState('')
   const [isOpenTelegram, setIsOpenTelegram] = useState(false)
   const [isOpenBot, setIsOpenBot] = useState(false)
@@ -132,13 +132,23 @@ const Settings = () => {
 
   if (!account) {
     return (
-      <div className='settings'>
-        <header className='settings-header'>
+      <div className='keys'>
+        <header className='keys-header'>
           Please connect your admin wallet to view your nodes.
         </header>
       </div>
     )
   }
+
+    if (chain_id !== 'Origintrail Parachain Testnet' && chain_id !== 'Origintrail Parachain Mainnet') {
+        return (
+            <div className="keys">
+                <header className="keys-header">
+                    Connected with an unsupported chain. Please switch to Origintrail Parachain Testnet or Mainnet.
+                </header>
+            </div>
+        )
+    }
 
   if (isLoading) {
     return (

@@ -16,6 +16,8 @@ const Settings = () => {
   const [inputValue, setInputValue] = useState('')
   const [limit, setLimit] = useState('')
   const [isLoading, setLoading] = useState(false)
+  const [isDeleteApp, setIsDeleteApp] = useState(false)
+  const [isEditAppOpen, setOpenEditApp] = useState(false)
   const [filterInput, setFilterInput] = useState({
     ual: "",
     txn_id: "",
@@ -63,7 +65,8 @@ const Settings = () => {
           const response = await axios.get(
               `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-app?public_address=${account}&network=${chain_id}&app_name=${e.target.app_name.value}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}&key_count=${e.target.key_count.value}`
           )
-          setData(response.data)
+            setData(response.data)
+            setCreateAppPopup(false);
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -117,11 +120,29 @@ const Settings = () => {
   const openPopupDeleteKey = (api_key) => {
     setInputValue(api_key)
     setIsDeleteKey(true)
-  }
+    }
+
+    const openPopupDeleteApp = (app_name) => {
+        setInputValue(app_name)
+        setIsDeleteApp(true)
+    }
+
+    const openEditApp = (app_name) => {
+        setInputValue(app_name)
+        setOpenEditApp(true)
+    }
 
   const closePopupDeleteKey = () => {
     setIsDeleteKey(false)
-  }
+    }
+
+    const closePopupDeleteApp = () => {
+        setIsDeleteApp(false)
+    }
+
+    const closeEditApp = () => {
+        setOpenEditApp(false)
+    }
 
   const handleDeleteKey = async (e) => {
     e.preventDefault()
@@ -145,7 +166,55 @@ const Settings = () => {
     } catch (error) {
       console.error(error) // Handle the error case
     }
-  }
+    }
+
+    const handleDeleteApp = async (e) => {
+        e.preventDefault()
+        // Perform the POST request using the entered value
+        try {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get(
+                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-app?public_address=${account}&network=${chain_id}&app_name=${inputValue}`
+                    )
+                    setData(response.data)
+                } catch (error) {
+                    console.error('Error fetching data:', error)
+                }
+            }
+
+            fetchData()
+            setIsDeleteApp(false)
+            setInputValue('')
+
+        } catch (error) {
+            console.error(error) // Handle the error case
+        }
+    }
+
+    const handleEditApp = async (e) => {
+        e.preventDefault()
+        // Perform the POST request using the entered value
+        try {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get(
+                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-app?public_address=${account}&network=${chain_id}&app_name=${inputValue}`
+                    )
+                    setData(response.data)
+                } catch (error) {
+                    console.error('Error fetching data:', error)
+                }
+            }
+
+            fetchData()
+            setOpenEditApp(false)
+            setInputValue('')
+
+        } catch (error) {
+            console.error(error) // Handle the error case
+        }
+    }
 
   const handleFilterInput = (e) => {
     const { name, value } = e.target;
@@ -193,7 +262,17 @@ const Settings = () => {
         </header>
       </div>
     )
-  }
+   }
+
+    if (chain_id !== 'Origintrail Parachain Testnet' && chain_id !== 'Origintrail Parachain Mainnet') {
+        return (
+            <div className="keys">
+                <header className="keys-header">
+                    Connected with an unsupported chain. Please switch to Origintrail Parachain Testnet or Mainnet.
+                </header>
+            </div>
+        )
+    }
 
     if (data && JSON.stringify(data.appRecords) === '[]') {
     return (
@@ -290,7 +369,66 @@ const Settings = () => {
             </form>
           </div>
         </div>
-      )}
+          )}
+          {isDeleteApp && (
+              <div className='popup-overlay'>
+                  <div className='keys-popup-content'>
+                      <button className='keys-close-button' onClick={closePopupDeleteApp}>
+                          X
+                      </button>
+                      <form onSubmit={handleDeleteApp}>
+                          <label>
+                              Are you sure you want to delete this App? You will lose all txn data for this app.
+                          </label>
+                          <button type='submit'>Yes</button>
+                      </form>
+                  </div>
+              </div>
+          )}
+          {isEditAppOpen && (
+              <div className='popup-overlay'>
+                  <div className='keys-popup-content'>
+                      <button className='keys-close-button' onClick={closeEditApp}>
+                          X
+                      </button>
+                      <form onSubmit={handleEditApp}>
+                          <div className="ea-app-description">
+                              App Description
+                              <br></br>
+                              <input
+                                  type="text"
+                                  name='app-description'
+                              />
+                          </div>
+                          <div className="ea-built-by">
+                              Built by
+                              <br></br>
+                              <input
+                                  type="text"
+                                  name='built-by'
+                              />
+                          </div>
+                          <div className="ea-website">
+                              Website
+                              <br></br>
+                              <input
+                                  type="text"
+                                  name='website'
+                              />
+                          </div>
+                          <div className="ea-github">
+                              Github
+                              <br></br>
+                              <input
+                                  type="text"
+                                  name='github'
+                              />
+                          </div>
+                          <button type='submit'>Save</button>
+                      </form>
+                  </div>
+              </div>
+          )}
       {data && isCreateAppOpen && (
         <div className='popup-overlay'>
           <div className='create-app-popup-content'>
@@ -538,6 +676,16 @@ const Settings = () => {
             style = {app_index >= 0 ? ({border: '1px solid #6168ED'}): ({})}
           >
             <div className='app-details'>
+                          <button onClick={() => openEditApp(data.appNames[app_index].app_name)}>
+                              <img alt='pencil' src="https://img.icons8.com/ios/30/000000/pencil.png" />
+                          </button>
+                          <button >
+                              <img alt='chart' src="https://img.icons8.com/ios/30/000000/line-chart.png" />
+                          </button>
+                          <button onClick={() => openPopupDeleteApp(data.appNames[app_index].app_name)}>
+                              <img alt='trash' src="https://img.icons8.com/material-rounded/30/000000/trash.png" />
+                          </button>
+                          <br></br>
               <div className='app-usage'>
                 {`Users`}<br></br> <span>{data.users.length ? (data.users.length) : (0) }</span>
               </div>
@@ -633,12 +781,6 @@ const Settings = () => {
               </button>
             ))}
           </div>
-          {/* <div className="app-activity">
-            <strong>Activity</strong>
-            <BarChart data={data.raw_txn_header} />
-            <br></br>
-            <BarChartTXNS data={data.raw_txn_header} />
-          </div> */}
         </header>
       ) : (
         <Loading />

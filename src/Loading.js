@@ -1,11 +1,15 @@
 import React from 'react'
 import './css/effects/Loading.css' // Import the CSS file for styling (see Step 3)
 
-const Loading = () => {
+const Loading = (data) => {
+    let text = 'Loading...'
+    if (JSON.stringify(data) !== '{}') {
+        text = JSON.stringify(data)
+    }
   return (
     <div className='loading-overlay'>
       <div className='loading-spinner'></div>
-      <p className='loading-text'>Loading...</p>
+          <p className='loading-text'>{text}</p>
     </div>
   )
 }

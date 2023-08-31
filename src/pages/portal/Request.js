@@ -26,7 +26,7 @@ const mainnet_node_options = {
 };
 
 const Request = (txn) => {
-  const { setData, setIsRequestOpen, chain_id, account } = useContext(AccountContext);
+    const { setData, setIsRequestOpen, isRequestOpen, chain_id, account } = useContext(AccountContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -34,7 +34,6 @@ const Request = (txn) => {
 
   const handleSubmit = async (txn) => {
     try {
-      console.log(txn);
       if (account.toUpperCase() !== txn.public_address.toUpperCase()) {
         console.log(
           `${account} attempted to sign a txn meant for ${txn.public_address}`
@@ -68,7 +67,6 @@ const Request = (txn) => {
       }
 
       let publishOptions;
-      console.log(txn.trac_fee);
       if (!txn.trac_fee) {
         publishOptions = {
           epochsNum: epochs,
@@ -103,8 +101,7 @@ const Request = (txn) => {
       }
 
       const DkgClient = new DKG(options);
-
-      await DkgClient.asset
+        await DkgClient.asset
         .create(
           {
             public: dkg_txn_data,
@@ -124,13 +121,14 @@ const Request = (txn) => {
         setIsLoading(false);
         setIsRequestOpen(false);
     } catch (error) {
-      console.log(error);
+        console.log(error);
+        setIsLoading(false);
+        setIsRequestOpen(false);
     }
     };
 
     const handleTransfer = async (txn) => {
         try {
-            console.log(txn);
             if (account.toUpperCase() !== txn.public_address.toUpperCase()) {
                 console.log(
                     `${account} attempted to sign a txn meant for ${txn.public_address}`
@@ -218,6 +216,8 @@ const Request = (txn) => {
             setIsRequestOpen(false);
         } catch (error) {
             console.log(error);
+            setIsLoading(false);
+            setIsRequestOpen(false);
         }
     };
 
@@ -258,7 +258,12 @@ const Request = (txn) => {
 
   if (isLoading) {
     return <Loading />;
-  }
+    }
+
+    if (isLoading && isRequestOpen) {
+        let text = 'Awaiting approval of transaction 1 of 2... '
+        return <Loading data={text} />;
+    }
 
   return (
     <div className="request-data">
@@ -337,18 +342,37 @@ const Request = (txn) => {
           </div>
         </div>
       )}
-      {txn.progress !== "REJECTED" && (txn.request === "Create" || txn.request === "Update") && (
         <div>
           <div className="estimated-cost-pub">
             Estimated Cost:
-          </div>
-          <button
-            onClick={() => handleSubmit(txn)}
-            type="submit"
-            className="create-button"
-          >
-            <strong>Create Asset</strong>
-          </button>
+              </div>
+          {txn.progress === "PENDING" && txn.request === "Create" && (
+              <button
+                onClick={() => handleSubmit(txn)}
+                type="submit"
+                className="create-button"
+              >
+                <strong>Create Asset</strong>
+              </button>
+              )}
+              {txn.progress === "PENDING" && txn.request === "Update" && (
+                  <button
+                      onClick={() => handleSubmit(txn)}
+                      type="submit"
+                      className="create-button"
+                  >
+                      <strong>Update Asset</strong>
+                  </button>
+              )}
+              {txn.progress === "PENDING" && txn.request === "Transfer" && (
+                  <button
+                      onClick={() => handleSubmit(txn)}
+                      type="submit"
+                      className="create-button"
+                  >
+                      <strong>Transfer Asset</strong>
+                  </button>
+              )}
           <button
             onClick={() => openPopupRejectTxn(txn)}
             type="submit"
@@ -357,8 +381,7 @@ const Request = (txn) => {
             <strong>Reject</strong>
           </button>
         </div>
-      )}
-      {(txn.progress !== "REJECTED" && txn.request === "Transfer") && (
+      {(txn.progress === "PENDING" && txn.request === "Transfer") && (
         <div>
           <div className="estimated-cost-transfer">
             Estimated Cost:

@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const api_key = 'sxtX4CDKSI1ulij8HjPtl5B9UiYtPF'
+const api_key = '5OTzQoQcNcOLgcKNCYf5ioOCrXFXtU'
 
 const queue_txns = async (api_key) => {
     //response = await axios.get(
@@ -36,8 +36,8 @@ const queue_txns = async (api_key) => {
     response = await axios.get(
         `http://localhost:5575/otp/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
             "@type" : "CreativeWork",
-            "name" : "Love letter to Luke",
-            "text" : "Dear Luke, U r 2 cute."
+            "name" : "Love letter to BRX",
+            "text" : "Dear BRX, U r 2 cute."
 }&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
     )
     console.log(`----------CREATE------------`)

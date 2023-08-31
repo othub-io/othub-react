@@ -36,7 +36,7 @@ const Gateway = () => {
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
           );
-          console.log(response.data);
+      
           await setData(response.data);
 
           if (provided_txn_id) {
@@ -60,23 +60,23 @@ const Gateway = () => {
 
   if (!account) {
     return (
-      <div className="gateway">
-        <header className="gateway-header">
+      <div className="keys">
+        <header className="keys-header">
           Please connect your wallet to unlock your portal.
         </header>
       </div>
     );
   }
 
-  if(chain_id !=='Origintrail Parachain Testnet' && chain_id !=='Origintrail Parachain Mainnet'){
-    return (
-    <div className="gateway">
-        <header className="gateway-header">
-          Connected with an unsupported chain. Please switch to Origintrail Parachain Testnet or Mainnet.
-        </header>
-      </div>
-    )
-  }
+    if (chain_id !== 'Origintrail Parachain Testnet' && chain_id !== 'Origintrail Parachain Mainnet') {
+        return (
+            <div className="keys">
+                <header className="keys-header">
+                    Connected with an unsupported chain. Please switch to Origintrail Parachain Testnet or Mainnet.
+                </header>
+            </div>
+        )
+    }
 
   const openRequestPopup = (txn) => {
     setInputValue(txn);
@@ -125,7 +125,6 @@ const Gateway = () => {
     } catch (error) {
       console.error(error); // Handle the error case
     }
-    //setData('')
   };
 
   const openInventory = () => {
@@ -133,7 +132,6 @@ const Gateway = () => {
     //window.open(`${process.env.WEB_HOST}/portal/gateway/inventory`, '_blank');
   };
 
-  console.log(data)
   return (
     <div className="gateway">
       {isRequestOpen && (

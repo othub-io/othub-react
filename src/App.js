@@ -10,7 +10,6 @@ import Assets from './pages/portal/assets'
 import Nodes from './pages/nodes'
 import NodeSettings from './pages/staking/settings.js'
 import StakingDashboard from './pages/staking/dashboard.js'
-import Vote from './pages/vote.js'
 import Charts from './pages/staking/charts'
 import DKGGet from './pages/dkgtools/get.js'
 import DKGPublish from './pages/dkgtools/publish.js'
@@ -31,7 +30,6 @@ function App () {
           <Route path='/nodes' element={<Nodes />} />
           <Route path='/staking/settings' element={<NodeSettings />} />
           <Route path='/staking/dashboard-dev' element={<StakingDashboard />} />
-          <Route path='/vote-dev' element={<Vote />} />
           <Route path='/charts-dev' element={<Charts />} />
           <Route path='/dkgtools/get-dev' element={<DKGGet />} />
           <Route path='/dkgtools/publish-dev' element={<DKGPublish />} />
