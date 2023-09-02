@@ -26,21 +26,14 @@ const mainnet_node_options = {
 };
 
 const Request = (txn) => {
-    const { setData, setIsRequestOpen, isRequestOpen, chain_id, account } = useContext(AccountContext);
+  const { setData, setIsRequestOpen, isRequestOpen, chain_id, account } = useContext(AccountContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   txn = JSON.parse(txn.data);
 
-  const handleSubmit = async (txn) => {
+  const handleCreate = async (txn) => {
     try {
-      if (account.toUpperCase() !== txn.public_address.toUpperCase()) {
-        console.log(
-          `${account} attempted to sign a txn meant for ${txn.public_address}`
-        );
-        return;
-      }
-
       setIsLoading(true);
       let options;
       if (
@@ -66,33 +59,17 @@ const Request = (txn) => {
         epochs = inputValue;
       }
 
-      let publishOptions;
-      if (!txn.trac_fee) {
-        publishOptions = {
-          epochsNum: epochs,
-          maxNumberOfRetries: 30,
-          frequency: 2,
-          contentType: "all",
-          keywords: txn.keywords,
-          blockchain: {
-              name: txn.network,
-              publicKey: account
-          },
+        let publishOptions = {
+            epochsNum: epochs,
+            maxNumberOfRetries: 30,
+            frequency: 2,
+            contentType: "all",
+            keywords: txn.keywords,
+            blockchain: {
+                name: txn.network,
+                publicKey: account
+            },
         };
-      } else {
-        publishOptions = {
-          epochsNum: epochs,
-          maxNumberOfRetries: 30,
-          frequency: 2,
-          contentType: "all",
-          //tokenAmount: ethers.utils.parseEther(txn.trac_fee),
-          keywords: txn.keywords,
-          blockchain: {
-              name: txn.network,
-              publicKey: account
-          },
-        };
-      }
 
       let dkg_txn_data = JSON.parse(txn.txn_data);
 
@@ -125,6 +102,78 @@ const Request = (txn) => {
         setIsLoading(false);
         setIsRequestOpen(false);
     }
+    };
+
+    const handleUpdate = async (txn) => {
+        try {
+            setIsLoading(true);
+            let options;
+            if (
+                txn.network === "otp::testnet" &&
+                chain_id === "Origintrail Parachain Testnet"
+            ) {
+                options = testnet_node_options;
+            }
+
+            if (
+                txn.network === "otp::mainnet" &&
+                chain_id === "Origintrail Parachain Mainnet"
+            ) {
+                options = mainnet_node_options;
+            }
+
+            if (!options) {
+                return;
+            }
+
+            let epochs = txn.epochs;
+            if (Number(inputValue)) {
+                epochs = inputValue;
+            }
+
+            let updateOptions = {
+                epochsNum: epochs,
+                maxNumberOfRetries: 30,
+                frequency: 2,
+                contentType: "all",
+                keywords: txn.keywords,
+                blockchain: {
+                    name: txn.network,
+                    publicKey: account
+                },
+            };
+
+            let dkg_txn_data = JSON.parse(txn.txn_data);
+
+            if (!dkg_txn_data["@context"]) {
+                dkg_txn_data["@context"] = "https://schema.org";
+            }
+
+            const DkgClient = new DKG(options);
+            await DkgClient.asset
+                .update(
+                    {
+                        public: dkg_txn_data,
+                    },
+                    updateOptions
+                )
+                .then((result) => {
+                    console.log({ assertionId: result.assertionId, UAL: result.UAL });
+                    return result;
+                });
+
+            const response = await axios.get(
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}`
+            );
+
+            setData(response.data);
+            setIsLoading(false);
+            setIsRequestOpen(false);
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false);
+            setIsRequestOpen(false);
+        }
     };
 
     const handleTransfer = async (txn) => {
@@ -161,34 +210,17 @@ const Request = (txn) => {
                 epochs = inputValue;
             }
 
-            let transferOptions;
-            console.log(txn.trac_fee);
-            if (!txn.trac_fee) {
-                transferOptions = {
-                    epochsNum: epochs,
-                    maxNumberOfRetries: 30,
-                    frequency: 2,
-                    contentType: "all",
-                    keywords: txn.keywords,
-                    blockchain: {
-                        name: txn.network,
-                        publicKey: account
-                    },
-                };
-            } else {
-                transferOptions = {
-                    epochsNum: epochs,
-                    maxNumberOfRetries: 30,
-                    frequency: 2,
-                    contentType: "all",
-                    //tokenAmount: ethers.utils.parseEther(txn.trac_fee),
-                    keywords: txn.keywords,
-                    blockchain: {
-                        name: txn.network,
-                        publicKey: account
-                    },
-                };
-            }
+            let transferOptions = {
+                epochsNum: epochs,
+                maxNumberOfRetries: 30,
+                frequency: 2,
+                contentType: "all",
+                keywords: txn.keywords,
+                blockchain: {
+                    name: txn.network,
+                    publicKey: account
+                },
+            };
 
             let dkg_txn_data = JSON.parse(txn.txn_data);
 
@@ -263,6 +295,25 @@ const Request = (txn) => {
     if (isLoading && isRequestOpen) {
         let text = 'Awaiting approval of transaction 1 of 2... '
         return <Loading data={text} />;
+    }
+
+    if (account.toUpperCase() !== txn.public_address.toUpperCase()) {
+        console.log(
+            `${account} attempted to sign a txn meant for ${txn.public_address}`
+        );
+        return (
+            <div className="invalid">
+                Invalid account.
+            </div>
+        )
+    }
+
+    if ((chain_id === 'Origintrail Parachain Testnet' && txn.network !== 'otp::testnet') || (chain_id === 'Origintrail Parachain Mainnet' && txn.network !== 'otp::mainnet')) {
+        return (
+            <div className="invalid">
+                Invalid network.
+            </div>
+        )
     }
 
   return (
@@ -345,63 +396,48 @@ const Request = (txn) => {
         <div>
           <div className="estimated-cost-pub">
             Estimated Cost:
-              </div>
-          {txn.progress === "PENDING" && txn.request === "Create" && (
-              <button
-                onClick={() => handleSubmit(txn)}
-                type="submit"
-                className="create-button"
-              >
-                <strong>Create Asset</strong>
-              </button>
+          </div>
+              {txn.progress === "PENDING" && txn.request === "Create" && (
+                  <button
+                    onClick={() => handleCreate(txn)}
+                    type="submit"
+                    className="create-button"
+                  >
+                    <strong>Create Asset</strong>
+                  </button>
               )}
+
               {txn.progress === "PENDING" && txn.request === "Update" && (
                   <button
-                      onClick={() => handleSubmit(txn)}
+                      onClick={() => handleUpdate(txn)}
                       type="submit"
                       className="create-button"
                   >
                       <strong>Update Asset</strong>
                   </button>
               )}
+
               {txn.progress === "PENDING" && txn.request === "Transfer" && (
                   <button
-                      onClick={() => handleSubmit(txn)}
+                      onClick={() => handleTransfer(txn)}
                       type="submit"
                       className="create-button"
                   >
                       <strong>Transfer Asset</strong>
                   </button>
               )}
-          <button
-            onClick={() => openPopupRejectTxn(txn)}
-            type="submit"
-            className="cancel-button"
-          >
-            <strong>Reject</strong>
-          </button>
-        </div>
-      {(txn.progress === "PENDING" && txn.request === "Transfer") && (
-        <div>
-          <div className="estimated-cost-transfer">
-            Estimated Cost:
           </div>
-          <button
-            onClick={() => handleTransfer(txn)}
-            type="submit"
-            className="transfer-button"
-          >
-            <strong>Transfer Asset</strong>
-          </button>
-          <button
-            onClick={() => openPopupRejectTxn(txn)}
-            type="submit"
-            className="cancel-button"
-          >
-            <strong>Reject</strong>
-          </button>
-        </div>
-      )}
+
+          {txn.progress !== "COMPLETE" && (
+              <button
+                  onClick={() => openPopupRejectTxn(txn)}
+                  type="submit"
+                  className="reject-button"
+              >
+                  <strong>Reject</strong>
+              </button>
+          )}
+
     </div>
   );
 };

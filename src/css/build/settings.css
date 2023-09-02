@@ -165,6 +165,8 @@
         overflow: auto;
         height: 7rem;
         padding-bottom: 10px;
+        width:500px;
+        word-wrap:break-word;
     }
 
   .app-built-by{

@@ -199,7 +199,7 @@ const Settings = () => {
             const fetchData = async () => {
                 try {
                     const response = await axios.get(
-                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-app?public_address=${account}&network=${chain_id}&app_name=${inputValue}`
+                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/edit-app?public_address=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}`
                     )
                     setData(response.data)
                 } catch (error) {
@@ -233,7 +233,7 @@ const Settings = () => {
           console.log(filterInput);
 
           const response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&ual=${filterInput.ual}&app_name=${filterInput.app_name}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/filter?account=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&ual=${filterInput.ual}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
             );
           setData(response.data)
         } catch (error) {
@@ -397,7 +397,7 @@ const Settings = () => {
                               <br></br>
                               <input
                                   type="text"
-                                  name='app-description'
+                                  name='app_description'
                               />
                           </div>
                           <div className="ea-built-by">
@@ -405,7 +405,7 @@ const Settings = () => {
                               <br></br>
                               <input
                                   type="text"
-                                  name='built-by'
+                                  name='built_by'
                               />
                           </div>
                           <div className="ea-website">

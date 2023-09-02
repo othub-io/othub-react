@@ -40,13 +40,13 @@ const Gateway = () => {
           await setData(response.data);
 
           if (provided_txn_id) {
-            console.log(provided_txn_id);
             const txn_id_response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?txn_id=${provided_txn_id}&network=${chain_id}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?txn_id=${provided_txn_id}`
             );
 
-            await setInputValue(txn_id_response.data.txn_header[0]);
-            await setIsRequestOpen(true);
+              await setInputValue(txn_id_response.data.txn_header[0]);
+              await setIsRequestOpen(true);
+
           }
         }
       } catch (error) {

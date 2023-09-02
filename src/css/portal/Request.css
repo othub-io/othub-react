@@ -51,29 +51,30 @@
     transform: scale(0.95);
   }
 
-  .create-button{
-    padding-top:40px;
-    margin-left:30%;
-    font-size:18px;
-    margin-right:20px;
+.create-button {
+    padding-top: 40px;
+    margin-left: 25%;
+    font-size: 18px;
+    margin-right: 20px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-    margin-bottom:20px;
-  }
+    position:absolute;
+}
 
-  .transfer-button{
-    padding-top:40px;
-    margin-left:25%;
-    font-size:18px;
-    margin-right:20px;
+.transfer-button {
+    padding-top: 40px;
+    margin-left: 25%;
+    font-size: 18px;
+    margin-right: 20px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-    margin-bottom:20px;
-  }
+    margin-bottom: 20px;
+    position: absolute;
+}
 
-  .cancel-button{
-    padding-top:40px;
+  .reject-button{
     font-size:18px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-bottom:20px;
+    margin-left:55%;
   }
 
   .request-PENDING-progress{
@@ -245,6 +246,13 @@
     color: #6168ED;
     font-weight: bold;
     cursor: pointer;
+  }
+
+  .invalid{
+      color: red;
+      font-weight:bold;
+      margin-top:50px;
+      font-size:18px;
   }
 
   @media(max-width:1366px){

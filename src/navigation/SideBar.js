@@ -31,7 +31,7 @@ function SideBar () {
       submenu: [
         { id: 19, 
           path: '/build/settings', 
-          title: 'Dev Settings' },
+          title: 'App Settings' },
         {
           id: 20,
           path: 'https://www.postman.com/crimson-crescent-721757/workspace/othub-api',

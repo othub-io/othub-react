@@ -4,12 +4,12 @@
     "\\src",
     "\\src\\css",
     "\\src\\css\\build",
-    "\\src\\css\\portal",
-    "\\src\\demo",
+    "\\src\\navigation",
     "\\src\\pages",
     "\\src\\pages\\build",
-    "\\src\\pages\\portal"
+    "\\src\\pages\\portal",
+    "\\src\\pages\\staking"
   ],
-  "SelectedNode": "\\src\\pages\\portal\\Request.js",
+  "SelectedNode": "\\src\\pages\\build\\settings.js",
   "PreviewInSolutionExplorer": false
 }
