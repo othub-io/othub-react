@@ -16,6 +16,7 @@ const AppSettings = () => {
     const [appsEnabled, setAppsEnabled] = useState("");
     const [inputValue, setInputValue] = useState("");
     const [searchResult, setSearchResult] = useState("");
+    const [clickedIndex, setClickedIndex] = useState("");
 
     useEffect(() => {
         async function fetchData() {
@@ -98,6 +99,11 @@ const AppSettings = () => {
         setInputValue(e.target.value)
     }
 
+    const handleAppClick = (index) => {
+        console.log(index)
+        setClickedIndex(index);
+    }
+
     return (
         <div>
             <div className='apps-filter'></div>
@@ -115,18 +121,28 @@ const AppSettings = () => {
                 </div>
                 <form onSubmit={applyAppSettings}>
                     <div className='apps-list'>
-                        {searchResult.search_result ? (<div>{searchResult.search_result.map((result,index) => (
-                            <div key={result.app_name} className='app-list-item'>
-                                <input
-                                    type="checkbox"
-                                    name={result.app_name}
-                                    defaultChecked={searchResult.apps_enabled[index].checked}
-                                    onChange={(event) => handleInputChange(event)}
-                                    onLoad={(event) => handleInputChange(event)}
-                                />
-                                <label>{result.app_name}</label>
+                        {searchResult.search_result ? (<div>{searchResult.search_result.map((result, index) => (
+                            <div>
+                                <div key={result.app_name} onClick={() => handleAppClick(index)}  className='app-list-item'>
+                                    <input
+                                        type="checkbox"
+                                        name={result.app_name}
+                                        defaultChecked={searchResult.apps_enabled[index].checked}
+                                        onChange={(event) => handleInputChange(event)}
+                                        onLoad={(event) => handleInputChange(event)}
+                                    />
+                                    <label>{result.app_name}</label>
+                                </div>
+                                <div>
+                                    <span>{result.app_description}</span>
+                                    <span>{result.website}</span>
+                                    <span>{result.github}</span>
+                                    <span>{result.built_by}</span>
+                                </div>
+                                
                             </div>
-                        ))}</div>) : (<div>{data.apps_enabled.map((app) => (
+                        ))}
+                        </div>) : (<div>{data.apps_enabled.map((app) => (
                             <div key={app.app_name} className='app-list-item'>
                                 <input
                                     type="checkbox"

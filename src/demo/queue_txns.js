@@ -33,27 +33,32 @@ const queue_txns = async (api_key) => {
 //    console.log(`----------GET STATE ISSUER------------`)
 //    console.log(response.data)
 
+//    response = await axios.get(
+//        `http://localhost:5575/otp/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
+//            "@type" : "CreativeWork",
+//            "title" : "Love letter to Luke",
+//            "content" : "Dear Luke, U r 2 cute. Tehe."
+//}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+//    )
+//    console.log(`----------CREATE------------`)
+//    console.log(response.data)
+
+//    response = await axios.get(
+//        `http://localhost:5575/otp/dkg/update?api_key=${api_key}&network=otp::mainnet&txn_data={
+//  "@type": "CreativeWork",
+//  "title": "Love letter to Luke",
+//  "content": "Dear Luke, U r 2 cute. Tehe.",
+//  "author": "Cosmi <3"
+//}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d&ual=did:dkg:otp/0x5cAC41237127F94c2D21dAe0b14bFeFa99880630/619273        `
+//      )
+//    console.log(`----------UPDATE------------`)
+//    console.log(response.data)
+
     response = await axios.get(
-        `http://localhost:5575/otp/dkg/create?api_key=${api_key}&network=otp::mainnet&txn_data={
-            "@type" : "CreativeWork",
-            "title" : "Love letter to Luke",
-            "content" : "Dear Luke, U r 2 cute. Tehe."
-}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
-    )
-    console.log(`----------CREATE------------`)
+        `http://localhost:5575/otp/dkg/transfer?api_key=${api_key}&network=otp::mainnet&ual=did:dkg:otp/0x5cAC41237127F94c2D21dAe0b14bFeFa99880630/619273&receiver=0x974e658A243a5Ec0cE1a0a4317D42f48dBB05Fbd&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d        `
+      )
+    console.log(`----------TRANSFER------------`)
     console.log(response.data)
-
-    //response = await axios.get(
-    //    `http://localhost:5575/otp/dkg/update?api_key=${api_key}&network=otp::testnet&txn_data={"author":"cosmi"}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/414880&trac_fee=0.0001        `
-    //  )
-    //console.log(`----------UPDATE------------`)
-    //console.log(response.data)
-
-    //response = await axios.get(
-    //    `http://localhost:5575/otp/dkg/transfer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/406325&receiver=0x3E4c39228BfcBfB98EdbC1905A6C7716cD5303f2&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d        `
-    //  )
-    //console.log(`----------TRANSFER------------`)
-    //console.log(response.data)
 
     //response = await axios.get(
     //    `http://localhost:5575/otp/dkg/query?api_key=${api_key}&query=prefix schema: <https://schema.org/>select ?s ?modelName where {?s schema:model ?modelName}&network=otp::testnet`

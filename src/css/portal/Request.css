@@ -506,6 +506,10 @@
       margin-left:5%;
       display: inline-block;
     }
+
+    .estimated-cost-pub{
+        display:none;
+    }
   
     .payment-header{
       color:#6168ED;
@@ -559,6 +563,40 @@
       color:#6168ED;
       font-size: 14px;
       font-weight: bold;
+    }
+
+    .create-button {
+        padding-top: 40px;
+        margin-left: 14%;
+        font-size: 14px;
+        margin-right: 20px;
+        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        display: inline-block;
+    }
+
+    .reject-button {
+        position: absolute;
+        display: inline-block;
+        margin-top: -100px;
+        font-size: 14px;
+    }
+
+    .request-ual{
+        margin-left:16px;
+    }
+
+    .request-ual span{
+        font-size:12px;
+    }
+
+    .txn {
+        padding-top:10px;
+        height:30px;
+    }
+
+    .txn span{
+        font-size: 14px;
     }
   }
 

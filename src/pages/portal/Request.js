@@ -152,6 +152,7 @@ const Request = (txn) => {
             const DkgClient = new DKG(options);
             await DkgClient.asset
                 .update(
+                    txn.ual,
                     {
                         public: dkg_txn_data,
                     },
@@ -241,9 +242,10 @@ const Request = (txn) => {
                     return result;
                 });
 
-            await axios.get(
+            const response = await axios.get(
                 `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}`
             );
+            setData(response.data);
             setIsLoading(false);
             setIsRequestOpen(false);
         } catch (error) {
@@ -347,7 +349,7 @@ const Request = (txn) => {
         
         <div className="data">
           <div className="request-ual">
-            <strong>UAL: </strong>{txn.ual}
+              <strong>UAL: </strong>
           </div>
           <div className="data-header">Data</div>
           <div className="data-value-pub">
@@ -411,7 +413,7 @@ const Request = (txn) => {
                   <button
                       onClick={() => handleUpdate(txn)}
                       type="submit"
-                      className="create-button"
+                      className="update-button"
                   >
                       <strong>Update Asset</strong>
                   </button>

@@ -26,18 +26,23 @@ const Gateway = () => {
     limit: "100",
   });
 
+    const [mobileFilterInput, setMobileFilterInput] = useState({
+        progress: "PENDING",
+        txn_type: "",
+        limit: "100",
+    });
+
   const queryParameters = new URLSearchParams(window.location.search);
   const provided_txn_id = queryParameters.get("txn_id");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        if (account && (chain_id ==='Origintrail Parachain Testnet' || chain_id ==='Origintrail Parachain Mainnet')) {
-          const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
-          );
-      
-          await setData(response.data);
+          if (account && (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet')) {
+              const response = await axios.get(
+                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=PENDING`
+              );
+              await setData(response.data);    
 
           if (provided_txn_id) {
             const txn_id_response = await axios.get(
@@ -47,7 +52,7 @@ const Gateway = () => {
               await setInputValue(txn_id_response.data.txn_header[0]);
               await setIsRequestOpen(true);
 
-          }
+            }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -102,7 +107,26 @@ const Gateway = () => {
       ...filterInput,
       [name]: value,
     }));
-  };
+    };
+
+    const handleMobileFilterInput = async (filterInput) => {
+        try {
+            filterInput = JSON.parse(filterInput)
+            await setMobileFilterInput((mobileFilterInput) => ({
+                ...mobileFilterInput,
+                [Object.keys(filterInput)[0]]: Object.values(filterInput)[0],
+            }));
+
+            console.log(mobileFilterInput)
+            const response = await axios.get(
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=${mobileFilterInput.progress}&request=${mobileFilterInput.txn_type}&limit=${mobileFilterInput.limit}`
+            );
+            setData(response.data)
+
+        } catch (e) {
+            console.error(e); 
+        }
+    };
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
@@ -282,17 +306,66 @@ const Gateway = () => {
               </div>
               <button type="submit">Apply</button>
               <br></br>
-            </form>
-          </div>
+             </form>
+           </div>
+          
           <div className="gateway-nav">
             <button type="submit" onClick={openInventory()}>
               <strong>Asset Inventory</strong>
             </button>
             <br></br>
-            <button type="submit" onClick={openAppSettings}>
+                      <button type="submit" onClick={openAppSettings}>
               <strong>Whitelist</strong>
-            </button>
-          </div>
+                      </button>
+                  </div>
+                  <br></br>
+                  <div className="mobile-buttonz">
+                      <form>
+
+                      </form>
+                      <button className="mobile-button"
+                          onClick={() => handleMobileFilterInput('{"txn_type": "Create"}')}
+                          name="txn_type"
+                          style={mobileFilterInput.txn_type === 'Create' ? ({ color: '#FFFFFF', backgroundColor: '#6168ED' }) : ({})}
+                      >
+                        Creations
+                      </button>
+                      <button className="mobile-button"
+                          onClick={() => handleMobileFilterInput('{"progress": "PENDING"}')}
+                          name="progress"
+                          style={mobileFilterInput.progress === 'PENDING' ? ({ color: '#FFFFFF', backgroundColor: '#6168ED' }) : ({})}
+                      >
+                        Pending
+                      </button>
+                      <button className="mobile-button"
+                          onClick={() => handleMobileFilterInput('{"txn_type": "Update"}')}
+                          name="txn_type"
+                          style={mobileFilterInput.txn_type === 'Update' ? ({ color: '#FFFFFF', backgroundColor: '#6168ED' }) : ({})}
+                      >
+                        Updates
+                      </button>
+                      <button className="mobile-button"
+                          onClick={() => handleMobileFilterInput('{"progress": "COMPLETE"}')}
+                          name="progress"
+                          style={mobileFilterInput.progress === 'COMPLETE' ? ({ color: '#FFFFFF', backgroundColor: '#6168ED' }) : ({})}
+                      >
+                        Complete
+                      </button>
+                      <button className="mobile-button"
+                          onClick={() => handleMobileFilterInput('{"txn_type": "Transfer"}')}
+                          name="txn_type"
+                          style={mobileFilterInput.txn_type === 'Transfer' ? ({ color: '#FFFFFF', backgroundColor: '#6168ED' }) : ({})}
+                      >
+                        Transfers
+                      </button>
+                      <button className="mobile-button"
+                          onClick={() => handleMobileFilterInput('{"progress": "REJECTED"}')}
+                          name="progress"
+                          style={mobileFilterInput.progress === 'REJECTED' ? ({ color: '#FFFFFF', backgroundColor: '#6168ED' }) : ({})}
+                      >
+                        Rejected
+                      </button>
+                  </div>
           <div className="recent-activity"></div>
           <div className="gateway-txn-container">
             {data.txn_header.map((txn) => (
