@@ -62,6 +62,7 @@ const Home = () => {
     avg_epochs = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgEpochsNumber).toFixed(1))
     avg_ask = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubPrice).toFixed(2))
     avg_big = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2))
+    totalStake = formatNumber(parseFloat(Number(data.totalStake).toFixed(2)))
   }
   
 

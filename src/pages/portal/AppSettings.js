@@ -24,7 +24,7 @@ const AppSettings = () => {
                 setIsLoading(true)
                 if (account && (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet')) {
                     const response = await axios.get(
-                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}`
+                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=PENDING`
                     );
                     await setData(response.data);
                     for (let i = 0; i < response.data.apps_enabled.length; i++) {

@@ -1,7 +1,7 @@
 .apps-list{
     border: 2px solid #6168ED;
     width:95%;
-    height: 550px;
+    height: 70%;
     position: absolute;
     overflow: auto;
     border-radius: 5px 5px 5px 5px;
@@ -39,7 +39,7 @@
 .app-settings-button {
     font-size: 16px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-    margin-top: 620px;
+    margin-top: 132.5%;
     padding: 8px 16px;
     background-color: #6168ED;
     color: #ffffff;
@@ -59,7 +59,7 @@
     border-radius: 3px;
     cursor: pointer;
     font-weight: bold;
-    margin-left: -200px;
+    margin-left: -30%;
 }
 
 .app-search input{
@@ -68,16 +68,44 @@
     margin-left:-3px;
 }
 
+@media (max-width:1366px){
+    .app-settings-button {
+        font-size: 16px;
+        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 150%;
+        padding: 8px 16px;
+        background-color: #6168ED;
+        color: #ffffff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+}
+
 @media (max-width: 480px) {
     .apps-list {
         border: 2px solid #6168ED;
         width: 95%;
-        height: 550px;
+        height: 70%;
         position: absolute;
         overflow: auto;
         border-radius: 5px 5px 5px 5px;
         margin-top: 5%;
         box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-settings-button {
+        font-size: 16px;
+        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 140%;
+        padding: 8px 16px;
+        background-color: #6168ED;
+        color: #ffffff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-weight: bold;
     }
 
     .app-list-item {
@@ -106,19 +134,6 @@
             text-align: left;
         }
 
-    .app-settings-button {
-        font-size: 16px;
-        box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-        margin-top: 620px;
-        padding: 8px 16px;
-        background-color: #6168ED;
-        color: #ffffff;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
     .app-search-button {
         font-size: 12px;
         box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -136,5 +151,37 @@
         height: 25px;
         margin-left: -3px;
         z-index:-1;
+    }
+}
+
+@media (max-width: 440px) {
+    .app-settings-button {
+        margin-top: 150%;
+    }
+}
+
+@media (max-width: 410px) {
+    .app-settings-button {
+        margin-top: 160%;
+    }
+}
+
+@media (max-width: 390px) {
+    .app-settings-button {
+        margin-top: 170%;
+    }
+
+    .app-search-button {
+        margin-left: -50px;
+    }
+}
+
+@media (max-width: 360px) {
+    .app-settings-button {
+        margin-top: 180%;
+    }
+
+    .app-search-button {
+        margin-left: -50px;
     }
 }

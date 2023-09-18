@@ -29,6 +29,14 @@
     padding-right:10px;
   }
   
+  @media (max-width: 1536px) {
+
+    .connection-info{
+      margin-left:-54%;
+      font-weight: bold;
+    }
+}
+
   @media (max-width: 1366px) {
 
       .connection-info{

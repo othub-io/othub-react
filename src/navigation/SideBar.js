@@ -10,7 +10,8 @@ function SideBar () {
       isOpen: true,
       submenu: [
         { id: 30, path: '/portal/gateway', title: 'Gateway' },
-        { id: 31, path: '/portal/assets', title: 'Assets' }
+        { id: 31, path: '/portal/inventory', title: 'Inventory' },
+        { id: 32, path: '/portal/assets', title: 'All Assets' }
       ]
     },
     {
@@ -57,15 +58,6 @@ function SideBar () {
         { id: 17, path: '/dkgtools/update', title: 'Update' }
       ]
     },
-    // {
-    //   id: 6,
-    //   title: 'Vote',
-    //   icon: 'https://img.icons8.com/ios/50/000000/ballot.png',
-    //   isOpen: true,
-    //   submenu: [
-    //     { id: 9, path: '/vote', title: 'Vote' }
-    //   ]
-    // },
     {
       id: 2,
       title: 'Nodes',
@@ -109,9 +101,13 @@ function SideBar () {
               <ul className='sub-menu'>
                 {item.submenu.map(subitem => (
                   <li key={subitem.id}>
-                    <a href={subitem.path} className='sub-title'>
+                    {subitem.id === 20 ? (
+                    <a href={subitem.path} className='sub-title' target='_blank'>
                       {subitem.title}
-                    </a>
+                    </a>)
+                     : (<a href={subitem.path} className='sub-title'>
+                     {subitem.title}
+                   </a>)}
                   </li>
                 ))}
               </ul>

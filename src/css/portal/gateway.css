@@ -151,12 +151,13 @@
   background-color: #6168ED;
   color:white;
   position: absolute;
-  width: 10%;
   height: 20px;
   margin-top:-17px;
   margin-left:-5px;
   border-radius: 10px 0px 10px 0px;
   font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .gateway-txn-result-count{
@@ -209,6 +210,30 @@
     font-weight: bold;
     font-size: 20px;
     margin-top:-20px;
+}
+
+.result-popup-content {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  width: 30%;
+  height: 20%;
+  overflow: auto;
+  color: #6168ED;
+  font-weight:bold;
+}
+
+.result-header{
+  width: 90%;
+  text-align: center;
+  }
+
+.result-text{
+width: 90%;
+word-wrap: break-word;
+text-align: center;
 }
 
 .app-settings-close-button {
@@ -414,6 +439,123 @@
     display:none;
 }
 
+@media(max-width:1536px){
+  .gateway-txn-record,
+  .gateway-txn-record:focus {
+    min-height:60px;
+    width:93%;
+    float:left;
+    margin-left:5%;
+    margin-bottom:2%;
+    border-radius: 10px;
+    outline: 2px solid #6168ED;
+    font-family: OCR A Std, monospace;
+    background-color: #FFFFFF;
+    border: none;
+    transition: all 0.6s ease;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .gateway-txn-record:hover,
+  .gateway-txn-record:focus:hover {
+    min-height:240px;
+    width:93%;
+    float:left;
+    margin-left:5%;
+    margin-bottom:3%;
+    border-radius: 10px;
+    outline: 3px solid #6168ED;
+    font-family: OCR A Std, monospace;
+    cursor: pointer;
+    border: none;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .gateway-form {
+    width:25%;
+    height:540px;
+    margin-left: 3%;
+    margin-right: 0%;
+    padding-left: 1%;
+    margin-top:2%;
+    text-align:left;
+    font-size:16px;
+    font-weight: bold;
+    background-color: #F5F5F5;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .gateway-nav{
+    width:5%;
+    font-family: OCR A Std, monospace;
+    height: 20%;
+    margin-top:580px;
+    position: absolute;
+    margin-left:3.25%;
+  }
+
+  .gateway-txn-record:hover .txn-ual{
+    display: block;
+    color: #6168ED;
+    font-weight: bold;
+    width:90%;
+    font-size: 12px;
+    margin-left:4%;
+    margin-top:50px;
+    text-align: left;
+    position: absolute;
+    border-radius: 5px;
+    outline: 1px solid #6168ED;
+    text-align:center;
+    height:20px;
+    padding-top:5px;
+  }
+
+  .result-popup-content {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    width: 35%;
+    height: 25%;
+    overflow: auto;
+    color: #6168ED;
+    font-weight:bold;
+  }
+}
+
+@media(max-width:1366px){
+  .gateway-form {
+    width:25%;
+    height:540px;
+    margin-left: 5%;
+    margin-right: 0%;
+    padding-left: 1%;
+    margin-top:2%;
+    text-align:left;
+    font-size:16px;
+    font-weight: bold;
+    background-color: #F5F5F5;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .gateway-nav{
+    width:5%;
+    font-family: OCR A Std, monospace;
+    margin-top:42%;
+    position: absolute;
+    margin-left:4.5%;
+  }
+
+  .gateway-nav button{
+    width:230px;
+    font-size:20px;
+  }
+}
+
 @media (max-width: 480px) {
     .gateway {
         text-align: center;
@@ -429,9 +571,9 @@
         font-size: calc(10px + 2vmin);
         z-index: 10;
         color: #6168ED;
-        height: 100vh;
+        height: calc(85vh - 105px);
         width: 80%;
-        margin-top: 180px;
+        padding-top: 180px;
         margin-left: 16%;
     }
 
@@ -441,7 +583,7 @@
         margin-bottom: 1%;
         margin-right: 1%;
         margin-left: 2%;
-        height: 95%;
+        height: calc(85vh - 105px);
         width: 77%;
         overflow: auto;
         padding-left: .5%;
@@ -451,14 +593,14 @@
     .gateway-nav {
         width: 78%;
         font-family: OCR A Std, monospace;
-        height: 100px;
+        height: 40px;
         margin-top: -100px;
         position: absolute;
         margin-left: 1%;
     }
 
         .gateway-nav button {
-            width: 330px;
+            width: 95%;
             font-size: 20px;
         }
 
@@ -574,7 +716,8 @@
         background-color: #6168ED;
         color: white;
         position: absolute;
-        width: 90px;
+        padding-left:10px;
+        padding-right:10px;
         height: 15px;
         margin-top: -12px;
         margin-left: -5px;
@@ -615,6 +758,31 @@
         position: relative;
         width: 80%;
         height: 85vh;
+        overflow: auto;
+    }
+
+    .result-popup-content {
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      width: 85%;
+      height: 30%;
+      overflow: auto;
+      color: #6168ED;
+      font-weight:bold;
+    }
+
+    .result-header{
+      width: 90%;
+      text-align: center;
+      }
+    
+    .result-text{
+    width: 90%;
+    word-wrap: break-word;
+    text-align: center;
     }
 
     .app-settings-popup-content {
@@ -836,7 +1004,7 @@
     .mobile-buttonz {
         display: block;
         width: 100%;
-        margin-top: -10px;
+        margin-top: -35px;
         height: 1px;
         margin-left: -5px;
     }
@@ -865,4 +1033,61 @@
             border-radius: 15px 15px 15px 15px;
             cursor: pointer;
         }
+}
+
+@media (max-width: 360px) {
+  .PENDING-progress {
+        color: #ffff00;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: left;
+        padding-left: 10px;
+        position: relative;
+        margin-top: -12px;
+        margin-left: 50px;
+        font-weight: bold;
+    }
+
+    .COMPLETE-progress {
+        color: #13B785;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: left;
+        padding-left: 10px;
+        position: relative;
+        margin-top: -12px;
+        margin-left: 50px;
+        font-weight: bold;
+    }
+
+    .REJECTED-progress {
+        color: #d86262;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: left;
+        padding-left: 10px;
+        position: relative;
+        margin-top: -12px;
+        margin-left: 50px;
+        font-weight:bold;
+    }
+
+    .PENDING-progress{
+      color: yellow;
+      font-weight: bold;
+      padding-left:10%;
+    }
+
+    .gateway-txn-record:hover .txn-Transfer-receiver {
+      display: inline-block;
+      color: #6168ED;
+      font-weight: bold;
+      width: 90%;
+      font-size: 12px;
+      margin-top: 90px;
+      margin-left: 0px;
+      margin-right: 200px;
+      word-wrap: break-word;
+      position: relative;
+  }
 }

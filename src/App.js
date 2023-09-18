@@ -5,7 +5,8 @@ import NavBar from './navigation/NavBar'
 import SideBar from './navigation/SideBar'
 import Footer from './navigation/Footer'
 import Home from './pages/home'
-import Portal from './pages/portal/gateway'
+import Gateway from './pages/portal/gateway'
+import Inventory from './pages/portal/inventory'
 import Assets from './pages/portal/assets'
 import Nodes from './pages/nodes'
 import NodeSettings from './pages/staking/settings.js'
@@ -25,7 +26,8 @@ function App () {
         <SideBar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/portal/gateway' element={<Portal />}/>
+          <Route path='/portal/gateway' element={<Gateway />}/>
+          <Route path='/portal/inventory' element={<Inventory />}/>
           <Route path='/portal/assets' element={<Assets />}/>
           <Route path='/nodes' element={<Nodes />} />
           <Route path='/staking/settings' element={<NodeSettings />} />

@@ -15,8 +15,8 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 }
 
 const Gateway = () => {
-  const { isAppSettingsOpen, setIsAppSettingsOpen, setData, data, isRequestOpen, setIsRequestOpen, chain_id, account } = useContext(AccountContext);
-  const [inputValue, setInputValue] = useState("");
+  const { isAppSettingsOpen, setIsAppSettingsOpen, setData, data, isRequestOpen, setIsRequestOpen, isResultOpen, setIsResultOpen, chain_id, account, resultValue } = useContext(AccountContext);
+  const [inputValue, setInputValue ] = useState('');
   const [filterInput, setFilterInput] = useState({
     ual: "",
     txn_id: "",
@@ -59,6 +59,7 @@ const Gateway = () => {
       }
     }
 
+    setInputValue('');
     setData("");
     fetchData();
   }, [account]);
@@ -99,6 +100,11 @@ const Gateway = () => {
 
   const closeSettingsPopup = () => {
     setIsAppSettingsOpen(false);
+  };
+
+  const closeResultPopup = () => {
+    setIsResultOpen(false);
+    setInputValue('');
   };
 
   const handleFilterInput = (e) => {
@@ -151,11 +157,6 @@ const Gateway = () => {
     }
   };
 
-  const openInventory = () => {
-    // Replace 'https://www.example.com' with the URL of the web page you want to open
-    //window.open(`${process.env.WEB_HOST}/portal/gateway/inventory`, '_blank');
-  };
-
   return (
     <div className="gateway">
       {isRequestOpen && (
@@ -183,6 +184,27 @@ const Gateway = () => {
             <AppSettings data={data} />
           </div>
         </div>
+      )}
+      {isResultOpen && (
+        <div className='popup-overlay'>
+        <div className='result-popup-content'>
+          <button className='keys-close-button' onClick={closeResultPopup}>
+            X
+          </button>
+          <br></br>
+          <div>
+            <div className="result-header">
+              {resultValue.msg}
+            </div>
+            <br></br>
+              {resultValue.url ? (<div className="result-text">
+              Visit <br></br><br></br><a href={resultValue.url} target='blank' style={({color: '#6168ED'})}>{resultValue.url}</a><br></br><br></br> to view your asset!
+            </div>) : (<div>
+              
+            </div>)}
+          </div>
+        </div>
+      </div>
       )}
       {data ? (
         <header className="gateway-header">
@@ -217,7 +239,7 @@ const Gateway = () => {
                   name="app_name"
                   value={filterInput.app_name}
                   onChange={handleFilterInput}
-                  maxLength="100"
+                  maxLength="20"
                 />
               </div>
               <br></br>
@@ -310,10 +332,9 @@ const Gateway = () => {
            </div>
           
           <div className="gateway-nav">
-            <button type="submit" onClick={openInventory()}>
+            {/* <button type="submit" onClick={openInventory()}>
               <strong>Asset Inventory</strong>
-            </button>
-            <br></br>
+            </button> */}
                       <button type="submit" onClick={openAppSettings}>
               <strong>Whitelist</strong>
                       </button>
@@ -382,7 +403,7 @@ const Gateway = () => {
                   {txn.progress}
                 </div>
                 <div className="txn-summary">
-                {`${txn.app_name}(${txn.txn_id})`}
+                {`${txn.app_name}(${txn.txn_id.substring(0,15)})`}
                 </div>
                 <div className="txn-ual">
                   {txn.ual}
@@ -394,7 +415,7 @@ const Gateway = () => {
                   Epochs: {txn.epochs}
                 </div>
                 <div className="txn-cost">
-                  Estimated Cost: {txn.trac_fee}
+                  - {txn.trac_fee}
                 </div>
                 <div className="txn-description">
                   <span>{txn.txn_description}</span>

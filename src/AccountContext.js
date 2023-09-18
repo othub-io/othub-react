@@ -8,13 +8,17 @@ export const AccountContext = createContext({
   isRequestOpen: '',
   isCreateAppOpen: '',
   isAppSettingsOpen: '',
+  isResultOpen: '',
+  resultValue: '',
   setData: () => { },
   setAccount: () => {},
   setChain: () => {},
   setAppIndex: () => { },
+  setIsResultOpen: () => { },
   setIsRequestOpen: () => { },
   setCreateAppPopup: () => { },
-  setIsAppSettingsOpen: () => { }
+  setIsAppSettingsOpen: () => { },
+  setResultValue: () => { }
 })
 
 export const AccountProvider = ({ children }) => {
@@ -25,6 +29,8 @@ export const AccountProvider = ({ children }) => {
   const [chain_id, setChain] = useState('')
   const [app_index, setAppIndex] = useState(0)
   const [isRequestOpen, setIsRequestOpen] = useState(false)
+  const [isResultOpen, setIsResultOpen] = useState(false)
+  const [resultValue, setResultValue] = useState('')
 
   const handleSetData = data => {
      setData(data)
@@ -54,6 +60,14 @@ export const AccountProvider = ({ children }) => {
         setIsAppSettingsOpen(isAppSettingsOpen)
     }
 
+  const handleSetIsResultOpen = isResultOpen => {
+      setIsResultOpen(isResultOpen)
+  }
+
+  const handleSetResultValue = resultValue => {
+    setResultValue(resultValue)
+  }
+
   return (
     <AccountContext.Provider
         value={{
@@ -64,13 +78,17 @@ export const AccountProvider = ({ children }) => {
         isRequestOpen,
         isCreateAppOpen,
         isAppSettingsOpen,
+        isResultOpen,
+        resultValue,
         setAccount: handleSetAccount,
         setChain: handleSetChain,
         setAppIndex: handleSetAppIndex,
         setIsRequestOpen: handleSetIsRequestOpen,
         setData: handleSetData,
         setCreateAppPopup: handleSetCreateAppPopup,
-        setIsAppSettingsOpen: handleSetIsAppSettingsOpen
+        setIsAppSettingsOpen: handleSetIsAppSettingsOpen,
+        setIsResultOpen: handleSetIsResultOpen,
+        setResultValue: handleSetResultValue
       }}
     >
       {children}

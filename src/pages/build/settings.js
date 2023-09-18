@@ -14,7 +14,7 @@ const Settings = () => {
   const { isCreateAppOpen, setCreateAppPopup, data, setData, setAppIndex, account, chain_id, app_index } = useContext(AccountContext)
   const [isOpenDeleteKey, setIsDeleteKey] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const [limit, setLimit] = useState('')
+  const [limit, setLimit] = useState('3')
   const [isLoading, setLoading] = useState(false)
   const [isDeleteApp, setIsDeleteApp] = useState(false)
   const [isEditAppOpen, setOpenEditApp] = useState(false)
@@ -296,6 +296,7 @@ const Settings = () => {
                 type="text"
                 required
                 name='app_name'
+                maxLength="20"
               />
               </div>
               <div className="cf-app-description">
@@ -304,6 +305,7 @@ const Settings = () => {
                 <textarea 
                 type="text"
                 name='app_description'
+                maxlength="255"
               />
               </div>
               <div className="cf-built-by">
@@ -312,6 +314,7 @@ const Settings = () => {
                 <input
                 type="text"
                 name='built_by'
+                maxlength="50"
               />
               </div>
               <div className="cf-website">
@@ -320,6 +323,7 @@ const Settings = () => {
                 <input
                 type="text"
                 name='website'
+                maxlength="50"
               />
               </div>
               <div className="cf-github">
@@ -328,6 +332,7 @@ const Settings = () => {
                 <input
                 type="text"
                 name='github'
+                maxlength="50"
               />
               </div>
               <div className="cf-keys-to-create">
@@ -442,6 +447,7 @@ const Settings = () => {
                 type="text"
                 required
                 name='app_name'
+                maxLength="20"
               />
               </div>
               <div className="cf-app-description">
@@ -450,6 +456,7 @@ const Settings = () => {
                 <textarea 
                 type="text"
                 name='app_description'
+                maxlength="255"
               />
               </div>
               <div className="cf-built-by">
@@ -458,6 +465,7 @@ const Settings = () => {
                 <input
                 type="text"
                 name='built_by'
+                maxlength="50"
               />
               </div>
               <div className="cf-website">
@@ -466,6 +474,7 @@ const Settings = () => {
                 <input
                 type="text"
                 name='website'
+                maxlength="50"
               />
               </div>
               <div className="cf-github">
@@ -474,6 +483,7 @@ const Settings = () => {
                 <input
                 type="text"
                 name='github'
+                maxlength="50"
               />
               </div>
               <div className="cf-keys-to-create">
@@ -761,7 +771,7 @@ const Settings = () => {
                   {txn.progress}
                 </div>
                 <div className="txn-summary">
-                {`${txn.app_name}(${txn.txn_id})`}
+                {`${txn.app_name}(${txn.txn_id.substring(0,15)})`}
                 </div>
                 <div className="txn-ual">
                   {txn.ual}

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { AccountContext } from "../../AccountContext";
 import '../../css/portal/assets.css'
 import Loading from '../../Loading'
 import Asset from './Asset'
@@ -12,6 +13,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
 
 const Assets = () => {
   const [data, setData] = useState('')
+  const {chain_id} = useContext(AccountContext);
   const [isAssetOpen, setIsAssetOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [filterInput, setFilterInput] = useState({
@@ -29,7 +31,7 @@ const Assets = () => {
     async function fetchData () {
       try {
         const pubs_response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
         )
         await setData(pubs_response.data)
 
@@ -43,7 +45,7 @@ const Assets = () => {
             }else{
                 console.log(provided_ual)
                 const ual_response = await axios.get(
-                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}`
+                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}&network=${chain_id}`
                   )
                     
                   console.log(`UAL RESP: ${JSON.stringify(ual_response)}`)
@@ -87,7 +89,7 @@ const Assets = () => {
             console.log(filterInput)
 
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}`
           )
           setData(response.data)
         } catch (error) {

@@ -21,14 +21,14 @@ ChartJS.register(
 
 const BarChart = ({ data }) => {
   // Extract labels and data from the dataset
-  const labels = ['Mints', 'Updates', 'Transfers'];
+  const labels = ['Creates', 'Updates', 'Transfers'];
 
   let mint_count = 0
   let update_count = 0
   let transfer_count = 0
 
   for(let i = 0; i < data.length;i++){
-    if(data[i].request === 'Mint' && data[i].progress === 'COMPLETE'){
+    if(data[i].request === 'Create' && data[i].progress === 'COMPLETE'){
         mint_count = mint_count + 1
     }
 

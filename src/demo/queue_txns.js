@@ -1,70 +1,90 @@
 const axios = require('axios');
 
-const api_key = '2AuB6CSGSCEgMS0Ptz3vcKOj9rubkb'
+const api_key = '6FCVZsJ4djazql4QUlaY3He7W13MvB'
 
 const queue_txns = async (api_key) => {
-//    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/get?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/406325`
-//      )
-//    console.log(`----------GET------------`)
-//    console.log(response.data)
+  //  response = await axios.get(
+  //      `http://localhost:5575/dkg/get?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/406325`
+  //    )
+  //  console.log(`----------GET------------`)
+  //  console.log(response.data)
+
+  //  response = await axios.get(
+  //      `http://localhost:5575/dkg/getLatestStateIssuer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
+  //    )
+  //  console.log(`----------GET LATEST STATE ISSUER------------`)
+  //  console.log(response.data)
+
+  //  response = await axios.get(
+  //      `http://localhost:5575/dkg/getOwner?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
+  //    )
+  //  console.log(`----------GET OWNER------------`)
+  //  console.log(response.data)
 
 //    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/getLatestStateIssuer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
-//      )
-//    console.log(`----------GET LATEST STATE ISSUER------------`)
-//    console.log(response.data)
-
-//    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/getOwner?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
-//      )
-//    console.log(`----------GET OWNER------------`)
-//    console.log(response.data)
-
-//    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/getStates?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
+//        `http://localhost:5575/dkg/getStates?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
 //      )
 //    console.log(`----------GET STATES------------`)
 //    console.log(response.data)
 
 //    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/getStateIssuer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828&stateIndex=0`
+//        `http://localhost:5575/dkg/getStateIssuer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828&stateIndex=0`
 //      )
 //    console.log(`----------GET STATE ISSUER------------`)
 //    console.log(response.data)
 
 //    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
+//        `http://localhost:5575/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
 //            "@type" : "CreativeWork",
-//            "title" : "Love letter to Luke",
-//            "content" : "Dear Luke, U r 2 cute. Tehe."
-//}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+//            "title" : "Dark Side of the Moon",
+//            "genre" : "Psychedelic Rock",
+//            "artist" : "Pink Floyd",
+//            "producer" : "Chris Thomas"
+// }&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
 //    )
 //    console.log(`----------CREATE------------`)
 //    console.log(response.data)
 
 //    response = await axios.get(
-//        `http://localhost:5575/otp/dkg/update?api_key=${api_key}&network=otp::mainnet&txn_data={
+//        `http://localhost:5575/dkg/update?api_key=${api_key}&network=otp::testnet&txn_data={
 //  "@type": "CreativeWork",
 //  "title": "Love letter to Luke",
 //  "content": "Dear Luke, U r 2 cute. Tehe.",
 //  "author": "Cosmi <3"
-//}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d&ual=did:dkg:otp/0x5cAC41237127F94c2D21dAe0b14bFeFa99880630/619273        `
+// }&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/426507        `
 //      )
 //    console.log(`----------UPDATE------------`)
 //    console.log(response.data)
 
     response = await axios.get(
-        `http://localhost:5575/otp/dkg/transfer?api_key=${api_key}&network=otp::mainnet&ual=did:dkg:otp/0x5cAC41237127F94c2D21dAe0b14bFeFa99880630/619273&receiver=0x974e658A243a5Ec0cE1a0a4317D42f48dBB05Fbd&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d        `
+        `http://localhost:5575/dkg/transfer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/426507&receiver=0x974e658A243a5Ec0cE1a0a4317D42f48dBB05Fbd&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
       )
     console.log(`----------TRANSFER------------`)
     console.log(response.data)
 
-    //response = await axios.get(
-    //    `http://localhost:5575/otp/dkg/query?api_key=${api_key}&query=prefix schema: <https://schema.org/>select ?s ?modelName where {?s schema:model ?modelName}&network=otp::testnet`
+    // response = await axios.get(
+    //    `http://localhost:5575/dkg/query?api_key=${api_key}&query=prefix schema: <https://schema.org/>select ?s ?modelName where {?s schema:model ?modelName}&network=otp::testnet`
     //  )
-    //console.log(`----------QUERY------------`)
-    //console.log(response.data)
-}
+    // console.log(`----------QUERY------------`)
+    // console.log(response.data)
+
+    // response = await axios.get(
+    //    `http://localhost:5575/dkg/create_n_transfer?api_key=${api_key}&network=otp::testnet&txn_data={"color":"green"}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+    //  )
+    // console.log(`----------CREATE N TRANSFER------------`)
+    // console.log(response.data)
+
+    // response = await axios.get(
+    //   `http://localhost:5575/otp_testnet/assetInventory?api_key=${api_key}&owner=0x974e658A243a5Ec0cE1a0a4317D42f48dBB05Fbd`
+    // )
+    // console.log(`----------INVENTORY------------`)
+    // console.log(response.data)
+
+    // response = await axios.get(
+    //   `http://localhost:5575/otp_testnet/assetHistory?api_key=${api_key}&ual=did:dkg:otp/0x5cAC41237127F94c2D21dAe0b14bFeFa99880630/619273`
+    // )
+    // console.log(`----------HISTORY------------`)
+    // console.log(response.data)
+  }
 
 queue_txns(api_key)
