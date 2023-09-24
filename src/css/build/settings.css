@@ -373,6 +373,22 @@
   position: relative;
 }
 
+.app-txn-record:hover .txn-Create-n-Transfer-receiver{
+  display:inline-block;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  margin-left:-50px;
+  margin-right:200px;
+  position: relative;
+}
+.app-txn-record:hover .txn-Create-n-Transfer-receiver span{
+  color: #6168ED;
+  font-weight:100;
+}
+
 .app-txn-record:hover .txn-Transfer-receiver{
   display:inline-block;
   color: #6168ED;
@@ -390,6 +406,42 @@
 }
 
 .app-txn-record:hover .txn-Create-epochs{
+  display: inline-block;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  padding-left:-100px;
+  position: relative;
+  
+}
+
+.txn-Create-n-Transfer-epochs{
+  display: none;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  padding-left:-100px;
+  position: relative;
+  
+}
+
+.txn-Create-n-Transfer-receiver{
+  display: none;
+  color: #6168ED;
+  font-weight: bold;
+  width:30%;
+  font-size: 16px;
+  margin-top:90px;
+  padding-left:-100px;
+  position: relative;
+  
+}
+
+.app-txn-record:hover .txn-Create-n-Transfer-epochs{
   display: inline-block;
   color: #6168ED;
   font-weight: bold;

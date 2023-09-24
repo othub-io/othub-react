@@ -31,7 +31,6 @@ const Inventory = () => {
     async function fetchData() {
       try {
         if (account && (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet')) {
-          console.log(`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?network=${chain_id}&owner=${account}`)
           const pubs_response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?network=${chain_id}&owner=${account}`
           );
@@ -51,7 +50,6 @@ const Inventory = () => {
                 `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?ual=${provided_ual}&network=${chain_id}&owner=${account}`
               );
   
-              console.log('iuwnfeiuefien: '+ual_response.data.v_pubs[0])
               if(ual_response.data.v_pubs[0]){
                 await setInputValue(ual_response.data.v_pubs[0])
                 await setIsAssetOpen(true)
@@ -221,7 +219,9 @@ const Inventory = () => {
                 key={pub.UAL}
               >
                 <div className="card-token">{pub.token_id}</div>
-                <div className="card-image">Images #Soon!</div>
+                <div className="card-image">
+                  <img src={`${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`} alt='KA' height='65' width='65'></img>
+                </div>
                 <div className="card-size">{pub.size}bytes</div>
                 <div className="card-cost">
                   {pub.token_amount.toFixed(2)} Trac

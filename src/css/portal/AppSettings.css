@@ -15,11 +15,17 @@
     border-bottom: solid 1px;
 }
 
+.app-list-item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    z-index: 900;
+  }
+
     .app-list-item:hover {
         width: 100%;
         outline: 2px 2px 1px 2px solid;
         background-color: #F5F5F5;
-        
+        cursor: pointer;
     }
 
   .app-list-item input[type="checkbox"]{
@@ -34,6 +40,7 @@
     margin-top: -23px;
     margin-left: 23%;
     text-align:left;
+    width:20%;
 }
 
 .app-settings-button {
@@ -67,6 +74,20 @@
     height:24px;
     margin-left:-3px;
 }
+
+.tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #F5F5F5;
+    color:#6168ED;
+    padding: 5px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out;
+  }
 
 @media (max-width: 480px) {
     .apps-list {

@@ -137,21 +137,30 @@ const Gateway = () => {
   const handleMobileFilterInput = async (filterInput) => {
     try {
       filterInput = JSON.parse(filterInput);
-      console.log(filterInput)
-      await setMobileFilterInput((mobileFilterInput) => ({
-        ...mobileFilterInput,
-        [Object.keys(filterInput)[0]]: Object.values(filterInput)[0],
-      }));
-
-      console.log(mobileFilterInput);
+  
+      // Create a Promise to ensure the state update is complete
+      const updateFilterInputPromise = new Promise((resolve) => {
+        setMobileFilterInput((prevMobileFilterInput) => {
+          const updatedFilterInput = {
+            ...prevMobileFilterInput,
+            [Object.keys(filterInput)[0]]: Object.values(filterInput)[0],
+          };
+          resolve(updatedFilterInput); // Resolve the promise with the updated state
+          return updatedFilterInput;
+        });
+      });
+  
+      // Wait for the state update to complete
+      const updatedMobileFilterInput = await updateFilterInputPromise;
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=${mobileFilterInput.progress}&request=${mobileFilterInput.txn_type}&limit=${mobileFilterInput.limit}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=${updatedMobileFilterInput.progress}&request=${updatedMobileFilterInput.txn_type}&limit=${updatedMobileFilterInput.limit}`
       );
       setData(response.data);
     } catch (e) {
       console.error(e);
     }
   };
+  
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();

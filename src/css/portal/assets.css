@@ -114,10 +114,10 @@
 
 .card-image{
     color: #6168ED;
-    outline: .5px solid #6168ED;
     height:4rem;
     width:90%;
     margin-left:5%;
+    background-color: #FFFFFF;
 }
 
 .card-size{

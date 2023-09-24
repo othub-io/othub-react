@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AccountContext } from "../../AccountContext";
 import '../../css/portal/assets.css'
 import Loading from '../../Loading'
-import Asset from './Asset'
+import InvAsset from './invAsset'
 import axios from 'axios'
 let ext
 
@@ -13,7 +13,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
 
 const Assets = () => {
   const [data, setData] = useState('')
-  const {chain_id} = useContext(AccountContext);
+  const {chain_id, account} = useContext(AccountContext);
   const [isAssetOpen, setIsAssetOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [filterInput, setFilterInput] = useState({
@@ -33,7 +33,6 @@ const Assets = () => {
         const pubs_response = await axios.get(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
         )
-        await setData(pubs_response.data)
 
         if(provided_ual){
             const segments = provided_ual.split(':');
@@ -55,6 +54,8 @@ const Assets = () => {
                 }
             }
         }
+        await setData(pubs_response.data)
+        return;
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -62,7 +63,7 @@ const Assets = () => {
 
     setData('')
     fetchData()
-  }, [])
+  }, [chain_id])
 
   const openAssetPopup = (pub) => {
     setInputValue(pub)
@@ -109,11 +110,11 @@ const Assets = () => {
     <div className='assets'>
         {isAssetOpen && inputValue && (
         <div className='popup-overlay'>
-          <div className='assets-popup-content'>
+          <div className='inv-assets-popup-content'>
             <button className='assets-close-button' onClick={closeAssetPopup}>
                     X
             </button>
-            <Asset data={inputValue}/>
+            <InvAsset data={inputValue}/>
           </div>
         </div>
       )}
@@ -164,7 +165,7 @@ const Assets = () => {
                 <button onClick={() => openAssetPopup(pub)} className="asset-card" key={pub.UAL}>
                     <div className="card-token">{pub.token_id}</div>
                     <div className="card-image">
-                        Images #Soon!
+                        <img src={`${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`} alt='KA' height='65' width='65'></img>
                     </div>
                     <div className="card-size">{pub.size}bytes</div>
                     <div className="card-cost">{pub.token_amount.toFixed(2)} Trac</div>
