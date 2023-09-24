@@ -1,30 +1,43 @@
 import React, { useState } from 'react'
-import '../css/SideBar.css'
+import '../css/navigation/SideBar.css'
 
 function SideBar () {
   const [menuItems, setMenuItems] = useState([
     {
       id: 1,
-      title: 'Assets',
-      path: '/assets',
-      icon: 'https://img.icons8.com/ios/50/000000/safe.png',
-      isOpen: true
-    },
-    {
-      id: 2,
-      title: 'Nodes',
-      path: '/nodes',
-      icon: 'https://img.icons8.com/ios/50/000000/server.png',
-      isOpen: true
+      title: 'Portal',
+      icon: 'https://img.icons8.com/ios/50/000000/portal.png',
+      isOpen: true,
+      submenu: [
+        { id: 30, path: '/portal/gateway', title: 'Gateway' },
+        { id: 31, path: '/portal/inventory', title: 'Inventory' },
+        { id: 32, path: '/portal/assets', title: 'All Assets' }
+      ]
     },
     {
       id: 3,
-      title: 'My Nodes',
-      icon: 'https://img.icons8.com/ios/50/000000/star.png',
+      title: 'Staking',
+      icon: 'https://img.icons8.com/ios/50/000000/steak.png',
       isOpen: true,
       submenu: [
-        { id: 4, path: '/mynodes/dashboard', title: 'Dashboard' },
-        { id: 5, path: '/mynodes/settings', title: 'Settings' }
+        { id: 4, path: '/staking/dashboard', title: 'Dashboard' },
+        { id: 5, path: '/staking/settings', title: 'Settings' }
+      ]
+    },
+    {
+      id: 21,
+      title: 'Build',
+      icon: 'https://img.icons8.com/ios/50/000000/block.png',
+      isOpen: true,
+      submenu: [
+        { id: 19, 
+          path: '/build/settings', 
+          title: 'App Settings' },
+        {
+          id: 20,
+          path: 'https://www.postman.com/crimson-crescent-721757/workspace/othub-api',
+          title: 'OTHub API Docs'
+        }
       ]
     },
     {
@@ -37,7 +50,7 @@ function SideBar () {
     {
       id: 14,
       title: 'DKG Tools',
-      icon: 'https://img.icons8.com/ios/50/000000/settings.png',
+      icon: 'https://img.icons8.com/ios/50/000000/hammer.png',
       isOpen: true,
       submenu: [
         { id: 15, path: '/dkgtools/get', title: 'Get' },
@@ -46,13 +59,11 @@ function SideBar () {
       ]
     },
     {
-      id: 6,
-      title: 'Vote',
-      icon: 'https://img.icons8.com/ios/50/000000/ballot.png',
-      isOpen: true,
-      submenu: [
-        { id: 9, path: '/vote', title: 'Vote' }
-      ]
+      id: 2,
+      title: 'Nodes',
+      path: '/nodes',
+      icon: 'https://img.icons8.com/ios/50/000000/server.png',
+      isOpen: true
     },
     {
       id: 18,
@@ -62,20 +73,6 @@ function SideBar () {
       submenu: [
         { id: 19, path: '/guides/walletMapping', title: 'Wallet Mapping' },
         { id: 20, path: '/guides/nodeInstall', title: 'Node Install' }
-      ]
-    },
-    {
-      id: 21,
-      title: 'othub API',
-      icon: 'https://img.icons8.com/ios/50/000000/api.png',
-      isOpen: true,
-      submenu: [
-        { id: 19, path: '/api/keys', title: 'API Keys' },
-        {
-          id: 20,
-          path: 'https://www.postman.com/crimson-crescent-721757/workspace/othub-api',
-          title: 'Docs'
-        }
       ]
     }
     // Rest of the menu items
@@ -104,9 +101,13 @@ function SideBar () {
               <ul className='sub-menu'>
                 {item.submenu.map(subitem => (
                   <li key={subitem.id}>
-                    <a href={subitem.path} className='sub-title'>
+                    {subitem.id === 20 ? (
+                    <a href={subitem.path} className='sub-title' target='_blank'>
                       {subitem.title}
-                    </a>
+                    </a>)
+                     : (<a href={subitem.path} className='sub-title'>
+                     {subitem.title}
+                   </a>)}
                   </li>
                 ))}
               </ul>

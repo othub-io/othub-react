@@ -1,15 +1,46 @@
 import React, { createContext, useState } from 'react'
 
 export const AccountContext = createContext({
+  data: '',
   account: '',
   chain_id: '',
+  app_index: '',
+  isRequestOpen: '',
+  isCreateAppOpen: '',
+  isAppSettingsOpen: '',
+  isResultOpen: '',
+  resultValue: '',
+  isLoading:'',
+  balance:'',
+  setData: () => { },
   setAccount: () => {},
-  setChain: () => {}
+  setChain: () => {},
+  setAppIndex: () => { },
+  setIsResultOpen: () => { },
+  setIsRequestOpen: () => { },
+  setCreateAppPopup: () => { },
+  setIsAppSettingsOpen: () => { },
+  setResultValue: () => { },
+  setIsLoading: () => { },
+  setBalance: () => { }
 })
 
 export const AccountProvider = ({ children }) => {
+  const [data, setData] = useState('')
+  const [isCreateAppOpen, setCreateAppPopup] = useState(false);
+  const [isAppSettingsOpen, setIsAppSettingsOpen] = useState(false);
   const [account, setAccount] = useState('')
   const [chain_id, setChain] = useState('')
+  const [app_index, setAppIndex] = useState(0)
+  const [isRequestOpen, setIsRequestOpen] = useState(false)
+  const [isResultOpen, setIsResultOpen] = useState(false)
+  const [resultValue, setResultValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [balance, setBalance] = useState('')
+
+  const handleSetData = data => {
+     setData(data)
+  }
 
   const handleSetAccount = newAccount => {
     setAccount(newAccount)
@@ -19,13 +50,63 @@ export const AccountProvider = ({ children }) => {
     setChain(newChain)
   }
 
+  const handleSetAppIndex = appIndex => {
+    setAppIndex(appIndex)
+    }
+
+    const handleSetIsRequestOpen = isRequestOpen => {
+        setIsRequestOpen(isRequestOpen)
+    }
+
+    const handleSetCreateAppPopup = isCreateAppOpen => {
+        setCreateAppPopup(isCreateAppOpen)
+    }
+
+    const handleSetIsAppSettingsOpen = isAppSettingsOpen => {
+        setIsAppSettingsOpen(isAppSettingsOpen)
+    }
+
+  const handleSetIsResultOpen = isResultOpen => {
+      setIsResultOpen(isResultOpen)
+  }
+
+  const handleSetResultValue = resultValue => {
+    setResultValue(resultValue)
+  }
+
+  const handleSetIsLoading = isLoading => {
+    setIsLoading(isLoading)
+  }
+
+  const handleSetBalance = balance => {
+    setBalance(balance)
+  }
+
   return (
     <AccountContext.Provider
-      value={{
+        value={{
+        data,
         account,
         chain_id,
+        app_index,
+        isRequestOpen,
+        isCreateAppOpen,
+        isAppSettingsOpen,
+        isResultOpen,
+        resultValue,
+        isLoading,
+        balance,
         setAccount: handleSetAccount,
-        setChain: handleSetChain
+        setChain: handleSetChain,
+        setAppIndex: handleSetAppIndex,
+        setIsRequestOpen: handleSetIsRequestOpen,
+        setData: handleSetData,
+        setCreateAppPopup: handleSetCreateAppPopup,
+        setIsAppSettingsOpen: handleSetIsAppSettingsOpen,
+        setIsResultOpen: handleSetIsResultOpen,
+        setResultValue: handleSetResultValue,
+        setIsLoading: handleSetIsLoading,
+        setBalance: handleSetBalance
       }}
     >
       {children}

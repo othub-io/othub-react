@@ -30,6 +30,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData () {
       try {
+        console.log(`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`)
         const response = await axios.get(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`
         )
@@ -55,27 +56,18 @@ const Home = () => {
 
   if(data){
     pub_count = formatNumber(parseFloat(data.pub_count))
-    console.log('1')
     totalTracSpent =  formatNumber(parseFloat(Number(data.totalTracSpent).toFixed(2)))
-    console.log('2')
     totalPubs_24h = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].totalPubs))
-    console.log('3')
     totalSpent_24h = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].totalTracSpent).toFixed(2))
-    console.log('4')
     avg_size = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubSize).toFixed(0))
-    console.log('5')
     avg_epochs = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgEpochsNumber).toFixed(1))
-    console.log('6')
     avg_ask = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgPubPrice).toFixed(2))
-    console.log('7')
     avg_big = formatNumber(parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2))
-    console.log('8')
-    totalStake = formatNumber(parseFloat(data.totalStake))
-    console.log('9')
+    totalStake = formatNumber(parseFloat(Number(data.totalStake).toFixed(2)))
   }
   
 
-  const percentage = (data.pub_count / 1000000) * 100;
+  const percentage = (data.pub_count / 10000000) * 100;
 
   return (
     <div className='home'>
@@ -85,14 +77,38 @@ const Home = () => {
           Network Statistics
           </div>
           <div className="bar-header">
-            <div className="bar-title">
-              Road to 1 Million Assets
+            <div className="badge">
+              <a href="https://dkg.origintrail.io/explore?ual=did:dkg:otp/0x5cac41237127f94c2d21dae0b14bfefa99880630/1004951" target="_blank"><img src={`${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-1M-Badge.jpg`} alt='1M Assets Badge'></img></a>
             </div>
-            <div className="bar-legend">
-              500K
-            </div>
-            <div className="bar-legend">
+            <div className="bar-legend-big">
               1M
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend-big">
+              5M
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend">
+              
+            </div>
+            <div className="bar-legend-big">
+              10M
             </div>
             <div className="progress-bar">
               <div className="progress-bar-fill" style={{ width: `${percentage}%` }}>
@@ -100,6 +116,9 @@ const Home = () => {
                     {pub_count}
                   </div>
                 </div>
+            </div>
+            <div className="bar-title">
+              Road to 10 Million Assets
             </div>
           </div>
           <div className='home-form'>

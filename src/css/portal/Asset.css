@@ -9,12 +9,11 @@
     padding-right:10px;
     background-color: #FFFFFF;
     border-radius: 10px 10px 10px 10px;
-    padding-left:10px;
     padding-top:10px;
     padding-bottom:10px;
   }
 
-  .minted{
+  .created{
     color:#6168ED;
     margin-bottom:10px;
     padding-bottom:15px;

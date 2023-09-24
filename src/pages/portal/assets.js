@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import '../css/assets.css'
-import Loading from '../Loading'
-import Asset from '../Asset'
+import React, { useState, useEffect, useContext } from 'react'
+import { AccountContext } from "../../AccountContext";
+import '../../css/portal/assets.css'
+import Loading from '../../Loading'
+import InvAsset from './invAsset'
 import axios from 'axios'
 let ext
 
@@ -12,6 +13,7 @@ if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
 
 const Assets = () => {
   const [data, setData] = useState('')
+  const {chain_id, account} = useContext(AccountContext);
   const [isAssetOpen, setIsAssetOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [filterInput, setFilterInput] = useState({
@@ -29,9 +31,8 @@ const Assets = () => {
     async function fetchData () {
       try {
         const pubs_response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/pubs`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
         )
-        await setData(pubs_response.data)
 
         if(provided_ual){
             const segments = provided_ual.split(':');
@@ -41,16 +42,20 @@ const Assets = () => {
             if (args.length !== 3) {
                 console.log(`UAL doesn't have correct format: ${provided_ual}`);
             }else{
-                console.log(provided_ual)
                 const ual_response = await axios.get(
-                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/pubs?ual=${provided_ual}`
+                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}&network=${chain_id}`
                   )
-                    
-                  console.log(`UAL RESP: ${JSON.stringify(ual_response)}`)
-                await setInputValue(ual_response.data.v_pubs[0])
-                await setIsAssetOpen(true)
+                
+                  console.log('UAL RESP: '+ual_response)
+                  
+                if(ual_response.data.v_pubs[0] !== ""){
+                  await setInputValue(ual_response.data.v_pubs[0])
+                  await setIsAssetOpen(true)
+                }
             }
         }
+        await setData(pubs_response.data)
+        return;
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -58,7 +63,7 @@ const Assets = () => {
 
     setData('')
     fetchData()
-  }, [])
+  }, [chain_id])
 
   const openAssetPopup = (pub) => {
     setInputValue(pub)
@@ -84,10 +89,9 @@ const Assets = () => {
     try {
       const fetchFilteredData = async () => {
         try {
-            console.log(filterInput)
 
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/pubs?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}`
           )
           setData(response.data)
         } catch (error) {
@@ -104,13 +108,13 @@ const Assets = () => {
 
   return (
     <div className='assets'>
-        {isAssetOpen && (
+        {isAssetOpen && inputValue && (
         <div className='popup-overlay'>
-          <div className='assets-popup-content'>
-            <button className='close-button' onClick={closeAssetPopup}>
+          <div className='inv-assets-popup-content'>
+            <button className='assets-close-button' onClick={closeAssetPopup}>
                     X
             </button>
-            <Asset data={inputValue}/>
+            <InvAsset data={inputValue}/>
           </div>
         </div>
       )}
@@ -161,7 +165,7 @@ const Assets = () => {
                 <button onClick={() => openAssetPopup(pub)} className="asset-card" key={pub.UAL}>
                     <div className="card-token">{pub.token_id}</div>
                     <div className="card-image">
-                        Images #Soon!
+                        <img src={`${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`} alt='KA' height='65' width='65'></img>
                     </div>
                     <div className="card-size">{pub.size}bytes</div>
                     <div className="card-cost">{pub.token_amount.toFixed(2)} Trac</div>

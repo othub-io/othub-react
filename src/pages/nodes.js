@@ -29,7 +29,6 @@ const Nodes = () => {
     fetchData()
   }, [])
 
-  console.log(data)
   return (
     <div className='allnodes'>
       {data ? (

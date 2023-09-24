@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\css",
+    "\\src\\css\\build",
+    "\\src\\navigation",
+    "\\src\\pages",
+    "\\src\\pages\\build",
+    "\\src\\pages\\portal",
+    "\\src\\pages\\staking"
+  ],
+  "SelectedNode": "\\src\\pages\\build\\settings.js",
+  "PreviewInSolutionExplorer": false
+}
