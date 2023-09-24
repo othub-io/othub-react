@@ -5,6 +5,7 @@ import moment from 'moment';
 let asset_data
 let sub_scan_link
 let link_type
+let explorer_url
 
 const Asset = (on_chain) => {
   const { chain_id } = useContext(AccountContext)
@@ -14,9 +15,11 @@ const Asset = (on_chain) => {
 
   sub_scan_link = 'https://'
   link_type = 'origintrail'
+  explorer_url = 'https://dkg.origintrail.io'
 
   if(chain_id === 'Origintrail Parachain Testnet'){
     link_type =  'origintrail-testnet'
+    explorer_url = 'https://dkg-testnet.origintrail.io'
   }
   sub_scan_link = sub_scan_link + link_type + '.subscan.io'
 
@@ -49,7 +52,7 @@ const Asset = (on_chain) => {
             <span>
                 Asset {asset_data.token_id}
                 <button onClick={() => handleCopyLink(`https://www.othub.io/assets?ual=${asset_data.UAL}`)}>
-                    <img class='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
+                    <img className='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
                 </button>
             </span>
         </div>
@@ -80,7 +83,7 @@ const Asset = (on_chain) => {
         <div className='meta-data'>
             <div className='ual'>
                 <div className='ual-header'>UAL</div>
-                <div className='ual-value'><a href={`https://dkg.origintrail.io/explore?ual=${asset_data.UAL}`} target='_blank' rel="noreferrer">{asset_data.UAL}</a></div>
+                <div className='ual-value'><a href={`${explorer_url}/explore?ual=${asset_data.UAL}`} target='_blank' rel="noreferrer">{asset_data.UAL}</a></div>
             </div>
             <div className='state'>
                 <div className='state-header'>State</div>
@@ -96,7 +99,7 @@ const Asset = (on_chain) => {
             </div>
             <div className='publisher'>
                 <div className='publisher-header'>Publisher</div>
-                <div className='publisher-value'><a href={`https://dkg.origintrail.io/profile?wallet=${asset_data.publisher}`} target='_blank' rel="noreferrer">{asset_data.publisher}</a></div>
+                <div className='publisher-value'><a href={`${explorer_url}/profile?wallet=${asset_data.publisher}`} target='_blank' rel="noreferrer">{asset_data.publisher}</a></div>
             </div>
         </div>
         <div className='winning-nodes'>

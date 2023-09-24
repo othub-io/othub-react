@@ -152,7 +152,8 @@
     font-weight: bold;
     font-size: 20px;
     width: 45%;
-    height: 85%;
+    height: 700px;
+    overflow: auto;
 }
 
 .inv-assets-close-button {
@@ -333,6 +334,10 @@
       font-size:20px;
       font-weight: bold;
     }
+
+    .inv-assets-popup-content {
+        width: 55%;
+    }
   }
 
   @media(max-width:1366px){ 
@@ -384,6 +389,9 @@
       background-color: #FFFFFF;
       font-size:14px;
   }
+  .inv-assets-popup-content {
+    width: 65%;
+}
   }
 
   @media (max-width: 480px) {
@@ -474,14 +482,14 @@
     }
 
 
-      .radios{
+      .inv-radios{
         margin-left:55%;
-        margin-top:-250px;
+        margin-top:-220px;
         margin-bottom:5%;
       }
 
-      .asset-limit{
-        margin-top:5%;
+      .inv-asset-limit{
+        margin-top:110px;
       }
     
       .assets-form input[type="text"]{
@@ -548,6 +556,20 @@
         margin-left:-5%;
         margin-top:-10%;
       }
+
+      .inv-assets-popup-content {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        position: relative;
+        color: #6168ED;
+        font-weight: bold;
+        font-size: 20px;
+        width: 360px;
+        height: 700px;
+        overflow: auto;
+    }
   }
 
   @media (max-width: 360px) {
@@ -704,10 +726,19 @@
       font-size:10px;
   }
   
-    .assets-popup-content{
-      width:80%;
-      height:85%;
-    }
+  .inv-assets-popup-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    color: #6168ED;
+    font-weight: bold;
+    font-size: 20px;
+    width: 360px;
+    height: 700px;
+    overflow: auto;
+}
   }
 
 

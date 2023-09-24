@@ -43,14 +43,16 @@ const Assets = () => {
             if (args.length !== 3) {
                 console.log(`UAL doesn't have correct format: ${provided_ual}`);
             }else{
-                console.log(provided_ual)
                 const ual_response = await axios.get(
                     `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}&network=${chain_id}`
                   )
-                    
-                  console.log(`UAL RESP: ${JSON.stringify(ual_response)}`)
-                await setInputValue(ual_response.data.v_pubs[0])
-                await setIsAssetOpen(true)
+                
+                  console.log('UAL RESP: '+ual_response)
+                  
+                if(ual_response.data.v_pubs[0] !== ""){
+                  await setInputValue(ual_response.data.v_pubs[0])
+                  await setIsAssetOpen(true)
+                }
             }
         }
       } catch (error) {
@@ -86,7 +88,6 @@ const Assets = () => {
     try {
       const fetchFilteredData = async () => {
         try {
-            console.log(filterInput)
 
           const response = await axios.get(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}`
@@ -106,7 +107,7 @@ const Assets = () => {
 
   return (
     <div className='assets'>
-        {isAssetOpen && (
+        {isAssetOpen && inputValue && (
         <div className='popup-overlay'>
           <div className='assets-popup-content'>
             <button className='assets-close-button' onClick={closeAssetPopup}>

@@ -43,7 +43,7 @@
     border-right:1px solid #6168ED;
     border-left:none;
     border-bottom: 1px solid #F5F5F5;
-    height: 7vh;
+    height: 67px;
     width: 15.3%;
     margin-top: 96px;
     margin-left: 245px;
@@ -76,7 +76,7 @@
     border-right:1px solid #6168ED;
     border-left:none;
     border-bottom: 1px solid #F5F5F5;
-    height: 7vh;
+    height: 67px;
     width: 15.3%;
     margin-top: 162px;
     margin-left: 245px;
@@ -109,7 +109,7 @@
     border-right:1px solid #6168ED;
     border-left:none;
     border-bottom: 1px solid #F5F5F5;
-    height: 7vh;
+    height: 67px;
     width: 15.3%;
     margin-top: 228px;
     margin-left: 245px;
@@ -120,6 +120,7 @@
     position: absolute;
     transition: all 0.5s ease;
     font-weight: bold;
+    word-wrap: normal;
   }
 
   .build-settings-header-2A:hover {
@@ -221,10 +222,10 @@
   }
 
   .msg-text{
-    width:40%;
+    width:60%;
     height:70%;
-    margin-top:-9.75%;
-    margin-left: 25%;
+    margin-top:-14%;
+    margin-left: 15%;
     font-size: 12px;
     text-align:center;
     float:right;
@@ -266,7 +267,6 @@
   
   .keysTable tr:hover {
     background-color: #F5F5F5;
-    color: 6168ED;
     border: 1px solid #6168ED;
   }
   
@@ -366,7 +366,6 @@
 
 .app-txn-record:hover .txn-cost{
   display: inline-block;
-  color: #6168ED;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -390,7 +389,7 @@
   font-weight:100;
 }
 
-.app-txn-record:hover .txn-Mint-epochs{
+.app-txn-record:hover .txn-Create-epochs{
   display: inline-block;
   color: #6168ED;
   font-weight: bold;
@@ -438,7 +437,8 @@
   background-color: #6168ED;
   color:white;
   position: absolute;
-  width: 12%;
+  padding-left:10px;
+  padding-right:10px;
   height: 20px;
   margin-top:-17px;
   margin-left:-5px;
@@ -448,7 +448,7 @@
 
 .app-txn-record:hover .txn-cost{
   display: inline-block;
-  color: #6168ED;
+  color: #FFFFFF;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -539,6 +539,55 @@
     text-align: left;
     padding-left:40px;
   }
+
+  .edit-app-popup-content {
+    background-color: #ffffff;
+    padding-left: 1.5%;
+    width:360px;
+    height:500px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    text-align: left;
+    color:#6168ED;
+    font-weight: bold;
+  }
+
+  .ea-app-description textarea{
+    width:90%;
+    height: 160px;
+    resize: none;
+  }
+
+  .ea-built-by{
+    padding-top:20px;
+  }
+
+  .ea-built-by input{
+    width:50%;
+  }
+
+  .ea-website{
+    padding-top:20px;
+  }
+
+  .ea-website input{
+    width:50%;
+  }
+
+  .ea-github{
+    padding-top:20px;
+  }
+
+  .ea-github input{
+    width:50%;
+    margin-bottom:30px;
+  }
+
+  .ea-save{
+    margin-top:40px;
+    margin-left:38%;
+  }
   
   .keys-close-button {
     position: absolute;
@@ -620,6 +669,7 @@
   .cf-app-description textarea{
     width: 350px;
     height:100px;
+    resize: none;
   }
 
   .cf-built-by{
@@ -657,7 +707,7 @@
 
   .build-settings-form {
     width:260px;
-    height:53vh;
+    height:500px;
     margin-left: 245px;
     margin-right: 0%;
     padding-left: 1%;
@@ -694,3 +744,489 @@
     margin-right:10px;
   }
 
+  @media(max-width:1536px){
+    .build-settings-header-0A {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 5px 0px 0px 0px;
+      box-shadow: -2px -2px 2px 0px rgba(0, 0, 0, 0.05);
+      border-top:none;
+      border-right:1px solid #6168ED;
+      border-left:none;
+      border-bottom: 1px solid #F5F5F5;
+      height: 47px;
+      width: 15.3%;
+      margin-top: 96px;
+      margin-left: 215px;
+      padding-top: 10px;
+      text-align: left;
+      padding-left:20px;
+      z-index: 50;
+      position: absolute;
+      transition: all 0.5s ease;
+      font-weight: bold;
+    }
+  
+    .build-settings-header-0A:hover {
+      background-color: #F5F5F5;
+      color: #6168ED;
+      cursor: pointer;
+      margin-top: 96px;
+    }
+  
+    .build-settings-header-1A {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 0px 0px 0px 0px;
+      box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
+      border-top:1px solid #F5F5F5;
+      border-right:1px solid #6168ED;
+      border-left:none;
+      border-bottom: 1px solid #F5F5F5;
+      height: 47px;
+      width: 15.3%;
+      margin-top: 142px;
+      margin-left: 215px;
+      padding-top: 10px;
+      text-align: left;
+      padding-left:20px;
+      z-index: 50;
+      position: absolute;
+      transition: all 0.5s ease;
+      font-weight: bold;
+    }
+  
+    .build-settings-header-1A:hover {
+      background-color: #F5F5F5;
+      margin-top: 142px;
+      color: #6168ED;
+      cursor: pointer;
+    }
+  
+    .build-settings-header-2A {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 0px 0px 0px 5px;
+      box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
+      border-top:none;
+      border-right:1px solid #6168ED;
+      border-left:none;
+      border-bottom: 1px solid #F5F5F5;
+      height: 47px;
+      width: 15.3%;
+      margin-top: 189px;
+      margin-left: 215px;
+      padding-top: 10px;
+      text-align: left;
+      padding-left:20px;
+      z-index: 50;
+      position: absolute;
+      transition: all 0.5s ease;
+      font-weight: bold;
+      word-wrap: normal;
+    }
+  
+    .build-settings-header-2A:hover {
+      background-color: #F5F5F5;
+      margin-top: 189px;
+      color: #6168ED;
+      cursor: pointer;
+      box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
+    }
+  
+    .build-settings-header-0B {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 0px 5px 5px 5px;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+      height: 82vh;
+      width: 70%;
+      margin-top:96px;
+      margin-left: 449px;
+      z-index: 1;
+      position: absolute;
+    }
+
+    .build-settings-form {
+      width:200px;
+      height:450px;
+      margin-left: 215px;
+      margin-right: 0%;
+      padding-left: 1%;
+      margin-top:250px;
+      text-align:left;
+      font-size:14px;
+      font-weight: bold;
+      background-color: #F5F5F5;
+      box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      color: #6168ED;
+    }
+
+    .app-txn-record:hover .txn-description {
+      display: block;
+      color: #6168ED;
+      font-weight: bold;
+      background-color: #F5F5F5;
+      box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+      height:50px;
+      width:85%;
+      margin-left:2%;
+      margin-top:20px;
+      text-align: left;
+      padding-top:10px;
+      padding-bottom:10px;
+      padding-left:20px;
+      padding-right:20px;
+      overflow: auto;
+      word-wrap: break-word;
+      position: absolute;
+    }
+
+    .app-txn-record:hover .txn-ual{
+      display: block;
+      color: #6168ED;
+      font-weight: bold;
+      width:90%;
+      font-size: 12px;
+      margin-left:4%;
+      margin-top:50px;
+      text-align: left;
+      position: absolute;
+      border-radius: 5px;
+      outline: 1px solid #6168ED;
+      text-align:center;
+      height:20px;
+      padding-top:5px;
+    }
+
+    .create-app-button{
+      padding: 8px 16px;
+      background-color: #6168ED;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top:10px;
+      margin-left:150px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-nav{
+      width:15%;
+      font-family: OCR A Std, monospace;
+      height: 20%;
+      margin-top:700px;
+      position: absolute;
+      margin-left:65px;
+    }
+  
+    .app-nav button{
+      width:215px;
+      font-size:20px;
+    }
+
+    .app-details button{
+      width: 40px;
+      height:35x;
+    }
+
+    .app-github{
+      font-size:16px;
+    }
+
+    .app-website{
+      font-size:16px;
+    }
+
+    .app-built-by{
+      font-size:16px;
+    }
+
+    .app-description{
+      margin-top:10px;
+      font-size:16px;
+      height: 6rem;
+    }
+
+    .app-built-by{
+      padding-bottom:20px;
+    }
+
+    .key-form{
+      width:42.5%;
+      height:3rem;
+      font-size: 20px;
+      text-align:left;
+      z-index: 600;
+      margin-left:15px;
+      font-weight: bold;
+      padding-top:50px;
+    }
+  
+    .key-text{
+      margin-top:-25px;
+      font-size:16px;
+    }
+
+    .keysTable {
+      width: 30%;
+      max-height:77vh;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      border: 1px solid #6168ED;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      float:right;
+      font-family: 'Roboto', sans-serif;
+      overflow: 'auto';
+      margin-left:30%;
+      margin-right:4%;
+      z-index: 901;
+      position: absolute;
+      margin-top:478px;
+    }
+
+    .keysTable th {
+      background-color: #6168ED;
+      color: #ffffff;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+      border: 1px solid #6168ED;
+    }
+
+    .keysTable tr {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #6168ED;
+      line-height:10px;
+      max-height: .5vh;
+    }
+    
+    .keysTable tr:hover {
+      background-color: #F5F5F5;
+      border: 1px solid #6168ED;
+    }
+    
+    .keysTable tr:hover td {
+      border: 1px solid #6168ED;
+    }
+
+    .keysTable td button{
+      width:25px;
+      height:25px;
+    }
+
+    .keysTable td img{
+      width:15px;
+      height:15px;
+    }
+
+    .radios-status{
+      float:right;
+      margin-top:-200px;
+      margin-right:10px;
+    }
+  }
+
+  @media(max-width:1366px){
+    .build-settings-header-0A {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 5px 0px 0px 0px;
+      box-shadow: -2px -2px 2px 0px rgba(0, 0, 0, 0.05);
+      border-top:none;
+      border-right:1px solid #6168ED;
+      border-left:none;
+      border-bottom: 1px solid #F5F5F5;
+      height: 47px;
+      width: 221px;
+      margin-top: 96px;
+      margin-left: 215px;
+      padding-top: 10px;
+      text-align: left;
+      padding-left:20px;
+      z-index: 50;
+      position: absolute;
+      transition: all 0.5s ease;
+      font-weight: bold;
+    }
+  
+    .build-settings-header-0A:hover {
+      background-color: #F5F5F5;
+      color: #6168ED;
+      cursor: pointer;
+      margin-top: 96px;
+    }
+  
+    .build-settings-header-1A {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 0px 0px 0px 0px;
+      box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
+      border-top:1px solid #F5F5F5;
+      border-right:1px solid #6168ED;
+      border-left:none;
+      border-bottom: 1px solid #F5F5F5;
+      height: 47px;
+      width: 221px;
+      margin-top: 142px;
+      margin-left: 215px;
+      padding-top: 10px;
+      text-align: left;
+      padding-left:20px;
+      z-index: 50;
+      position: absolute;
+      transition: all 0.5s ease;
+      font-weight: bold;
+    }
+  
+    .build-settings-header-1A:hover {
+      background-color: #F5F5F5;
+      margin-top: 142px;
+      color: #6168ED;
+      cursor: pointer;
+    }
+  
+    .build-settings-header-2A {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 0px 0px 0px 5px;
+      box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
+      border-top:none;
+      border-right:1px solid #6168ED;
+      border-left:none;
+      border-bottom: 1px solid #F5F5F5;
+      height: 47px;
+      width: 221px;
+      margin-top: 189px;
+      margin-left: 215px;
+      padding-top: 10px;
+      text-align: left;
+      padding-left:20px;
+      z-index: 50;
+      position: absolute;
+      transition: all 0.5s ease;
+      font-weight: bold;
+      word-wrap: normal;
+    }
+  
+    .build-settings-header-2A:hover {
+      background-color: #F5F5F5;
+      margin-top: 189px;
+      color: #6168ED;
+      cursor: pointer;
+      box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
+    }
+  
+    .build-settings-header-0B {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      z-index: 10;
+      color: #6168ED;
+      background-color: #FFFFFF;
+      border-radius: 0px 5px 5px 5px;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+      height: 82vh;
+      width: 67%;
+      margin-top:96px;
+      margin-left: 435px;
+      z-index: 1;
+      position: absolute;
+    }
+
+    .build-settings-form {
+      width:190px;
+      height:450px;
+      margin-left: 215px;
+      margin-right: 0%;
+      padding-left: 1%;
+      margin-top:250px;
+      text-align:left;
+      font-size:14px;
+      font-weight: bold;
+      background-color: #F5F5F5;
+      box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      color: #6168ED;
+    }
+
+    .key-form{
+      width:42.5%;
+      height:3rem;
+      font-size: 20px;
+      text-align:left;
+      z-index: 600;
+      margin-left:-15px;
+      font-weight: bold;
+      padding-top:50px;
+    }
+  
+    .key-text{
+      margin-top:-25px;
+      font-size:16px;
+      margin-left:30px;
+    }
+
+    .keysTable {
+      width: 18%;
+      max-height:77vh;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      border: 1px solid #6168ED;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      float:right;
+      font-family: 'Roboto', sans-serif;
+      overflow: 'auto';
+      margin-left:33%;
+      margin-right:4%;
+      z-index: 901;
+      position: absolute;
+      margin-top:478px;
+    }
+
+    .keysTable td {
+      padding: 10px;
+      font-size: 12px;
+      border: 1px solid #6168ED;
+      line-height:10px;
+      max-height: .5vh;
+    }
+
+    .app-nav button{
+      width:205px;
+      font-size:20px;
+    }
+  }

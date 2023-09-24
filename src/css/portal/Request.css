@@ -828,10 +828,4 @@
       font-size: 14px;
       font-weight: bold;
     }
-
-    .request-PENDING-progress{
-      color: yellow;
-      font-weight: bold;
-      padding-left:30%;
-    }
   }

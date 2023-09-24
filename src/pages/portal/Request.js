@@ -27,15 +27,16 @@ const mainnet_node_options = {
 
 const Request = (txn) => {
   const {
+    setIsLoading,
     setData,
     setIsRequestOpen,
     setIsResultOpen,
+    setResultValue,
     isRequestOpen,
     chain_id,
     account,
-    setResultValue,
+    isLoading,
   } = useContext(AccountContext);
-  const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
   txn = JSON.parse(txn.data);
@@ -338,6 +339,11 @@ const Request = (txn) => {
 
   if (isLoading && !isRequestOpen) {
     return <Loading />;
+  }
+
+  if (isLoading && isRejectTxnOpen) {
+    let text = "Processing rejection... "
+    return <Loading data={text}/>;
   }
 
   if (isLoading && isRequestOpen) {

@@ -264,6 +264,16 @@ const Settings = () => {
     )
    }
 
+   if(window.matchMedia('(max-width: 480px)').matches){
+    return (
+      <div className='keys'>
+        <header className='keys-header'>
+          Please switch to desktop to view your app settings.
+        </header>
+      </div>
+    )
+   }
+
     if (chain_id !== 'Origintrail Parachain Testnet' && chain_id !== 'Origintrail Parachain Mainnet') {
         return (
             <div className="keys">
@@ -392,7 +402,7 @@ const Settings = () => {
           )}
           {isEditAppOpen && (
               <div className='popup-overlay'>
-                  <div className='keys-popup-content'>
+                  <div className='edit-app-popup-content'>
                       <button className='keys-close-button' onClick={closeEditApp}>
                           X
                       </button>
@@ -400,7 +410,7 @@ const Settings = () => {
                           <div className="ea-app-description">
                               App Description
                               <br></br>
-                              <input
+                              <textarea
                                   type="text"
                                   name='app_description'
                               />
@@ -429,7 +439,7 @@ const Settings = () => {
                                   name='github'
                               />
                           </div>
-                          <button type='submit'>Save</button>
+                          <button type='submit' className="ea-save">Save</button>
                       </form>
                   </div>
               </div>
@@ -514,7 +524,8 @@ const Settings = () => {
               onClick={() => clickAppTab(record.app_name,index)}
               style={app_index === index ? ({border: "1px solid #6168ED", borderRight: '1px solid #FFFFFF',borderTop: '1px solid #6168ED', zIndex: 300}): ({})}
               >
-              {record.app_name} 
+                {/* window.matchMedia('(max-width: 480px)').match */}
+              {record.app_name.substring(0, 16)} 
             </button>
           ))}
           <div className="build-settings-form">
@@ -726,12 +737,12 @@ const Settings = () => {
                 {`${data.keyRecords.length}/5 Active Keys`}
                 
               </div>
-              <form onSubmit={() => handleCreateKey(app_index)} className='app-text'>
-                <button type='submit'>Create Key</button>
-              </form>
               <div className='msg-text'>
                 {data.msg}
               </div>
+              <form onSubmit={() => handleCreateKey(app_index)} className='app-text'>
+                <button type='submit'>Create Key</button>
+              </form>
             </div>
           </div>
           <table className='keysTable'>
@@ -783,7 +794,7 @@ const Settings = () => {
                   Epochs: {txn.epochs}
                 </div>
                 <div className="txn-cost">
-                  Estimated Cost: {txn.trac_fee}
+                  - 
                 </div>
                 <div className="txn-description">
                   <span>{txn.txn_description}</span>

@@ -199,8 +199,8 @@
 }
 
 .app-settings-popup-content {
-    width: 25%;
-    height: 80%;
+    width: 400px;
+    height: 660px;
     background-color: #ffffff;
     padding: 10px;
     border-radius: 5px;
@@ -330,7 +330,7 @@ text-align: center;
   text-align: right;
   position: relative;
   margin-top:-110px;
-  transition: all 0.4s ease;
+  transition: all 0.6s ease;
 }
 
 .gateway-txn-record:hover .txn-summary{
@@ -341,7 +341,7 @@ text-align: center;
   padding-left:2%;
   padding-top:10px;
   position: absolute;
-  transition: all 0.4s ease;
+  transition: all 0.6s ease;
 }
 
 .gateway-txn-record:hover .txn-details{
@@ -368,7 +368,7 @@ text-align: center;
 
 .gateway-txn-record:hover .txn-cost{
   display: inline-block;
-  color: #6168ED;
+  color: #FFFFFF;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -578,7 +578,7 @@ text-align: center;
     }
 
     .gateway-txn-container {
-        margin-top: 105px;
+        margin-top: 70px;
         padding-top: 1%;
         margin-bottom: 1%;
         margin-right: 1%;
@@ -594,7 +594,7 @@ text-align: center;
         width: 78%;
         font-family: OCR A Std, monospace;
         height: 40px;
-        margin-top: -100px;
+        margin-top: 0px;
         position: absolute;
         margin-left: 1%;
     }
@@ -785,19 +785,6 @@ text-align: center;
     text-align: center;
     }
 
-    .app-settings-popup-content {
-        width: 80%;
-        height: 83vh;
-        background-color: #ffffff;
-        padding: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        position: relative;
-        color: #6168ED;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
     .app-settings-close-button {
         position: absolute;
         right: 10px;
@@ -892,7 +879,7 @@ text-align: center;
         text-align: right;
         position: relative;
         margin-top: -70px;
-        transition: all 0.4s ease;
+        transition: all 0.6s ease;
     }
 
     .gateway-txn-record:hover .txn-summary {
@@ -902,7 +889,7 @@ text-align: center;
         text-align: left;
         padding-left: 2%;
         position: absolute;
-        transition: all 0.4s ease;
+        transition: all 0.6s ease;
         margin-top:-5px;
     }
 
@@ -929,7 +916,7 @@ text-align: center;
 
     .gateway-txn-record:hover .txn-cost {
         display: none;
-        color: #6168ED;
+        color: #FFFFFF;
         font-weight: bold;
         width: 30%;
         font-size: 16px;
@@ -1004,7 +991,7 @@ text-align: center;
     .mobile-buttonz {
         display: block;
         width: 100%;
-        margin-top: -35px;
+        margin-top: -120px;
         height: 1px;
         margin-left: -5px;
     }
@@ -1033,6 +1020,22 @@ text-align: center;
             border-radius: 15px 15px 15px 15px;
             cursor: pointer;
         }
+}
+
+@media (max-width:400px){
+  .app-settings-popup-content {
+      width: 320px;
+      height: 660px;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      color: #6168ED;
+      font-weight: bold;
+      font-size: 20px;
+      margin-top:-20px;
+  }
 }
 
 @media (max-width: 360px) {

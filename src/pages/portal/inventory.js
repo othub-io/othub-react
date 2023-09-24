@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AccountContext } from "../../AccountContext";
 import "../../css/portal/inventory.css";
 import Loading from "../../Loading";
-import InvAsset from "./InvAsset";
 import axios from "axios";
+import InvAsset from "./invAsset";
 let ext;
 
 ext = "http";
@@ -11,7 +11,7 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
-const Assets = () => {
+const Inventory = () => {
   const [data, setData] = useState("");
   const { chain_id, account } = useContext(AccountContext);
   const [isAssetOpen, setIsAssetOpen] = useState(false);
@@ -30,30 +30,36 @@ const Assets = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const pubs_response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?network=${chain_id}&owner=${account}`
-        );
-        await setData(pubs_response.data);
-
-        if (provided_ual) {
-          const segments = provided_ual.split(":");
-          const argsString =
-            segments.length === 3 ? segments[2] : segments[2] + segments[3];
-          const args = argsString.split("/");
-
-          if (args.length !== 3) {
-            console.log(`UAL doesn't have correct format: ${provided_ual}`);
-          } else {
-            console.log(provided_ual);
-            const ual_response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?ual=${provided_ual}&network=${chain_id}&owner=${account}`
-            );
-
-            console.log(`UAL RESP: ${JSON.stringify(ual_response)}`);
-            await setInputValue(ual_response.data.v_pubs[0]);
-            await setIsAssetOpen(true);
+        if (account && (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet')) {
+          console.log(`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?network=${chain_id}&owner=${account}`)
+          const pubs_response = await axios.get(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?network=${chain_id}&owner=${account}`
+          );
+          await setData(pubs_response.data);
+  
+          if (provided_ual) {
+            const segments = provided_ual.split(":");
+            const argsString =
+              segments.length === 3 ? segments[2] : segments[2] + segments[3];
+            const args = argsString.split("/");
+  
+            if (args.length !== 3) {
+              console.log(`UAL doesn't have correct format: ${provided_ual}`);
+            } else {
+              console.log(provided_ual);
+              const ual_response = await axios.get(
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?ual=${provided_ual}&network=${chain_id}&owner=${account}`
+              );
+  
+              console.log('iuwnfeiuefien: '+ual_response.data.v_pubs[0])
+              if(ual_response.data.v_pubs[0]){
+                await setInputValue(ual_response.data.v_pubs[0])
+                await setIsAssetOpen(true)
+              }
+            }
           }
         }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,7 +67,7 @@ const Assets = () => {
 
     setData("");
     fetchData();
-  }, []);
+  }, [account]);
 
   const openAssetPopup = (pub) => {
     setInputValue(pub);
@@ -105,6 +111,16 @@ const Assets = () => {
     setData("");
   };
 
+  if (!account) {
+    return (
+      <div className="keys">
+        <header className="keys-header">
+          Please connect your wallet to unlock your inventory.
+        </header>
+      </div>
+    );
+  }
+
   if (data === "") {
     return (
       <div className="keys">
@@ -143,7 +159,7 @@ const Assets = () => {
                 />
               </div>
               <br></br>
-              <div className="asset-limit">
+              <div className="inv-asset-limit">
                 Limit: {filterInput.limit}
                 <br></br>
                 <input
@@ -156,7 +172,7 @@ const Assets = () => {
                   style={{ cursor: "pointer", width: "75%" }}
                 />
               </div>
-              <div className="radios">
+              <div className="inv-radios">
                 Sort:<br></br>
                 <input
                   type="radio"
@@ -232,4 +248,4 @@ const Assets = () => {
   );
 };
 
-export default Assets;
+export default Inventory;

@@ -23,7 +23,6 @@ ChartJS.register(
 
 const HomeChart = ({ data }) => {
 
-  console.log(data)
   data = JSON.parse(data)
   // Extract labels and data from the dataset
   const labels = data.map((item) => moment(item.date).format('DD MMM'));
@@ -48,7 +47,6 @@ const HomeChart = ({ data }) => {
   //   }
   // }
   
-  console.group(pubCounts)
   const formattedData = {
     labels: labels,
     datasets: [
