@@ -78,7 +78,7 @@ const Home = () => {
           </div>
           <div className="bar-header">
             <div className="badge">
-              <a href="https://dkg.origintrail.io/explore?ual=did:dkg:otp/0x5cac41237127f94c2d21dae0b14bfefa99880630/1004951" target="_blank"><img src={`${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-1M-Badge.jpg`} alt='1M Assets Badge'></img></a>
+              <a href="https://dkg.origintrail.io/explore?ual=did:dkg:otp/0x5cac41237127f94c2d21dae0b14bfefa99880630/1004951" target="_blank"><img src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-1M-Badge.jpg`} alt='1M Assets Badge'></img></a>
             </div>
             <div className="bar-legend-big">
               1M
