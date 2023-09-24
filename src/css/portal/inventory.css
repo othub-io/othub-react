@@ -459,6 +459,12 @@
         padding-top:10%;
       }
 
+      .card-img{
+        height:35px;
+        width:35px;
+        margin-top:-5px;
+      }
+
       .card-token{
         color: #6168ED;
         font-size:15px;
