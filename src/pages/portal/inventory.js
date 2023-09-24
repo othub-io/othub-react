@@ -220,7 +220,7 @@ const Inventory = () => {
               >
                 <div className="card-token">{pub.token_id}</div>
                 <div className="card-image">
-                  <img src={`${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`} alt='KA' height='65' width='65'></img>
+                  <img src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`} alt='KA' height='65' width='65'></img>
                 </div>
                 <div className="card-size">{pub.size}bytes</div>
                 <div className="card-cost">
