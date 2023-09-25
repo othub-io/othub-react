@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AccountContext } from "../../AccountContext";
 import '../../css/portal/assets.css'
 import Loading from '../../Loading'
-import InvAsset from './invAsset'
+import Asset from './Asset'
 import axios from 'axios'
 let ext
 
@@ -114,7 +114,7 @@ const Assets = () => {
             <button className='assets-close-button' onClick={closeAssetPopup}>
                     X
             </button>
-            <InvAsset data={inputValue}/>
+            <Asset data={inputValue}/>
           </div>
         </div>
       )}

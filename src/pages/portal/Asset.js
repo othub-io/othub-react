@@ -1,14 +1,24 @@
-import React, { useContext } from 'react'
-import '../../css/portal/Asset.css' // Import the CSS file for styling (see Step 3)
+import React, { useContext, useState, useEffect } from 'react'
+import '../../css/portal/invAsset.css' // Import the CSS file for styling (see Step 3)
 import { AccountContext } from '../../AccountContext'
 import moment from 'moment';
+import axios from "axios";
+let ext;
+let explorer_url
+
+ext = "http";
+if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
+  ext = "https";
+}
+
 let asset_data
 let sub_scan_link
 let link_type
-let explorer_url
 
 const Asset = (on_chain) => {
   const { chain_id } = useContext(AccountContext)
+  const [assetHistory, setAssetHistory] = useState("");
+  const isMobile = window.matchMedia('(max-width: 480px)').matches
   let winners
   asset_data = on_chain.data
   winners = JSON.parse(asset_data.winners)
@@ -34,6 +44,24 @@ const Asset = (on_chain) => {
   const expire_date_fancy = new Date(expire_date).toISOString();
   const formatted_expire_date_fancy = moment.utc(expire_date_fancy).format('MM/DD/YYYY')
 
+  useEffect(() => {
+    async function fetchData () {
+      try {
+        const response = await axios.get(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory?ual=${asset_data.UAL}&network=${chain_id}`
+        )
+        console.log(response.data)
+        await setAssetHistory(response.data.assetHistory)
+
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+
+    setAssetHistory('')
+    fetchData()
+  }, [asset_data.UAL])
+
   const handleCopyLink = async (link) => {
     try {
       await navigator.clipboard.writeText(link); // Replace with your desired link
@@ -43,8 +71,17 @@ const Asset = (on_chain) => {
     }
   };
 
-  return ( 
-    <div className='asset-data'>
+  const historyTxn = async (url) => {
+    try {
+        await window.open(url, '_blank');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div> 
+    <div className='inv-asset-data'>
         <div className='created'>
             <span>Created on {formatted_mint_date_fancy}</span>
         </div>
@@ -52,7 +89,7 @@ const Asset = (on_chain) => {
             <span>
                 Asset {asset_data.token_id}
                 <button onClick={() => handleCopyLink(`https://www.othub.io/portal/assets?ual=${asset_data.UAL}`)}>
-                    <img className='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
+                    <img class='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
                 </button>
             </span>
         </div>
@@ -112,6 +149,17 @@ const Asset = (on_chain) => {
             </div>
         ))}</div>) : (<div></div>)}
     </div>
+        <div className="inv-asset-history" style={({display: isMobile ? "none" : "block"})}>
+            {assetHistory && !isMobile ? (<div>{assetHistory.map((event, index) => (
+                <div className='event-list-item' key={index} onClick={() => historyTxn(sub_scan_link+'/tx/'+ event.transaction_hash)}>
+                    <div className='event-timestamp'>{event.updated_at}</div>
+                    <div className='event-name'>{event.event} for {event.minted_epochs_number} epoch(s)</div>
+                    <div className='event-cost'>Costing {event.minted_token_amount / 1000000000000000000} TRAC</div>
+                </div>
+            ))}</div>) : (<div></div>)}
+        </div>
+    </div>
+    
   )
 }
 
