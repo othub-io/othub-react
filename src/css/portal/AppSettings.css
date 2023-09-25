@@ -18,7 +18,7 @@
 .app-list-item:hover .tooltip {
     opacity: 1;
     visibility: visible;
-    z-index: 900;
+    
   }
 
     .app-list-item:hover {
@@ -40,7 +40,6 @@
     margin-top: -23px;
     margin-left: 23%;
     text-align:left;
-    width:20%;
 }
 
 .app-settings-button {

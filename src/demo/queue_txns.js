@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const api_key = '6FCVZsJ4djazql4QUlaY3He7W13MvB'
+const api_key = 'D3zAFE7pSAWeC02EH4a9NLwx8dLNKG'
 
 const queue_txns = async (api_key) => {
   //  response = await axios.get(
@@ -33,30 +33,22 @@ const queue_txns = async (api_key) => {
 //    console.log(`----------GET STATE ISSUER------------`)
 //    console.log(response.data)
 
-//    response = await axios.get(
-//        `http://localhost:5575/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
-//           "@type": "ImageObject",
-//            "name" : "OTHub 1M Assets Badge",
-//            "author":"OTHub.io",
-//            "caption" : "1 Million Assets!",
-//            "contentUrl" : "https://www.othub.io/images?src=OTHub-1M-Badge.jpg",
-//            "datePublished": "2023-09-23",
-//            "description": "A badge celebrating the achievement of 1 million assets on the Origintrail Decentralized Knowledge Graph",
-//            "encodingFormat": "image/jpeg",
-//            "belongsTo" : ["did:dkg:otp/0x5cac41237127f94c2d21dae0b14bfefa99880630/1000000"],
-//            "ipfs" : {"type" : "string", "pattern" : "QmR17tQLVXvbEpPsBqee8NSB7T6fCZ7LPorGrjuzNyJ4nQ"}
-// }&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
-//    )
-//    console.log(`----------CREATE------------`)
-//    console.log(response.data)
+   response = await axios.get(
+       `http://api.othub.io/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
+          "@type": "Thing",
+           "name" : "color"
+}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+   )
+   console.log(`----------CREATE------------`)
+   console.log(response.data)
 
   //  response = await axios.get(
-  //      `http://localhost:5575/dkg/update?api_key=${api_key}&network=otp::mainnet&txn_data={
+  //      `http://api.othub.io/dkg/update?api_key=${api_key}&network=otp::mainnet&txn_data={
   //       "@type": "ImageObject",
   //        "name" : "OTHub 1M Assets Badge",
   //        "author":"OTHub.io",
   //        "caption" : "1 Million Assets!",
-  //        "contentUrl" : "https://www.othub.io/images?src=OTHub-1M-Badge.jpg",
+  //        "contentUrl" : "https://runtime.othub.io/images?src=OTHub-1M-Badge.jpg",
   //        "datePublished": "2023-09-23",
   //        "description": "A badge celebrating the achievement of 1 million assets on the Origintrail Decentralized Knowledge Graph",
   //        "encodingFormat": "image/jpeg",
@@ -79,11 +71,11 @@ const queue_txns = async (api_key) => {
     // console.log(`----------QUERY------------`)
     // console.log(response.data)
 
-    response = await axios.get(
-       `http://localhost:5575/dkg/create_n_transfer?api_key=${api_key}&network=otp::testnet&txn_data={"color":"green"}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
-     )
-    console.log(`----------CREATE N TRANSFER------------`)
-    console.log(response.data)
+    // response = await axios.get(
+    //    `http://localhost:5575/dkg/create_n_transfer?api_key=${api_key}&network=otp::testnet&txn_data={"color":"green"}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+    //  )
+    // console.log(`----------CREATE N TRANSFER------------`)
+    // console.log(response.data)
 
     // response = await axios.get(
     //   `http://localhost:5575/otp_testnet/assetInventory?api_key=${api_key}&owner=0x974e658A243a5Ec0cE1a0a4317D42f48dBB05Fbd`
