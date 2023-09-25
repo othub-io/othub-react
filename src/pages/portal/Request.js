@@ -40,7 +40,6 @@ const Request = (txn) => {
   const [inputValue, setInputValue] = useState("");
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
   txn = JSON.parse(txn.data);
-  console.log(txn);
 
   const handleCreate = async (txn) => {
     try {

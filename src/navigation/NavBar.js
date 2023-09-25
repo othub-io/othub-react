@@ -85,7 +85,7 @@ function NavBar() {
     <nav>
       <div className="navbar">
         <h1>
-        <img src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`} alt='othub-logo' className="othub-logo"></img>
+        <a href="/"><img src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`} alt='othub-logo' className="othub-logo"></img></a>
           <a href="/" className="logo-text">
             othub.io <span style={{ fontSize: "14px" }}>beta</span>
           </a>

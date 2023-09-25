@@ -50,6 +50,7 @@ const Inventory = () => {
                 `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?ual=${provided_ual}&network=${chain_id}&owner=${account}`
               );
   
+              console.log(JSON.stringify(ual_response))
               if(ual_response.data.v_pubs[0]){
                 await setInputValue(ual_response.data.v_pubs[0])
                 await setIsAssetOpen(true)

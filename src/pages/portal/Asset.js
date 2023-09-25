@@ -51,7 +51,7 @@ const Asset = (on_chain) => {
         <div className='token'>
             <span>
                 Asset {asset_data.token_id}
-                <button onClick={() => handleCopyLink(`https://www.othub.io/assets?ual=${asset_data.UAL}`)}>
+                <button onClick={() => handleCopyLink(`https://www.othub.io/portal/assets?ual=${asset_data.UAL}`)}>
                     <img className='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
                 </button>
             </span>
