@@ -120,6 +120,11 @@
     margin-left:5%;
 }
 
+.card-img{
+  height:65px;
+  width:65px;
+}
+
 .card-size{
     padding-top:5%;
     color: #6168ED;
