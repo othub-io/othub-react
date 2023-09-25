@@ -10,6 +10,12 @@ let back_admin_key;
 let addr;
 let chain;
 let url;
+let ext;
+
+ext = "http";
+if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
+  ext = "https";
+}
 
 function NavBar() {
   const { account, chain_id, isLoading, balance, setBalance } = useContext(AccountContext);
@@ -79,6 +85,7 @@ function NavBar() {
     <nav>
       <div className="navbar">
         <h1>
+        <img src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`} alt='othub-logo' className="othub-logo"></img>
           <a href="/" className="logo-text">
             othub.io <span style={{ fontSize: "14px" }}>beta</span>
           </a>

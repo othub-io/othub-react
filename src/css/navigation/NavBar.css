@@ -16,7 +16,7 @@
     font-size: 28px;
     color: #6168ED;
     margin: 0;
-    width:220px;
+    width:300px;
   }
 
   .connection-info{
@@ -28,6 +28,8 @@
     color: #6168ED;
     text-decoration: none; 
     padding-right:10px;
+    padding-top:17px;
+    float:right;
   }
 
   .addr-chain{
@@ -43,17 +45,40 @@
     color: #6168ED;
     font-weight: bold;
   }
+
+  .othub-logo{
+    width:70px;
+    height:70px;
+  }
   
   @media (max-width: 1536px) {
     .navbar h1 {
-      width:230px;
+      font-size: 28px;
+      color: #6168ED;
+      margin: 0;
+      width:350px;
+    }
+
+    .logo-text {
+      color: #6168ED;
+      text-decoration: none; 
+      padding-right:10px;
+      float:right;
+    }
+
+    .othub-logo{
+      width:70px;
+      height:70px;
     }
 }
 
   @media (max-width: 1366px) {
     .navbar h1 {
-      width:240px;
-    } 
+      font-size: 28px;
+      color: #6168ED;
+      margin: 0;
+      width:350px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -68,6 +93,10 @@
       z-index: 9900;
       position:relative;
       width:calc(100%);
+    }
+
+    .logo-text {
+      display:none;
     }
     
     .navbar h1 {
