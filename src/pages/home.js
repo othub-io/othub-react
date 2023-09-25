@@ -30,7 +30,6 @@ const Home = () => {
   useEffect(() => {
     async function fetchData () {
       try {
-        console.log(`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`)
         const response = await axios.get(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`
         )
