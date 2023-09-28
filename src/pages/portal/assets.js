@@ -30,7 +30,7 @@ const Assets = () => {
   useEffect(() => {
     async function fetchData () {
       try {
-        const pubs_response = await axios.get(
+        const response = await axios.get(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
         )
 
@@ -42,19 +42,20 @@ const Assets = () => {
             if (args.length !== 3) {
                 console.log(`UAL doesn't have correct format: ${provided_ual}`);
             }else{
-                const ual_response = await axios.get(
+                const pubs_response = await axios.get(
                     `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}&network=${chain_id}`
                   )
                 
-                  console.log('UAL RESP: '+ual_response)
+                  console.log('UAL RESP: '+pubs_response)
                   
-                if(ual_response.data.v_pubs[0] !== ""){
-                  await setInputValue(ual_response.data.v_pubs[0])
+                if(pubs_response.data.v_pubs[0] !== ""){
+                  await setInputValue(pubs_response.data.v_pubs[0])
                   await setIsAssetOpen(true)
                 }
             }
         }
-        await setData(pubs_response.data)
+        console.log('here')
+        await setData(response.data)
         return;
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -63,7 +64,7 @@ const Assets = () => {
 
     setData('')
     fetchData()
-  }, [chain_id])
+  }, [])
 
   const openAssetPopup = (pub) => {
     setInputValue(pub)

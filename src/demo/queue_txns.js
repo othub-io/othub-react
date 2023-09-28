@@ -2,12 +2,12 @@ const axios = require('axios');
 
 const api_key = 'D3zAFE7pSAWeC02EH4a9NLwx8dLNKG'
 
-const queue_txns = async (api_key) => {
-  //  response = await axios.get(
-  //      `http://localhost:5575/dkg/get?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/406325`
-  //    )
-  //  console.log(`----------GET------------`)
-  //  console.log(response.data)
+ const queue_txns = async (api_key) => {
+   response = await axios.get(
+       `https://api.othub.io/dkg/get?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/446140&state=LATEST&txn_description`
+     )
+   console.log(`----------GET------------`)
+   console.log(response.data)
 
   //  response = await axios.get(
   //      `http://localhost:5575/dkg/getLatestStateIssuer?api_key=${api_key}&network=otp::testnet&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/356828`
@@ -33,14 +33,14 @@ const queue_txns = async (api_key) => {
 //    console.log(`----------GET STATE ISSUER------------`)
 //    console.log(response.data)
 
-   response = await axios.get(
-       `http://api.othub.io/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
-          "@type": "Thing",
-           "name" : "color"
-}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
-   )
-   console.log(`----------CREATE------------`)
-   console.log(response.data)
+//    response = await axios.get(
+//        `http://api.othub.io/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
+//           "@type": "Thing",
+//            "name" : "color"
+// }&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+//    )
+//    console.log(`----------CREATE------------`)
+//    console.log(response.data)
 
   //  response = await axios.get(
   //      `http://api.othub.io/dkg/update?api_key=${api_key}&network=otp::mainnet&txn_data={
@@ -72,7 +72,7 @@ const queue_txns = async (api_key) => {
     // console.log(response.data)
 
     // response = await axios.get(
-    //    `http://localhost:5575/dkg/create_n_transfer?api_key=${api_key}&network=otp::testnet&txn_data={"color":"green"}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
+    //    `https://api.othub.io/dkg/create_n_transfer?api_key=${api_key}&network=otp::testnet&txn_data={"color":"green"}&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d`
     //  )
     // console.log(`----------CREATE N TRANSFER------------`)
     // console.log(response.data)
