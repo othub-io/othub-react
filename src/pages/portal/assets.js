@@ -64,7 +64,7 @@ const Assets = () => {
 
     setData('')
     fetchData()
-  }, [])
+  }, [chain_id])
 
   const openAssetPopup = (pub) => {
     setInputValue(pub)
