@@ -98,9 +98,9 @@ function NavBar() {
             </div>
 
             <div className="balance">
-              <span>{(balance.native[0].balance / 1000000000000).toFixed(4)} OTP</span>
+              {balance.native ? (<span>{(balance.native[0].balance / 1000000000000).toFixed(4)} OTP</span>) : (<span></span>)}
               <br></br>
-              <span>{(balance.ERC20[0].balance / 1000000000000000000).toFixed(4)} TRAC</span>
+              {balance.ERC20 ? (<span>{(balance.ERC20[0].balance / 1000000000000000000).toFixed(4)} TRAC</span>) : (<span></span>)}
             </div>
           </div>
           
