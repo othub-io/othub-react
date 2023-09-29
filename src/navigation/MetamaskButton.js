@@ -2,12 +2,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { AccountContext } from '../AccountContext'
 import detectEthereumProvider from '@metamask/detect-provider'
 import '../css/navigation/metamaskButton.css'
-import axios from 'axios'
 let readable_chain_id
-let url
 
 const MetamaskButton = () => {
-  const { setAccount, setChain, setIsLoading, setBalance,account} = useContext(AccountContext)
+  const { setAccount, setChain, setIsLoading} = useContext(AccountContext)
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
@@ -48,38 +46,6 @@ const MetamaskButton = () => {
             }
             setIsLoading(true)
 
-            // if (readable_chain_id === "Origintrail Parachain Testnet") {
-            //   url = "https://origintrail-testnet.subscan.io";
-            // }
-  
-            // if (readable_chain_id === "Origintrail Parachain Mainnet") {
-            //   url = "https://origintrail.api.subscan.io";
-            // }
-    
-            // const config = {
-            //   method: "post",
-            //   url: url+'/api/scan/evm/account/tokens', 
-            //   headers: {
-            //     "Content-Type": "application/json",
-            //     "X-API-Key": process.env.REACT_APP_SUBSCAN_KEY
-            //   },
-            //   data: {
-            //     "address": newAccounts[0]
-            //   }, 
-            // };
-    
-            // const account_balance = axios(config)
-            //   .then(function (response) {
-            //     // Handle the successful response here
-            //     return response.data;
-            //   })
-            //   .catch(function (error) {
-            //     // Handle errors here
-            //     console.error(error);
-            //   });
-    
-            // setBalance(account_balance.data);
-
             await window.location.reload();
           })
 
@@ -95,38 +61,6 @@ const MetamaskButton = () => {
 
             setChain(readable_chain_id)
             setIsLoading(true)
-
-            // if (readable_chain_id === "Origintrail Parachain Testnet") {
-            //   url = "https://origintrail-testnet.subscan.io";
-            // }
-  
-            // if (readable_chain_id === "Origintrail Parachain Mainnet") {
-            //   url = "https://origintrail.api.subscan.io";
-            // }
-    
-            // const config = {
-            //   method: "post",
-            //   url: url+'/api/scan/evm/account/tokens', 
-            //   headers: {
-            //     "Content-Type": "application/json",
-            //     "X-API-Key": process.env.REACT_APP_SUBSCAN_KEY
-            //   },
-            //   data: {
-            //     "address": account
-            //   }, 
-            // };
-    
-            // const account_balance = axios(config)
-            //   .then(function (response) {
-            //     // Handle the successful response here
-            //     return response.data;
-            //   })
-            //   .catch(function (error) {
-            //     // Handle errors here
-            //     console.error(error);
-            //   });
-    
-            // setBalance(account_balance.data);
 
             window.location.reload();
           })
@@ -165,38 +99,6 @@ const MetamaskButton = () => {
           } else {
             readable_chain_id = 'Unsupported Chain'
           }
-
-          // if (readable_chain_id === "Origintrail Parachain Testnet") {
-          //   url = "https://origintrail-testnet.subscan.io";
-          // }
-
-          // if (readable_chain_id === "Origintrail Parachain Mainnet") {
-          //   url = "https://origintrail.api.subscan.io";
-          // }
-  
-          // const config = {
-          //   method: "post",
-          //   url: url+'/api/scan/evm/account/tokens', 
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     "X-API-Key": process.env.REACT_APP_SUBSCAN_KEY
-          //   },
-          //   data: {
-          //     "address": accounts[0]
-          //   }, 
-          // };
-  
-          // const account_balance = axios(config)
-          //   .then(function (response) {
-          //     // Handle the successful response here
-          //     return response.data;
-          //   })
-          //   .catch(function (error) {
-          //     // Handle errors here
-          //     console.error(error);
-          //   });
-  
-          // setBalance(account_balance.data);
 
           setChain(readable_chain_id)
         }

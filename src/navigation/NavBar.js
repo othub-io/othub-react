@@ -91,22 +91,22 @@ function NavBar() {
           </a>
         </h1>
         <br></br>
-        {account && balance ? (
           <div className="connection-info">
             <div className="addr-chain">
               <span style={connectionStyle}>{addr}</span><span style={connectionStyle}>{chain}</span>
             </div>
 
+            {account && balance ? (
             <div className="balance">
               {balance.native ? (<span>{(balance.native[0].balance / 1000000000000).toFixed(4)} OTP</span>) : (<span></span>)}
               <br></br>
-              {balance.ERC20 ? (<span>{(balance.ERC20[0].balance / 1000000000000000000).toFixed(4)} TRAC</span>) : (<span></span>)}
+              {balance.ERC20 ? (<span>{(balance.ERC20[0].balance / 1000000000000000000).toFixed(4)} TRAC</span>) : (<span>0</span>)}
             </div>
+            ) : (
+              <div></div>
+            )}
           </div>
           
-        ) : (
-          <div></div>
-        )}
         <MetamaskButton />
       </div>
     </nav>

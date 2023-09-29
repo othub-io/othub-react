@@ -30,11 +30,13 @@ const Assets = () => {
   useEffect(() => {
     async function fetchData () {
       try {
-        const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
-        )
+        if (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet') {
+          const response = await axios.get(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
+          )
+          await setData(response.data)
 
-        if(provided_ual){
+          if(provided_ual){
             const segments = provided_ual.split(':');
             const argsString = segments.length === 3 ? segments[2] : segments[2] + segments[3];
             const args = argsString.split('/');
@@ -54,9 +56,7 @@ const Assets = () => {
                 }
             }
         }
-        console.log('here')
-        await setData(response.data)
-        return;
+        }
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -176,7 +176,13 @@ const Assets = () => {
             </div>
         </header>
       ) : (
-        <Loading />
+        <div>{chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet' ? (<Loading />) : (
+        <div className="keys">
+        <header className="keys-header">
+          Connected with an unsupported chain. Please switch to Origintrail
+          Parachain Testnet or Mainnet.
+        </header>
+      </div>)}</div>
       )}
     </div>
   )
