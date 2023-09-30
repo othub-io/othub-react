@@ -11,10 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-#root {
-  max-width: 1920px; /* Set your maximum width */
-  max-height: 955px; /* Set your maximum height */
-  margin: 0 auto; /* Center the app horizontally */
-  overflow: auto; /* Add scrollbars if content exceeds the dimensions */
-}

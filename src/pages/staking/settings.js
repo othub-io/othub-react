@@ -253,7 +253,7 @@ const Settings = () => {
                     <td>{record.nodeId}</td>
                     <td>{record.tokenName}</td>
                     <td>{record.cumulativePayouts ? (record.cumulativePayouts.toFixed(2)) :(record.cumulativePayouts)}</td>
-                    <td>{record.cumulativeEstimatedEarnings ? (record.cumulativeEstimatedEarnings.toFixed(2)) :(record.cumulativeEstimatedEarnings)}</td>
+                    <td>{record.cumulativeEstimatedEarnings ? ((record.cumulativeEstimatedEarnings - record.cumulativePayouts).toFixed(2)) :((record.cumulativeEstimatedEarnings - record.cumulativePayouts).toFixed(2))}</td>
                   </tr>
                 ))}
               </tbody>
@@ -280,7 +280,7 @@ const Settings = () => {
                     <td>{record.nodeStake ? (record.nodeStake.toFixed(2) + ' TRAC') : (record.nodeStake  + ' TRAC')}</td>
                     <td>{record.cumulativePayouts ? (record.cumulativePayouts.toFixed(2) + ' TRAC') : (record.cumulativePayouts  + ' TRAC')}</td>
                     <td>
-                      {record.cumulativeEstimatedEarnings ? (record.cumulativeEstimatedEarnings.toFixed(2) + ' TRAC') :(record.cumulativeEstimatedEarnings  + ' TRAC')}
+                      {record.cumulativeEstimatedEarnings ? (record.cumulativeEstimatedEarnings.toFixed(2) + ' TRAC') :(<td>{record.cumulativeEstimatedEarnings ? (<td>{record.cumulativeEstimatedEarnings ? ((record.cumulativeEstimatedEarnings - record.cumulativePayouts).toFixed(2)) :((record.cumulativeEstimatedEarnings - record.cumulativePayouts).toFixed(2) +' TRAC')}</td>) :((record.cumulativeEstimatedEarnings - record.cumulativePayouts).toFixed(2) +' TRAC')}</td>)}
                     </td>
                     <td>{record.ask}</td>
                   </tr>
