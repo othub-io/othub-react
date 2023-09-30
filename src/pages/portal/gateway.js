@@ -56,13 +56,13 @@ const Gateway = () => {
             chain_id === "Origintrail Parachain Mainnet")
         ) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=PENDING`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&progress=PENDING`
           );
           await setData(response.data);
 
           if (provided_txn_id) {
             const txn_id_response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?txn_id=${provided_txn_id}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&txn_id=${provided_txn_id}`
             );
 
             await setInputValue(txn_id_response.data.txn_header[0]);
@@ -153,7 +153,7 @@ const Gateway = () => {
       // Wait for the state update to complete
       const updatedMobileFilterInput = await updateFilterInputPromise;
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=${updatedMobileFilterInput.progress}&request=${updatedMobileFilterInput.txn_type}&limit=${updatedMobileFilterInput.limit}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&progress=${updatedMobileFilterInput.progress}&request=${updatedMobileFilterInput.txn_type}&limit=${updatedMobileFilterInput.limit}`
       );
       setData(response.data);
     } catch (e) {
@@ -171,7 +171,7 @@ const Gateway = () => {
           console.log(filterInput);
 
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&ual=${filterInput.ual}&app_name=${filterInput.app_name}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&ual=${filterInput.ual}&app_name=${filterInput.app_name}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
           );
           setData(response.data);
         } catch (error) {

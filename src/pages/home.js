@@ -31,7 +31,7 @@ const Home = () => {
     async function fetchData () {
       try {
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home?auth=${process.env.REACT_APP_RUNTIME_AUTH}`
         )
         setData(response.data)
       } catch (error) {

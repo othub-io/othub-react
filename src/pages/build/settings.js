@@ -32,7 +32,7 @@ const Settings = () => {
       try {
         if (account) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}`
           )
           setData(response.data)
         }
@@ -63,7 +63,7 @@ const Settings = () => {
         try {
           e.preventDefault()
           const response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-app?public_address=${account}&network=${chain_id}&app_name=${e.target.app_name.value}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}&key_count=${e.target.key_count.value}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-app?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}&app_name=${e.target.app_name.value}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}&key_count=${e.target.key_count.value}`
           )
             setData(response.data)
             setCreateAppPopup(false);
@@ -85,7 +85,7 @@ const Settings = () => {
 
           await setAppIndex(index)
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?public_address=${account}&network=${chain_id}&app_name=${app_name}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}&app_name=${app_name}`
           )
               setData(response.data)
         } catch (error) {
@@ -105,7 +105,7 @@ const Settings = () => {
       setLoading(true)
           const fetchData = async () => {
               const response = await axios.get(
-                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-key?public_address=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&key_count=1`
+                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-key?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&key_count=1`
               )
               setData(response.data)
               setLoading(false)
@@ -151,7 +151,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-key?public_address=${account}&network=${chain_id}&delete_key=${inputValue}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-key?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}&delete_key=${inputValue}`
           )
           setData(response.data)
         } catch (error) {
@@ -175,7 +175,7 @@ const Settings = () => {
             const fetchData = async () => {
                 try {
                     const response = await axios.get(
-                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-app?public_address=${account}&network=${chain_id}&app_name=${inputValue}`
+                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-app?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}&app_name=${inputValue}`
                     )
                     setData(response.data)
                 } catch (error) {
@@ -199,7 +199,7 @@ const Settings = () => {
             const fetchData = async () => {
                 try {
                     const response = await axios.get(
-                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/edit-app?public_address=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}`
+                        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/edit-app?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&app_description=${e.target.app_description.value}&built_by=${e.target.built_by.value}&website=${e.target.website.value}&github=${e.target.github.value}`
                     )
                     setData(response.data)
                 } catch (error) {
@@ -233,7 +233,7 @@ const Settings = () => {
           console.log(filterInput);
 
           const response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/filter?account=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&ual=${filterInput.ual}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/filter?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&app_name=${data.appNames[app_index].app_name}&ual=${filterInput.ual}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
             );
           setData(response.data)
         } catch (error) {

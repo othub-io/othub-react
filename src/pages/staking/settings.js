@@ -24,7 +24,7 @@ const Settings = () => {
       try {
         if (account) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?public_address=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}`
           )
           setData(response.data)
         }
@@ -57,7 +57,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?public_address=${account}&telegramID=${inputValue}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&telegramID=${inputValue}`
           )
           setData(response.data)
           setIsLoading(false)
@@ -93,7 +93,7 @@ const Settings = () => {
     try {
       setIsLoading(true)
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?public_address=${account}&botToken=${inputValue}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&botToken=${inputValue}`
       )
 
       setData(response.data)
@@ -107,7 +107,7 @@ const Settings = () => {
     const submitSettings = async () => {
         try {
             await axios.get(
-                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?public_address=${account}&sendScript=yes`
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&public_address=${account}&sendScript=yes`
             )
         } catch (error) {
             console.error(error) // Handle the error case

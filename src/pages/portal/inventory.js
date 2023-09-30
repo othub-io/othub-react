@@ -32,7 +32,7 @@ const Inventory = () => {
       try {
         if (account && (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet')) {
           const pubs_response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?network=${chain_id}&owner=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&network=${chain_id}&owner=${account}`
           );
           await setData(pubs_response.data);
   
@@ -45,12 +45,10 @@ const Inventory = () => {
             if (args.length !== 3) {
               console.log(`UAL doesn't have correct format: ${provided_ual}`);
             } else {
-              console.log(provided_ual);
               const ual_response = await axios.get(
-                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?ual=${provided_ual}&network=${chain_id}&owner=${account}`
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${provided_ual}&network=${chain_id}&owner=${account}`
               );
   
-              console.log(JSON.stringify(ual_response))
               if(ual_response.data.v_pubs[0]){
                 await setInputValue(ual_response.data.v_pubs[0])
                 await setIsAssetOpen(true)
@@ -95,7 +93,7 @@ const Inventory = () => {
           console.log(filterInput);
 
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?ual=${filterInput.ual}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}&owner=${account}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${filterInput.ual}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}&owner=${account}`
           );
           setData(response.data);
         } catch (error) {

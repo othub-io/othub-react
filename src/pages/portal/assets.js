@@ -32,7 +32,7 @@ const Assets = () => {
       try {
         if (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet') {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?network=${chain_id}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?auth=${process.env.REACT_APP_RUNTIME_AUTH}&network=${chain_id}`
           )
           await setData(response.data)
 
@@ -45,7 +45,7 @@ const Assets = () => {
                 console.log(`UAL doesn't have correct format: ${provided_ual}`);
             }else{
                 const pubs_response = await axios.get(
-                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${provided_ual}&network=${chain_id}`
+                    `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${provided_ual}&network=${chain_id}`
                   )
                 
                   console.log('UAL RESP: '+pubs_response)
@@ -92,7 +92,7 @@ const Assets = () => {
         try {
 
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${filterInput.ual}&publisher=${filterInput.publisher}&nodeId=${filterInput.node_id}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}`
           )
           setData(response.data)
         } catch (error) {

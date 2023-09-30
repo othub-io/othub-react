@@ -17,7 +17,7 @@ const Nodes = () => {
     async function fetchData () {
       try {
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes?auth=${process.env.REACT_APP_RUNTIME_AUTH}`
         )
         setData(response.data)
       } catch (error) {
