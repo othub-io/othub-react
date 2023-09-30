@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const api_key = 'D3zAFE7pSAWeC02EH4a9NLwx8dLNKG'
+const api_key = '6FCVZsJ4djazql4QUlaY3He7W13MvB'
 
  const queue_txns = async (api_key) => {
 //    response = await axios.get(
@@ -33,7 +33,7 @@ const api_key = 'D3zAFE7pSAWeC02EH4a9NLwx8dLNKG'
 //    console.log(`----------GET STATE ISSUER------------`)
 //    console.log(response.data)
 
-//    response = await axios.get(
+//    response = await axios.post(
 //        `http://api.othub.io/dkg/create?api_key=${api_key}&network=otp::mainnet&txn_data={
 //           "@type": "Thing",
 //            "name" : "color"
@@ -42,7 +42,7 @@ const api_key = 'D3zAFE7pSAWeC02EH4a9NLwx8dLNKG'
 //    console.log(`----------CREATE------------`)
 //    console.log(response.data)
 
-  //  response = await axios.get(
+  //  response = await axios.post(
   //      `http://api.othub.io/dkg/update?api_key=${api_key}&network=otp::mainnet&txn_data={
   //       "@type": "ImageObject",
   //        "name" : "OTHub 1M Assets Badge",
@@ -71,16 +71,161 @@ const api_key = 'D3zAFE7pSAWeC02EH4a9NLwx8dLNKG'
     // console.log(`----------QUERY------------`)
     // console.log(response.data)
 
-    response = await axios.get(
-       `https://api.othub.io/dkg/create_n_transfer?api_key=FhFkFbxpLz1ze55J4cUpQDLbKAJjWn&network=otp::testnet&txn_data={
-               "@type": "CreativeWork",
-                "title" : "Love Letter to Hottogo",
-                "author":"cosmi <3",
-                "content" : "Wow Hot To Go u r a qt"
-               }&public_address=0xe4dd1F7d2e33406CC5d81165aa2fD9Bb93fC8ba9`
-     )
-    console.log(`----------CREATE N TRANSFER------------`)
-    console.log(response.data)
+    // response = await axios.post(
+    //    `https://api.othub.io/dkg/create?api_key=${api_key}&network=otp::testnet&txn_data={
+    //     "@type": "MusicAlbum",
+    //     "title": "Tangible Dream",
+    //     "byArtist": {
+    //       "@type": "Person",
+    //       "name": "Oddisee",
+    //       "@id": "https://en.wikipedia.org/wiki/Oddisee"
+    //     },
+    //     "track": {
+    //       "@type": "ItemList",
+    //       "numberOfItems": 13,
+    //       "itemListElement": [
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 1,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Tangible Dream"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 2,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Yeezus Was a Mortal Man"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 3,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Killin' Time"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 4,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Own Appeal"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 5,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "The Goings On",
+    //             "featuring": {
+    //               "@type": "Person",
+    //               "name": "Ralph Real"
+    //             }
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 6,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Be There"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 7,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Yeah and Nah"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 8,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Interlude Flow"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 9,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Unfollow You",
+    //             "featuring": {
+    //               "@type": "Person",
+    //               "name": "Olivier St. Louis"
+    //             }
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 10,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Back of My Mind",
+    //             "featuring": {
+    //               "@type": "Person",
+    //               "name": "Paolo Escobar"
+    //             }
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 11,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Tomorrow Today"
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 12,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Outro Flow",
+    //             "featuring": {
+    //               "@type": "Person",
+    //               "name": [
+    //                 "Toine",
+    //                 "Trek Life"
+    //               ]
+    //             }
+    //           }
+    //         },
+    //         {
+    //           "@type": "ListItem",
+    //           "position": 13,
+    //           "item": {
+    //             "@type": "MusicRecording",
+    //             "name": "Bonus Flow",
+    //             "featuring": {
+    //               "@type": "MusicGroup",
+    //               "name": "Diamond District"
+    //             }
+    //           }
+    //         }    
+    //       ]
+    //     }
+    //   }&public_address=0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d&ual=did:dkg:otp/0x1a061136ed9f5ed69395f18961a0a535ef4b3e5f/458155`
+    //  )
+    // console.log(`----------CREATE N TRANSFER------------`)
+    // console.log(response.data)
+
+    response = await axios.post(
+      `http://localhost:5575/dkg/create_n_transfer?api_key=${api_key}&network=otp::testnet&txn_data={
+       "@type": "Movie",
+       "name": "The Prestige"
+     }&public_address=0x7fc06aAb44c9Dcf441ADAcf757D0a4e9fCD8910E`
+    )
+   console.log(`----------CREATE N TRANSFER------------`)
+   console.log(response.data)
 
     // response = await axios.get(
     //   `http://localhost:5575/otp_testnet/assetInventory?api_key=${api_key}&owner=0x974e658A243a5Ec0cE1a0a4317D42f48dBB05Fbd`
