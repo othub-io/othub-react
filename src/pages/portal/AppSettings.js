@@ -30,7 +30,7 @@ const AppSettings = () => {
             chain_id === "Origintrail Parachain Mainnet")
         ) {
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?account=${account}&network=${chain_id}&progress=PENDING`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&progress=PENDING`
           );
           await setData(response.data);
           for (let i = 0; i < response.data.apps_enabled.length; i++) {
@@ -58,7 +58,7 @@ const AppSettings = () => {
       const response = await axios.get(
         `${ext}://${
           process.env.REACT_APP_RUNTIME_HOST
-        }/portal/gateway?account=${account}&network=${chain_id}&enable_apps=${JSON.stringify(
+        }/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&enable_apps=${JSON.stringify(
           appsEnabled
         )}`
       );
@@ -79,7 +79,7 @@ const AppSettings = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings?app_search=${inputValue}&account=${account}&network=${chain_id}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&app_search=${inputValue}&account=${account}&network=${chain_id}`
       );
       console.log(`SEARCH RESULT: ${JSON.stringify(response.data)}`);
       await setSearchResult(response.data);

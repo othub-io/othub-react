@@ -101,14 +101,14 @@ const Request = (txn) => {
         });
 
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}&ual=${dkg_result.UAL}&epochs=${epochs}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}&ual=${dkg_result.UAL}&epochs=${epochs}`
       );
 
       setData(response.data);
       result = {
         status: "success",
         msg: `Asset creation succeeded!`,
-        url: `${process.env.REACT_APP_WEB_HOST}/portal/inventory?ual=${dkg_result.UAL}`,
+        url: `${process.env.REACT_APP_WEB_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${dkg_result.UAL}`,
       };
       setResultValue(result);
       setIsLoading(false);
@@ -188,14 +188,14 @@ const Request = (txn) => {
         });
 
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}&ual=${dkg_result.UAL}&epochs=${epochs}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}&ual=${dkg_result.UAL}&epochs=${epochs}`
       );
 
       setData(response.data);
       result = {
         status: "success",
         msg: `Asset update succeeded!`,
-        url: `${process.env.REACT_APP_WEB_HOST}/portal/inventory?ual=${dkg_result.UAL}`,
+        url: `${process.env.REACT_APP_WEB_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${dkg_result.UAL}`,
       };
       setResultValue(result);
       setIsLoading(false);
@@ -276,7 +276,7 @@ const Request = (txn) => {
         });
 
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&completeTxn=${txn.txn_id}&account=${account}&network=${chain_id}`
       );
       setData(response.data);
       result = {
@@ -322,7 +322,7 @@ const Request = (txn) => {
         try {
           setIsLoading(true);
           await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?rejectTxn=${inputValue.txn_id}`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&rejectTxn=${inputValue.txn_id}`
           );
           window.location.reload();
         } catch (error) {

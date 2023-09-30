@@ -48,7 +48,7 @@ const Asset = (on_chain) => {
     async function fetchData () {
       try {
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory?ual=${asset_data.UAL}&network=${chain_id}`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${asset_data.UAL}&network=${chain_id}`
         )
         console.log(response.data)
         await setAssetHistory(response.data.assetHistory)
