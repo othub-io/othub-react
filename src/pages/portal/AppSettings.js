@@ -10,9 +10,16 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+  },
+};
+
 const AppSettings = () => {
-  const { setIsAppSettingsOpen, data, setData, chain_id, account } =
-    useContext(AccountContext);
+  const { setIsAppSettingsOpen, data, setData } = useContext(AccountContext);
+  const account = localStorage.getItem("account");
+  const chain_id = localStorage.getItem("chain_id");
   const [isLoading, setIsLoading] = useState(false);
   const [appsEnabled, setAppsEnabled] = useState("");
   const [inputValue, setInputValue] = useState("");
@@ -29,8 +36,14 @@ const AppSettings = () => {
           (chain_id === "Origintrail Parachain Testnet" ||
             chain_id === "Origintrail Parachain Mainnet")
         ) {
+          const request_data = {
+            network: chain_id,
+            progress: "PENDING",
+          };
           const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&progress=PENDING`
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+            request_data,
+            config
           );
           await setData(response.data);
           for (let i = 0; i < response.data.apps_enabled.length; i++) {
@@ -55,12 +68,14 @@ const AppSettings = () => {
     // Perform the POST request using the entered value
     try {
       setIsLoading(true);
+      const request_data = {
+        network: chain_id,
+        enabled_apps: JSON.stringify(appsEnabled),
+      };
       const response = await axios.get(
-        `${ext}://${
-          process.env.REACT_APP_RUNTIME_HOST
-        }/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&enable_apps=${JSON.stringify(
-          appsEnabled
-        )}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+        request_data,
+        config
       );
       await setData(response.data);
       setIsLoading(false);
@@ -78,10 +93,16 @@ const AppSettings = () => {
   const applySearch = async () => {
     try {
       setIsLoading(true);
+      const request_data = {
+        app_search: inputValue,
+        network: chain_id,
+      };
       const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings?auth=${process.env.REACT_APP_RUNTIME_AUTH}&app_search=${inputValue}&account=${account}&network=${chain_id}`
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings`,
+        request_data,
+        config
       );
-      console.log(`SEARCH RESULT: ${JSON.stringify(response.data)}`);
+
       await setSearchResult(response.data);
       for (let i = 0; i < response.data.apps_enabled.length; i++) {
         setAppsEnabled((prevFormData) => ({
@@ -110,12 +131,10 @@ const AppSettings = () => {
   };
 
   const handleAppClick = (index) => {
-    console.log(index);
     setClickedIndex(index);
   };
 
   const handleMouseEnter = () => {
-    console.log('here')
     setIsHovered(true);
   };
 
@@ -164,13 +183,14 @@ const AppSettings = () => {
                           onLoad={(event) => handleInputChange(event)}
                         />
                         <label>{result.app_name}</label>
-                        {isHovered && 
-                        <div className="tooltip" key={result.app_name}>
+                        {isHovered && (
+                          <div className="tooltip" key={result.app_name}>
                             <span>{result.app_description}</span>
                             <span>{result.website}</span>
                             <span>{result.github}</span>
                             <span>{result.built_by}</span>
-                        </div>}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}

@@ -14,6 +14,12 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+  },
+};
+
 const Gateway = () => {
   const {
     isAppSettingsOpen,
@@ -24,10 +30,10 @@ const Gateway = () => {
     setIsRequestOpen,
     isResultOpen,
     setIsResultOpen,
-    chain_id,
-    account,
     resultValue,
   } = useContext(AccountContext);
+  const account = localStorage.getItem("account");
+  const chain_id = localStorage.getItem("chain_id");
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",
@@ -55,15 +61,24 @@ const Gateway = () => {
           (chain_id === "Origintrail Parachain Testnet" ||
             chain_id === "Origintrail Parachain Mainnet")
         ) {
-          const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&progress=PENDING`
+          const request_data = {
+            network: chain_id,
+            progress: "PENDING",
+          };
+          const response = await axios.post(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+            request_data,
+            config
           );
           await setData(response.data);
 
           if (provided_txn_id) {
-            const txn_id_response = await axios.get(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&txn_id=${provided_txn_id}`
+            const txn_id_response = await axios.post(
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+              { txn_id: provided_txn_id, network: chain_id },
+              config
             );
+              console.log(txn_id_response.data.txn_header[0])
 
             await setInputValue(txn_id_response.data.txn_header[0]);
             await setIsRequestOpen(true);
@@ -137,7 +152,7 @@ const Gateway = () => {
   const handleMobileFilterInput = async (filterInput) => {
     try {
       filterInput = JSON.parse(filterInput);
-  
+
       // Create a Promise to ensure the state update is complete
       const updateFilterInputPromise = new Promise((resolve) => {
         setMobileFilterInput((prevMobileFilterInput) => {
@@ -149,18 +164,25 @@ const Gateway = () => {
           return updatedFilterInput;
         });
       });
-  
+
       // Wait for the state update to complete
       const updatedMobileFilterInput = await updateFilterInputPromise;
-      const response = await axios.get(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&progress=${updatedMobileFilterInput.progress}&request=${updatedMobileFilterInput.txn_type}&limit=${updatedMobileFilterInput.limit}`
+      const request_data = {
+        network: chain_id,
+        progress: updatedMobileFilterInput.progress,
+        request: updatedMobileFilterInput.txn_type,
+        limit: updatedMobileFilterInput.limit,
+      };
+      const response = await axios.post(
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+        request_data,
+        config
       );
       setData(response.data);
     } catch (e) {
       console.error(e);
     }
   };
-  
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
@@ -168,10 +190,20 @@ const Gateway = () => {
     try {
       const fetchFilteredData = async () => {
         try {
-          console.log(filterInput);
+          const request_data = {
+            network: chain_id,
+            ual: filterInput.ual,
+            app_name: filterInput.app_name,
+            txn_id: filterInput.txn_id,
+            progress: filterInput.progress,
+            request: filterInput.request,
+            limit: filterInput.limit,
+          };
 
-          const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway?auth=${process.env.REACT_APP_RUNTIME_AUTH}&account=${account}&network=${chain_id}&ual=${filterInput.ual}&app_name=${filterInput.app_name}&txn_id=${filterInput.txn_id}&progress=${filterInput.progress}&request=${filterInput.request}&limit=${filterInput.limit}`
+          const response = await axios.post(
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+            request_data,
+            config
           );
           setData(response.data);
         } catch (error) {
@@ -476,7 +508,7 @@ const Gateway = () => {
                 </div>
                 <div className="txn-ual">{txn.ual}</div>
                 <div className={`txn-${txn.request}-receiver`}>
-                  Receiver:<span>{JSON.parse(txn.txn_data).receiver}</span>
+                  Receiver:<span>{txn.receiver}</span>
                 </div>
                 <div className={`txn-${txn.request}-epochs`}>
                   Epochs: {txn.epochs}

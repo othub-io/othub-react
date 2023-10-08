@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import '../css/nodes.css'
-import Loading from '../Loading'
-import axios from 'axios'
-let ext
+import React, { useState, useEffect } from "react";
+import "../css/nodes.css";
+import Loading from "../Loading";
+import axios from "axios";
+let ext;
 
-ext = 'http'
-if(process.env.REACT_APP_RUNTIME_HTTPS === 'true'){
-  ext = 'https'
+ext = "http";
+if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
+  ext = "https";
 }
 
 const Nodes = () => {
-  const [data, setData] = useState('')
-  const isMobile = window.matchMedia('(max-width: 480px)').matches
+  const [data, setData] = useState("");
+  const isMobile = window.matchMedia("(max-width: 480px)").matches;
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       try {
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes?auth=${process.env.REACT_APP_RUNTIME_AUTH}`
-        )
-        setData(response.data)
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`
+        );
+        setData(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error)
+        console.error("Error fetching data:", error);
       }
     }
 
-    setData('')
-    fetchData()
-  }, [])
+    setData("");
+    fetchData();
+  }, []);
 
   return (
-    <div className='allnodes'>
+    <div className="allnodes">
       {data ? (
-        <header className='allnodes-header'>
+        <header className="allnodes-header">
           {isMobile ? (
-            <div className='allnodes-table-container'>
-              <table className='allnodesTable'>
+            <div className="allnodes-table-container">
+              <table className="allnodesTable">
                 <thead>
                   <tr>
                     <th>Node ID</th>
@@ -44,9 +44,9 @@ const Nodes = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.v_nodes.map(node => (
+                  {data.v_nodes.map((node) => (
                     <tr key={node.nodeId}>
-                      <td width='10'>{node.nodeId}</td>
+                      <td width="10">{node.nodeId}</td>
                       <td>{node.tokenName}</td>
                       <td>{Number(node.nodeStake).toFixed(2)}</td>
                     </tr>
@@ -55,8 +55,8 @@ const Nodes = () => {
               </table>
             </div>
           ) : (
-            <div className='allnodes-table-container'>
-              <table className='allnodesTable'>
+            <div className="allnodes-table-container">
+              <table className="allnodesTable">
                 <thead>
                   <tr>
                     <th>Node ID</th>
@@ -67,7 +67,7 @@ const Nodes = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.v_nodes.map(node => (
+                  {data.v_nodes.map((node) => (
                     <tr key={node.nodeId}>
                       <td>{node.nodeId}</td>
                       <td>{node.networkId}</td>
@@ -85,7 +85,7 @@ const Nodes = () => {
         <Loading />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Nodes
+export default Nodes;

@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react'
-import '../../css/portal/invAsset.css' // Import the CSS file for styling (see Step 3)
-import { AccountContext } from '../../AccountContext'
+import React, { useState, useEffect } from 'react'
+import '../../css/portal/invAsset.css'
 import moment from 'moment';
 import axios from "axios";
 let ext;
@@ -16,7 +15,7 @@ let sub_scan_link
 let link_type
 
 const InvAsset = (on_chain) => {
-  const { chain_id } = useContext(AccountContext)
+  const chain_id = localStorage.getItem('chain_id')
   const [assetHistory, setAssetHistory] = useState("");
   const isMobile = window.matchMedia('(max-width: 480px)').matches
   let winners
@@ -47,10 +46,15 @@ const InvAsset = (on_chain) => {
   useEffect(() => {
     async function fetchData () {
       try {
-        const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${asset_data.UAL}&network=${chain_id}`
+        const request_data = {
+          ual: asset_data.UAL,
+          network: chain_id
+        }
+
+        const response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
+          request_data
         )
-        console.log(response.data)
         await setAssetHistory(response.data.assetHistory)
 
       } catch (error) {
@@ -88,7 +92,7 @@ const InvAsset = (on_chain) => {
         <div className='token'>
             <span>
                 Asset {asset_data.token_id}
-                <button onClick={() => handleCopyLink(`https://www.othub.io/portal/inventory?ual=${asset_data.UAL}`)}>
+                <button onClick={() => handleCopyLink(`https://www.othub.io/portal/asset?ual=${asset_data.UAL}`)}>
                     <img class='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
                 </button>
             </span>

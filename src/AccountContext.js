@@ -2,8 +2,6 @@ import React, { createContext, useState } from 'react'
 
 export const AccountContext = createContext({
   data: '',
-  account: '',
-  chain_id: '',
   app_index: '',
   isRequestOpen: '',
   isCreateAppOpen: '',
@@ -12,9 +10,8 @@ export const AccountContext = createContext({
   resultValue: '',
   isLoading:'',
   balance:'',
+  isConnected:'',
   setData: () => { },
-  setAccount: () => {},
-  setChain: () => {},
   setAppIndex: () => { },
   setIsResultOpen: () => { },
   setIsRequestOpen: () => { },
@@ -22,7 +19,8 @@ export const AccountContext = createContext({
   setIsAppSettingsOpen: () => { },
   setResultValue: () => { },
   setIsLoading: () => { },
-  setBalance: () => { }
+  setBalance: () => { },
+  setIsConnected: () => { }
 })
 
 export const AccountProvider = ({ children }) => {
@@ -37,6 +35,7 @@ export const AccountProvider = ({ children }) => {
   const [resultValue, setResultValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [balance, setBalance] = useState('')
+  const [isConnected, setIsConnected] = useState(false)
 
   const handleSetData = data => {
      setData(data)
@@ -82,9 +81,13 @@ export const AccountProvider = ({ children }) => {
     setBalance(balance)
   }
 
+  const handleSetIsConnected = isConnected => {
+    setIsConnected(isConnected)
+  }
+
   return (
     <AccountContext.Provider
-        value={{
+      value={{
         data,
         account,
         chain_id,
@@ -96,6 +99,7 @@ export const AccountProvider = ({ children }) => {
         resultValue,
         isLoading,
         balance,
+        isConnected,
         setAccount: handleSetAccount,
         setChain: handleSetChain,
         setAppIndex: handleSetAppIndex,
@@ -106,7 +110,8 @@ export const AccountProvider = ({ children }) => {
         setIsResultOpen: handleSetIsResultOpen,
         setResultValue: handleSetResultValue,
         setIsLoading: handleSetIsLoading,
-        setBalance: handleSetBalance
+        setBalance: handleSetBalance,
+        setIsConnected: handleSetIsConnected
       }}
     >
       {children}

@@ -18,7 +18,10 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 }
 
 function NavBar() {
-  const { account, chain_id, isLoading, balance, setBalance } = useContext(AccountContext);
+  const { isLoading, balance, setBalance, } = useContext(AccountContext);
+
+  const account = localStorage.getItem("account");
+  const chain_id = localStorage.getItem("chain_id");
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
 
   useEffect(() => {
@@ -26,7 +29,8 @@ function NavBar() {
       try {
         if (account) {
           if (chain_id === "Origintrail Parachain Testnet") {
-            url = "https://origintrail-testnet.api.subscan.io/api/scan/account/tokens";
+            url =
+              "https://origintrail-testnet.api.subscan.io/api/scan/account/tokens";
           }
 
           if (chain_id === "Origintrail Parachain Mainnet") {
@@ -35,15 +39,17 @@ function NavBar() {
         }
 
         const data = {
-          address: account
-        }
+          address: account,
+        };
 
-        const account_balance = await axios.post(url, data, {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': process.env.REACT_APP_SUBSCAN_KEY
-          },
-        }).then(function (response) {
+        const account_balance = await axios
+          .post(url, data, {
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-Key": process.env.REACT_APP_SUBSCAN_KEY,
+            },
+          })
+          .then(function (response) {
             // Handle the successful response here
             return response.data;
           })
@@ -85,28 +91,48 @@ function NavBar() {
     <nav>
       <div className="navbar">
         <h1>
-        <a href="/"><img src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`} alt='othub-logo' className="othub-logo"></img></a>
+          <a href="/">
+            <img
+              src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`}
+              alt="othub-logo"
+              className="othub-logo"
+            ></img>
+          </a>
           <a href="/" className="logo-text">
             othub.io <span style={{ fontSize: "14px" }}>beta</span>
           </a>
         </h1>
         <br></br>
-          <div className="connection-info">
-            <div className="addr-chain">
-              <span style={connectionStyle}>{addr}</span><span style={connectionStyle}>{chain}</span>
-            </div>
-
-            {account && balance ? (
-            <div className="balance">
-              {balance.native ? (<span>{(balance.native[0].balance / 1000000000000).toFixed(4)} OTP</span>) : (<span></span>)}
-              <br></br>
-              {balance.ERC20 ? (<span>{(balance.ERC20[0].balance / 1000000000000000000).toFixed(4)} TRAC</span>) : (<span>0</span>)}
-            </div>
-            ) : (
-              <div></div>
-            )}
+        <div className="connection-info">
+          <div className="addr-chain">
+            <span style={connectionStyle}>{addr}</span>
+            <span style={connectionStyle}>{chain}</span>
           </div>
-          
+
+          {account && balance ? (
+            <div className="balance">
+              {balance.native ? (
+                <span>
+                  {(balance.native[0].balance / 1000000000000).toFixed(4)} OTP
+                </span>
+              ) : (
+                <span></span>
+              )}
+              <br></br>
+              {balance.ERC20 ? (
+                <span>
+                  {(balance.ERC20[0].balance / 1000000000000000000).toFixed(4)}{" "}
+                  TRAC
+                </span>
+              ) : (
+                <span>0</span>
+              )}
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+
         <MetamaskButton />
       </div>
     </nav>
