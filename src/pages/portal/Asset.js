@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react'
-import '../../css/portal/invAsset.css' // Import the CSS file for styling (see Step 3)
-import { AccountContext } from '../../AccountContext'
+import React, { useState, useEffect } from 'react'
+import '../../css/portal/invAsset.css'
 import moment from 'moment';
 import axios from "axios";
 let ext;
@@ -11,12 +10,18 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+const config = {
+  headers: {
+    Authorization: localStorage.getItem('token'),
+  },
+};
+
 let asset_data
 let sub_scan_link
 let link_type
 
 const Asset = (on_chain) => {
-  const { chain_id } = useContext(AccountContext)
+  const chain_id = localStorage.getItem('chain_id')
   const [assetHistory, setAssetHistory] = useState("");
   const isMobile = window.matchMedia('(max-width: 480px)').matches
   let winners
@@ -47,10 +52,14 @@ const Asset = (on_chain) => {
   useEffect(() => {
     async function fetchData () {
       try {
+        const request_data = {
+          ual: asset_data.UAL,
+          network: chain_id
+        }
         const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${asset_data.UAL}&network=${chain_id}`
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
+          request_data
         )
-        console.log(response.data)
         await setAssetHistory(response.data.assetHistory)
 
       } catch (error) {

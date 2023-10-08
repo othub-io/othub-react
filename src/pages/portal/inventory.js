@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AccountContext } from "../../AccountContext";
+import React, { useState, useEffect } from "react";
 import "../../css/portal/inventory.css";
 import Loading from "../../Loading";
 import axios from "axios";
@@ -11,9 +10,16 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+  },
+};
+
 const Inventory = () => {
   const [data, setData] = useState("");
-  const { chain_id, account } = useContext(AccountContext);
+  const account = localStorage.getItem("account");
+  const chain_id = localStorage.getItem("chain_id");
   const [isAssetOpen, setIsAssetOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
@@ -30,33 +36,68 @@ const Inventory = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        if (account && (chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Origintrail Parachain Mainnet')) {
-          const pubs_response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&network=${chain_id}&owner=${account}`
-          );
-          await setData(pubs_response.data);
-  
+        if (
+          account &&
+          (chain_id === "Origintrail Parachain Testnet" ||
+            chain_id === "Origintrail Parachain Mainnet")
+        ) {
+          const request_data = {
+            network: chain_id,
+          };
+
+          const response = await axios
+            .post(
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory`,
+              request_data,
+              config
+            )
+            .then((response) => {
+              // Handle the successful response here
+              return response;
+            })
+            .catch((error) => {
+              // Handle errors here
+              console.error(error);
+            });
+
+          await setData(response.data);
+
           if (provided_ual) {
             const segments = provided_ual.split(":");
             const argsString =
               segments.length === 3 ? segments[2] : segments[2] + segments[3];
             const args = argsString.split("/");
-  
+
             if (args.length !== 3) {
               console.log(`UAL doesn't have correct format: ${provided_ual}`);
             } else {
-              const ual_response = await axios.get(
-                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${provided_ual}&network=${chain_id}&owner=${account}`
-              );
-  
-              if(ual_response.data.v_pubs[0]){
-                await setInputValue(ual_response.data.v_pubs[0])
-                await setIsAssetOpen(true)
+              const request_data = {
+                network: chain_id,
+                ual: provided_ual,
+              };
+
+              const ual_response = await axios
+                .post(
+                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory`,
+                  request_data,
+                  config
+                )
+                .then((response) => {
+                  // Handle the successful response here
+                  return response;
+                })
+                .catch((error) => {
+                  // Handle errors here
+                  console.error(error);
+                });
+
+              if (ual_response.data.v_pubs[0]) {
+                await setInputValue(ual_response.data.v_pubs[0]);
+                await setIsAssetOpen(true);
               }
             }
           }
         }
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -90,11 +131,27 @@ const Inventory = () => {
     try {
       const fetchFilteredData = async () => {
         try {
-          console.log(filterInput);
+          const request_data = {
+            ual: filterInput.ual,
+            order: filterInput.order,
+            limit: filterInput.limit,
+            network: chain_id,
+          };
 
-          const response = await axios.get(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory?auth=${process.env.REACT_APP_RUNTIME_AUTH}&ual=${filterInput.ual}&order=${filterInput.order}&limit=${filterInput.limit}&network=${chain_id}&owner=${account}`
-          );
+          const response = await axios
+            .post(
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory`,
+              request_data,
+              config
+            )
+            .then((response) => {
+              // Handle the successful response here
+              return response;
+            })
+            .catch((error) => {
+              // Handle errors here
+              console.error(error);
+            });
           setData(response.data);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -219,7 +276,11 @@ const Inventory = () => {
               >
                 <div className="card-token">{pub.token_id}</div>
                 <div className="card-image">
-                  <img className="card-img" src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`} alt='KA'></img>
+                  <img
+                    className="card-img"
+                    src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`}
+                    alt="KA"
+                  ></img>
                 </div>
                 <div className="card-size">{pub.size}bytes</div>
                 <div className="card-cost">
