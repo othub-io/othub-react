@@ -40,7 +40,7 @@ const AppSettings = () => {
             network: chain_id,
             progress: "PENDING",
           };
-          const response = await axios.get(
+          const response = await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
             request_data,
             config
@@ -72,7 +72,7 @@ const AppSettings = () => {
         network: chain_id,
         enabled_apps: JSON.stringify(appsEnabled),
       };
-      const response = await axios.get(
+      const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
         request_data,
         config
@@ -97,7 +97,7 @@ const AppSettings = () => {
         app_search: inputValue,
         network: chain_id,
       };
-      const response = await axios.get(
+      const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings`,
         request_data,
         config
