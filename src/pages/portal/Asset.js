@@ -56,7 +56,7 @@ const Asset = (on_chain) => {
           ual: asset_data.UAL,
           network: chain_id
         }
-        const response = await axios.get(
+        const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
           request_data
         )
