@@ -17,7 +17,9 @@ const config = {
 };
 
 const Inventory = () => {
+
   const [data, setData] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const account = localStorage.getItem("account");
   const chain_id = localStorage.getItem("chain_id");
   const [isAssetOpen, setIsAssetOpen] = useState(false);
@@ -98,13 +100,16 @@ const Inventory = () => {
             }
           }
         }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
+    setIsLoading(true);
     setData("");
     fetchData();
+    setIsLoading(false)
   }, [account]);
 
   const openAssetPopup = (pub) => {
@@ -175,7 +180,11 @@ const Inventory = () => {
     );
   }
 
-  if (data === "") {
+  if(data === ''){
+    return(<Loading />)
+  }
+
+  if (data === "" && !isLoading) {
     return (
       <div className="keys">
         <header className="keys-header">No assets found.</header>

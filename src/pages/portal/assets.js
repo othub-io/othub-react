@@ -20,6 +20,7 @@ const Assets = () => {
   const [data, setData] = useState("");
   let chain_id = localStorage.getItem("chain_id");
   const [isAssetOpen, setIsAssetOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",
@@ -93,6 +94,21 @@ const Assets = () => {
       [name]: value,
     }));
   };
+
+  if((chain_id !== "Origintrail Parachain Testnet" &&
+  chain_id !== "Origintrail Parachain Mainnet") && chain_id){
+    return(
+    <div className="keys">
+      <header className="keys-header">
+        Connected with an unsupported chain. Please switch to
+        Origintrail Parachain Testnet or Mainnet.
+      </header>
+    </div>)
+  }
+
+  if(data === ''){
+    return(<Loading />)
+  }
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
@@ -264,17 +280,7 @@ const Assets = () => {
         </header>
       ) : (
         <div>
-          {chain_id === "Origintrail Parachain Testnet" ||
-          chain_id === "Origintrail Parachain Mainnet" ? (
-            <Loading />
-          ) : (
-            <div className="keys">
-              <header className="keys-header">
-                Connected with an unsupported chain. Please switch to
-                Origintrail Parachain Testnet or Mainnet.
-              </header>
-            </div>
-          )}
+          
         </div>
       )}
     </div>
