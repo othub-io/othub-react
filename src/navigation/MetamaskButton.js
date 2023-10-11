@@ -17,7 +17,7 @@ const handleSignMessage = async (publicAddress, nonce) => {
     var web3 = new Web3(window.ethereum);
     return new Promise((resolve, reject) => {
       const signature = web3.eth.personal.sign(
-        web3.utils.fromUtf8(`Nonce: ${nonce}`),
+        web3.utils.fromUtf8(`Please sign nonce ${nonce} to authenticate account ownership.`),
         publicAddress,
         ""
       );
