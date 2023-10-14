@@ -124,6 +124,17 @@
   margin-left:190px;
 }
 
+.PROCESSING-progress{
+  color: #ffff00;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-19px;
+  margin-left:190px;
+}
+
 .COMPLETE-progress{
   color:#13B785;
   font-weight: bold;
@@ -136,6 +147,39 @@
 }
 
 .REJECTED-progress{
+  color: #d86262;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-19px;
+  margin-left:190px;
+}
+
+.FAILED-progress{
+  color: #d86262;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-19px;
+  margin-left:190px;
+}
+
+.CREATE-FAILED-progress{
+  color: #d86262;
+  font-weight: bold;
+  font-size:18px;
+  text-align: left;
+  padding-left:10px;
+  position: relative;
+  margin-top:-19px;
+  margin-left:190px;
+}
+
+.TRANSFER-FAILED-progress{
   color: #d86262;
   font-weight: bold;
   font-size:18px;
