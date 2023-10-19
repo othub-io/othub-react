@@ -29,9 +29,14 @@ const Settings = () => {
     async function fetchData() {
       try {
         if (account) {
+          const request_data = {
+            network: chain_id,
+          };
+
           const response = await axios
             .post(
               `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings`,
+              request_data,
               config
             )
             .then((response) => {
@@ -73,6 +78,7 @@ const Settings = () => {
       const fetchData = async () => {
         try {
           const request_data = {
+            network: chain_id,
             telegramID: inputValue,
           };
 
@@ -125,6 +131,7 @@ const Settings = () => {
     try {
       setIsLoading(true);
       const request_data = {
+        network: chain_id,
         botToken: inputValue,
       };
 
@@ -154,6 +161,7 @@ const Settings = () => {
   const submitSettings = async () => {
     try {
       const request_data = {
+        network: chain_id,
         sendScript: "yes",
       };
 
