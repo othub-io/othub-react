@@ -30,7 +30,7 @@ const Settings = () => {
       try {
         if (account) {
           const response = await axios
-            .get(
+            .post(
               `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings`,
               config
             )
