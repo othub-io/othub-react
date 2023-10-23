@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import "../../css/portal/AppSettings.css"; // Import the CSS file for styling (see Step 3)
-import { AccountContext } from "../../AccountContext";
-import Loading from "../../Loading";
+import "../css/AppSettings.css"; // Import the CSS file for styling (see Step 3)
+import { AccountContext } from "../AccountContext";
+import Loading from "../Loading";
 import axios from "axios";
 let ext;
 
@@ -41,7 +41,7 @@ const AppSettings = () => {
             progress: "PENDING",
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
             request_data,
             config
           );
@@ -73,7 +73,7 @@ const AppSettings = () => {
         enabled_apps: JSON.stringify(appsEnabled),
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
         request_data,
         config
       );
@@ -98,7 +98,7 @@ const AppSettings = () => {
         network: chain_id,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/app-settings`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/app-settings`,
         request_data,
         config
       );

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import "../../css/build/settings.css";
-import { AccountContext } from "../../AccountContext";
-import Loading from "../../Loading";
+import "../css/build.css";
+import { AccountContext } from "../AccountContext";
+import Loading from "../Loading";
 import axios from "axios";
 let ext;
 
@@ -16,7 +16,7 @@ const config = {
   },
 };
 
-const Settings = () => {
+const Build = () => {
   const account = localStorage.getItem("account");
   const chain_id = localStorage.getItem("chain_id");
   const {
@@ -50,7 +50,7 @@ const Settings = () => {
             network: chain_id,
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build`,
             request_data,
             config
           );
@@ -119,7 +119,7 @@ const Settings = () => {
             app_name: app_name,
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/settings`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build`,
             request_data,
             config
           );
@@ -883,4 +883,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Build;

@@ -44,7 +44,7 @@ const MetamaskButton = () => {
             if (newAccounts.length > 0) {
               //get user record
               const user_record = await axios.post(
-                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/users/register`,
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/auth/register`,
                 {public_address: newAccounts[0]}
               );
 
@@ -56,7 +56,7 @@ const MetamaskButton = () => {
 
               // Send signature to backend
               const responseSign = await axios.post(
-                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/users/sign`,
+                `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/auth/sign`,
                 {public_address: newAccounts[0], signature: signedMessage}
               );
 
@@ -104,7 +104,7 @@ const MetamaskButton = () => {
 
         if (accounts.length > 0) {
           const user_record = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/users/register`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/auth/register`,
             {public_address: accounts[0]}
           );
 
@@ -116,7 +116,7 @@ const MetamaskButton = () => {
 
           // Send signature to backend
           const responseSign = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/users/sign`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/auth/sign`,
             {public_address: accounts[0], signature: signedMessage}
           );
 

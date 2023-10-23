@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../../css/staking/settings.css";
-import Loading from "../../Loading";
+import "../css/staking.css";
+import Loading from "../Loading";
 import axios from "axios";
 let ext;
 
@@ -15,7 +15,7 @@ const config = {
   },
 };
 
-const Settings = () => {
+const Staking = () => {
   const [data, setData] = useState("");
   const [isOpenTelegram, setIsOpenTelegram] = useState(false);
   const [isOpenBot, setIsOpenBot] = useState(false);
@@ -35,7 +35,7 @@ const Settings = () => {
 
           const response = await axios
             .post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings`,
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking`,
               request_data,
               config
             )
@@ -84,7 +84,7 @@ const Settings = () => {
 
           const response = await axios
             .post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings`,
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking`,
               request_data,
               config
             )
@@ -137,7 +137,7 @@ const Settings = () => {
 
       const response = await axios
         .post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking`,
           request_data,
           config
         )
@@ -167,7 +167,7 @@ const Settings = () => {
 
       await axios
         .post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/settings`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking`,
           request_data,
           config
         )
@@ -404,4 +404,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Staking;

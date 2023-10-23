@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../../css/portal/gateway.css";
-import { AccountContext } from "../../AccountContext";
-import Loading from "../../Loading";
+import "../css/portal.css";
+import { AccountContext } from "../AccountContext";
+import Loading from "../Loading";
 import Request from "./Request";
 import AppSettings from "./AppSettings";
-import BarChart from "../../charts/gatewayBarChart";
-import BarChartTXNS from "../../charts/gatewayBarChartTXNS";
+import BarChart from "../charts/gatewayBarChart";
+import BarChartTXNS from "../charts/gatewayBarChartTXNS";
 import axios from "axios";
 let ext;
 
@@ -20,7 +20,7 @@ const config = {
   },
 };
 
-const Gateway = () => {
+const Portal = () => {
   const {
     isAppSettingsOpen,
     setIsAppSettingsOpen,
@@ -66,7 +66,7 @@ const Gateway = () => {
             progress: "PENDING",
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
             request_data,
             config
           );
@@ -74,7 +74,7 @@ const Gateway = () => {
 
           if (provided_txn_id) {
             const txn_id_response = await axios.post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
               { txn_id: provided_txn_id, network: chain_id },
               config
             );
@@ -174,7 +174,7 @@ const Gateway = () => {
         limit: updatedMobileFilterInput.limit,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
         request_data,
         config
       );
@@ -201,7 +201,7 @@ const Gateway = () => {
           };
 
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/gateway`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
             request_data,
             config
           );
@@ -534,4 +534,4 @@ const Gateway = () => {
   );
 };
 
-export default Gateway;
+export default Portal;

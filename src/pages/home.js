@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../css/home.css";
 import Loading from "../Loading";
-import HomeChart from "../charts/homeChart";
+import HomeChart from "../charts/assetsMinted";
 import axios from "axios";
 let ext;
 
@@ -148,11 +148,11 @@ const Home = () => {
               <div className="home-stats-info">{avg_size}bytes</div>
             </div>
             <div className="home-chart">
-              <HomeChart
+              {/* <HomeChart
                 data={JSON.stringify(data.v_pubs_stats)}
                 width="1500"
                 height="100"
-              />
+              /> */}
             </div>
           </div>
         </header>

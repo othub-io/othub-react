@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../../css/portal/assets.css";
-import Loading from "../../Loading";
+import "../css/assets.css";
+import Loading from "../Loading";
 import Asset from "./Asset";
 import axios from "axios";
 let ext;
@@ -43,7 +43,7 @@ const Assets = () => {
           network: chain_id,
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
           request_data
         );
         await setData(response.data);
@@ -58,7 +58,7 @@ const Assets = () => {
             console.log(`UAL doesn't have correct format: ${provided_ual}`);
           } else {
             const pubs_response = await axios.post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets`,
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
               { network: chain_id, ual: provided_ual }
             );
 
@@ -125,7 +125,7 @@ const Assets = () => {
             network: chain_id,
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/assets`,
+            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
             request_data,
             config
           );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../../css/portal/inventory.css";
-import Loading from "../../Loading";
+import "../css/inventory.css";
+import Loading from "../Loading";
 import axios from "axios";
 import InvAsset from "./invAsset";
 let ext;
@@ -49,7 +49,7 @@ const Inventory = () => {
 
           const response = await axios
             .post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory`,
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/inventory`,
               request_data,
               config
             )
@@ -80,7 +80,7 @@ const Inventory = () => {
 
               const ual_response = await axios
                 .post(
-                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory`,
+                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/inventory`,
                   request_data,
                   config
                 )
@@ -145,7 +145,7 @@ const Inventory = () => {
 
           const response = await axios
             .post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal/inventory`,
+              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/inventory`,
               request_data,
               config
             )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../../css/portal/invAsset.css'
+import '../css/invAsset.css'
 import moment from 'moment';
 import axios from "axios";
 let ext;
@@ -10,11 +10,17 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+const config = {
+  headers: {
+    Authorization: localStorage.getItem('token'),
+  },
+};
+
 let asset_data
 let sub_scan_link
 let link_type
 
-const InvAsset = (on_chain) => {
+const Asset = (on_chain) => {
   const chain_id = localStorage.getItem('chain_id')
   const [assetHistory, setAssetHistory] = useState("");
   const isMobile = window.matchMedia('(max-width: 480px)').matches
@@ -50,7 +56,6 @@ const InvAsset = (on_chain) => {
           ual: asset_data.UAL,
           network: chain_id
         }
-
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
           request_data
@@ -92,7 +97,7 @@ const InvAsset = (on_chain) => {
         <div className='token'>
             <span>
                 Asset {asset_data.token_id}
-                <button onClick={() => handleCopyLink(`https://www.othub.io/portal/asset?ual=${asset_data.UAL}`)}>
+                <button onClick={() => handleCopyLink(`https://www.othub.io/assets?ual=${asset_data.UAL}`)}>
                     <img class='copy-icon' src={'https://img.icons8.com/ios/50/000000/copy.png'} alt="Copy Link" />
                 </button>
             </span>
@@ -167,4 +172,4 @@ const InvAsset = (on_chain) => {
   )
 }
 
-export default InvAsset
+export default Asset
