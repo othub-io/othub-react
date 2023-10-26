@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../css/home.css";
 import Loading from "../Loading";
-import HomeChart from "../charts/assetsMinted";
+import CumGraph from "../charts/cumGraph";
 import axios from "axios";
+const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS);
 let ext;
 
 ext = "http";
@@ -24,12 +25,23 @@ function formatNumber(number) {
 
 const Home = () => {
   const [data, setData, token] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
+
+  const changeNetwork = (selected_network) => {
+    setNetwork(selected_network);
+    //window.location.reload();
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`
+        let network_data = {
+          network: network
+        }
+        const response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`,
+          network_data
         );
         setData(response.data);
       } catch (error) {
@@ -39,7 +51,7 @@ const Home = () => {
 
     setData("");
     fetchData();
-  }, []);
+  }, [network]);
 
   let pub_count;
   let totalTracSpent;
@@ -81,9 +93,24 @@ const Home = () => {
 
   return (
     <div className="home">
-      {data ? (
+      {data && network ? (
         <header>
-          <div className="header">Network Statistics</div>
+          <div className="header">
+            <div className="network-drop-down">
+              <select>
+                {networks.map((network) => (
+                  <option
+                    key={network.name}
+                    onClick={() => changeNetwork(network.name)}
+                  >
+                    {network.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+          </div>
+          Network Statistics
           <div className="bar-header">
             <div className="badge">
               <a
@@ -148,16 +175,16 @@ const Home = () => {
               <div className="home-stats-info">{avg_size}bytes</div>
             </div>
             <div className="home-chart">
-              {/* <HomeChart
-                data={JSON.stringify(data.v_pubs_stats)}
-                width="1500"
-                height="100"
-              /> */}
+              <CumGraph data={network} />
             </div>
           </div>
         </header>
       ) : (
-        <Loading />
+        <div className="assets">
+          <div className="assets-header">
+            <Loading />
+          </div>
+        </div>
       )}
     </div>
   );

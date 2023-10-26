@@ -27,8 +27,9 @@ ChartJS.register(
   Legend
 );
 
-const CumGraph = () => {
+const AssetSize = (network) => {
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const CumGraph = () => {
       try {
         const time_data = {
           timeframe: inputValue,
+          network: network.data
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
@@ -50,41 +52,53 @@ const CumGraph = () => {
     setData("");
     setInputValue("");
     fetchData();
-  }, []);
+  }, [network]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
+      setisLoading(true)
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
+        network: network.data
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
         time_data
       );
       setData(response.data.chart_data);
+      setisLoading(false)
     } catch (e) {
       console.log(e);
     }
   };
 
   let labels = [];
-  let pubCounts = [];
+  let avgPubSize = [];
+  let priv = [];
   if (data) {
-    let format = "DD MMM"
+    let format = "MMM"
     if(inputValue === "24h"){
-      format = 'HH DD'
+      format = 'HH:00'
     }
     if(inputValue === "7d"){
-      format = 'WW  MM'
+      format = 'ddd HH:00'
     }
     if(inputValue === "30d"){
-      format = 'MM YY'
+      format = 'DD MMM'
+    }
+    if(inputValue === "6m"){
+      format = 'DD MMM'
     }
 
-    labels = data.map((item) => moment(item.datetime).format(format));
-    pubCounts = data.map((item) => item.totalPubs);
+    labels = data.map((item) => moment(item.date).format(format));
+    avgPubSize = data.map((item) => item.avgPubSize);
+    priv = data.map((item) => item.privatePubsPercentage);
   }else{
+    return (<Loading />)
+  }
+
+  if(isLoading){
     return (<Loading />)
   }
 
@@ -93,26 +107,35 @@ const CumGraph = () => {
     labels: labels,
     datasets: [
       {
-        label: "OTP Assets",
-        data: pubCounts,
+        label: "Private %",
+        data: priv,
+        fill: false,
+        borderColor: "#D9DDDC",
+        backgroundColor: "#D9DDDC",
+        yAxisID: 'line-y-axis',
+        type: 'line'
+      },
+      {
+        label: "Size(kb)",
+        data: avgPubSize,
         fill: false,
         borderColor: "#6168ED",
-        color: "#6168ED"
-      },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
+        backgroundColor: "#6168ED",
+        yAxisID: 'bar-y-axis'
+      }
     ],
   };
 
   const options = {
     scales: {
-      y: {
-        beginAtZero: true, // Start the scale at 0
-      },
+        'line-y-axis': {
+            position: 'left',
+            beginAtZero: true
+        },
+        'bar-y-axis': {
+            position: 'right',
+            beginAtZero: true
+        }
     },
   };
 
@@ -120,7 +143,7 @@ const CumGraph = () => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Asset Mints</div>
+          <div className="chart-name">Asset Size</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
@@ -163,6 +186,18 @@ const CumGraph = () => {
             </button>
             <button
               className="chart-filter-button"
+              onClick={() => changeTimeFrame("6m")}
+              name="timeframe"
+              style={
+                inputValue === "6m"
+                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  : {}
+              }
+            >
+              6m
+            </button>
+            <button
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("1y")}
               name="timeframe"
               style={
@@ -188,10 +223,12 @@ const CumGraph = () => {
           </div>
         </div>
       ) : (
-        <Loading />
+        <div className="chart-widget">
+          <Loading />
+        </div> 
       )}
     </div>
   );
 };
 
-export default CumGraph;
+export default AssetSize;

@@ -27,11 +27,10 @@ ChartJS.register(
   Legend
 );
 
-const AssetsMinted = (network) => {
+const Earnings = (network) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
-  console.log(network)
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +40,7 @@ const AssetsMinted = (network) => {
           network: network.data
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
           time_data
         );
         setData(response.data.chart_data);
@@ -64,7 +63,7 @@ const AssetsMinted = (network) => {
         network: network.data
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
         time_data
       );
       setData(response.data.chart_data);
@@ -75,7 +74,8 @@ const AssetsMinted = (network) => {
   };
 
   let labels = [];
-  let pubCounts = [];
+  let estimatedEarnings1stEpochOnly = [];
+  let estimatedEarnings2plusEpochs = [];
   if (data) {
     let format = "MMM"
     if(inputValue === "24h"){
@@ -92,7 +92,8 @@ const AssetsMinted = (network) => {
     }
 
     labels = data.map((item) => moment(item.date).format(format));
-    pubCounts = data.map((item) => item.totalPubs);
+    estimatedEarnings1stEpochOnly = data.map((item) => item.estimatedEarnings1stEpochOnly);
+    estimatedEarnings2plusEpochs = data.map((item) => item.estimatedEarnings2plusEpochs);
   }else{
     return (<Loading />)
   }
@@ -100,24 +101,24 @@ const AssetsMinted = (network) => {
   if(isLoading){
     return (<Loading />)
   }
-
   // Extract labels and data from the dataset
   const formattedData = {
     labels: labels,
     datasets: [
       {
-        label: "OTP Assets",
-        data: pubCounts,
+        label: "Earnings in Trac 1st Epoch",
+        data: estimatedEarnings1stEpochOnly,
+        fill: false,
+        borderColor: "#D9DDDC",
+        backgroundColor: "#D9DDDC"
+      },
+      {
+        label: "Earnings in Trac 2nd+ Epochs",
+        data: estimatedEarnings2plusEpochs,
         fill: false,
         borderColor: "#6168ED",
         backgroundColor: "#6168ED"
-      },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
+      }
     ],
   };
 
@@ -125,6 +126,11 @@ const AssetsMinted = (network) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
+      },
+      x: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
       },
     },
   };
@@ -133,7 +139,7 @@ const AssetsMinted = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Assets Minted</div>
+          <div className="chart-name">Node Earnings</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
@@ -221,4 +227,4 @@ const AssetsMinted = (network) => {
   );
 };
 
-export default AssetsMinted;
+export default Earnings;

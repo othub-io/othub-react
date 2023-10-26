@@ -311,7 +311,11 @@ const Inventory = () => {
           </div>
         </header>
       ) : (
-        <Loading />
+        <div className="assets">
+          <div className="assets-header">
+            <Loading />
+          </div>
+        </div>
       )}
     </div>
   );

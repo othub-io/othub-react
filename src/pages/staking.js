@@ -398,7 +398,11 @@ const Staking = () => {
           </div>
         </header>
       ) : (
-        <Loading />
+        <div className="assets">
+          <div className="assets-header">
+            <Loading />
+          </div>
+        </div>
       )}
     </div>
   );

@@ -25,7 +25,7 @@ function SideBar() {
       isOpen: true,
     },
     {
-      id: 14,
+      id: 16,
       title: "Mint",
       path: "/mint",
       icon: "https://img.icons8.com/ios/50/000000/nft.png",

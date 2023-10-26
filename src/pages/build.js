@@ -321,10 +321,6 @@ const Build = () => {
     //setData('')
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   if (!account) {
     return (
       <div className="keys">
@@ -877,7 +873,11 @@ const Build = () => {
           </div>
         </header>
       ) : (
-        <Loading />
+        <div className="assets">
+          <div className="assets-header">
+            <Loading />
+          </div>
+        </div>
       )}
     </div>
   );

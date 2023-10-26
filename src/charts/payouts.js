@@ -27,11 +27,10 @@ ChartJS.register(
   Legend
 );
 
-const AssetsMinted = (network) => {
+const Payouts = (network) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
-  console.log(network)
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +40,7 @@ const AssetsMinted = (network) => {
           network: network.data
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
           time_data
         );
         setData(response.data.chart_data);
@@ -64,7 +63,7 @@ const AssetsMinted = (network) => {
         network: network.data
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
         time_data
       );
       setData(response.data.chart_data);
@@ -75,7 +74,7 @@ const AssetsMinted = (network) => {
   };
 
   let labels = [];
-  let pubCounts = [];
+  let payouts = [];
   if (data) {
     let format = "MMM"
     if(inputValue === "24h"){
@@ -92,7 +91,7 @@ const AssetsMinted = (network) => {
     }
 
     labels = data.map((item) => moment(item.date).format(format));
-    pubCounts = data.map((item) => item.totalPubs);
+    payouts = data.map((item) => item.payouts);
   }else{
     return (<Loading />)
   }
@@ -100,24 +99,17 @@ const AssetsMinted = (network) => {
   if(isLoading){
     return (<Loading />)
   }
-
   // Extract labels and data from the dataset
   const formattedData = {
     labels: labels,
     datasets: [
       {
-        label: "OTP Assets",
-        data: pubCounts,
+        label: "Payouts in Trac",
+        data: payouts,
         fill: false,
         borderColor: "#6168ED",
         backgroundColor: "#6168ED"
-      },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
+      }
     ],
   };
 
@@ -125,6 +117,11 @@ const AssetsMinted = (network) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
+      },
+      x: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
       },
     },
   };
@@ -133,7 +130,7 @@ const AssetsMinted = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Assets Minted</div>
+          <div className="chart-name">Node Payouts</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
@@ -221,4 +218,4 @@ const AssetsMinted = (network) => {
   );
 };
 
-export default AssetsMinted;
+export default Payouts;

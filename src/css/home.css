@@ -20,10 +20,8 @@
 .home-chart {
   margin-top:18.5%;
   padding-left:1%;
-  height:60%;
-  width:98%;
-  background-color: #F5F5F5;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  height:20vh;
+  width: 95%;
 }
 
 .home-form{

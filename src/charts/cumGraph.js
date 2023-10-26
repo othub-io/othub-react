@@ -1,0 +1,137 @@
+import React, { useState, useEffect } from "react";
+import { Line, Bar } from "react-chartjs-2";
+import moment from "moment";
+import axios from "axios";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import Loading from "../Loading";
+
+let ext = "http";
+if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
+  ext = "https";
+}
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend
+);
+
+const CumGraph = (network) => {
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setisLoading] = useState(false);
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const time_data = {
+          timeframe: inputValue,
+          network: network.data
+        };
+        const response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/cumGraph`,
+          time_data
+        );
+        setData(response.data.chart_data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    setData("");
+    setInputValue("");
+    fetchData();
+  }, [network]);
+
+  let labels = [];
+  let cumulativeTotalTracSpent = [];
+  let cumulativePubs = [];
+  let cumulativePayout = [];
+  if (data) {
+    let format = "DD MMM"
+    if(inputValue === "24h"){
+      format = 'HH:00'
+    }
+    if(inputValue === "7d"){
+      format = 'ddd HH:00'
+    }
+    if(inputValue === "30d"){
+      format = 'DD MMM'
+    }
+
+    labels = data.map((item) => moment(item.date).format(format));
+    cumulativeTotalTracSpent = data.map((item) => item.cumulativeTotalTracSpent);
+    cumulativePubs = data.map((item) => item.cumulativePubs);
+    cumulativePayout = data.map((item) => item.cumulativePayout);
+  }else{
+    return (<Loading />)
+  }
+
+  if(isLoading){
+    return (<Loading />)
+  }
+  // Extract labels and data from the dataset
+  const formattedData = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Assets",
+        data: cumulativePubs,
+        fill: false,
+        borderColor: "#6168ED",
+        backgroundColor: "#6168ED"
+      },
+      {
+        label: "Payouts",
+        data: cumulativePayout,
+        fill: false,
+        borderColor: "#13B785",
+        backgroundColor: "#13B785"
+      },
+      {
+        label: "Trac Spent",
+        data: cumulativeTotalTracSpent,
+        fill: false,
+        borderColor: "#D9DDDC",
+        backgroundColor: "#D9DDDC"
+      },
+    ]
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: false, // Start the scale at 0
+      },
+    },
+  };
+
+  return (
+    <div>
+      {data ? (
+        <div className="chart-widget">
+          <div>
+            <Line data={formattedData} options={options} height='80'/>
+          </div>
+        </div>
+      ) : (
+        <div className="chart-widget">
+          <Loading />
+        </div> 
+      )}
+    </div>
+  );
+};
+
+export default CumGraph;

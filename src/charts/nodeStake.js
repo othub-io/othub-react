@@ -27,11 +27,10 @@ ChartJS.register(
   Legend
 );
 
-const AssetsMinted = (network) => {
+const NodeStake = (network) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
-  console.log(network)
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +40,7 @@ const AssetsMinted = (network) => {
           network: network.data
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/nodeStake`,
           time_data
         );
         setData(response.data.chart_data);
@@ -64,7 +63,7 @@ const AssetsMinted = (network) => {
         network: network.data
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/nodeStake`,
         time_data
       );
       setData(response.data.chart_data);
@@ -75,9 +74,9 @@ const AssetsMinted = (network) => {
   };
 
   let labels = [];
-  let pubCounts = [];
+  let stake = [];
   if (data) {
-    let format = "MMM"
+    let format = "DD MMM"
     if(inputValue === "24h"){
       format = 'HH:00'
     }
@@ -87,12 +86,9 @@ const AssetsMinted = (network) => {
     if(inputValue === "30d"){
       format = 'DD MMM'
     }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
-    }
 
     labels = data.map((item) => moment(item.date).format(format));
-    pubCounts = data.map((item) => item.totalPubs);
+    stake = data.map((item) => item.stake);
   }else{
     return (<Loading />)
   }
@@ -100,24 +96,17 @@ const AssetsMinted = (network) => {
   if(isLoading){
     return (<Loading />)
   }
-
   // Extract labels and data from the dataset
   const formattedData = {
     labels: labels,
     datasets: [
       {
-        label: "OTP Assets",
-        data: pubCounts,
+        label: "Stake in Trac",
+        data: stake,
         fill: false,
         borderColor: "#6168ED",
         backgroundColor: "#6168ED"
-      },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
+      }
     ],
   };
 
@@ -125,6 +114,11 @@ const AssetsMinted = (network) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
+      },
+      x: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
       },
     },
   };
@@ -133,9 +127,9 @@ const AssetsMinted = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Assets Minted</div>
+          <div className="chart-name">Network Stake</div>
           <div className="chart-port">
-            <Bar data={formattedData} options={options} />
+            <Line data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
             <button
@@ -221,4 +215,4 @@ const AssetsMinted = (network) => {
   );
 };
 
-export default AssetsMinted;
+export default NodeStake;

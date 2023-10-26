@@ -106,10 +106,6 @@ const Assets = () => {
     </div>)
   }
 
-  if(data === ''){
-    return(<Loading />)
-  }
-
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
     // Perform the POST request using the entered value
@@ -279,8 +275,10 @@ const Assets = () => {
           </div>
         </header>
       ) : (
-        <div>
-          
+        <div className="assets">
+          <div className="assets-header">
+            <Loading />
+          </div>
         </div>
       )}
     </div>

@@ -27,11 +27,10 @@ ChartJS.register(
   Legend
 );
 
-const AssetsMinted = (network) => {
+const AssetCost = (network) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
-  console.log(network)
 
   useEffect(() => {
     async function fetchData() {
@@ -75,9 +74,10 @@ const AssetsMinted = (network) => {
   };
 
   let labels = [];
-  let pubCounts = [];
+  let avgBid = [];
+  let avgPubPrice = [];
   if (data) {
-    let format = "MMM"
+    let format = "DD MMM"
     if(inputValue === "24h"){
       format = 'HH:00'
     }
@@ -87,12 +87,11 @@ const AssetsMinted = (network) => {
     if(inputValue === "30d"){
       format = 'DD MMM'
     }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
-    }
 
     labels = data.map((item) => moment(item.date).format(format));
-    pubCounts = data.map((item) => item.totalPubs);
+    avgPubPrice = data.map((item) => item.avgPubPrice);
+    avgBid = data.map((item) => item.avgBid);
+
   }else{
     return (<Loading />)
   }
@@ -106,18 +105,19 @@ const AssetsMinted = (network) => {
     labels: labels,
     datasets: [
       {
-        label: "OTP Assets",
-        data: pubCounts,
+        label: "Cost",
+        data: avgPubPrice,
         fill: false,
         borderColor: "#6168ED",
         backgroundColor: "#6168ED"
       },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
+      {
+        label: "Bid",
+        data: avgBid,
+        fill: false,
+        borderColor: "#D9DDDC",
+        backgroundColor: "#D9DDDC"
+      }
     ],
   };
 
@@ -133,9 +133,9 @@ const AssetsMinted = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Assets Minted</div>
+          <div className="chart-name">Asset Details</div>
           <div className="chart-port">
-            <Bar data={formattedData} options={options} />
+            <Line data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
             <button
@@ -221,4 +221,4 @@ const AssetsMinted = (network) => {
   );
 };
 
-export default AssetsMinted;
+export default AssetCost;
