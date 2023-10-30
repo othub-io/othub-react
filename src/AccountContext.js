@@ -11,6 +11,7 @@ export const AccountContext = createContext({
   isLoading:'',
   balance:'',
   isConnected:'',
+  isActionOpen:'',
   setData: () => { },
   setAppIndex: () => { },
   setIsResultOpen: () => { },
@@ -20,7 +21,8 @@ export const AccountContext = createContext({
   setResultValue: () => { },
   setIsLoading: () => { },
   setBalance: () => { },
-  setIsConnected: () => { }
+  setIsConnected: () => { },
+  setIsActionOpen: () => { }
 })
 
 export const AccountProvider = ({ children }) => {
@@ -36,6 +38,7 @@ export const AccountProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [balance, setBalance] = useState('')
   const [isConnected, setIsConnected] = useState(false)
+  const [isActionOpen, setIsActionOpen] = useState('')
 
   const handleSetData = data => {
      setData(data)
@@ -84,6 +87,10 @@ export const AccountProvider = ({ children }) => {
   const handleSetIsConnected = isConnected => {
     setIsConnected(isConnected)
   }
+  //setIsActionOpen
+  const handleSetIsActionOpen = isActionOpen => {
+    setIsActionOpen(isActionOpen)
+  }
 
   return (
     <AccountContext.Provider
@@ -100,6 +107,7 @@ export const AccountProvider = ({ children }) => {
         isLoading,
         balance,
         isConnected,
+        isActionOpen,
         setAccount: handleSetAccount,
         setChain: handleSetChain,
         setAppIndex: handleSetAppIndex,
@@ -111,7 +119,8 @@ export const AccountProvider = ({ children }) => {
         setResultValue: handleSetResultValue,
         setIsLoading: handleSetIsLoading,
         setBalance: handleSetBalance,
-        setIsConnected: handleSetIsConnected
+        setIsConnected: handleSetIsConnected,
+        setIsActionOpen: handleSetIsActionOpen
       }}
     >
       {children}

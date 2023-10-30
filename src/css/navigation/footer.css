@@ -93,9 +93,9 @@
         left: 0;
         bottom: 0;
         z-index: 8800;
+        background-color: #FFFFFF;
       }
     
-      
       .footer-header {
         height: 30px;
         display: flex;

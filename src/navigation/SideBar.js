@@ -4,39 +4,46 @@ import "../css/navigation/SideBar.css";
 function SideBar() {
   const [menuItems, setMenuItems] = useState([
     {
-      id: 1,
-      title: "Portal",
-      icon: "https://img.icons8.com/ios/50/000000/portal.png",
+      id: 14,
+      title: "Assets",
+      path: "/assets",
+      icon: "https://img.icons8.com/ios/50/000000/list.png",
       isOpen: true,
-      submenu: [
-        { id: 30, path: "/portal/gateway", title: "Gateway" },
-        { id: 31, path: "/portal/inventory", title: "Inventory" },
-        { id: 32, path: "/portal/assets", title: "All Assets" },
-      ],
+    },
+    {
+      id: 2,
+      title: "Staking",
+      path: "/staking",
+      icon: "https://img.icons8.com/ios/50/000000/steak.png",
+      isOpen: true,
     },
     {
       id: 3,
-      title: "Staking",
-      icon: "https://img.icons8.com/ios/50/000000/steak.png",
-      isOpen: true,
-      submenu: [
-        { id: 4, path: "/staking/dashboard", title: "Dashboard" },
-        { id: 5, path: "/staking/settings", title: "Settings" },
-      ],
-    },
-    {
-      id: 21,
       title: "Build",
+      path: "/build",
       icon: "https://img.icons8.com/ios/50/000000/block.png",
       isOpen: true,
-      submenu: [
-        { id: 19, path: "/build/settings", title: "App Settings" },
-        {
-          id: 20,
-          path: "https://www.postman.com/crimson-crescent-721757/workspace/othub-api",
-          title: "OTHub API Docs",
-        },
-      ],
+    },
+    {
+      id: 16,
+      title: "Mint",
+      path: "/mint",
+      icon: "https://img.icons8.com/ios/50/000000/nft.png",
+      isOpen: true,
+    },
+    {
+      id: 44,
+      title: "Inventory",
+      path: "/inventory",
+      icon: "https://img.icons8.com/ios/50/000000/backpack.png",
+      isOpen: true,
+    },
+    {
+      id: 1,
+      title: "Portal",
+      path: "/portal",
+      icon: "https://img.icons8.com/ios/50/000000/portal.png",
+      isOpen: true
     },
     {
       id: 10,
@@ -46,33 +53,30 @@ function SideBar() {
       isOpen: true,
     },
     {
-      id: 14,
-      title: "DKG Tools",
-      icon: "https://img.icons8.com/ios/50/000000/hammer.png",
-      isOpen: true,
-      submenu: [
-        { id: 15, path: "/dkgtools/get", title: "Get" },
-        { id: 16, path: "/dkgtools/publish", title: "Publish" },
-        { id: 17, path: "/dkgtools/update", title: "Update" },
-      ],
-    },
-    {
-      id: 2,
+      id: 4,
       title: "Nodes",
       path: "/nodes",
       icon: "https://img.icons8.com/ios/50/000000/server.png",
       isOpen: true,
     },
+    // },
+    // {
+    //   id: 18,
+    //   title: "Guides",
+    //   icon: "https://img.icons8.com/ios/50/000000/map.png",
+    //   isOpen: true,
+    //   submenu: [
+    //     { id: 19, path: "/guides/walletMapping", title: "Wallet Mapping" },
+    //     { id: 20, path: "/guides/nodeInstall", title: "Node Install" },
+    //   ],
+    // },
     {
-      id: 18,
-      title: "Guides",
-      icon: "https://img.icons8.com/ios/50/000000/map.png",
+      id: 5,
+      path: "https://www.postman.com/crimson-crescent-721757/workspace/othub-api",
+      title: "API Docs",
+      icon: "https://img.icons8.com/ios/50/000000/api.png",
       isOpen: true,
-      submenu: [
-        { id: 19, path: "/guides/walletMapping", title: "Wallet Mapping" },
-        { id: 20, path: "/guides/nodeInstall", title: "Node Install" },
-      ],
-    },
+    }
     // Rest of the menu items
   ]);
 
@@ -99,7 +103,19 @@ function SideBar() {
             </a>
             <div className="title">
               <a href={item.path} className="title">
-                {item.title}
+                {item.id === 5 ? (
+                      <a
+                        href={item.path}
+                        className="title"
+                        target="_blank"
+                      >
+                        {item.title}
+                      </a>
+                    ) : (
+                      <a href={item.path} className="title">
+                        {item.title}
+                      </a>
+                    )}
               </a>
             </div>
             {item.isOpen && item.submenu && (

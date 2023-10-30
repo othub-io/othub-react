@@ -14,7 +14,7 @@
   
   .navbar h1 {
     font-size: 28px;
-    color: #6168ED;
+    color: #6344df;
     margin: 0;
     width:300px;
   }
@@ -25,7 +25,7 @@
   }
 
   .logo-text {
-    color: #6168ED;
+    color: #6344df;
     text-decoration: none; 
     padding-right:10px;
     padding-top:17px;
@@ -42,7 +42,7 @@
     display: block;
     width:98%;
     text-align:right;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
   }
 
@@ -54,13 +54,13 @@
   @media (max-width: 1536px) {
     .navbar h1 {
       font-size: 28px;
-      color: #6168ED;
+      color: #6344df;
       margin: 0;
       width:350px;
     }
 
     .logo-text {
-      color: #6168ED;
+      color: #6344df;
       text-decoration: none; 
       padding-right:10px;
       float:right;
@@ -75,7 +75,7 @@
   @media (max-width: 1366px) {
     .navbar h1 {
       font-size: 28px;
-      color: #6168ED;
+      color: #6344df;
       margin: 0;
       width:350px;
     }
@@ -101,7 +101,7 @@
     
     .navbar h1 {
       font-size: 16px;
-      color: #6168ED;
+      color: #6344df;
       margin: 0;
       margin-left:3%;
       width:140px;
@@ -118,7 +118,7 @@
       display: block;
       width:98%;
       text-align:right;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
       margin-top:-60px;
     }
@@ -132,7 +132,7 @@
         display: block;
         width:98%;
         text-align:right;
-        color: #6168ED;
+        color: #6344df;
         font-weight: bold;
         margin-top:0px;
         margin-right:20px;
@@ -146,7 +146,7 @@
     }
 
     .logo-text {
-      color: #6168ED;
+      color: #6344df;
       text-decoration: none; 
       padding-right:10px;
     }
@@ -160,7 +160,7 @@
       display: inline-block;
       width:40%;
       text-align:right;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     } */
   }
@@ -181,7 +181,7 @@
       
       .navbar h1 {
         font-size: 16px;
-        color: #6168ED;
+        color: #6344df;
         margin: 0;
         margin-left:3%;
       }
@@ -193,7 +193,7 @@
       }
 
       .logo-text {
-        color: #6168ED;
+        color: #6344df;
         text-decoration: none; 
         padding-right:10px;
       }
