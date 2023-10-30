@@ -106,8 +106,8 @@ const Epochs = (network) => {
         label: "Epochs",
         data: epochs,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED"
+        borderColor: "#6344df",
+        backgroundColor: "#6344df"
       }
     ],
   };
@@ -116,7 +116,25 @@ const Epochs = (network) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        title: {
+            display: true,
+            text: "Epochs", // Add your X-axis label here
+            color: "#6344df", // Label color
+            font: {
+              size: 12, // Label font size
+            },
+          },
       },
+      x: {
+        title: {
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+      }
     },
   };
 
@@ -135,7 +153,7 @@ const Epochs = (network) => {
               name="timeframe"
               style={
                 inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -147,7 +165,7 @@ const Epochs = (network) => {
               name="timeframe"
               style={
                 inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -159,7 +177,7 @@ const Epochs = (network) => {
               name="timeframe"
               style={
                 inputValue === "30d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -171,7 +189,7 @@ const Epochs = (network) => {
               name="timeframe"
               style={
                 inputValue === "6m"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -183,7 +201,7 @@ const Epochs = (network) => {
               name="timeframe"
               style={
                 inputValue === "1y"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -195,7 +213,7 @@ const Epochs = (network) => {
               name="timeframe"
               style={
                 inputValue === ""
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >

@@ -37,7 +37,7 @@ const AssetCost = (network) => {
       try {
         const time_data = {
           timeframe: inputValue,
-          network: network.data
+          network: network.data,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
@@ -56,18 +56,18 @@ const AssetCost = (network) => {
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: network.data
+        network: network.data,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -77,27 +77,26 @@ const AssetCost = (network) => {
   let avgBid = [];
   let avgPubPrice = [];
   if (data) {
-    let format = "DD MMM"
-    if(inputValue === "24h"){
-      format = 'HH:00'
+    let format = "DD MMM";
+    if (inputValue === "24h") {
+      format = "HH:00";
     }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
     }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
+    if (inputValue === "30d") {
+      format = "DD MMM";
     }
 
     labels = data.map((item) => moment(item.date).format(format));
     avgPubPrice = data.map((item) => item.avgPubPrice);
     avgBid = data.map((item) => item.avgBid);
-
-  }else{
-    return (<Loading />)
+  } else {
+    return <Loading />;
   }
 
-  if(isLoading){
-    return (<Loading />)
+  if (isLoading) {
+    return <Loading />;
   }
 
   // Extract labels and data from the dataset
@@ -108,16 +107,16 @@ const AssetCost = (network) => {
         label: "Cost",
         data: avgPubPrice,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED"
+        borderColor: "#6344df",
+        backgroundColor: "#6344df",
       },
       {
         label: "Bid",
         data: avgBid,
         fill: false,
-        borderColor: "#D9DDDC",
-        backgroundColor: "#D9DDDC"
-      }
+        borderColor: "#df44c0",
+        backgroundColor: "#df44c0",
+      },
     ],
   };
 
@@ -125,6 +124,24 @@ const AssetCost = (network) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        title: {
+          display: true,
+          text: "TRAC", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
       },
     },
   };
@@ -133,7 +150,7 @@ const AssetCost = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Asset Details</div>
+          <div className="chart-name">Asset Cost</div>
           <div className="chart-port">
             <Line data={formattedData} options={options} />
           </div>
@@ -144,7 +161,7 @@ const AssetCost = (network) => {
               name="timeframe"
               style={
                 inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -156,7 +173,7 @@ const AssetCost = (network) => {
               name="timeframe"
               style={
                 inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -168,7 +185,7 @@ const AssetCost = (network) => {
               name="timeframe"
               style={
                 inputValue === "30d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -180,7 +197,7 @@ const AssetCost = (network) => {
               name="timeframe"
               style={
                 inputValue === "6m"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -192,7 +209,7 @@ const AssetCost = (network) => {
               name="timeframe"
               style={
                 inputValue === "1y"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -204,7 +221,7 @@ const AssetCost = (network) => {
               name="timeframe"
               style={
                 inputValue === ""
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -215,7 +232,7 @@ const AssetCost = (network) => {
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );

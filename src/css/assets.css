@@ -11,7 +11,7 @@
     display: flex;
     font-size: calc(10px + 2vmin);
     z-index: 10;
-    color: #6168ED;
+    color: #6344df;
     height: 85vh;
     width: 86%;
     margin-top: 5%;
@@ -27,14 +27,41 @@
     width: 90%;
     overflow: auto;
     padding-left:1.5%;
-    outline: 2px solid #6168ED;
+    outline: 2px solid #6344df;
     border-radius: 10px 10px 10px 10px;
+  }
+
+  .asset-network-drop-down {
+    width:10%;
+    position: absolute;
+    margin-left:230px;
+    margin-top:100px;
+  }
+  
+  .asset-network-drop-down select{
+    background-color: #FFFFFF;
+    border: none;
+    color: #6344df;
+    outline: 1px solid #6344df;
+    border-radius: 2px 2px 2px 2px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .asset-network-drop-down select:hover{
+    background-color: #FFFFFF;
+    border: none;
+    color: #6344df;
+    outline: 1px solid #6344df;
+    border-radius: 2px 2px 2px 2px;
+    cursor: pointer;
+    font-weight: bold;
   }
 
   .assets-form {
     width:20%;
     height:70%;
-    margin-top: 1%;
+    margin-top:50px;
     margin-left: 0%;
     margin-right: 4%;
     padding-left: 3%;
@@ -70,7 +97,7 @@
   margin-left:2%;
   margin-bottom:2%;
   border-radius: 10px;
-  outline: 2px solid #6168ED;
+  outline: 2px solid #6344df;
   font-family: OCR A Std, monospace;
   background-color: #FFFFFF;
   border: none;
@@ -85,7 +112,7 @@
   margin-left:2%;
   margin-bottom:2%;
   border-radius: 10px;
-  outline: 3px solid #6168ED;
+  outline: 3px solid #6344df;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
@@ -96,7 +123,7 @@
 .assets-result-count{
     margin-left:31%;
     margin-top: 5px;;
-    outline: 2px solid #6168ED;
+    outline: 2px solid #6344df;
     position: absolute;
     z-index: 60;
     border-radius: 2px;
@@ -104,7 +131,7 @@
 }
 
 .card-token{
-    color: #6168ED;
+    color: #6344df;
     font-size:16px;
     margin-top:0%;
     padding-bottom:10%;
@@ -113,7 +140,7 @@
 }
 
 .card-image{
-    color: #6168ED;
+    color: #6344df;
     height:4rem;
     width:90%;
     margin-left:5%;
@@ -122,21 +149,21 @@
 
 .card-size{
     padding-top:5%;
-    color: #6168ED;
+    color: #6344df;
     font-size:12px;
     text-align:left;
     margin-left:5%;
 }
 
 .card-cost{
-    color: #6168ED;
+    color: #6344df;
     font-size:12px;
     text-align:left;
     margin-left:5%;
 }
 
 .card-expires{
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
     font-size:12px;
     padding-top:20%;
@@ -148,7 +175,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: relative;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
     font-size: 20px;
     width: 30%;
@@ -164,7 +191,7 @@
     font-size: 20px;
     color: #000000;
     cursor: pointer;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
 }
 
@@ -188,7 +215,7 @@
       display: flex;
       font-size: calc(10px + 2vmin);
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       height: 85vh;
       width: 86%;
       margin-top: 5%;
@@ -203,15 +230,15 @@
       height: 88%;
       width: 75%;
       overflow: auto;
-      padding-left:1.5%;
-      outline: 2px solid #6168ED;
+      padding-left:3%;
+      outline: 2px solid #6344df;
       border-radius: 10px 10px 10px 10px;
     }
   
     .assets-form {
       width:30%;
       height:75%;
-      margin-top: 3%;
+      margin-top: 65px;
       margin-left: 4%;
       margin-right: 4%;
       padding-left: 5%;
@@ -247,7 +274,7 @@
     margin-left:2%;
     margin-bottom:2%;
     border-radius: 10px;
-    outline: 2px solid #6168ED;
+    outline: 2px solid #6344df;
     font-family: OCR A Std, monospace;
     background-color: #FFFFFF;
     border: none;
@@ -261,7 +288,7 @@
     margin-left:2%;
     margin-bottom:2%;
     border-radius: 10px;
-    outline: 3px solid #6168ED;
+    outline: 3px solid #6344df;
     font-family: OCR A Std, monospace;
     cursor: pointer;
     border: none;
@@ -271,7 +298,7 @@
   .assets-result-count{
       margin-left:34%;
       margin-top: 25px;
-      outline: 2px solid #6168ED;
+      outline: 2px solid #6344df;
       position: absolute;
       z-index: 60;
       border-radius: 2px;
@@ -279,7 +306,7 @@
   }
   
   .card-token{
-      color: #6168ED;
+      color: #6344df;
       font-size:16px;
       margin-top:0%;
       padding-bottom:10%;
@@ -288,8 +315,8 @@
   }
   
   .card-image{
-      color: #6168ED;
-      outline: .5px solid #6168ED;
+      color: #6344df;
+      outline: .5px solid #6344df;
       height:4rem;
       width:90%;
       margin-left:5%;
@@ -297,21 +324,21 @@
   
   .card-size{
       padding-top:5%;
-      color: #6168ED;
+      color: #6344df;
       font-size:12px;
       text-align:left;
       margin-left:5%;
   }
   
   .card-cost{
-      color: #6168ED;
+      color: #6344df;
       font-size:12px;
       text-align:left;
       margin-left:5%;
   }
   
   .card-expires{
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
       font-size:12px;
       padding-top:20%;
@@ -340,7 +367,7 @@
         display: flex;
         font-size: calc(10px + 2vmin);
         z-index: 10;
-        color: #6168ED;
+        color: #6344df;
         height: 85vh;
         width: 82%;
         margin-top: 7%;
@@ -355,15 +382,15 @@
         height: 94%;
         width: 75%;
         overflow: auto;
-        padding-left:0%;
-        outline: 2px solid #6168ED;
+        padding-left:6%;
+        outline: 2px solid #6344df;
         border-radius: 10px 10px 10px 10px;
       }
     
     .assets-result-count{
         margin-left:23.5%;
         margin-top:-10px;
-        outline: 2px solid #6168ED;
+        outline: 2px solid #6344df;
         position: absolute;
         z-index: 60;
         border-radius: 2px;
@@ -373,12 +400,14 @@
 
     .assets-form {
       height:70%;
+      margin-left:0px;
+      margin-top:50px;
     }
 
     .assets-result-count{
       margin-left:30%;
       margin-top:0%;
-      outline: 2px solid #6168ED;
+      outline: 2px solid #6344df;
       position: absolute;
       border-radius: 2px;
       background-color: #FFFFFF;
@@ -401,12 +430,12 @@
         display: flex;
         font-size: calc(10px + 2vmin);
         z-index: 10;
-        color: #6168ED;
+        color: #6344df;
         height: 95%;
         width: 82%;
         margin-top: 0%;
         padding-top:23%;
-        margin-left: 15.5%;
+        margin-left: 13%;
         position: relative;
       }
     
@@ -414,63 +443,99 @@
         width:90%;
         height:270px;
         font-size:18px;
+        margin-top:30px;
         font-weight: bold;
         margin-bottom:10%;
-        margin-left:2%;
+        margin-left:4%;
         overflow: auto;
       }
 
+      .asset-network-drop-down {
+        width:10%;
+        position: absolute;
+        margin-left:70px;
+        margin-top:100px;
+        z-index: 200;
+      }
+      
+      .asset-network-drop-down select{
+        background-color: #FFFFFF;
+        border: none;
+        color: #6344df;
+        outline: 1px solid #6344df;
+        border-radius: 2px 2px 2px 2px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      
+      .asset-network-drop-down select:hover{
+        background-color: #FFFFFF;
+        border: none;
+        color: #6344df;
+        outline: 1px solid #6344df;
+        border-radius: 2px 2px 2px 2px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
       .asset-card-container {
-        margin-top:300px;
+        margin-top:330px;
         margin-bottom:3%;
-        margin-right:1%;
-        margin-left:2%;
+        margin-right:0%;
+        margin-left:0%;
         height: 55%;
         width: 90%;
         padding-top:1%;
         overflow: auto;
         padding-right:3%;
-        outline: 1px solid #6168ED;
+        outline: none;
         border-radius: 10px 10px 10px 10px;
         position: absolute;
       }
 
       .card-expires{
-        color: #6168ED;
+        color: #6344df;
         font-weight: bold;
-        font-size:10px;
-        padding-top:10%;
+        font-size:14px;
+        padding-top:30px;
       }
 
       .card-image{
-        color: #6168ED;
-        outline: .5px solid #6168ED;
-        height:3rem;
+        color: #6344df;
+        outline: .5px solid #6344df;
+        height:100px;
         width:90%;
         margin-left:5%;
         padding-top:10%;
       }
 
       .card-token{
-        color: #6168ED;
+        color: #6344df;
         font-size:15px;
-        text-align:left;
+        text-align:right;
         font-weight: bold;
     }
 
     .card-size{
         padding-top:5%;
-        color: #6168ED;
-        font-size:12px;
+        color: #6344df;
+        font-size:14px;
         text-align:left;
         margin-left:5%;
+        font-weight: bold;
     }
 
     .card-cost{
-        color: #6168ED;
-        font-size:12px;
+        color: #6344df;
+        font-size:14px;
         text-align:left;
         margin-left:5%;
+        font-weight: bold;
+    }
+
+    .card-img{
+      height: 90px;
+      width:90px;
     }
 
 
@@ -505,13 +570,14 @@
     
       .asset-card,
     .asset-card:focus {
-      height:8.5rem;
-      width:27%;
+      height:250px;
+      width:47%;
       float:left;
-      margin-left:5%;
+      margin-left:1%;
+      margin-right:2%;
       margin-bottom:4%;
       border-radius: 10px;
-      outline: 2px solid #6168ED;
+      outline: 2px solid #6344df;
       font-family: OCR A Std, monospace;
       background-color: #FFFFFF;
       border: none;
@@ -519,23 +585,23 @@
     
     .asset-card:hover,
     .asset-card:focus:hover {
-      height:8.5rem;
-      width:27%;
+      height:250px;
+      width:47%;
       float:left;
-      margin-left:5%;
+      margin-left:1%;
+      margin-right:2%;
       margin-bottom:4%;
       border-radius: 10px;
-      outline: 3px solid #6168ED;
+      outline: 3px solid #6344df;
       font-family: OCR A Std, monospace;
-      cursor: pointer;
+      background-color: #FFFFFF;
       border: none;
-      background-color: #F5F5F5;
     }
     
     .assets-result-count{
         margin-left:38.5%;
         margin-top:290px;
-        outline: 2px solid #6168ED;
+        outline: 2px solid #6344df;
         position: absolute;
         border-radius: 2px;
         background-color: #FFFFFF;
@@ -565,7 +631,7 @@
       display: flex;
       font-size: calc(10px + 2vmin);
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       height: 97%;
       width: 82%;
       margin-left: 15.5%;
@@ -592,7 +658,7 @@
       width: 90%;
       overflow: auto;
       padding-right:3%;
-      outline: 1px solid #6168ED;
+      outline: 1px solid #6344df;
       border-radius: 10px 10px 10px 10px;
       position: absolute;
     }
@@ -605,7 +671,7 @@
       margin-left:5%;
       margin-bottom:4%;
       border-radius: 10px;
-      outline: 2px solid #6168ED;
+      outline: 2px solid #6344df;
       font-family: OCR A Std, monospace;
       background-color: #FFFFFF;
       border: none;
@@ -619,7 +685,7 @@
       margin-left:5%;
       margin-bottom:4%;
       border-radius: 10px;
-      outline: 3px solid #6168ED;
+      outline: 3px solid #6344df;
       font-family: OCR A Std, monospace;
       cursor: pointer;
       border: none;
@@ -627,8 +693,8 @@
     }
 
     .card-image{
-      color: #6168ED;
-      outline: .5px solid #6168ED;
+      color: #6344df;
+      outline: .5px solid #6344df;
       height:2rem;
       width:90%;
       margin-left:5%;
@@ -637,28 +703,28 @@
 
     .card-size{
       padding-top:5%;
-      color: #6168ED;
+      color: #6344df;
       font-size:11px;
       text-align:left;
       margin-left:5%;
   }
 
   .card-cost{
-      color: #6168ED;
+      color: #6344df;
       font-size:10px;
       text-align:left;
       margin-left:5%;
   }
 
     .card-token{
-      color: #6168ED;
+      color: #6344df;
       font-size:12px;
       text-align:left;
       font-weight: bold;
   }
 
   .card-expires{
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
     text-align: left;
     font-size:8px;
@@ -697,7 +763,7 @@
   .assets-result-count{
       margin-left:39%;
       margin-top:290px;
-      outline: 2px solid #6168ED;
+      outline: 2px solid #6344df;
       position: absolute;
       border-radius: 2px;
       background-color: #FFFFFF;

@@ -106,11 +106,11 @@ const AssetsMinted = (network) => {
     labels: labels,
     datasets: [
       {
-        label: "OTP Assets",
+        label: "Assets",
         data: pubCounts,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED"
+        borderColor: "#6344df",
+        backgroundColor: "#6344df"
       },
       // {
       //   label: 'Expiring',
@@ -125,7 +125,28 @@ const AssetsMinted = (network) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
       },
+      x: {
+        title: {
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+      }
     },
   };
 
@@ -133,7 +154,7 @@ const AssetsMinted = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Assets Minted</div>
+          <div className="chart-name">Assets Published</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
@@ -144,7 +165,7 @@ const AssetsMinted = (network) => {
               name="timeframe"
               style={
                 inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -156,7 +177,7 @@ const AssetsMinted = (network) => {
               name="timeframe"
               style={
                 inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -168,7 +189,7 @@ const AssetsMinted = (network) => {
               name="timeframe"
               style={
                 inputValue === "30d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -180,7 +201,7 @@ const AssetsMinted = (network) => {
               name="timeframe"
               style={
                 inputValue === "6m"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -192,7 +213,7 @@ const AssetsMinted = (network) => {
               name="timeframe"
               style={
                 inputValue === "1y"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -204,7 +225,7 @@ const AssetsMinted = (network) => {
               name="timeframe"
               style={
                 inputValue === ""
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >

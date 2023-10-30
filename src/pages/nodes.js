@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css/nodes.css";
 import Loading from "../Loading";
 import axios from "axios";
+const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS)
 let ext;
 
 ext = "http";
@@ -12,12 +13,22 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 const Nodes = () => {
   const [data, setData] = useState("");
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
+  const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
+
+  const changeNetwork = (selected_network) => {
+    setNetwork(selected_network);
+    //window.location.reload();
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`
+        const dater = {
+          network: network
+        };
+        const response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`,
+          dater
         );
         setData(response.data);
       } catch (error) {
@@ -27,10 +38,17 @@ const Nodes = () => {
 
     setData("");
     fetchData();
-  }, []);
+  }, [network]);
 
   return (
     <div className="allnodes">
+      <div className="nodes-network-drop-down">
+          <select>
+            {networks.map((network) => (
+              <option key={network.name} onClick={()=> changeNetwork(network.name)}>{network.name}</option>
+            ))}
+          </select>
+        </div>
       {data ? (
         <header className="allnodes-header">
           {isMobile ? (

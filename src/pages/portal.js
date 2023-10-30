@@ -262,7 +262,7 @@ const Portal = () => {
                   <a
                     href={resultValue.url}
                     target="blank"
-                    style={{ color: "#6168ED" }}
+                    style={{ color: "#6344df" }}
                   >
                     {resultValue.url}
                   </a>
@@ -409,7 +409,7 @@ const Portal = () => {
               name="txn_type"
               style={
                 mobileFilterInput.txn_type === "Create"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -421,7 +421,7 @@ const Portal = () => {
               name="progress"
               style={
                 mobileFilterInput.progress === "PENDING"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -433,7 +433,7 @@ const Portal = () => {
               name="txn_type"
               style={
                 mobileFilterInput.txn_type === "Update"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -447,7 +447,7 @@ const Portal = () => {
               name="progress"
               style={
                 mobileFilterInput.progress === "COMPLETE"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -461,7 +461,7 @@ const Portal = () => {
               name="txn_type"
               style={
                 mobileFilterInput.txn_type === "Transfer"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -475,7 +475,7 @@ const Portal = () => {
               name="progress"
               style={
                 mobileFilterInput.progress === "REJECTED"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >

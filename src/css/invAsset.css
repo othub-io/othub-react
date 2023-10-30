@@ -13,6 +13,18 @@
     padding-bottom:10px;
   }
 
+  .action-data{
+    width:100%;
+    height:100%;
+    white-space: normal;
+    overflow: hidden;
+    text-align:left;
+    padding-top:40px;
+    padding-bottom:10px;
+    overflow: auto;
+  }
+
+
   .inv-asset-history{
     width:38%;
     height:740px;
@@ -23,13 +35,43 @@
     float:right;
     margin-top:-740px;
     border-radius: 10px 10px 10px 10px;
-    border: #6168ED 2px solid;
+    border: #6344df 2px solid;
+  }
+
+  .inv-action-popup-content {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    color: #6344df;
+    font-weight: bold;
+    font-size: 20px;
+    width: 45%;
+    height: 70%;
+  }
+  
+  .inv-action-close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 20px;
+      color: #000000;
+      cursor: pointer;
+      color: #6344df;
+      font-weight: bold;
+  }
+
+  .inv-update-data-input{
+    width: 300px;
+    height:350
   }
 
   .event-list-item{
     width:100%;
     height:80px;
-    border-bottom: #6168ED 1px solid;
+    border-bottom: #6344df 1px solid;
   }
 
   .event-list-item:hover{
@@ -56,7 +98,7 @@
   }
 
   .created{
-    color:#6168ED;
+    color:#6344df;
     margin-bottom:10px;
     padding-bottom:15px;
   }
@@ -64,7 +106,7 @@
   .token{
     width:99.5%;
     height:6%;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
     border-radius: 10px 10px 10px 10px;
     text-align:center;
     padding-top:10px;
@@ -72,7 +114,7 @@
   }
 
   .token span{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:32px;
   }
@@ -85,8 +127,8 @@
   .copy-icon {
     height: 20px;
     width: 20px;
-    color: #6168ED;
-    fill:#6168ED;
+    color: #6344df;
+    fill:#6344df;
     cursor: pointer;
   }
 
@@ -104,14 +146,14 @@
   }
 
   .size-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:24px;
     margin-bottom:5px;
   }
 
   .size-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 24px;
     font-weight: bold;
   }
@@ -126,14 +168,14 @@
   }
 
   .epochs-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:24px;
     margin-bottom:5px;
   }
 
   .epochs-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 24px;
     font-weight: bold;
   }
@@ -148,14 +190,14 @@
   }
 
   .triples-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:24px;
     margin-bottom:5px;
   }
 
   .triples-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 24px;
     font-weight: bold;
   }
@@ -171,14 +213,14 @@
   }
 
   .payment-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:24px;
     margin-bottom:5px;
   }
 
   .payment-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 24px;
     font-weight: bold;
   }
@@ -193,14 +235,14 @@
   }
 
   .bid-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:24px;
     margin-bottom:5px;
   }
 
   .bid-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 24px;
     font-weight: bold;
   }
@@ -215,14 +257,14 @@
   }
 
   .expires-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 20px;
     font-size:24px;
     margin-bottom:5px;
   }
 
   .expires-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 24px;
     font-weight: bold;
   }
@@ -231,7 +273,7 @@
     margin-top:8%;
     z-index: 10;
     width:99.5%;
-    color: #6168ED;
+    color: #6344df;
     font-size:16px;
     background-color: #F5F5F5;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -245,7 +287,7 @@
   }
 
   .ual-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 16px;
     margin-bottom:5px;
     font-weight:bold;
@@ -253,7 +295,7 @@
   }
 
   .ual-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 15px;
     word-wrap: break-word;
   }
@@ -266,7 +308,7 @@
   }
 
   .state-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 16px;
     margin-bottom:5px;
     font-weight:bold;
@@ -274,7 +316,7 @@
   }
 
   .state-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 15px;
     word-wrap: break-word;
   }
@@ -287,7 +329,7 @@
   }
 
   .txn-hash-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 16px;
     margin-bottom:5px;
     font-weight:bold;
@@ -295,7 +337,7 @@
   }
 
   .txn-hash-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 15px;
     word-wrap: break-word;
   }
@@ -308,7 +350,7 @@
   }
 
   .keywords-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 16px;
     margin-bottom:5px;
     font-weight:bold;
@@ -316,7 +358,7 @@
   }
 
   .keywords-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 15px;
     word-wrap: break-word;
   }
@@ -330,7 +372,7 @@
   }
 
   .publisher-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 16px;
     margin-bottom:5px;
     font-weight:bold;
@@ -338,7 +380,7 @@
   }
 
   .publisher-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 15px;
     word-wrap: break-word;
   }
@@ -354,14 +396,14 @@
   }
 
   .winners-header{
-    color:#6168ED;
+    color:#6344df;
     font-size: 16px;
     margin-bottom:5px;
     font-weight:bold;
   }
 
   .winners-value{
-    color:#6168ED;
+    color:#6344df;
     font-size: 15px;
   }
 
@@ -369,15 +411,62 @@
     margin-top:5%;
     font-size: 16px;
     font-weight:bold;
-    color:#6168ED;
+    color:#6344df;
     text-decoration: underline;
+  }
+
+  .asset-transfer-button{
+    margin-left: 100px;
+  }
+
+  .asset-create-button{
+    margin-left: 40px;
+  }
+
+  .inv-transfer-button{
+    margin-left: 380px;
+    margin-top: 350px;
+    padding: 8px 16px;
+    background-color: #6344df;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .inv-transfer-input{
+    width:400px;
+    border:1px solid #6344df;
+  }
+
+  .inv-update-epochs-input{
+    margin-left:20%;
+    width:20%;
+  }
+
+  .inv-update-keywords-input{
+    width:20%;
+    float:right;
+    margin-top:-47px;
+    margin-right:20%;
+  }
+
+  .inv-update-data-input{
+    margin-top:30px;
+  }
+
+  .inv-update-data-input textarea{
+    width: 550px;
+    height:300px;
+    resize: none;
+    margin-left: 100px;
   }
 
   @media(max-width:1366px){
     .token{
         width:99.5%;
         height:6%;
-        border: 1px solid #6168ED;
+        border: 1px solid #6344df;
         border-radius: 10px 10px 10px 10px;
         text-align:center;
         padding-top:10px;
@@ -385,7 +474,7 @@
       }
 
       .token span{
-        color:#6168ED;
+        color:#6344df;
         font-size:28px;
       }
 
@@ -399,14 +488,14 @@
       }
     
       .size-header{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-size:20px;
         margin-bottom:5px;
       }
     
       .size-value{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-weight: bold;
       }
@@ -421,13 +510,13 @@
       }
     
       .epochs-header{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         margin-bottom:5px;
       }
     
       .epochs-value{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-weight: bold;
       }
@@ -442,14 +531,14 @@
       }
     
       .triples-header{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-size:20px;
         margin-bottom:5px;
       }
     
       .triples-value{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-weight: bold;
       }
@@ -465,13 +554,13 @@
       }
     
       .payment-header{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         margin-bottom:5px;
       }
     
       .payment-value{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-weight: bold;
       }
@@ -486,14 +575,14 @@
       }
     
       .bid-header{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-size:20px;
         margin-bottom:5px;
       }
     
       .bid-value{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-weight: bold;
       }
@@ -508,13 +597,13 @@
       }
     
       .expires-header{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         margin-bottom:5px;
       }
     
       .expires-value{
-        color:#6168ED;
+        color:#6344df;
         font-size: 20px;
         font-weight: bold;
       }
@@ -539,7 +628,7 @@
     .token{
       width:99.5%;
       height:6%;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       border-radius: 10px 10px 10px 10px;
       text-align:center;
       padding-top:5px;
@@ -547,7 +636,7 @@
     }
 
     .token span{
-      color:#6168ED;
+      color:#6344df;
       font-size:28px;
     }
 
@@ -561,13 +650,13 @@
     }
   
     .size-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .size-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -582,13 +671,13 @@
     }
   
     .epochs-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .epochs-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -603,13 +692,13 @@
     }
   
     .triples-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .triples-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -625,13 +714,13 @@
     }
   
     .payment-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .payment-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -646,13 +735,13 @@
     }
   
     .bid-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .bid-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -667,13 +756,13 @@
     }
   
     .expires-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .expires-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 14px;
       font-weight: bold;
     }
@@ -683,7 +772,7 @@
     .token{
       width:99.5%;
       height:6%;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       border-radius: 10px 10px 10px 10px;
       text-align:center;
       padding-top:5px;
@@ -691,7 +780,7 @@
     }
 
     .token span{
-      color:#6168ED;
+      color:#6344df;
       font-size:28px;
     }
 
@@ -705,13 +794,13 @@
     }
   
     .size-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .size-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -726,13 +815,13 @@
     }
   
     .epochs-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .epochs-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -747,13 +836,13 @@
     }
   
     .triples-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .triples-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -769,13 +858,13 @@
     }
   
     .payment-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .payment-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -790,13 +879,13 @@
     }
   
     .bid-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .bid-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       font-weight: bold;
     }
@@ -811,13 +900,13 @@
     }
   
     .expires-header{
-      color:#6168ED;
+      color:#6344df;
       font-size: 18px;
       margin-bottom:5px;
     }
   
     .expires-value{
-      color:#6168ED;
+      color:#6344df;
       font-size: 14px;
       font-weight: bold;
     }

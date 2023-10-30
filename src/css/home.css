@@ -13,15 +13,55 @@
   padding-left:250px;
   font-size: 28px;
   font-family: 'Roboto', sans-serif;
-  color: #6168ED;
+  color: #6344df;
   font-weight:bold;
 }
 
+.home-title{
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: -30px;
+  margin-left:20px;
+}
+
 .home-chart {
-  margin-top:18.5%;
+  margin-top:15%;
   padding-left:1%;
-  height:20vh;
-  width: 95%;
+  padding-right:2%;
+  margin-right:1%;
+  height:47vh;
+  width: 40%;
+  outline: 2px solid #6344df;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  float: right;
+}
+
+.home-network-drop-down {
+  width:10%;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.home-network-drop-down select{
+  background-color: #FFFFFF;
+  border: none;
+  color: #6344df;
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.home-network-drop-down select:hover{
+  background-color: #FFFFFF;
+  border: none;
+  color: #6344df;
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .home-form{
@@ -29,7 +69,7 @@
   height:80%;
   position: absolute;
   left: 12%;
-  color: #6168ED;
+  color: #6344df;
   z-index:11;
 }
 
@@ -108,7 +148,7 @@
   padding-top:5px;
   font-size: 40px;
   position: absolute;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:200px;
 }
@@ -142,7 +182,7 @@
   padding: 10px 20px;
   font-size: 16px;
   color: #ffffff;
-  background-color: #6168ED;
+  background-color: #6344df;
   border: none;
   border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -154,7 +194,7 @@
 }
 
 .join-button-alliance:hover {
-  background-color: #6168ED;
+  background-color: #6344df;
   color: #ffffff;
   cursor: pointer;
 }
@@ -231,7 +271,7 @@ input[type='number'] {
 button[type='submit'] {
   margin-top: 10px;
   padding: 8px 16px;
-  background-color: #6168ED;
+  background-color: #6344df;
   color: #ffffff;
   border: none;
   border-radius: 3px;
@@ -239,7 +279,7 @@ button[type='submit'] {
 }
 
 button[type='submit']:hover {
-  background-color: #4b51cc;
+  background-color: #4925da;
 }
 
 .bar-header{
@@ -252,7 +292,7 @@ button[type='submit']:hover {
 }
 
 .bar-title{
-  color: #6168ED;
+  color: #6344df;
   font-size:24px;
   font-weight: bold;
   text-align: center;
@@ -263,7 +303,7 @@ button[type='submit']:hover {
   display: inline-block;
   width:10%;
   text-align: right;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   font-size:10px;
 }
@@ -272,7 +312,7 @@ button[type='submit']:hover {
   display: inline-block;
   width:10%;
   text-align: right;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
 }
 
@@ -286,7 +326,7 @@ button[type='submit']:hover {
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #6168ED;
+  background-color: #6344df;
   border-radius: 5px;
   left: 0;
   z-index: 91;
@@ -328,30 +368,42 @@ button[type='submit']:hover {
     padding-left:250px;
     font-size: 28px;
     font-family: 'Roboto', sans-serif;
-    color: #6168ED;
+    color: #6344df;
     font-weight:bold;
   }
   
   .home-chart {
-    margin-top:18.5%;
-    padding-left:9%;
-    height:60%;
-    width:90%;
-    background-color: #F5F5F5;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    margin-top:18%;
+    padding-left:1%;
+    padding-right:2%;
+    margin-right:1%;
+    height:47vh;
+    width: 39%;
+    outline: 2px solid #6344df;
+    border-radius: 10px 10px 10px 10px;
+    display: inline-block;
+    float: right;
   }
   
+  .home-title{
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left:20px;
+    margin-bottom:-10px;
+  }
+
   .bar-header{
     height: 50px;
     width: 400px;
     border-radius: 5px;
     margin-left:68%;
     position: absolute;
-    padding-top:40px;
+    padding-top:70px;
   }
   
   .bar-title{
-    color: #6168ED;
+    color: #6344df;
     font-size:24px;
     font-weight: bold;
     text-align: center;
@@ -362,7 +414,7 @@ button[type='submit']:hover {
     display: inline-block;
     width:10%;
     text-align: right;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
     font-size:10px;
   }
@@ -371,7 +423,7 @@ button[type='submit']:hover {
     display: inline-block;
     width:10%;
     text-align: right;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
   }
   
@@ -384,7 +436,7 @@ button[type='submit']:hover {
   
   .progress-bar-fill {
     height: 100%;
-    background-color: #6168ED;
+    background-color: #6344df;
     border-radius: 5px;
     left: 0;
     z-index: 91;
@@ -410,7 +462,7 @@ button[type='submit']:hover {
     height:70%;
     position: absolute;
     left: 15%;
-    color: #6168ED;
+    color: #6344df;
     z-index:11;
     margin-top:0px;
   }
@@ -490,7 +542,7 @@ button[type='submit']:hover {
     padding-top:5px;
     font-size: 40px;
     position: absolute;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
   }
   
@@ -549,7 +601,7 @@ button[type='submit']:hover {
   button[type='submit'] {
     margin-top: 10px;
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -557,7 +609,7 @@ button[type='submit']:hover {
   }
   
   button[type='submit']:hover {
-    background-color: #4b51cc;
+    background-color: #4925da;
   }
   
 }
@@ -578,17 +630,21 @@ button[type='submit']:hover {
     padding-left:220px;
     font-size: 24px;
     font-family: 'Roboto', sans-serif;
-    color: #6168ED;
+    color: #6344df;
     font-weight:bold;
   }
   
   .home-chart {
-    margin-top:23%;
-    height:60%;
-    width:99%;
-    background-color: #F5F5F5;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-    padding-left:10px;
+    margin-top:21%;
+    padding-left:1%;
+    padding-right:2%;
+    margin-right:1%;
+    height:47vh;
+    width: 38%;
+    outline: 2px solid #6344df;
+    border-radius: 10px 10px 10px 10px;
+    display: inline-block;
+    float: right;
   }
   
   .bar-header{
@@ -597,11 +653,11 @@ button[type='submit']:hover {
     border-radius: 5px;
     margin-left:73%;
     position: absolute;
-    padding-top:40px;
+    padding-top:80px;
   }
   
   .bar-title{
-    color: #6168ED;
+    color: #6344df;
     font-size:20px;
     font-weight: bold;
     text-align: center;
@@ -612,7 +668,7 @@ button[type='submit']:hover {
     display: inline-block;
     width:10%;
     text-align: right;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
     font-size:10px;
   }
@@ -621,7 +677,7 @@ button[type='submit']:hover {
     display: inline-block;
     width:10%;
     text-align: right;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
   }
   
@@ -634,7 +690,7 @@ button[type='submit']:hover {
   
   .progress-bar-fill {
     height: 100%;
-    background-color: #6168ED;
+    background-color: #6344df;
     border-radius: 5px;
     left: 0;
     z-index: 91;
@@ -655,7 +711,7 @@ button[type='submit']:hover {
     height:78%;
     position: absolute;
     left: 16%;
-    color: #6168ED;
+    color: #6344df;
     z-index:11;
   }
   
@@ -734,7 +790,7 @@ button[type='submit']:hover {
     padding-top:5px;
     font-size: 32px;
     position: absolute;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
   }
 
@@ -767,7 +823,7 @@ button[type='submit']:hover {
     padding: 10px 20px;
     font-size: 16px;
     color: #ffffff;
-    background-color: #6168ED;
+    background-color: #6344df;
     border: none;
     border-radius: 4px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -779,7 +835,7 @@ button[type='submit']:hover {
   }
   
   .join-button-alliance:hover {
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     cursor: pointer;
   }
@@ -856,7 +912,7 @@ button[type='submit']:hover {
   button[type='submit'] {
     margin-top: 10px;
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -864,45 +920,87 @@ button[type='submit']:hover {
   }
   
   button[type='submit']:hover {
-    background-color: #4b51cc;
+    background-color: #4925da;
   }
 }
 
 @media (max-width: 480px) {
   .home {
     text-align: left;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
-    height:100%;
+    height:110%;
     font-family: 'Roboto', sans-serif;
+    padding-top:0px;
+    overflow: auto;
     }
 
     .header {
-      padding-top:100px;
+      padding-top:0px;
       padding-left:70px;
       font-size: 20px;
       font-family: 'Roboto', sans-serif;
-      color: #6168ED;
+      color: #6344df;
       font-weight:bold;
     }
 
-    .home-chart {
-      display:none;
+    .home-network-drop-down {
+      width:10%;
+      margin-bottom: 15px;
+    }
+    
+    .home-network-drop-down select{
+      background-color: #FFFFFF;
+      border: none;
+      color: #6344df;
+      outline: 1px solid #6344df;
+      border-radius: 2px 2px 2px 2px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .home-network-drop-down select:hover{
+      background-color: #FFFFFF;
+      border: none;
+      color: #6344df;
+      outline: 1px solid #6344df;
+      border-radius: 2px 2px 2px 2px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
+    .home-chart {
+      padding-left:1%;
+      padding-right:2%;
+      margin-right:3%;
+      height:30vh;
+      width: 80%;
+      outline: 2px solid #6344df;
+      border-radius: 10px 10px 10px 10px;
+      display: block;
+      position: relative;
+      margin-top: 0px;
+      margin-bottom: 40px;
+    }
+
+
+    .home-title{
+        display: none;
+      }
+
     .bar-header{
-      height: 40px;
       width: 300px;
       border-radius: 5px;
       margin-left:20%;
-      position: absolute;
-      padding-top:40px;
+      position: relative;
+      margin-bottom: 200px;
+      padding-top:20px;
     }
     
     .bar-title{
-      color: #6168ED;
+      color: #6344df;
       font-size:16px;
       font-weight: bold;
       text-align: center;
@@ -913,7 +1011,7 @@ button[type='submit']:hover {
       display: inline-block;
       width:10%;
       text-align: right;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
       font-size:10px;
     }
@@ -922,7 +1020,7 @@ button[type='submit']:hover {
       display: inline-block;
       width:10%;
       text-align: right;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     }
     
@@ -936,7 +1034,7 @@ button[type='submit']:hover {
     
     .progress-bar-fill {
       height: 100%;
-      background-color: #6168ED;
+      background-color: #6344df;
       border-radius: 5px;
       left: 0;
       z-index: 91;
@@ -962,13 +1060,13 @@ button[type='submit']:hover {
     .home-form{
       width:80%;
       height:280px;
-      margin-top:300px;
       padding-top:0px;
-      position: absolute;
-      color: #6168ED;
+      position: relative;
+      color: #6344df;
       z-index:0;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
     }
   
     .home-form h1{
@@ -989,7 +1087,7 @@ button[type='submit']:hover {
       font-size: 14px;
       position:absolute;
       padding-top:20px;
-      padding-left:180px;
+      padding-left:210px;
       font-weight: bold;
     }
     
@@ -1004,7 +1102,7 @@ button[type='submit']:hover {
     .trac-spent-24h{
       font-size: 14px;
       position:absolute;
-      padding-left:180px;
+      padding-left:210px;
       padding-top:210px;
       font-weight: bold;
     }
@@ -1029,7 +1127,7 @@ button[type='submit']:hover {
       font-size: 14px;
       position:absolute;
       padding-top:120px;
-      padding-left:180px;
+      padding-left:210px;
       font-weight: bold;
     }
     
@@ -1043,56 +1141,99 @@ button[type='submit']:hover {
     .home-stats-info{
       font-size: 24px;
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 400px) {
   .home {
     text-align: left;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
-    height:100vh;
+    height:110%;
     font-family: 'Roboto', sans-serif;
+    padding-top:0px;
+    overflow: auto;
     }
 
     .header {
-      padding-top:100px;
+      padding-top:0px;
       padding-left:70px;
       font-size: 20px;
       font-family: 'Roboto', sans-serif;
-      color: #6168ED;
+      color: #6344df;
       font-weight:bold;
     }
 
-    .home-chart {
-      display:none;
+    .home-network-drop-down {
+      width:10%;
+      margin-bottom: 15px;
+    }
+    
+    .home-network-drop-down select{
+      background-color: #FFFFFF;
+      border: none;
+      color: #6344df;
+      outline: 1px solid #6344df;
+      border-radius: 2px 2px 2px 2px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .home-network-drop-down select:hover{
+      background-color: #FFFFFF;
+      border: none;
+      color: #6344df;
+      outline: 1px solid #6344df;
+      border-radius: 2px 2px 2px 2px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
+    .home-chart {
+      padding-left:1%;
+      padding-right:2%;
+      margin-right:3%;
+      height:30vh;
+      width: 78%;
+      outline: 2px solid #6344df;
+      border-radius: 10px 10px 10px 10px;
+      display: block;
+      position: relative;
+      margin-top: 0px;
+      margin-bottom: 40px;
+    }
+
+
+    .home-title{
+        display: none;
+      }
+
     .bar-header{
-      height: 40px;
-      width: 250px;
+      width: 300px;
       border-radius: 5px;
-      margin-left:22%;
-      position: absolute;
-      padding-top:40px;
+      margin-left:15%;
+      position: relative;
+      margin-bottom: 200px;
+      padding-top:20px;
     }
     
     .bar-title{
-      color: #6168ED;
+      color: #6344df;
       font-size:16px;
       font-weight: bold;
       text-align: center;
+      padding-bottom:50px;
     }
     
     .bar-legend{
       display: inline-block;
       width:10%;
       text-align: right;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
       font-size:10px;
     }
@@ -1101,7 +1242,7 @@ button[type='submit']:hover {
       display: inline-block;
       width:10%;
       text-align: right;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     }
     
@@ -1110,12 +1251,12 @@ button[type='submit']:hover {
       width: 100%;
       border-radius: 5px;
       background-color: #F5F5F5;
-      margin-left:1.5%;
+      margin-left:2.5%;
     }
     
     .progress-bar-fill {
       height: 100%;
-      background-color: #6168ED;
+      background-color: #6344df;
       border-radius: 5px;
       left: 0;
       z-index: 91;
@@ -1135,19 +1276,19 @@ button[type='submit']:hover {
       margin-top:-20px;
       margin-bottom:20px;
       width:125px;
-      margin-left:25%;
+      margin-left:30%;
     }
     
     .home-form{
-      width:78%;
+      width:80%;
       height:280px;
-      margin-left:7px;
-      margin-top:300px;
-      position: absolute;
-      color: #6168ED;
+      padding-top:0px;
+      position: relative;
+      color: #6344df;
       z-index:0;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
     }
   
     .home-form h1{
@@ -1160,7 +1301,7 @@ button[type='submit']:hover {
       font-size: 14px;
       position:absolute;
       padding-top:20px;
-      padding-left:20px;
+      padding-left:40px;
       font-weight: bold;
     }
     
@@ -1168,21 +1309,14 @@ button[type='submit']:hover {
       font-size: 14px;
       position:absolute;
       padding-top:20px;
-      padding-left:140px;
-      font-weight: bold;
-    }
-    
-    .trac-paid{
-      font-size: 14px;
-      position:absolute;
-      padding-left: 800px;
+      padding-left:180px;
       font-weight: bold;
     }
     
     .assets-24h{
       font-size: 14px;
       position:absolute;
-      padding-left:20px;
+      padding-left:40px;
       padding-top:210px;
       font-weight: bold;
     }
@@ -1190,7 +1324,7 @@ button[type='submit']:hover {
     .trac-spent-24h{
       font-size: 14px;
       position:absolute;
-      padding-left:140px;
+      padding-left:180px;
       padding-top:210px;
       font-weight: bold;
     }
@@ -1207,7 +1341,7 @@ button[type='submit']:hover {
       font-size: 14px;
       position:absolute;
       padding-top:120px;
-      padding-left:20px;
+      padding-left:40px;
       font-weight: bold;
     }
     
@@ -1215,7 +1349,7 @@ button[type='submit']:hover {
       font-size: 14px;
       position:absolute;
       padding-top:120px;
-      padding-left:140px;
+      padding-left:180px;
       font-weight: bold;
     }
     
@@ -1229,7 +1363,7 @@ button[type='submit']:hover {
     .home-stats-info{
       font-size: 24px;
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     }
 }

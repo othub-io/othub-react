@@ -3,6 +3,7 @@ import "../css/assets.css";
 import Loading from "../Loading";
 import Asset from "./Asset";
 import axios from "axios";
+const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS);
 let ext;
 
 ext = "http";
@@ -18,9 +19,7 @@ const config = {
 
 const Assets = () => {
   const [data, setData] = useState("");
-  let chain_id = localStorage.getItem("chain_id");
   const [isAssetOpen, setIsAssetOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",
@@ -29,6 +28,12 @@ const Assets = () => {
     order: "",
     limit: "100",
   });
+  const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
+
+  const changeNetwork = (selected_network) => {
+    setNetwork(selected_network);
+    //window.location.reload();
+  };
 
   const queryParameters = new URLSearchParams(window.location.search);
   const provided_ual = queryParameters.get("ual");
@@ -36,11 +41,8 @@ const Assets = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        if(!chain_id){
-          chain_id = 'Origintrail Parachain Mainnet'
-        }
         const request_data = {
-          network: chain_id,
+          network: network,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
@@ -59,7 +61,7 @@ const Assets = () => {
           } else {
             const pubs_response = await axios.post(
               `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
-              { network: chain_id, ual: provided_ual }
+              { network: network, ual: provided_ual }
             );
 
             if (pubs_response.data.v_pubs[0] !== "") {
@@ -75,7 +77,7 @@ const Assets = () => {
 
     setData("");
     fetchData();
-  }, [chain_id]);
+  }, [network]);
 
   const openAssetPopup = (pub) => {
     setInputValue(pub);
@@ -95,16 +97,16 @@ const Assets = () => {
     }));
   };
 
-  if((chain_id !== "Origintrail Parachain Testnet" &&
-  chain_id !== "Origintrail Parachain Mainnet") && chain_id){
-    return(
-    <div className="keys">
-      <header className="keys-header">
-        Connected with an unsupported chain. Please switch to
-        Origintrail Parachain Testnet or Mainnet.
-      </header>
-    </div>)
-  }
+//   if((chain_id !== "Origintrail Parachain Testnet" &&
+//   chain_id !== "Origintrail Parachain Mainnet") && chain_id){
+//     return(
+//     <div className="keys">
+//       <header className="keys-header">
+//         Connected with an unsupported chain. Please switch to
+//         Origintrail Parachain Testnet or Mainnet.
+//       </header>
+//     </div>)
+//   }
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
@@ -118,7 +120,7 @@ const Assets = () => {
             nodeId: filterInput.node_id,
             order: filterInput.order,
             limit: filterInput.limit,
-            network: chain_id,
+            network: network,
           };
           const response = await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
@@ -150,6 +152,18 @@ const Assets = () => {
           </div>
         </div>
       )}
+      <div className="asset-network-drop-down">
+              <select>
+                {networks.map((network) => (
+                  <option
+                    key={network.name}
+                    onClick={() => changeNetwork(network.name)}
+                  >
+                    {network.name}
+                  </option>
+                ))}
+              </select>
+            </div>
       {data ? (
         <header className="assets-header">
           <div className="assets-form">

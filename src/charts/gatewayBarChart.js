@@ -48,7 +48,7 @@ const BarChart = ({ data }) => {
       {
         data: counts,
         fill: false,
-        backgroundColor: ['#6168ED','#6168ED','#6168ED'],
+        backgroundColor: ['#6344df','#6344df','#6344df'],
       },
       // {
       //   label: 'Expiring',

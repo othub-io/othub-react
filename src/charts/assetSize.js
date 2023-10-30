@@ -110,17 +110,17 @@ const AssetSize = (network) => {
         label: "Private %",
         data: priv,
         fill: false,
-        borderColor: "#D9DDDC",
-        backgroundColor: "#D9DDDC",
+        borderColor: "#df44c0",
+        backgroundColor: "#df44c0",
         yAxisID: 'line-y-axis',
         type: 'line'
       },
       {
-        label: "Size(kb)",
+        label: "Size",
         data: avgPubSize,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED",
+        borderColor: "#6344df",
+        backgroundColor: "#6344df",
         yAxisID: 'bar-y-axis'
       }
     ],
@@ -130,20 +130,46 @@ const AssetSize = (network) => {
     scales: {
         'line-y-axis': {
             position: 'left',
-            beginAtZero: true
+            beginAtZero: true,
+            title: {
+                display: true,
+                text: "Percent", // Add your X-axis label here
+                color: "#df44c0", // Label color
+                font: {
+                  size: 12, // Label font size
+                },
+              },
         },
         'bar-y-axis': {
             position: 'right',
-            beginAtZero: true
-        }
-    },
+            beginAtZero: true,
+            title: {
+                display: true,
+                text: "Bytes", // Add your X-axis label here
+                color: "#6344df", // Label color
+                font: {
+                  size: 12, // Label font size
+                },
+              },
+        },
+        x: {
+            title: {
+              display: true,
+              text: "Datetime (UTC)", // Add your X-axis label here
+              color: "#6344df", // Label color
+              font: {
+                size: 12, // Label font size
+              },
+            },
+          }
+    }
   };
 
   return (
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Asset Size</div>
+          <div className="chart-name">Asset size and public/private ratio</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
@@ -154,7 +180,7 @@ const AssetSize = (network) => {
               name="timeframe"
               style={
                 inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -166,7 +192,7 @@ const AssetSize = (network) => {
               name="timeframe"
               style={
                 inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -178,7 +204,7 @@ const AssetSize = (network) => {
               name="timeframe"
               style={
                 inputValue === "30d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -190,7 +216,7 @@ const AssetSize = (network) => {
               name="timeframe"
               style={
                 inputValue === "6m"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -202,7 +228,7 @@ const AssetSize = (network) => {
               name="timeframe"
               style={
                 inputValue === "1y"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -214,7 +240,7 @@ const AssetSize = (network) => {
               name="timeframe"
               style={
                 inputValue === ""
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >

@@ -10,7 +10,7 @@
   .keys-header {
     font-size: 18px;
     z-index: 100;
-    color: #6168ED;
+    color: #6344df;
     width: 85%;
     margin-top: 10%;
     margin-left:13%;
@@ -35,12 +35,12 @@
     flex-direction: column;
     font-size: 24px;
     z-index: 10;
-    color: #6168ED;
+    color: #6344df;
     background-color: #FFFFFF;
     border-radius: 5px 0px 0px 0px;
     box-shadow: -2px -2px 2px 0px rgba(0, 0, 0, 0.05);
     border-top:none;
-    border-right:1px solid #6168ED;
+    border-right:1px solid #6344df;
     border-left:none;
     border-bottom: 1px solid #F5F5F5;
     height: 67px;
@@ -58,7 +58,7 @@
 
   .build-settings-header-0A:hover {
     background-color: #F5F5F5;
-    color: #6168ED;
+    color: #6344df;
     cursor: pointer;
     margin-top: 96px;
   }
@@ -68,12 +68,12 @@
     flex-direction: column;
     font-size: 24px;
     z-index: 10;
-    color: #6168ED;
+    color: #6344df;
     background-color: #FFFFFF;
     border-radius: 0px 0px 0px 0px;
     box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
     border-top:1px solid #F5F5F5;
-    border-right:1px solid #6168ED;
+    border-right:1px solid #6344df;
     border-left:none;
     border-bottom: 1px solid #F5F5F5;
     height: 67px;
@@ -92,7 +92,7 @@
   .build-settings-header-1A:hover {
     background-color: #F5F5F5;
     margin-top: 162px;
-    color: #6168ED;
+    color: #6344df;
     cursor: pointer;
   }
 
@@ -101,12 +101,12 @@
     flex-direction: column;
     font-size: 24px;
     z-index: 10;
-    color: #6168ED;
+    color: #6344df;
     background-color: #FFFFFF;
     border-radius: 0px 0px 0px 5px;
     box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
     border-top:none;
-    border-right:1px solid #6168ED;
+    border-right:1px solid #6344df;
     border-left:none;
     border-bottom: 1px solid #F5F5F5;
     height: 67px;
@@ -126,7 +126,7 @@
   .build-settings-header-2A:hover {
     background-color: #F5F5F5;
     margin-top: 228px;
-    color: #6168ED;
+    color: #6344df;
     cursor: pointer;
     box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
   }
@@ -136,7 +136,7 @@
     flex-direction: column;
     font-size: 24px;
     z-index: 10;
-    color: #6168ED;
+    color: #6344df;
     background-color: #FFFFFF;
     border-radius: 0px 5px 5px 5px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
@@ -229,7 +229,7 @@
     font-size: 12px;
     text-align:center;
     float:right;
-    color:#6168ED;
+    color:#6344df;
   }
 
   .keysTable {
@@ -238,7 +238,7 @@
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     float:right;
     font-family: 'Roboto', sans-serif;
@@ -251,27 +251,27 @@
   }
   
   .keysTable th {
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     padding: 10px;
     text-align: left;
     font-size: 14px;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
   }
   
   .keysTable td {
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
   }
   
   .keysTable tr:hover {
     background-color: #F5F5F5;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
   }
   
   .keysTable tr:hover td {
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
   }
 
   .app-txn-container {
@@ -296,7 +296,7 @@
   margin-left:0%;
   margin-bottom:1%;
   border-radius: 10px;
-  outline: 2px solid #6168ED;
+  outline: 2px solid #6344df;
   font-family: OCR A Std, monospace;
   background-color: #FFFFFF;
   border: none;
@@ -312,7 +312,7 @@
   margin-left:0%;
   margin-bottom:2%;
   border-radius: 10px;
-  outline: 3px solid #6168ED;
+  outline: 3px solid #6344df;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
@@ -322,7 +322,7 @@
 }
 
 .app-txn-record:hover .txn-created-at{
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   font-size:14px;
   text-align: right;
@@ -332,7 +332,7 @@
 }
 
 .app-txn-record:hover .txn-summary{
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   font-size:18px;
   text-align: left;
@@ -349,7 +349,7 @@
 
 .app-txn-record:hover .txn-ual{
   display: block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:90%;
   font-size: 14px;
@@ -358,7 +358,7 @@
   text-align: left;
   position: absolute;
   border-radius: 5px;
-  outline: 1px solid #6168ED;
+  outline: 1px solid #6344df;
   text-align:center;
   height:20px;
   padding-top:5px;
@@ -375,7 +375,7 @@
 
 .app-txn-record:hover .txn-Create-n-Transfer-receiver{
   display:inline-block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -385,13 +385,13 @@
   position: relative;
 }
 .app-txn-record:hover .txn-Create-n-Transfer-receiver span{
-  color: #6168ED;
+  color: #6344df;
   font-weight:100;
 }
 
 .app-txn-record:hover .txn-Transfer-receiver{
   display:inline-block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -401,13 +401,13 @@
   position: relative;
 }
 .app-txn-record:hover .txn-Transfer-receiver span{
-  color: #6168ED;
+  color: #6344df;
   font-weight:100;
 }
 
 .app-txn-record:hover .txn-Create-epochs{
   display: inline-block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -419,7 +419,7 @@
 
 .txn-Create-n-Transfer-epochs{
   display: none;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -431,7 +431,7 @@
 
 .txn-Create-n-Transfer-receiver{
   display: none;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -443,7 +443,7 @@
 
 .app-txn-record:hover .txn-Create-n-Transfer-epochs{
   display: inline-block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -455,7 +455,7 @@
 
 .app-txn-record:hover .txn-Update-epochs{
   display: inline-block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   width:30%;
   font-size: 16px;
@@ -466,7 +466,7 @@
 
 .app-txn-record:hover .txn-description {
   display: block;
-  color: #6168ED;
+  color: #6344df;
   font-weight: bold;
   background-color: #F5F5F5;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -486,7 +486,7 @@
 
 .app-request{
   font-size:16px;
-  background-color: #6168ED;
+  background-color: #6344df;
   color:white;
   position: absolute;
   padding-left:10px;
@@ -584,7 +584,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: relative;
-    color: #6168ED;
+    color: #6344df;
     font-weight:bold;
 }
 
@@ -609,7 +609,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: absolute;
     text-align: left;
-    color:#6168ED;
+    color:#6344df;
     font-weight: bold;
   }
 
@@ -658,7 +658,7 @@
     font-size: 16px;
     cursor: pointer;
     font-weight: bold;
-    color: #6168ED;
+    color: #6344df;
   }
   
   .close-button:hover {
@@ -684,7 +684,7 @@
   button[type='submit'] {
     margin-top: 10px;
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -697,7 +697,7 @@
 
   .create-app-button{
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -714,7 +714,7 @@
 
 
   .create-app-form {
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
   }
 
@@ -752,11 +752,11 @@
 
   .cf-keys-to-create{
     padding-top:40px;
-    color: #6168ED;
+    color: #6344df;
   }
 
   .cf-keys-to-create input{
-    color: #6168ED;
+    color: #6344df;
     width:350px;
     margin-bottom: 20px;
   }
@@ -778,7 +778,7 @@
     background-color: #F5F5F5;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     position: absolute;
-    color: #6168ED;
+    color: #6344df;
   }
 
   .build-settings-form input[type="text"]{
@@ -810,12 +810,12 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 5px 0px 0px 0px;
       box-shadow: -2px -2px 2px 0px rgba(0, 0, 0, 0.05);
       border-top:none;
-      border-right:1px solid #6168ED;
+      border-right:1px solid #6344df;
       border-left:none;
       border-bottom: 1px solid #F5F5F5;
       height: 47px;
@@ -833,7 +833,7 @@
   
     .build-settings-header-0A:hover {
       background-color: #F5F5F5;
-      color: #6168ED;
+      color: #6344df;
       cursor: pointer;
       margin-top: 96px;
     }
@@ -843,12 +843,12 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 0px 0px 0px 0px;
       box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
       border-top:1px solid #F5F5F5;
-      border-right:1px solid #6168ED;
+      border-right:1px solid #6344df;
       border-left:none;
       border-bottom: 1px solid #F5F5F5;
       height: 47px;
@@ -867,7 +867,7 @@
     .build-settings-header-1A:hover {
       background-color: #F5F5F5;
       margin-top: 142px;
-      color: #6168ED;
+      color: #6344df;
       cursor: pointer;
     }
   
@@ -876,12 +876,12 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 0px 0px 0px 5px;
       box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
       border-top:none;
-      border-right:1px solid #6168ED;
+      border-right:1px solid #6344df;
       border-left:none;
       border-bottom: 1px solid #F5F5F5;
       height: 47px;
@@ -901,7 +901,7 @@
     .build-settings-header-2A:hover {
       background-color: #F5F5F5;
       margin-top: 189px;
-      color: #6168ED;
+      color: #6344df;
       cursor: pointer;
       box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
     }
@@ -911,7 +911,7 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 0px 5px 5px 5px;
       box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
@@ -936,12 +936,12 @@
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
     }
 
     .app-txn-record:hover .txn-description {
       display: block;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -961,7 +961,7 @@
 
     .app-txn-record:hover .txn-ual{
       display: block;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
       width:90%;
       font-size: 12px;
@@ -970,7 +970,7 @@
       text-align: left;
       position: absolute;
       border-radius: 5px;
-      outline: 1px solid #6168ED;
+      outline: 1px solid #6344df;
       text-align:center;
       height:20px;
       padding-top:5px;
@@ -978,7 +978,7 @@
 
     .create-app-button{
       padding: 8px 16px;
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       border: none;
       border-radius: 3px;
@@ -1052,7 +1052,7 @@
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       float:right;
       font-family: 'Roboto', sans-serif;
@@ -1065,29 +1065,29 @@
     }
 
     .keysTable th {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       padding: 10px;
       text-align: left;
       font-size: 14px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
 
     .keysTable tr {
       padding: 10px;
       font-size: 14px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       line-height:10px;
       max-height: .5vh;
     }
     
     .keysTable tr:hover {
       background-color: #F5F5F5;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
     
     .keysTable tr:hover td {
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
 
     .keysTable td button{
@@ -1113,12 +1113,12 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 5px 0px 0px 0px;
       box-shadow: -2px -2px 2px 0px rgba(0, 0, 0, 0.05);
       border-top:none;
-      border-right:1px solid #6168ED;
+      border-right:1px solid #6344df;
       border-left:none;
       border-bottom: 1px solid #F5F5F5;
       height: 47px;
@@ -1136,7 +1136,7 @@
   
     .build-settings-header-0A:hover {
       background-color: #F5F5F5;
-      color: #6168ED;
+      color: #6344df;
       cursor: pointer;
       margin-top: 96px;
     }
@@ -1146,12 +1146,12 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 0px 0px 0px 0px;
       box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
       border-top:1px solid #F5F5F5;
-      border-right:1px solid #6168ED;
+      border-right:1px solid #6344df;
       border-left:none;
       border-bottom: 1px solid #F5F5F5;
       height: 47px;
@@ -1170,7 +1170,7 @@
     .build-settings-header-1A:hover {
       background-color: #F5F5F5;
       margin-top: 142px;
-      color: #6168ED;
+      color: #6344df;
       cursor: pointer;
     }
   
@@ -1179,12 +1179,12 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 0px 0px 0px 5px;
       box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.05);
       border-top:none;
-      border-right:1px solid #6168ED;
+      border-right:1px solid #6344df;
       border-left:none;
       border-bottom: 1px solid #F5F5F5;
       height: 47px;
@@ -1204,7 +1204,7 @@
     .build-settings-header-2A:hover {
       background-color: #F5F5F5;
       margin-top: 189px;
-      color: #6168ED;
+      color: #6344df;
       cursor: pointer;
       box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
     }
@@ -1214,7 +1214,7 @@
       flex-direction: column;
       font-size: 18px;
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       background-color: #FFFFFF;
       border-radius: 0px 5px 5px 5px;
       box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
@@ -1239,7 +1239,7 @@
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
     }
 
     .key-form{
@@ -1265,7 +1265,7 @@
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       float:right;
       font-family: 'Roboto', sans-serif;
@@ -1280,7 +1280,7 @@
     .keysTable td {
       padding: 10px;
       font-size: 12px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       line-height:10px;
       max-height: .5vh;
     }

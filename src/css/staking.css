@@ -14,7 +14,7 @@
     justify-content: left;
     font-size: calc(10px + 2vmin);
     z-index: 10;
-    color: #6168ED;
+    color: #6344df;
     width: 87%;
     margin-top: 5%;
     margin-left: 11.75%;
@@ -33,18 +33,18 @@
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-family: 'Roboto', sans-serif;
   }
   
   .nodesTable th {
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     padding: 10px;
     text-align: left;
     font-size: 16px;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
     position: sticky;
     top: 0;
   }
@@ -52,17 +52,17 @@
   .nodesTable td {
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
   }
 
   .nodesTable tr:hover {
     background-color: #F5F5F5;
-    color: #6168ED;
-    border: 1px solid #6168ED;
+    color: #6344df;
+    border: 1px solid #6344df;
   }
   
   .nodesTable tr:hover td {
-    border: 1px solid #6168ED;
+    border: 1px solid #6344df;
   }
   
   .settings-form{
@@ -70,7 +70,7 @@
     width:23%;
     height:50%;
     position: absolute;
-    color: #6168ED;
+    color: #6344df;
     z-index:11;
     background-color: #F5F5F5;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -106,7 +106,7 @@
     padding-top:5px;
     font-size: 20px;
     position: absolute;
-    color: #6168ED;
+    color: #6344df;
   }
 
   .join-form input{
@@ -123,7 +123,7 @@
     padding: 10px 20px;
     font-size: 16px;
     color: #ffffff;
-    background-color: #6168ED;
+    background-color: #6344df;
     border: none;
     border-radius: 4px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -135,7 +135,7 @@
   }
 
   .join-button:hover {
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     cursor: pointer;
   }
@@ -177,7 +177,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: relative;
-    color:#6168ED;
+    color:#6344df;
     font-weight:bold;
     font-size:20px;
   }
@@ -191,7 +191,7 @@
     font-size: 20px;
     color: #000000;
     cursor: pointer;
-    color: #6168ED;
+    color: #6344df;
     font-weight: bold;
 }
   
@@ -219,7 +219,7 @@
 .submitSettings {
     margin-top: 270px;
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -229,14 +229,14 @@
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
     .submitSettings:hover {
-        background-color: #4b51cc;
+        background-color: #4925da;
     }
 
 
     button[type='submit'] {
         margin-top: 10px;
         padding: 8px 16px;
-        background-color: #6168ED;
+        background-color: #6344df;
         color: #ffffff;
         border: none;
         border-radius: 3px;
@@ -245,7 +245,7 @@
     }
   
   button[type='submit']:hover {
-    background-color: #4b51cc;
+    background-color: #4925da;
   }
 
   .settings-popup-content{
@@ -270,7 +270,7 @@
       justify-content: left;
       font-size: calc(10px + 2vmin);
       z-index: 10;
-      color: #6168ED;
+      color: #6344df;
       width: 87%;
       margin-top: 5%;
       margin-left: 11.75%;
@@ -289,18 +289,18 @@
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       font-family: 'Roboto', sans-serif;
     }
     
     .nodesTable th {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       padding: 10px;
       text-align: left;
       font-size: 16px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       position: sticky;
       top: 0;
     }
@@ -308,17 +308,17 @@
     .nodesTable td {
       padding: 10px;
       font-size: 14px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
   
     .nodesTable tr:hover {
       background-color: #F5F5F5;
-      color: #6168ED;
-      border: 1px solid #6168ED;
+      color: #6344df;
+      border: 1px solid #6344df;
     }
     
     .nodesTable tr:hover td {
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
     
     .settings-form{
@@ -326,7 +326,7 @@
       width:27%;
       position: absolute;
       left: 15%;
-      color: #6168ED;
+      color: #6344df;
       z-index:11;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -359,7 +359,7 @@
       padding-top:5px;
       font-size: 20px;
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     }
   
@@ -392,7 +392,7 @@
       padding: 10px 20px;
       font-size: 16px;
       color: #ffffff;
-      background-color: #6168ED;
+      background-color: #6344df;
       border: none;
       border-radius: 4px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -404,7 +404,7 @@
     }
   
     .join-button:hover {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       cursor: pointer;
     }
@@ -482,7 +482,7 @@
     button[type='submit'] {
       margin-top: 10px;
       padding: 8px 16px;
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       border: none;
       border-radius: 3px;
@@ -490,7 +490,7 @@
     }
     
     button[type='submit']:hover {
-      background-color: #4b51cc;
+      background-color: #4925da;
     }
   
     .settings-popup-content{
@@ -516,7 +516,7 @@
         justify-content: left;
         font-size: calc(10px + 2vmin);
         z-index: 10;
-        color: #6168ED;
+        color: #6344df;
         height: 84vh;
         width: 83%;
         margin-top: 7%;
@@ -535,18 +535,18 @@
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       font-family: 'Roboto', sans-serif;
     }
     
     .nodesTable th {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       padding: 10px;
       text-align: left;
       font-size: 16px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       position: sticky;
       top: 0;
     }
@@ -554,17 +554,17 @@
     .nodesTable td {
       padding: 10px;
       font-size: 14px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
   
     .nodesTable tr:hover {
       background-color: #F5F5F5;
-      color: #6168ED;
-      border: 1px solid #6168ED;
+      color: #6344df;
+      border: 1px solid #6344df;
     }
     
     .nodesTable tr:hover td {
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
     
     .settings-form{
@@ -573,7 +573,7 @@
       height:82vh;
       position: absolute;
       margin-left: 4%;
-      color: #6168ED;
+      color: #6344df;
       z-index:11;
     }
   
@@ -597,7 +597,7 @@
       padding-top:5px;
       font-size: 16px;
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
       font-weight: bold;
     }
   
@@ -630,7 +630,7 @@
       padding: 10px 20px;
       font-size: 16px;
       color: #ffffff;
-      background-color: #6168ED;
+      background-color: #6344df;
       border: none;
       border-radius: 4px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -642,7 +642,7 @@
     }
   
     .join-button:hover {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       cursor: pointer;
     }
@@ -720,7 +720,7 @@
     button[type='submit'] {
       margin-top: 10px;
       padding: 8px 16px;
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       border: none;
       border-radius: 3px;
@@ -728,7 +728,7 @@
     }
     
     button[type='submit']:hover {
-      background-color: #4b51cc;
+      background-color: #4925da;
     }
   }
   
@@ -746,7 +746,7 @@
     .settings-header {
         font-size: calc(10px + 2vmin);
         z-index: 2;
-        color: #6168ED;
+        color: #6344df;
         height: 95%;
         width: 100%;
         background-color: none;
@@ -767,34 +767,34 @@
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       font-family: 'Roboto', sans-serif;
     }
     
     .nodesTable th {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       text-align: left;
       font-size: 16px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       position: sticky;
     }
     
     .nodesTable td {
       font-size: 14px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       height:.5rem;
     }
   
     .nodesTable tr:hover {
       background-color: #F5F5F5;
-      color: #6168ED;
-      border: 1px solid #6168ED;
+      color: #6344df;
+      border: 1px solid #6344df;
     }
     
     .nodesTable tr:hover td {
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
     
     .settings-form{
@@ -803,7 +803,7 @@
       height:240px;
       position: absolute;
       left: 12%;
-      color: #6168ED;
+      color: #6344df;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     }
@@ -837,7 +837,7 @@
       padding-top:5px;
       font-size: 16px;
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
     }
   
     .star {
@@ -869,7 +869,7 @@
       padding: 10px 20px;
       font-size: 16px;
       color: #ffffff;
-      background-color: #6168ED;
+      background-color: #6344df;
       border: none;
       border-radius: 4px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -881,7 +881,7 @@
     }
   
     .join-button:hover {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       cursor: pointer;
     }
@@ -926,7 +926,7 @@
     .settings-header {
         font-size: calc(10px + 2vmin);
         z-index: 2;
-        color: #6168ED;
+        color: #6344df;
         height: 95%;
         width: 100%;
         background-color: none;
@@ -947,34 +947,34 @@
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       font-family: 'Roboto', sans-serif;
     }
     
     .nodesTable th {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       text-align: left;
       font-size: 16px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       position: sticky;
     }
     
     .nodesTable td {
       font-size: 14px;
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
       height:.5rem;
     }
   
     .nodesTable tr:hover {
       background-color: #F5F5F5;
-      color: #6168ED;
-      border: 1px solid #6168ED;
+      color: #6344df;
+      border: 1px solid #6344df;
     }
     
     .nodesTable tr:hover td {
-      border: 1px solid #6168ED;
+      border: 1px solid #6344df;
     }
     
     .settings-form{
@@ -983,7 +983,7 @@
       height:240px;
       position: absolute;
       left: 12%;
-      color: #6168ED;
+      color: #6344df;
       background-color: #F5F5F5;
       box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     }
@@ -1017,7 +1017,7 @@
       padding-top:5px;
       font-size: 16px;
       position: absolute;
-      color: #6168ED;
+      color: #6344df;
     }
   
     .star {
@@ -1049,7 +1049,7 @@
       padding: 10px 20px;
       font-size: 16px;
       color: #ffffff;
-      background-color: #6168ED;
+      background-color: #6344df;
       border: none;
       border-radius: 4px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -1061,7 +1061,7 @@
     }
   
     .join-button:hover {
-      background-color: #6168ED;
+      background-color: #6344df;
       color: #ffffff;
       cursor: pointer;
     }

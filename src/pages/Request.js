@@ -47,7 +47,6 @@ const Request = (txn) => {
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
   txn = JSON.parse(txn.data);
 
-  console.log(txn);
   const handleTxn = async (txn) => {
     try {
       setIsLoading(true);
@@ -91,12 +90,31 @@ const Request = (txn) => {
       let dkg_result;
       let loc = "inventory";
 
-      if (txn.request === "Update") {
+      if (txn.request === "Create") {
         let dkg_txn_data = JSON.parse(txn.txn_data);
         if (!dkg_txn_data["@context"]) {
           dkg_txn_data["@context"] = "https://schema.org";
         }
 
+        dkg_result = await DkgClient.asset
+          .create(
+            {
+              public: dkg_txn_data,
+            },
+            dkgOptions
+          )
+          .then((result) => {
+            console.log({ assertionId: result.assertionId, UAL: result.UAL });
+            return result;
+          });
+      }
+
+      if (txn.request === "Update") {
+        let dkg_txn_data = JSON.parse(txn.txn_data);
+        if (!dkg_txn_data["@context"]) {
+          dkg_txn_data["@context"] = "https://schema.org";
+        }
+        
         dkg_result = await DkgClient.asset
           .update(
             txn.ual,
@@ -114,30 +132,31 @@ const Request = (txn) => {
       if (txn.request === "Transfer") {
         loc = "assets";
         dkg_result = await DkgClient.asset
-          .transfer(txn.ual, txn.receiver, dkgOptions)
+          .transfer(
+            txn.ual, 
+            txn.receiver,
+            dkgOptions
+          )
           .then((result) => {
             console.log({ assertionId: result.assertionId, UAL: result.UAL });
             return result;
           });
       }
 
-      if (txn.txn_id) {
-        const request_data = {
-          completeTxn: txn.txn_id,
-          network: chain_id,
-          ual: dkg_result.UAL,
-          epochs: epochs,
-        };
+      const request_data = {
+        completeTxn: txn.txn_id,
+        network: chain_id,
+        ual: dkg_result.UAL,
+        epochs: epochs,
+      };
 
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
-          request_data,
-          config
-        );
+      const response = await axios.post(
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+        request_data,
+        config
+      );
 
-        setData(response.data);
-      }
-
+      setData(response.data);
       let result = {
         status: "success",
         msg: `Asset ${txn.request} succeeded!`,
@@ -182,8 +201,8 @@ const Request = (txn) => {
         try {
           setIsLoading(true);
           const request_data = {
-            rejectTxn: inputValue.txn_id,
-          };
+            rejectTxn: inputValue.txn_id
+          }
           await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
             request_data,
@@ -216,7 +235,9 @@ const Request = (txn) => {
   }
 
   if (account.toUpperCase() !== txn.approver.toUpperCase()) {
-    console.log(`${account} attempted to sign a txn meant for ${txn.approver}`);
+    console.log(
+      `${account} attempted to sign a txn meant for ${txn.approver}`
+    );
     return <div className="invalid">Invalid account.</div>;
   }
 
@@ -274,7 +295,7 @@ const Request = (txn) => {
           <div className="data-header"></div>
           <div className="data-value-transfer">
             <br></br>
-            <span>Send </span>
+            <span>Transfer </span>
             <br></br>
             <br></br>
             {txn.ual}
@@ -283,13 +304,7 @@ const Request = (txn) => {
             <span>to </span>
             <br></br>
             <br></br>
-            {txn.receiver ? (
-              txn.receiver
-            ) : (
-              <div>
-                <input/>
-              </div>
-            )}
+            {txn.receiver}
           </div>
         </div>
       )}

@@ -555,9 +555,9 @@ const Build = () => {
               style={
                 app_index === index
                   ? {
-                      border: "1px solid #6168ED",
+                      border: "1px solid #6344df",
                       borderRight: "1px solid #FFFFFF",
-                      borderTop: "1px solid #6168ED",
+                      borderTop: "1px solid #6344df",
                       zIndex: 300,
                     }
                   : {}
@@ -739,7 +739,7 @@ const Build = () => {
           </div>
           <div
             className="build-settings-header-0B"
-            style={app_index >= 0 ? { border: "1px solid #6168ED" } : {}}
+            style={app_index >= 0 ? { border: "1px solid #6344df" } : {}}
           >
             <div className="app-details">
               <button

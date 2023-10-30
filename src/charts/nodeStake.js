@@ -37,7 +37,7 @@ const NodeStake = (network) => {
       try {
         const time_data = {
           timeframe: inputValue,
-          network: network.data
+          network: network.data,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/nodeStake`,
@@ -56,69 +56,137 @@ const NodeStake = (network) => {
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: network.data
+        network: network.data,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/nodeStake`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
   let labels = [];
-  let stake = [];
+  let nodesStake = [];
+  let nodesWithMoreThan50kStake = [];
+  let nodesWithLessThan50kStake = [];
   if (data) {
-    let format = "DD MMM"
-    if(inputValue === "24h"){
-      format = 'HH:00'
+    let format = "DD MMM";
+    if (inputValue === "24h") {
+      format = "HH:00";
     }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
     }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
+    if (inputValue === "30d") {
+      format = "DD MMM";
     }
 
     labels = data.map((item) => moment(item.date).format(format));
-    stake = data.map((item) => item.stake);
-  }else{
-    return (<Loading />)
+    nodesStake = data.map((item) => item.nodesStake);
+    nodesWithMoreThan50kStake = data.map(
+      (item) => item.nodesWithMoreThan50kStake
+    );
+    nodesWithLessThan50kStake = data.map(
+      (item) => item.nodesWithLessThan50kStake
+    );
+  } else {
+    return <Loading />;
   }
 
-  if(isLoading){
-    return (<Loading />)
+  if (isLoading) {
+    return <Loading />;
   }
   // Extract labels and data from the dataset
   const formattedData = {
     labels: labels,
     datasets: [
       {
-        label: "Stake in Trac",
-        data: stake,
+        label: "Stake in TRAC",
+        data: nodesStake,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED"
+        borderColor: "#df44c0",
+        backgroundColor: "#df44c0",
+        yAxisID: "line-y-axis",
+        type: "line",
+      },
+      {
+        label: "Inactive",
+        data: nodesWithLessThan50kStake,
+        fill: false,
+        borderColor: "#56a4ff",
+        backgroundColor: "#56a4ff",
+        yAxisID: "bar-y-axis",
+      },
+      {
+        label: "Active",
+        data: nodesWithMoreThan50kStake,
+        fill: false,
+        borderColor: "#6344df",
+        backgroundColor: "#6344df",
+        yAxisID: "bar-y-axis",
       }
     ],
   };
 
   const options = {
     scales: {
-      y: {
-        beginAtZero: true, // Start the scale at 0
-        stacked: true,
+      "line-y-axis": {
+        position: "right",
+        beginAtZero: true,
+        title: {
+            // Start the scale at 0
+            display: true,
+            text: "Stake", // Add your X-axis label here
+            color: "#df44c0", // Label color
+            font: {
+              size: 12, // Label font size
+            },
+          },
+          ticks: {
+            callback: function (value, index, values) {
+              if (value >= 1000000) {
+                return (value / 1000000).toFixed(1) + "M";
+              } else if (value >= 1000) {
+                return (value / 1000).toFixed(1) + "K";
+              } else {
+                return value;
+              }
+            },
+          },
+      },
+      "bar-y-axis": {
+        position: "left",
+        beginAtZero: true,
+        title: {
+            // Start the scale at 0
+            display: true,
+            text: "Nodes", // Add your X-axis label here
+            color: "#6344df", // Label color
+            font: {
+              size: 12, // Label font size
+            },
+          },
       },
       x: {
-        beginAtZero: true, // Start the scale at 0
+        beginAtZero: true,
         stacked: true,
+        title: {
+          // Start the scale at 0
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
       },
     },
   };
@@ -127,42 +195,18 @@ const NodeStake = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Network Stake</div>
+          <div className="chart-name">Combined Node Stake</div>
           <div className="chart-port">
             <Line data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("24h")}
-              name="timeframe"
-              style={
-                inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
-                  : {}
-              }
-            >
-              24h
-            </button>
-            <button
-              className="chart-filter-button"
-              onClick={() => changeTimeFrame("7d")}
-              name="timeframe"
-              style={
-                inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
-                  : {}
-              }
-            >
-              7d
-            </button>
-            <button
-              className="chart-filter-button"
               onClick={() => changeTimeFrame("30d")}
               name="timeframe"
               style={
                 inputValue === "30d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -174,7 +218,7 @@ const NodeStake = (network) => {
               name="timeframe"
               style={
                 inputValue === "6m"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -186,7 +230,7 @@ const NodeStake = (network) => {
               name="timeframe"
               style={
                 inputValue === "1y"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -198,7 +242,7 @@ const NodeStake = (network) => {
               name="timeframe"
               style={
                 inputValue === ""
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -209,7 +253,7 @@ const NodeStake = (network) => {
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );

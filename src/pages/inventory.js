@@ -180,16 +180,20 @@ const Inventory = () => {
     );
   }
 
-  if(data === ''){
-    return(<Loading />)
-  }
-
   if (data === "" && !isLoading) {
     return (
       <div className="keys">
         <header className="keys-header">No assets found.</header>
       </div>
     );
+  }
+  
+  if(data === ''){
+    return(<div className="assets">
+    <div className="assets-header">
+      <Loading />
+    </div>
+  </div>)
   }
 
   return (

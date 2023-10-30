@@ -1,11 +1,27 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AccountContext } from "../AccountContext";
 import "../css/invAsset.css";
+import Loading from "../Loading";
 import moment from "moment";
 import axios from "axios";
-import Request from "./Request";
+import DKG from "dkg.js";
+import InvAction from "./invAction";
 let ext;
 let explorer_url;
+
+const testnet_node_options = {
+  endpoint: process.env.REACT_APP_OTNODE_HOST,
+  port: process.env.REACT_APP_OTNODE_TESTNET_PORT,
+  useSSL: true,
+  maxNumberOfRetries: 100,
+};
+
+const mainnet_node_options = {
+  endpoint: process.env.REACT_APP_OTNODE_HOST,
+  port: process.env.REACT_APP_OTNODE_MAINNET_PORT,
+  useSSL: true,
+  maxNumberOfRetries: 100,
+};
 
 ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -18,15 +34,13 @@ let link_type;
 
 const InvAsset = (txn) => {
   const {
-    isAppSettingsOpen,
-    setIsAppSettingsOpen,
-    setData,
-    data,
-    isRequestOpen,
-    setIsRequestOpen,
     isResultOpen,
     setIsResultOpen,
     resultValue,
+    isActionOpen,
+    isLoading,
+    setIsLoading,
+    setIsActionOpen,
   } = useContext(AccountContext);
   const account = localStorage.getItem("account");
   const chain_id = localStorage.getItem("chain_id");
@@ -34,32 +48,32 @@ const InvAsset = (txn) => {
   const [assetHistory, setAssetHistory] = useState("");
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
   let winners;
-  let network
-  let keywords
+  let network;
+  let keywords;
   asset_data = txn.data;
   winners = JSON.parse(asset_data.winners);
 
-  if (
-    chain_id === "Origintrail Parachain Testnet"
-  ) {
-    network = 'otp::testnet'
+  if (chain_id === "Origintrail Parachain Testnet") {
+    network = "otp::testnet";
   }
 
-  if (
-    chain_id === "Origintrail Parachain Mainnet"
-  ) {
-    network = 'otp::mainnet'
+  if (chain_id === "Origintrail Parachain Mainnet") {
+    network = "otp::mainnet";
   }
 
   sub_scan_link = "https://";
   link_type = "origintrail";
   explorer_url = "https://dkg.origintrail.io";
+  let node_options = mainnet_node_options;
 
   if (chain_id === "Origintrail Parachain Testnet") {
     link_type = "origintrail-testnet";
     explorer_url = "https://dkg-testnet.origintrail.io";
+    node_options = testnet_node_options;
   }
   sub_scan_link = sub_scan_link + link_type + ".subscan.io";
+
+  const DkgClient = new DKG(node_options);
 
   const days_to_expire =
     Number(asset_data.epochs_number) *
@@ -104,24 +118,47 @@ const InvAsset = (txn) => {
     fetchData();
   }, [asset_data.UAL]);
 
-  const openRequestPopup = (asset_data,request) => {
+  const openActionPopup = async (asset_data, request) => {
+    setIsLoading(true);
     const txn = {
-        network: network,
-        epochs: 1,
-        keyworks: keywords,
-        request: request,
-        txn_data: '',
-        ual: asset_data.UAL,
-        approver: account,
-        receiver: ''
+      network: network,
+      epochs: 1,
+      keyworks: keywords,
+      request: request,
+      txn_data: "",
+      ual: asset_data.UAL,
+      approver: account,
+      receiver: "",
+    };
+
+    if(request === 'Update'){
+      let dkg_get_result = await DkgClient.asset
+      .get(txn.ual, {
+        validate: true,
+        maxNumberOfRetries: 30,
+        frequency: 1,
+        state: "LATEST_FINALIZED",
+        blockchain: {
+          name: network,
+          publicKey: process.env.PUBLIC_KEY,
+          privateKey: process.env.PRIVATE_KEY,
+        },
+      })
+      .then((result) => {
+        console.log({ assertionId: result.assertionId, UAL: result.UAL });
+        return result;
+      });
+
+    txn.txn_data = dkg_get_result.assertion;
     }
 
     setInputValue(txn);
-    setIsRequestOpen(true);
+    setIsLoading(false)
+    setIsActionOpen(true);
   };
 
-  const closeRequestPopup = () => {
-    setIsRequestOpen(false);
+  const closeActionPopup = () => {
+    setIsActionOpen(false);
     setInputValue("");
   };
 
@@ -147,18 +184,22 @@ const InvAsset = (txn) => {
     }
   };
 
+  if (isLoading && !isActionOpen) {
+    return <Loading data={'Getting asset data...'} />;
+  }
+
   return (
     <div>
-      {isRequestOpen && (
+      {isActionOpen && (
         <div className="popup-overlay">
-          <div className="request-popup-content">
+          <div className="inv-action-popup-content">
             <button
-              className="request-close-button"
-              onClick={closeRequestPopup}
+              className="inv-action-close-button"
+              onClick={closeActionPopup}
             >
               X
             </button>
-            <Request data={JSON.stringify(inputValue)} />
+            <InvAction data={JSON.stringify(inputValue)} />
           </div>
         </div>
       )}
@@ -179,7 +220,7 @@ const InvAsset = (txn) => {
                   <a
                     href={resultValue.url}
                     target="blank"
-                    style={{ color: "#6168ED" }}
+                    style={{ color: "#6344df" }}
                   >
                     {resultValue.url}
                   </a>
@@ -304,16 +345,16 @@ const InvAsset = (txn) => {
         )}
         <div className="inv-asset-buttons">
           <button
-            onClick={() => openRequestPopup(asset_data,"Transfer")}
+            onClick={() => openActionPopup(asset_data, "Transfer")}
             type="submit"
-            className="transfer-button"
+            className="asset-transfer-button"
           >
             <strong>Transfer Asset</strong>
           </button>
           <button
-            onClick={() => openRequestPopup(asset_data,"Update")}
+            onClick={() => openActionPopup(asset_data, "Update")}
             type="submit"
-            className="create-button"
+            className="asset-create-button"
           >
             <strong>Update Asset</strong>
           </button>

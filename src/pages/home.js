@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../css/home.css";
 import Loading from "../Loading";
-import CumGraph from "../charts/cumGraph";
+import CumPubs from "../charts/cumPubs";
+import CumPay from "../charts/cumPay";
 import axios from "axios";
 const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS);
 let ext;
@@ -93,10 +94,8 @@ const Home = () => {
 
   return (
     <div className="home">
-      {data && network ? (
-        <header>
-          <div className="header">
-            <div className="network-drop-down">
+      <div className="header">
+            <div className="home-network-drop-down">
               <select>
                 {networks.map((network) => (
                   <option
@@ -110,7 +109,8 @@ const Home = () => {
             </div>
             
           </div>
-          Network Statistics
+      {data && network ? (
+        <header>
           <div className="bar-header">
             <div className="badge">
               <a
@@ -142,8 +142,9 @@ const Home = () => {
               </div>
             </div>
             <div className="bar-title">Road to 10 Million Assets</div>
-          </div>
+          </div>  
           <div className="home-form">
+            <div className="home-title">Network Statistics</div>
             <div className="total-assets">
               Total Trac Spent
               <br></br>
@@ -160,7 +161,7 @@ const Home = () => {
               <div className="home-stats-info">{data.v_nodes_length}</div>
             </div>
             <div className="trac-spent">
-              Assets Minted 24h
+              Assets Published 24h
               <br></br>
               <div className="home-stats-info">{totalPubs_24h}</div>
             </div>
@@ -174,10 +175,13 @@ const Home = () => {
               <br></br>
               <div className="home-stats-info">{avg_size}bytes</div>
             </div>
-            <div className="home-chart">
-              <CumGraph data={network} />
-            </div>
           </div>
+          <div className="home-chart">
+              <CumPay data={network} />
+            </div>
+          <div className="home-chart">
+              <CumPubs data={network} />
+            </div>
         </header>
       ) : (
         <div className="assets">

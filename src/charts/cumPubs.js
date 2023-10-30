@@ -27,7 +27,7 @@ ChartJS.register(
   Legend
 );
 
-const CumGraph = (network) => {
+const CumPubs = (network) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -37,7 +37,7 @@ const CumGraph = (network) => {
       try {
         const time_data = {
           timeframe: inputValue,
-          network: network.data
+          network: network.data,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/cumGraph`,
@@ -59,27 +59,29 @@ const CumGraph = (network) => {
   let cumulativePubs = [];
   let cumulativePayout = [];
   if (data) {
-    let format = "DD MMM"
-    if(inputValue === "24h"){
-      format = 'HH:00'
+    let format = "DD MMM";
+    if (inputValue === "24h") {
+      format = "HH:00";
     }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
     }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
+    if (inputValue === "30d") {
+      format = "DD MMM";
     }
 
     labels = data.map((item) => moment(item.date).format(format));
-    cumulativeTotalTracSpent = data.map((item) => item.cumulativeTotalTracSpent);
+    cumulativeTotalTracSpent = data.map(
+      (item) => item.cumulativeTotalTracSpent
+    );
     cumulativePubs = data.map((item) => item.cumulativePubs);
     cumulativePayout = data.map((item) => item.cumulativePayout);
-  }else{
-    return (<Loading />)
+  } else {
+    return <Loading />;
   }
 
-  if(isLoading){
-    return (<Loading />)
+  if (isLoading) {
+    return <Loading />;
   }
   // Extract labels and data from the dataset
   const formattedData = {
@@ -89,30 +91,37 @@ const CumGraph = (network) => {
         label: "Assets",
         data: cumulativePubs,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED"
-      },
-      {
-        label: "Payouts",
-        data: cumulativePayout,
-        fill: false,
-        borderColor: "#13B785",
-        backgroundColor: "#13B785"
-      },
-      {
-        label: "Trac Spent",
-        data: cumulativeTotalTracSpent,
-        fill: false,
-        borderColor: "#D9DDDC",
-        backgroundColor: "#D9DDDC"
-      },
-    ]
+        borderColor: "#df6344",
+        backgroundColor: "#df6344",
+      }
+    ],
   };
 
   const options = {
     scales: {
       y: {
         beginAtZero: false, // Start the scale at 0
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
       },
     },
   };
@@ -122,16 +131,22 @@ const CumGraph = (network) => {
       {data ? (
         <div className="chart-widget">
           <div>
-            <Line data={formattedData} options={options} height='80'/>
+            <Line
+              data={formattedData}
+              options={options}
+              height={
+                window.matchMedia("(max-width: 400px)").matches ? "260" : window.matchMedia("(max-width: 420px)").matches ? "240" : window.matchMedia("(max-width: 480px)").matches ? "210" : (window.matchMedia("(max-width: 1366px)").matches ? "230" : (window.matchMedia("(max-width: 1536px)").matches ? "210" : "172"))
+              }
+            />
           </div>
         </div>
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );
 };
 
-export default CumGraph;
+export default CumPubs;

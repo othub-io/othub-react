@@ -106,18 +106,18 @@ const Earnings = (network) => {
     labels: labels,
     datasets: [
       {
-        label: "Earnings in Trac 1st Epoch",
+        label: "Earnings 1st Epoch",
         data: estimatedEarnings1stEpochOnly,
         fill: false,
-        borderColor: "#D9DDDC",
-        backgroundColor: "#D9DDDC"
+        borderColor: "#6344df",
+        backgroundColor: "#6344df"
       },
       {
-        label: "Earnings in Trac 2nd+ Epochs",
+        label: "Earnings 2nd+ Epochs",
         data: estimatedEarnings2plusEpochs,
         fill: false,
-        borderColor: "#6168ED",
-        backgroundColor: "#6168ED"
+        borderColor: "#56a4ff",
+        backgroundColor: "#56a4ff"
       }
     ],
   };
@@ -127,10 +127,37 @@ const Earnings = (network) => {
       y: {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
+        title: {
+          display: true,
+          text: "TRAC", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
       },
       x: {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
+        title: { // Start the scale at 0
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        }
       },
     },
   };
@@ -139,7 +166,7 @@ const Earnings = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Node Earnings</div>
+          <div className="chart-name">Combined Node Earnings</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
@@ -150,7 +177,7 @@ const Earnings = (network) => {
               name="timeframe"
               style={
                 inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -162,7 +189,7 @@ const Earnings = (network) => {
               name="timeframe"
               style={
                 inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -174,7 +201,7 @@ const Earnings = (network) => {
               name="timeframe"
               style={
                 inputValue === "30d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -186,7 +213,7 @@ const Earnings = (network) => {
               name="timeframe"
               style={
                 inputValue === "6m"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -198,7 +225,7 @@ const Earnings = (network) => {
               name="timeframe"
               style={
                 inputValue === "1y"
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >
@@ -210,7 +237,7 @@ const Earnings = (network) => {
               name="timeframe"
               style={
                 inputValue === ""
-                  ? { color: "#FFFFFF", backgroundColor: "#6168ED" }
+                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
             >

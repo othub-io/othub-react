@@ -1,5 +1,5 @@
 .apps-list{
-    border: 2px solid #6168ED;
+    border: 2px solid #6344df;
     width:95%;
     height: 70%;
     position: absolute;
@@ -30,13 +30,13 @@
 
   .app-list-item input[type="checkbox"]{
     cursor: pointer;
-    color: #6168ED;
+    color: #6344df;
     margin-right:80%;
     margin-top:25px;
   }
 
 .app-list-item label {
-    color: #6168ED;
+    color: #6344df;
     margin-top: -23px;
     margin-left: 23%;
     text-align:left;
@@ -47,7 +47,7 @@
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-top: 530px;
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -59,7 +59,7 @@
     font-size: 12px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     padding: 8px 16px;
-    background-color: #6168ED;
+    background-color: #6344df;
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -80,7 +80,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: #F5F5F5;
-    color:#6168ED;
+    color:#6344df;
     padding: 5px 10px;
     border-radius: 5px;
     opacity: 0;
@@ -90,7 +90,7 @@
 
 @media (max-width: 480px) {
     .apps-list {
-        border: 2px solid #6168ED;
+        border: 2px solid #6344df;
         width: 95%;
         height: 70%;
         position: absolute;
@@ -114,13 +114,13 @@
 
         .app-list-item input[type="checkbox"] {
             cursor: pointer;
-            color: #6168ED;
+            color: #6344df;
             margin-right: 80%;
             margin-top: 25px;
         }
 
         .app-list-item label {
-            color: #6168ED;
+            color: #6344df;
             margin-top: -23px;
             margin-left: 23%;
             text-align: left;
@@ -130,7 +130,7 @@
         font-size: 12px;
         box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
         padding: 8px 16px;
-        background-color: #6168ED;
+        background-color: #6344df;
         color: #ffffff;
         border: none;
         border-radius: 3px;
