@@ -141,7 +141,7 @@ const TracSpent = (network) => {
           beginAtZero: true, // Start the scale at 0
           stacked: true,
           display: true,
-          text: "Date (UTC)", // Add your X-axis label here
+          text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size

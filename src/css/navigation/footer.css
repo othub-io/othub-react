@@ -1,18 +1,20 @@
 .footer {
     text-align: center;
-    z-index: -100;
-    position: absolute;
+    z-index: 9690;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: #FFFFFF;
+    height:30px;
   }
 
   
   .footer-header {
-    flex-direction: column;
-    align-items: center;
+    display: inline-block;
     color: #282c34;
     z-index: 8800;
+    margin-top:-10px;
   }
   
   @media (max-width: 1366px) {
@@ -20,7 +22,7 @@
       text-align: center;
       flex: 1;
       z-index: 8800;
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
@@ -38,53 +40,6 @@
     }
   }
 
-  @media (max-width: 1280px) {
-    .footer {
-        text-align: center;
-        flex: 1;
-        z-index: 8800;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-      }
-    
-      
-      .footer-header {
-        height: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 12px;
-        color: #282c34;
-        z-index: 8800;
-      }
-  }
-
-  @media (max-width: 768px) {
-    .footer {
-        text-align: center;
-        flex: 1;
-        left: 0;
-        bottom: 0;
-        position: sticky;  
-        width: 100%;
-        z-index: 8800;
-      }
-    
-      
-      .footer-header {
-        height: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 10px;
-        color: #282c34;
-        z-index: 8800;
-        margin-left:10%;
-      }
-  }
-
   @media (max-width: 480px) {
     .footer {
         text-align: center;
@@ -98,6 +53,30 @@
     
       .footer-header {
         height: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #282c34;
+        z-index: 8800;
+        margin-left:10%;
+        margin-bottom:0px;
+      }
+  }
+
+  @media (max-width: 380px) {
+    .footer {
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 8800;
+        background-color: #FFFFFF;
+        height: 15px;
+      }
+    
+      .footer-header {
         display: flex;
         flex-direction: column;
         align-items: center;

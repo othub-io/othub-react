@@ -104,7 +104,6 @@ const Request = (txn) => {
             dkgOptions
           )
           .then((result) => {
-            console.log({ assertionId: result.assertionId, UAL: result.UAL });
             return result;
           });
       }
@@ -124,7 +123,6 @@ const Request = (txn) => {
             dkgOptions
           )
           .then((result) => {
-            console.log({ assertionId: result.assertionId, UAL: result.UAL });
             return result;
           });
       }
@@ -138,7 +136,6 @@ const Request = (txn) => {
             dkgOptions
           )
           .then((result) => {
-            console.log({ assertionId: result.assertionId, UAL: result.UAL });
             return result;
           });
       }

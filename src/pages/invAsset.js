@@ -145,7 +145,6 @@ const InvAsset = (txn) => {
         },
       })
       .then((result) => {
-        console.log({ assertionId: result.assertionId, UAL: result.UAL });
         return result;
       });
 

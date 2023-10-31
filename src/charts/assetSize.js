@@ -110,8 +110,8 @@ const AssetSize = (network) => {
         label: "Private %",
         data: priv,
         fill: false,
-        borderColor: "#56a4ff",
-        backgroundColor: "#56a4ff",
+        borderColor: "#df6344",
+        backgroundColor: "#df6344",
         yAxisID: 'line-y-axis',
         type: 'line'
       },
@@ -134,7 +134,7 @@ const AssetSize = (network) => {
             title: {
                 display: true,
                 text: "Percent", // Add your X-axis label here
-                color: "#56a4ff", // Label color
+                color: "#df6344", // Label color
                 font: {
                   size: 12, // Label font size
                 },

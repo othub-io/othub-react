@@ -8,7 +8,7 @@
     align-items: center;
     padding: 0 20px;
     z-index: 9900;
-    position:absolute;
+    position:fixed;
     width:97.75%;
   }
   

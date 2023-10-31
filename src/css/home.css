@@ -9,7 +9,7 @@
 }
 
 .header {
-  padding-top:100px;
+  padding-top:80px;
   padding-left:250px;
   font-size: 28px;
   font-family: 'Roboto', sans-serif;
@@ -26,11 +26,11 @@
 }
 
 .home-chart {
-  margin-top:15%;
+  margin-top:16%;
   padding-left:1%;
   padding-right:2%;
   margin-right:1%;
-  height:47vh;
+  height:450px;
   width: 40%;
   outline: 2px solid #6344df;
   border-radius: 10px 10px 10px 10px;
@@ -38,6 +38,13 @@
   float: right;
   z-index: 500;
   position: relative;
+}
+
+.home-chart-name{
+  padding-top:10px;
+  font-weight: bold;
+  color: #6344df;
+  text-align: center;
 }
 
 .home-network-drop-down {
@@ -366,7 +373,7 @@ button[type='submit']:hover {
   }
   
   .header {
-    padding-top:100px;
+    padding-top:80px;
     padding-left:250px;
     font-size: 28px;
     font-family: 'Roboto', sans-serif;
@@ -379,13 +386,21 @@ button[type='submit']:hover {
     padding-left:1%;
     padding-right:2%;
     margin-right:1%;
-    height:47vh;
+    height:380px;
     width: 39%;
     outline: 2px solid #6344df;
     border-radius: 10px 10px 10px 10px;
     display: inline-block;
     float: right;
+    margin-bottom: 20px;
   }
+
+  .home-chart-name{
+    padding-top:10px;
+    font-weight: bold;
+    color: #6344df;
+    text-align: center;
+}
   
   .home-title{
     font-size: 28px;

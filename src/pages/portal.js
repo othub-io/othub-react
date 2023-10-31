@@ -78,7 +78,6 @@ const Portal = () => {
               { txn_id: provided_txn_id, network: chain_id },
               config
             );
-              console.log(txn_id_response.data.txn_header[0])
 
             await setInputValue(txn_id_response.data.txn_header[0]);
             await setIsRequestOpen(true);
