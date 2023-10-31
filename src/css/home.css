@@ -36,6 +36,8 @@
   border-radius: 10px 10px 10px 10px;
   display: inline-block;
   float: right;
+  z-index: 500;
+  position: relative;
 }
 
 .home-network-drop-down {
@@ -1206,7 +1208,6 @@ button[type='submit']:hover {
       margin-top: 0px;
       margin-bottom: 40px;
     }
-
 
     .home-title{
         display: none;

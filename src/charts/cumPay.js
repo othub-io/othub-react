@@ -91,8 +91,8 @@ const CumPay = (network) => {
         label: "TRAC Rewarded",
         data: cumulativePayout,
         fill: false,
-        borderColor: "#df44c0",
-        backgroundColor: "#df44c0",
+        borderColor: "#56a4ff",
+        backgroundColor: "#56a4ff",
       },
       {
         label: "TRAC Spent",
@@ -123,7 +123,7 @@ const CumPay = (network) => {
       x: {
         title: {
           display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
+          text: "Date (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -137,12 +137,18 @@ const CumPay = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div>
+            <br></br>
+            <div className="chart-name">Cumulative TRAC spent on asset publishing and TRAC rewarded</div>
+            <br></br>
+          <div className="chart-port">
             <Line
               data={formattedData}
               options={options}
               height={
-                window.matchMedia("(max-width: 400px)").matches ? "260" : window.matchMedia("(max-width: 420px)").matches ? "240" : window.matchMedia("(max-width: 480px)").matches ? "210" : (window.matchMedia("(max-width: 1366px)").matches ? "230" : (window.matchMedia("(max-width: 1536px)").matches ? "210" : "172"))
+                window.matchMedia("(max-width: 380px)").matches ? "170" : window.matchMedia("(max-width: 400px)").matches ? "160" : window.matchMedia("(max-width: 420px)").matches ? "140" : window.matchMedia("(max-width: 480px)").matches ? "100" : (window.matchMedia("(max-width: 1366px)").matches ? "140" : (window.matchMedia("(max-width: 1536px)").matches ? "120" : "100"))
+              }
+              width={
+                window.matchMedia("(max-width: 380px)").matches ? "260" : window.matchMedia("(max-width: 400px)").matches ? "260" : window.matchMedia("(max-width: 420px)").matches ? "240" : window.matchMedia("(max-width: 480px)").matches ? "200" : (window.matchMedia("(max-width: 1366px)").matches ? "200" : (window.matchMedia("(max-width: 1536px)").matches ? "200" : "200"))
               }
             />
           </div>

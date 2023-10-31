@@ -110,8 +110,8 @@ const AssetSize = (network) => {
         label: "Private %",
         data: priv,
         fill: false,
-        borderColor: "#df44c0",
-        backgroundColor: "#df44c0",
+        borderColor: "#56a4ff",
+        backgroundColor: "#56a4ff",
         yAxisID: 'line-y-axis',
         type: 'line'
       },
@@ -134,7 +134,7 @@ const AssetSize = (network) => {
             title: {
                 display: true,
                 text: "Percent", // Add your X-axis label here
-                color: "#df44c0", // Label color
+                color: "#56a4ff", // Label color
                 font: {
                   size: 12, // Label font size
                 },
@@ -169,7 +169,7 @@ const AssetSize = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Asset size and public/private ratio</div>
+          <div className="chart-name">Avg asset size and public/private ratio</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>

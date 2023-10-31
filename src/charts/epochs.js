@@ -142,7 +142,7 @@ const Epochs = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Epochs</div>
+          <div className="chart-name">Avg number of epochs</div>
           <div className="chart-port">
             <Line data={formattedData} options={options} />
           </div>

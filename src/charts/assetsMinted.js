@@ -50,6 +50,7 @@ const AssetsMinted = (network) => {
       }
     }
 
+    console.log(network)
     setData("");
     setInputValue("");
     fetchData();

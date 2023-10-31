@@ -15,11 +15,6 @@ const Nodes = () => {
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
   const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
 
-  const changeNetwork = (selected_network) => {
-    setNetwork(selected_network);
-    //window.location.reload();
-  };
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -45,7 +40,7 @@ const Nodes = () => {
       <div className="nodes-network-drop-down">
           <select>
             {networks.map((network) => (
-              <option key={network.name} onClick={()=> changeNetwork(network.name)}>{network.name}</option>
+              <option key={network.name} onClick={()=> setNetwork(network.name)}>{network.name}</option>
             ))}
           </select>
         </div>

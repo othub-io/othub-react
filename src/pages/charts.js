@@ -21,18 +21,13 @@ const Charts = () => {
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
   const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
 
-  const changeNetwork = (selected_network) => {
-    setNetwork(selected_network);
-    //window.location.reload();
-  };
-
   return (network &&
     <div className="charts">
       <header className="charts-header">
         <div className="network-drop-down">
           <select>
             {networks.map((network) => (
-              <option key={network.name} onClick={()=> changeNetwork(network.name)}>{network.name}</option>
+              <option key={network.name} onClick={()=> setNetwork(network.name)}>{network.name}</option>
             ))}
           </select>
         </div>
