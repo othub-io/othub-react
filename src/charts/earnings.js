@@ -116,8 +116,8 @@ const Earnings = (network) => {
         label: "Earnings 2nd+ Epochs",
         data: estimatedEarnings2plusEpochs,
         fill: false,
-        borderColor: "#56a4ff",
-        backgroundColor: "#56a4ff"
+        borderColor: "#df6344",
+        backgroundColor: "#df6344"
       }
     ],
   };
@@ -152,7 +152,7 @@ const Earnings = (network) => {
         stacked: true,
         title: { // Start the scale at 0
           display: true,
-          text: "Date (UTC)", // Add your X-axis label here
+          text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size

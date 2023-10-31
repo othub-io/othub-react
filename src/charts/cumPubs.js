@@ -130,15 +130,14 @@ const CumPubs = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <br></br>
-          <div className="chart-name">Cumulative number of published assets</div>
+          <div className="home-chart-name">Cumulative number of published assets</div>
           <br></br>
           <div className="chart-port">
             <Line
               data={formattedData}
               options={options}
               height={
-                window.matchMedia("(max-width: 380px)").matches ? "120" : window.matchMedia("(max-width: 400px)").matches ? "170" : window.matchMedia("(max-width: 420px)").matches ? "150" : window.matchMedia("(max-width: 480px)").matches ? "110" : (window.matchMedia("(max-width: 1366px)").matches ? "140" : (window.matchMedia("(max-width: 1536px)").matches ? "120" : "100"))
+                window.matchMedia("(max-width: 380px)").matches ? "120" : window.matchMedia("(max-width: 400px)").matches ? "170" : window.matchMedia("(max-width: 420px)").matches ? "150" : window.matchMedia("(max-width: 480px)").matches ? "110" : (window.matchMedia("(max-width: 1366px)").matches ? "140" : (window.matchMedia("(max-width: 1536px)").matches ? "110" : "100"))
               }
               width={
                 window.matchMedia("(max-width: 380px)").matches ? "180" : window.matchMedia("(max-width: 400px)").matches ? "260" : window.matchMedia("(max-width: 420px)").matches ? "240" : window.matchMedia("(max-width: 480px)").matches ? "200" : (window.matchMedia("(max-width: 1366px)").matches ? "200" : (window.matchMedia("(max-width: 1536px)").matches ? "200" : "200"))

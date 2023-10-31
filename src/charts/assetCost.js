@@ -114,8 +114,8 @@ const AssetCost = (network) => {
         label: "Bid",
         data: avgBid,
         fill: false,
-        borderColor: "#56a4ff",
-        backgroundColor: "#56a4ff",
+        borderColor: "#df6344",
+        backgroundColor: "#df6344",
       },
     ],
   };

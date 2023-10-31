@@ -4,8 +4,8 @@
   width: 200px;
   padding: 0px 0 0px;
   font-family: "OCR A Std", monospace;
-  height:100vh;
-  position: absolute;
+  height:100%;
+  position: fixed;
   z-index:9700;
 }
 

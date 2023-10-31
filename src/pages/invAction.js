@@ -46,9 +46,7 @@ const InvAction = (txn) => {
   const [keywordValue, setKeywordValue] = useState("");
   const [epochValue, setEpochValue] = useState("");
   const [receiverValue, setReceiverValue] = useState("");
-  console.log(txn.data)
   txn = JSON.parse(txn.data);
-  console.log(txn)
 
   const handleTxn = async (txn) => {
     try {
@@ -108,7 +106,6 @@ const InvAction = (txn) => {
             dkgOptions
           )
           .then((result) => {
-            console.log({ assertionId: result.assertionId, UAL: result.UAL });
             return result;
           });
       }
@@ -118,7 +115,6 @@ const InvAction = (txn) => {
         dkg_result = await DkgClient.asset
           .transfer(txn.ual, txn.receiver, dkgOptions)
           .then((result) => {
-            console.log({ assertionId: result.assertionId, UAL: result.UAL });
             return result;
           });
       }
