@@ -29,11 +29,6 @@ const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
 
-  const changeNetwork = (selected_network) => {
-    setNetwork(selected_network);
-    //window.location.reload();
-  };
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -88,6 +83,14 @@ const Home = () => {
       parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2)
     );
     totalStake = formatNumber(parseFloat(Number(data.totalStake).toFixed(2)));
+  }else{
+    return(
+      <div className="assets">
+          <div className="assets-header">
+            <Loading />
+          </div>
+        </div>
+    )
   }
 
   const percentage = (data.pub_count / 10000000) * 100;
@@ -100,7 +103,7 @@ const Home = () => {
                 {networks.map((network) => (
                   <option
                     key={network.name}
-                    onClick={() => changeNetwork(network.name)}
+                    onClick={() => setNetwork(network.name)}
                   >
                     {network.name}
                   </option>

@@ -152,7 +152,7 @@ const Earnings = (network) => {
         stacked: true,
         title: { // Start the scale at 0
           display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
+          text: "Date (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size

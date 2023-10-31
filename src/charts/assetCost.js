@@ -114,8 +114,8 @@ const AssetCost = (network) => {
         label: "Bid",
         data: avgBid,
         fill: false,
-        borderColor: "#df44c0",
-        backgroundColor: "#df44c0",
+        borderColor: "#56a4ff",
+        backgroundColor: "#56a4ff",
       },
     ],
   };
@@ -150,7 +150,7 @@ const AssetCost = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Asset Cost</div>
+          <div className="chart-name">Avg asset cost and avg bid</div>
           <div className="chart-port">
             <Line data={formattedData} options={options} />
           </div>

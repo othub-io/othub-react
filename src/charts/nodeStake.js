@@ -112,8 +112,8 @@ const NodeStake = (network) => {
         label: "Stake in TRAC",
         data: nodesStake,
         fill: false,
-        borderColor: "#df44c0",
-        backgroundColor: "#df44c0",
+        borderColor: "#df6344",
+        backgroundColor: "#df6344",
         yAxisID: "line-y-axis",
         type: "line",
       },
@@ -145,7 +145,7 @@ const NodeStake = (network) => {
             // Start the scale at 0
             display: true,
             text: "Stake", // Add your X-axis label here
-            color: "#df44c0", // Label color
+            color: "#df6344", // Label color
             font: {
               size: 12, // Label font size
             },
@@ -172,7 +172,7 @@ const NodeStake = (network) => {
             color: "#6344df", // Label color
             font: {
               size: 12, // Label font size
-            },
+            }
           },
       },
       x: {
@@ -181,7 +181,7 @@ const NodeStake = (network) => {
         title: {
           // Start the scale at 0
           display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
+          text: "Date (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -195,7 +195,7 @@ const NodeStake = (network) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Combined Node Stake</div>
+          <div className="chart-name">Number of nodes and combined nodes stake</div>
           <div className="chart-port">
             <Line data={formattedData} options={options} />
           </div>

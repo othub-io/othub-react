@@ -35,10 +35,12 @@
 
 .chart-name{
     font-weight: bold;
+    color: #6344df;
+    text-align: center;
 }
 
 .chart-port{
-    width: 99%;
+    width: 100%;
     height:380px;
 }
 
@@ -313,6 +315,8 @@
       
       .chart-name{
           font-weight: bold;
+          color: #6344df;
+          text-align: center;
       }
       
       .chart-port{

@@ -30,11 +30,6 @@ const Assets = () => {
   });
   const [network, setNetwork] = useState("Origintrail Parachain Mainnet");
 
-  const changeNetwork = (selected_network) => {
-    setNetwork(selected_network);
-    //window.location.reload();
-  };
-
   const queryParameters = new URLSearchParams(window.location.search);
   const provided_ual = queryParameters.get("ual");
 
@@ -157,7 +152,7 @@ const Assets = () => {
                 {networks.map((network) => (
                   <option
                     key={network.name}
-                    onClick={() => changeNetwork(network.name)}
+                    onClick={() => setNetwork(network.name)}
                   >
                     {network.name}
                   </option>
