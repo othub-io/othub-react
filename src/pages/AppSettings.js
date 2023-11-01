@@ -70,7 +70,7 @@ const AppSettings = () => {
       setIsLoading(true);
       const request_data = {
         network: chain_id,
-        enabled_apps: JSON.stringify(appsEnabled),
+        enable_apps: JSON.stringify(appsEnabled),
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
