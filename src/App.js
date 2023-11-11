@@ -30,7 +30,7 @@ function App() {
           <Route path="/nodes" element={<Nodes />} />
           <Route path="/staking" element={<Staking />} />
           <Route path="/charts" element={<Charts />} />
-          <Route path="/mint" element={<Mint />} />
+          <Route path="/mint-dev" element={<Mint />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
