@@ -150,8 +150,8 @@
 }
 
 .ee-chart-filter {
-  width: 35%;
-  padding-left: 260px;
+  width: 50%;
+  padding-left: 120px;
   margin-top: 20px;
   z-index: 900;
 }
@@ -648,8 +648,8 @@ button[type="submit"]:hover {
   }
 
   .ee-chart-filter {
-    width: 40%;
-    padding-left: 160px;
+    width: 50%;
+    padding-left: 110px;
     margin-top: 20px;
     z-index: 900;
   }
