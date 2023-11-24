@@ -3,6 +3,7 @@ import "../css/home.css";
 import Loading from "../Loading";
 import CumPubs from "../charts/cumPubs";
 import CumPay from "../charts/cumPay";
+import ActivityFeed from "../charts/activityFeed";
 import axios from "axios";
 const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS);
 let ext;
@@ -113,8 +114,8 @@ const Home = () => {
             
           </div>
       {data && network ? (
-        <header>
-          <div className="bar-header">
+        <div>
+          {/* <div className="bar-header">
             <div className="badge">
               <a
                 href="https://dkg.origintrail.io/explore?ual=did:dkg:otp/0x5cac41237127f94c2d21dae0b14bfefa99880630/1004951"
@@ -145,7 +146,17 @@ const Home = () => {
               </div>
             </div>
             <div className="bar-title">Road to 10 Million Assets</div>
-          </div>  
+          </div>   */}
+          <div className="activity-feed">
+            <ActivityFeed 
+            data={[
+              {
+                network: network,
+                data: data
+              },
+            ]}
+            />
+          </div>
           <div className="home-form">
             <div className="home-title">Network Statistics</div>
             <div className="total-assets">
@@ -185,7 +196,7 @@ const Home = () => {
           <div className="home-chart">
               <CumPubs data={network} />
             </div>
-        </header>
+        </div>
       ) : (
         <div className="assets">
           <div className="assets-header">

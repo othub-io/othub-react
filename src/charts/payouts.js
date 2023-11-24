@@ -76,7 +76,7 @@ const Payouts = (network) => {
   let labels = [];
   let payouts = [];
   if (data) {
-    let format = "MMM"
+    let format = "MMM YY"
     if(inputValue === "24h"){
       format = 'HH:00'
     }

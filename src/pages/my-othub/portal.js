@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../css/portal.css";
-import { AccountContext } from "../AccountContext";
-import Loading from "../Loading";
-import Request from "./Request";
-import AppSettings from "./AppSettings";
-import BarChart from "../charts/gatewayBarChart";
-import BarChartTXNS from "../charts/gatewayBarChartTXNS";
+import "../../css/portal.css";
+import { AccountContext } from "../../AccountContext";
+import Loading from "../../Loading";
+import Request from "../Request";
+import AppSettings from "../AppSettings";
+import BarChart from "../../charts/gatewayBarChart";
+import BarChartTXNS from "../../charts/gatewayBarChartTXNS";
 import axios from "axios";
 let ext;
 

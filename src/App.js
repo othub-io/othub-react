@@ -3,16 +3,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AccountProvider } from "./AccountContext";
 import NavBar from "./navigation/NavBar";
 import SideBar from "./navigation/SideBar";
-import Footer from "./navigation/Footer";
 import Home from "./pages/home";
-import Portal from "./pages/portal";
-import Inventory from "./pages/inventory";
 import Assets from "./pages/assets";
+import Publish from "./pages/publish.js";
+//import Staking from "./pages/my-othub/staking.js";
+import Analytics from "./pages/analytics.js";
+import NodeDashboard from "./pages/my-othub/node-dashboard.js";
+import Build from "./pages/my-othub/build.js";
+import Portal from "./pages/my-othub/portal";
+import Inventory from "./pages/my-othub/inventory";
 import Nodes from "./pages/nodes";
-import Staking from "./pages/staking.js";
-import Charts from "./pages/charts.js";
-import Mint from "./pages/mint.js";
-import Build from "./pages/build.js";
+import Footer from "./navigation/Footer";
+
 import NotFound from "./pages/notFound";
 
 function App() {
@@ -23,14 +25,15 @@ function App() {
         <SideBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/portal" element={<Portal />} />
-          <Route path="/inventory" element={<Inventory />} />
           <Route path="/assets" element={<Assets />} />
-          <Route path="/build" element={<Build />} />
+          <Route path="/publish-dev" element={<Publish />} />
+          <Route path="/my-othub/node-dashboard" element={<NodeDashboard />} />
+          <Route path="/my-othub/build" element={<Build />} />
+          <Route path="/my-othub/portal" element={<Portal />} />
+          <Route path="/my-othub/inventory" element={<Inventory />} />
+          {/* <Route path="/staking-dev" element={<Staking />} /> */}
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/nodes" element={<Nodes />} />
-          <Route path="/staking" element={<Staking />} />
-          <Route path="/charts" element={<Charts />} />
-          <Route path="/mint-dev" element={<Mint />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

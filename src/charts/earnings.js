@@ -77,7 +77,7 @@ const Earnings = (network) => {
   let estimatedEarnings1stEpochOnly = [];
   let estimatedEarnings2plusEpochs = [];
   if (data) {
-    let format = "MMM"
+    let format = "MMM YY"
     if(inputValue === "24h"){
       format = 'HH:00'
     }

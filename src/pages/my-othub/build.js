@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import "../css/build.css";
-import { AccountContext } from "../AccountContext";
-import Loading from "../Loading";
+import "../../css/build.css";
+import { AccountContext } from "../../AccountContext";
+import Loading from "../../Loading";
 import axios from "axios";
 let ext;
 

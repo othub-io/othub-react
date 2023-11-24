@@ -78,7 +78,7 @@ const AssetsMinted = (network) => {
   let labels = [];
   let pubCounts = [];
   if (data) {
-    let format = "MMM"
+    let format = "MMM YY"
     if(inputValue === "24h"){
       format = 'HH:00'
     }

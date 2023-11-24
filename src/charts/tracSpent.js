@@ -76,7 +76,7 @@ const TracSpent = (network) => {
   let labels = [];
   let totalTracSpent = [];
   if (data) {
-    let format = "MMM"
+    let format = "MMM YY"
     if(inputValue === "24h"){
       format = 'HH:00'
     }

@@ -27,6 +27,14 @@ ChartJS.register(
   Legend
 );
 
+function generateRandomColor() {
+  // Generate a random hexadecimal color code
+  const randomColor = Math.floor(Math.random()*16777215).toString(16);
+  
+  // Pad the color code with zeros if needed
+  return '#' + '0'.repeat(6 - randomColor.length) + randomColor;
+}
+
 const EstimatedEarnings = (node_data) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
@@ -35,104 +43,150 @@ const EstimatedEarnings = (node_data) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          timeframe: inputValue,
-          network: node_data.data[0].network,
-          nodeId: node_data.data[0].nodeId,
-          public_address: node_data.data[0].public_address,
-        };
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/nodeStats`,
-          time_data
-        );
-        setData(response.data.chart_data);
+        // const time_data = {
+        //   timeframe: inputValue,
+        //   network: node_data.data[0].network,
+        //   nodeId: node_data.data[0].nodeId,
+        //   public_address: node_data.data[0].public_address,
+        // };
+        // const response = await axios.post(
+        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        //   time_data
+        // );
+        // setData(response.data.chart_data);
+        setData(node_data.data[0].data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setData("");
     setInputValue("");
     fetchData();
   }, [node_data]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: node_data.data.chain_id,
-        nodeIds: node_data.data.nodeFilter
+        network: node_data.data[0].network,
+        nodeId: node_data.data[0].nodeId,
+        public_address: node_data.data[0].public_address,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
-  let labels = [];
-  let estimatedEarnings = [];
-  let estimatedEarnings1stEpochOnly = [];
-  let cumulativeEstimatedEarnings = [];
-  let cumulativeEstimatedEarnings1stEpochOnly = [];
-  if (data) {
-    let format = "MMM"
-    if(inputValue === "24h"){
-      format = 'HH:00'
-    }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
-    }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
-    }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
-    }
-
-    labels = data.map((item) => moment(item.date).format(format));
-    estimatedEarnings = data.map((item) => item.estimatedEarnings);
-    estimatedEarnings1stEpochOnly = data.map((item) => item.estimatedEarnings1stEpochOnly);
-    cumulativeEstimatedEarnings = data.map((item) => item.cumulativeEstimatedEarnings);
-    cumulativeEstimatedEarnings1stEpochOnly = data.map((item) => item.cumulativeEstimatedEarnings1stEpochOnly);
-  }else{
-    return (<Loading />)
-  }
-
-  if(isLoading){
-    return (<Loading />)
-  }
-  // Extract labels and data from the dataset
   const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Earnings 1st Epoch",
-        data: estimatedEarnings1stEpochOnly,
-        fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df"
-      },
-      {
-        label: "Earnings 2nd+ Epochs",
-        data: estimatedEarnings,
-        fill: false,
-        borderColor: "#df6344",
-        backgroundColor: "#df6344"
-      }
-    ],
+    datasets: [],
   };
+
+  let estimatedEarnings_obj = [];
+  let estimatedEarnings1stEpochOnly_obj = [];
+  if (data) {
+    let format = "MMM YY";
+    if (inputValue === "24h") {
+      format = "HH:00";
+    }
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
+    }
+    if (inputValue === "30d") {
+      format = "DD MMM";
+    }
+    if (inputValue === "6m") {
+      format = "DD MMM";
+    }
+
+    const uniqueDates = new Set();
+
+    formattedData.labels = data
+    .filter((item) => {
+      const formattedDate = moment(item.date).format(format);
+      // Check if the formatted date is unique
+      if (!uniqueDates.has(formattedDate)) {
+        uniqueDates.add(formattedDate);
+        return true;
+      }
+      return false;
+    })
+    .map((item) => moment(item.date).format(format));
+
+    let final_earnings = []
+    let dates = new Set(data.map((item) => item.date));
+    for (const date of dates) {
+      let estimatedEarnings = 0
+      for (const item of data) {
+        if(item.date === date){
+          estimatedEarnings = item.estimatedEarnings + estimatedEarnings
+        }
+      }
+      final_earnings.push(estimatedEarnings)
+    }
+
+    estimatedEarnings_obj = {
+      label: "Total Estimated Earnings",
+      data: final_earnings,
+      fill: false,
+      borderColor: "#6344df",
+      backgroundColor: "#6344df",
+      type: "line",
+    };
+    formattedData.datasets.push(estimatedEarnings_obj);
+
+    let tokenNames = new Set(data.map((item) => item.tokenName));
+    for (const tokenName of tokenNames) {
+      let randomHexColor = generateRandomColor();
+      const estimatedEarnings1stEpochOnly = data
+        .filter((item) => item.tokenName === tokenName)
+        .map((item) => item.estimatedEarnings1stEpochOnly);
+
+        if(estimatedEarnings1stEpochOnly.length !== formattedData.labels.length){
+          for(let i = 0; i < (Number(formattedData.labels.length) - Number(estimatedEarnings1stEpochOnly.length)); i++){
+            estimatedEarnings1stEpochOnly.unshift(0);
+          }
+        }
+
+        estimatedEarnings1stEpochOnly_obj = {
+          label: tokenName + ' Earnings 1st Epoch Only',
+          data: estimatedEarnings1stEpochOnly,
+          fill: false,
+          borderColor: randomHexColor,
+          backgroundColor: randomHexColor,
+        };
+  
+        formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
+    }
+  } else {
+    return (<Loading />)
+  }
+
+  if (isLoading) {
+    return (<Loading />)
+  }
 
   const options = {
     scales: {
+      x: {
+        stacked: true,
+        title: {
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+      },
       y: {
-        beginAtZero: true, // Start the scale at 0
         stacked: true,
         title: {
           display: true,
@@ -154,40 +208,53 @@ const EstimatedEarnings = (node_data) => {
           },
         },
       },
-      x: {
-        beginAtZero: true, // Start the scale at 0
-        stacked: true,
-        title: { // Start the scale at 0
-          display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
-          color: "#6344df", // Label color
-          font: {
-            size: 12, // Label font size
-          },
-        }
-      },
     },
   };
 
   return (
     <div>
       {data ? (
-        <div className="ee-chart-widget">
-          <div className="ee-chart-name">Estimated Earnings</div>
-          <div className="ee-chart-port">
-            <Bar data={formattedData}
-             options={options} 
-             height={
-                window.matchMedia("(max-width: 380px)").matches ? "120" : window.matchMedia("(max-width: 400px)").matches ? "170" : window.matchMedia("(max-width: 420px)").matches ? "150" : window.matchMedia("(max-width: 480px)").matches ? "110" : (window.matchMedia("(max-width: 1366px)").matches ? "140" : (window.matchMedia("(max-width: 1536px)").matches ? "110" : "140"))
+        <div className="chart-widget">
+          <div className="chart-name">Estimated Earnings</div>
+          <div className="chart-port">
+            <Bar
+              data={formattedData}
+              options={options}
+              height={
+                window.matchMedia("(max-width: 380px)").matches
+                  ? "120"
+                  : window.matchMedia("(max-width: 400px)").matches
+                  ? "170"
+                  : window.matchMedia("(max-width: 420px)").matches
+                  ? "150"
+                  : window.matchMedia("(max-width: 480px)").matches
+                  ? "110"
+                  : window.matchMedia("(max-width: 1366px)").matches
+                  ? "140"
+                  : window.matchMedia("(max-width: 1536px)").matches
+                  ? "110"
+                  : "140"
               }
               width={
-                window.matchMedia("(max-width: 380px)").matches ? "180" : window.matchMedia("(max-width: 400px)").matches ? "260" : window.matchMedia("(max-width: 420px)").matches ? "240" : window.matchMedia("(max-width: 480px)").matches ? "200" : (window.matchMedia("(max-width: 1366px)").matches ? "200" : (window.matchMedia("(max-width: 1536px)").matches ? "200" : "350"))
+                window.matchMedia("(max-width: 380px)").matches
+                  ? "180"
+                  : window.matchMedia("(max-width: 400px)").matches
+                  ? "260"
+                  : window.matchMedia("(max-width: 420px)").matches
+                  ? "240"
+                  : window.matchMedia("(max-width: 480px)").matches
+                  ? "200"
+                  : window.matchMedia("(max-width: 1366px)").matches
+                  ? "200"
+                  : window.matchMedia("(max-width: 1536px)").matches
+                  ? "200"
+                  : "280"
               }
-             />
+            />
           </div>
           <div className="ee-chart-filter">
             <button
-              className="ee-chart-filter-button"
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
               name="timeframe"
               style={
@@ -199,7 +266,7 @@ const EstimatedEarnings = (node_data) => {
               24h
             </button>
             <button
-              className="ee-chart-filter-button"
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("7d")}
               name="timeframe"
               style={
@@ -211,7 +278,7 @@ const EstimatedEarnings = (node_data) => {
               7d
             </button>
             <button
-              className="ee-chart-filter-button"
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("30d")}
               name="timeframe"
               style={
@@ -223,7 +290,7 @@ const EstimatedEarnings = (node_data) => {
               30d
             </button>
             <button
-              className="ee-chart-filter-button"
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("6m")}
               name="timeframe"
               style={
@@ -235,7 +302,7 @@ const EstimatedEarnings = (node_data) => {
               6m
             </button>
             <button
-              className="ee-chart-filter-button"
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("1y")}
               name="timeframe"
               style={
@@ -247,7 +314,7 @@ const EstimatedEarnings = (node_data) => {
               1y
             </button>
             <button
-              className="ee-chart-filter-button"
+              className="chart-filter-button"
               onClick={() => changeTimeFrame("")}
               name="timeframe"
               style={
@@ -261,9 +328,9 @@ const EstimatedEarnings = (node_data) => {
           </div>
         </div>
       ) : (
-        <div className="ee-chart-widget">
+        <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );
