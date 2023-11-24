@@ -84,7 +84,7 @@ const NodeCommits = (node_data) => {
               </div>
               <div className="activity-feed-head">
                   <div>
-                  <span className={`activity-feed-event-name-${record.eventName}`}>{`${record.signer.substring(0, 10)} ${record.eventName}: `}</span>
+                  <span className={`activity-feed-event-name-${record.eventName}`}>{`${record.signer ? (record.signer.substring(0, 10)) : ("")} ${record.eventName}: `}</span>
                     <a
                       target ="_blank"
                       href={`${explorer_url}/explore?ual=${record.UAL}`}
