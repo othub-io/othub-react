@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../css/invAsset.css'
+import '../css/Asset.css'
 import moment from 'moment';
 import axios from "axios";
 let ext;
@@ -26,6 +26,8 @@ const Asset = (on_chain) => {
   const isMobile = window.matchMedia('(max-width: 480px)').matches
   let winners
   asset_data = on_chain.data
+
+  console.log(asset_data)
   winners = JSON.parse(asset_data.winners)
 
   sub_scan_link = 'https://'
@@ -154,11 +156,11 @@ const Asset = (on_chain) => {
         {winners ? (<div>{winners.map((group, index) => (
             <div className='winners' key={index}>
                 <div className='winners-header'>Epoch {index}</div>
-                <div className='winners-value'>{group.winners}</div>
+                <div className='winners-value'>{group[0] ? (group[0]): ('')}{group[1] ? (','+group[1]): ('')}{group[2] ? (','+group[2]): ('')}</div>
             </div>
         ))}</div>) : (<div></div>)}
     </div>
-        <div className="inv-asset-history" style={({display: isMobile ? "none" : "block"})}>
+        <div className="asset-history" style={({display: isMobile ? "none" : "block"})}>
             {assetHistory && !isMobile ? (<div>{assetHistory.map((event, index) => (
                 <div className='event-list-item' key={index} onClick={() => historyTxn(sub_scan_link+'/tx/'+ event.transaction_hash)}>
                     <div className='event-timestamp'>{event.updated_at}</div>

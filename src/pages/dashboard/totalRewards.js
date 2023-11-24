@@ -35,42 +35,37 @@ const TotalRewards = (node_data) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          timeframe: "All",
-          network: node_data.data[0].network,
-          nodeId: node_data.data[0].nodeId,
-          public_address: node_data.data[0].public_address,
-        };
-        console.log(time_data);
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/nodeStats`,
-          time_data
-        );
-        console.log(response.data.chart_data);
-        setData(response.data.chart_data);
+        // const time_data = {
+        //   timeframe: inputValue,
+        //   network: node_data.data[0].network,
+        //   nodeId: node_data.data[0].nodeId,
+        //   public_address: node_data.data[0].public_address,
+        // };
+        // const response = await axios.post(
+        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        //   time_data
+        // );
+        // setData(response.data.chart_data);
+        setData(node_data.data[0].data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
     setisLoading(true);
-    setData("");
     fetchData();
     setisLoading(false);
   }, [node_data]);
 
-  console.log(data)
   let totalRewards = 0
-  for(let i = 0; i < Number(data.length);i++){
-    totalRewards = totalRewards + Number(data[i].payouts)
+  if (data) {
+    for(const record of data){
+      totalRewards = totalRewards + Number(record.payouts)
+    }
   }
 
   if (!data) {
-    
-    return (<div width="100" height="100">
-        <br></br>
-        <Loading data={''}/>
-      </div>);
+    return (<div><Loading data={''}/></div>);
   }
 
   return (

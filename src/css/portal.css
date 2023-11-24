@@ -290,6 +290,7 @@ text-align: center;
     cursor: pointer;
     color: #6344df;
     font-weight: bold;
+    z-index: 500;
 }
 
 .app-request{

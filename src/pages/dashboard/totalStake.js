@@ -41,12 +41,12 @@ const TotalStake = (node_data) => {
           nodeId: node_data.data[0].nodeId,
           public_address: node_data.data[0].public_address,
         };
-        console.log(time_data);
+
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/nodeStake`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStake`,
           time_data
         );
-        console.log(response.data.chart_data);
+
         setData(response.data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -59,18 +59,15 @@ const TotalStake = (node_data) => {
     setisLoading(false);
   }, [node_data]);
 
-  console.log(data)
-  let totalStake = 0
-  for(let i = 0; i < Number(data.length);i++){
-    totalStake = totalStake + Number(data[i].nodeStake)
+  if (!data) {
+    return (<Loading data={''}/>);
   }
 
-  if (!data) {
-    
-    return (<div width="100" height="100">
-        <br></br>
-        <Loading data={''}/>
-      </div>);
+  let totalStake = 0
+  if (data) {
+    for(let node of data){
+      totalStake = totalStake + Number(node.nodeStake)
+    }
   }
 
   return (data &&

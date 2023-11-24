@@ -27,6 +27,14 @@ ChartJS.register(
   Legend
 );
 
+function generateRandomColor() {
+  // Generate a random hexadecimal color code
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
+  // Pad the color code with zeros if needed
+  return "#" + "0".repeat(6 - randomColor.length) + randomColor;
+}
+
 const NodeRewards = (node_data) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
@@ -35,25 +43,23 @@ const NodeRewards = (node_data) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          timeframe: inputValue,
-          network: node_data.data[0].network,
-          nodeId: node_data.data[0].nodeId,
-          public_address: node_data.data[0].public_address,
-        };
-        console.log(time_data);
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/nodeStats`,
-          time_data
-        );
-        console.log(response.data.chart_data);
-        setData(response.data.chart_data);
+        // const time_data = {
+        //   timeframe: inputValue,
+        //   network: node_data.data[0].network,
+        //   nodeId: node_data.data[0].nodeId,
+        //   public_address: node_data.data[0].public_address,
+        // };
+        // const response = await axios.post(
+        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        //   time_data
+        // );
+        // setData(response.data.chart_data);
+        setData(node_data.data[0].data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setData("");
     setInputValue("");
     fetchData();
   }, [node_data]);
@@ -63,13 +69,13 @@ const NodeRewards = (node_data) => {
       setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
         network: node_data.data[0].network,
         nodeId: node_data.data[0].nodeId,
         public_address: node_data.data[0].public_address,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
         time_data
       );
       setData(response.data.chart_data);
@@ -83,10 +89,9 @@ const NodeRewards = (node_data) => {
     datasets: [],
   };
 
-  let rewards = [];
-  let cumulativeRewards = [];
+  let payouts_obj = [];
   if (data) {
-    let format = "MMM";
+    let format = "MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
     }
@@ -100,43 +105,49 @@ const NodeRewards = (node_data) => {
       format = "DD MMM";
     }
 
-    formattedData.labels = data.map((item) => moment(item.date).format(format));
+    const uniqueDates = new Set();
+
+    formattedData.labels = data
+    .filter((item) => {
+      const formattedDate = moment(item.date).format(format);
+      // Check if the formatted date is unique
+      if (!uniqueDates.has(formattedDate)) {
+        uniqueDates.add(formattedDate);
+        return true;
+      }
+      return false;
+    })
+    .map((item) => moment(item.date).format(format));
 
     let tokenNames = new Set(data.map((item) => item.tokenName));
-
-    for (const obj of tokenNames) {
-      rewards = data
-        .filter((item) => item.tokenName === obj)
+    for (const tokenName of tokenNames) {
+      let randomHexColor = generateRandomColor();
+      const payouts = data
+        .filter((item) => item.tokenName === tokenName)
         .map((item) => item.payouts);
 
-      cumulativeRewards = data
-        .filter((item) => item.tokenName === obj)
-        .map((item) => item.cumulativePayouts);
+        if(payouts.length !== formattedData.labels.length){
+          for(let i = 0; i < (Number(formattedData.labels.length) - Number(payouts.length)); i++){
+            payouts.unshift(0);
+          }
+        }
 
-      let rewards_obj = {
-        label: obj,
-        data: rewards,
-        fill: false,
-        borderColor: "#df6344",
-        backgroundColor: "#df6344",
-      };
-
-      let cumRewards_obj = {
-        label: obj,
-        data: cumulativeRewards,
-        fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df",
-      };
-
-      formattedData.datasets.push(rewards_obj, cumRewards_obj);
+        payouts_obj = {
+          label: tokenName + ' Rewards',
+          data: payouts,
+          fill: false,
+          borderColor: randomHexColor,
+          backgroundColor: randomHexColor,
+        };
+  
+        formattedData.datasets.push(payouts_obj);
     }
   } else {
-    return <Loading />;
+    return (<Loading />)
   }
 
   if (isLoading) {
-    return <Loading />;
+    return (<Loading />)
   }
 
   const options = {
@@ -186,9 +197,42 @@ const NodeRewards = (node_data) => {
         <div className="chart-widget">
           <div className="chart-name">Node Rewards</div>
           <div className="chart-port">
-            <Bar data={formattedData} options={options} />
+            <Bar
+              data={formattedData}
+              options={options}
+              height={
+                window.matchMedia("(max-width: 380px)").matches
+                  ? "120"
+                  : window.matchMedia("(max-width: 400px)").matches
+                  ? "170"
+                  : window.matchMedia("(max-width: 420px)").matches
+                  ? "150"
+                  : window.matchMedia("(max-width: 480px)").matches
+                  ? "110"
+                  : window.matchMedia("(max-width: 1366px)").matches
+                  ? "140"
+                  : window.matchMedia("(max-width: 1536px)").matches
+                  ? "110"
+                  : "140"
+              }
+              width={
+                window.matchMedia("(max-width: 380px)").matches
+                  ? "180"
+                  : window.matchMedia("(max-width: 400px)").matches
+                  ? "260"
+                  : window.matchMedia("(max-width: 420px)").matches
+                  ? "240"
+                  : window.matchMedia("(max-width: 480px)").matches
+                  ? "200"
+                  : window.matchMedia("(max-width: 1366px)").matches
+                  ? "200"
+                  : window.matchMedia("(max-width: 1536px)").matches
+                  ? "200"
+                  : "280"
+              }
+            />
           </div>
-          <div className="chart-filter">
+          <div className="ee-chart-filter">
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}

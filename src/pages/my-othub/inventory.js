@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../css/inventory.css";
-import Loading from "../Loading";
+import "../../css/inventory.css";
+import Loading from "../../Loading";
 import axios from "axios";
-import InvAsset from "./invAsset";
+import InvAsset from "../invAsset";
 let ext;
 
 ext = "http";
