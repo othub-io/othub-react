@@ -23,7 +23,7 @@ const Charts = () => {
 
   return (network &&
     <div className="charts">
-      <header className="charts-header">
+      <div className="charts-header">
         <div className="network-drop-down">
           <select>
             {networks.map((network) => (
@@ -55,7 +55,7 @@ const Charts = () => {
         <div className="chart-container">
           <NodeStake data={network}/>
         </div>
-      </header>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,236 @@
+.publish {
+  text-align: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+}
+
+.publish-header {
+  height: 100px;
+  width: 87%;
+  margin-left: 12%;
+}
+
+.type-drop-down {
+  width: 30%;
+  display: inline-block;
+}
+
+.type-drop-down select {
+  background-color: #ffffff;
+  border: none;
+  color: #6344df;
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 35px;
+  margin-left: 10px;
+  font-size: 20px;
+  width: 250px;
+}
+
+.type-drop-down select:hover {
+  background-color: #ffffff;
+  border: none;
+  color: #6344df;
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.publish-file-upload {
+    width:100%;
+    height:50%;
+    color: #6344df;
+    font-weight: bold;
+}
+
+.publish-event-selection-div {
+  width: 86.5%;
+  height: 100px;
+  margin-left: 12%;
+  margin-right: 1%;
+  outline: 2px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  color: #6344df;
+  font-weight: bold;
+}
+
+.upload-button{
+    padding: 8px 16px;
+    background-color: #6344df;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    height:35px;
+    margin-left:42.5%;
+    text-align: center;
+    position: relative;
+    height: 40px;
+    width: 15%;
+    font-size: 20px;
+}
+
+.upload-button:hover{
+    background-color: #4925da;
+}
+
+.publish-json-display-div {
+  width: 35%;
+  height: 700px;
+  outline: 2px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  display:inline-block;
+  float:right;
+  margin-right:1.5%;
+  margin-top:20px;
+  overflow: auto;
+  word-wrap: break-word;
+  position: relative;
+  padding-right:20px;
+}
+
+.publish-form-div {
+  width: 49.5%;
+  height: 700px;
+  outline: 2px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  display:inline-block;
+  float:right;
+  margin-top:20px;
+  margin-right: 20px;
+}
+
+.selected-file{
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 40px;
+}
+
+.file-error{
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    color: #c54f4f;
+}
+
+.browse-button{
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin-top:200px;
+}
+
+.publish-popup-content {
+  width: 20%;
+  height: 50%;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  color: #6344df;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.publish-asset{
+  width:100%;
+  height:95%;
+  white-space: normal;
+  overflow: hidden;
+  text-align:center;
+  overflow: auto;
+  margin-top:30px;
+  padding-bottom:10px;
+}
+
+.publish-asset-title{
+  width: 80%;
+  margin-left: 10%;
+}
+
+.epoch-buttons{
+  margin-top:20px;
+}
+
+.epoch-button{
+  background-color: #FFFFFF;
+  border: none;
+  color: #6344df;
+  outline: 2px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  cursor: pointer;
+  margin-left:10px;
+  font-weight: bold;
+}
+
+.epoch-button:hover {
+  background-color: #6344df;
+  border: none;
+  color: #FFFFFF;
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  cursor: pointer;
+}
+
+.publish-asset-estimated-cost{
+  text-align: left;
+  margin-top:30px;
+  color: #6344df;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  width:80%;
+  margin-left: 6%;
+  margin-bottom: 20px;
+}
+
+.publish-asset-div{
+  outline: 1px solid #6344df;
+  border-radius: 2px 2px 2px 2px;
+  width:90%;
+  position: relative;
+  margin-left:5%;
+  padding-right:10px;
+}
+
+.publish-asset-ual{
+  margin-top:30px;
+  font-size:12px;
+  text-align: left;
+  padding-left:10px;
+  word-wrap: break-word;
+  padding-top: 10px;
+}
+
+.publish-asset-assertion{
+  margin-top:30px;
+  font-size:12px;
+  text-align: left;
+  padding-left:10px;
+  word-wrap: break-word;
+  padding-bottom: 10px;
+}
+
+.publish-asset-link{
+  margin-top:30px;
+  font-size:16px;
+  text-align: left;
+  padding-left:10px;
+}
+
+.publish-asset-link a{
+  color: #6344df;
+}

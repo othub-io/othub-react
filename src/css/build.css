@@ -682,7 +682,6 @@
   }
   
   button[type='submit'] {
-    margin-top: 10px;
     padding: 8px 16px;
     background-color: #6344df;
     color: #ffffff;
@@ -692,7 +691,7 @@
   }
   
   button[type='submit']:hover {
-    background-color: #4b51cc;
+    background-color: #4925da;
   }
 
   .create-app-button{
@@ -709,7 +708,7 @@
   }
 
   .create-app-button:hover{
-    background-color: #4b51cc;
+    background-color: #4925da;
   }
 
 
