@@ -11,7 +11,7 @@ const formatBytes = (bytes, decimals = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };
 
-const JsonFileUploadPopup = ({ selectedFile, openPopUp}) => {
+const FileUpload = ({ selectedFile, openPopUp}) => {
   const [assetContent, setAssetContent] = useState(null);
   const [selectFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
@@ -79,4 +79,4 @@ const JsonFileUploadPopup = ({ selectedFile, openPopUp}) => {
   );
 };
 
-export default JsonFileUploadPopup;
+export default FileUpload;

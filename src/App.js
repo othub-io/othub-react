@@ -5,7 +5,7 @@ import NavBar from "./navigation/NavBar";
 import SideBar from "./navigation/SideBar";
 import Home from "./pages/home";
 import Assets from "./pages/assets";
-import Publish from "./pages/publish.js";
+import Publish from "./pages/publish/index.js";
 import Analytics from "./pages/analytics.js";
 import NodeDashboard from "./pages/my-othub/node-dashboard.js";
 import Build from "./pages/my-othub/build.js";

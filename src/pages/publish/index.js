@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/googlecode.css";
-import "../css/publish.css";
-import AssetPublish from ".//assetPublish";
-import EventForm from "../templates/event";
-import ArticleForm from "../templates/article";
-import PersonForm from "../templates/person";
-import FileUpload from "../templates/fileUpload";
-const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS);
+import "../../css/publish.css";
+import AssetPublish from "./assetPublish";
+import EventForm from "./templates/event";
+import ArticleForm from "./templates/article";
+import PersonForm from "./templates/person";
+import FileUpload from "./templates/fileUpload";
 let ext;
 
 ext = "http";
@@ -17,13 +16,13 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 
 const types = ["File Upload", "Event", "Article", "Person"];
 
+
 //REACT_APP_SUPPORTED_NETWORKS
 const Publish = () => {
   const [type, setType] = useState("File Upload");
   const [popUp, setPopUp] = useState(false);
   const account = localStorage.getItem("account");
   const chain_id = localStorage.getItem("chain_id");
-  const asset_json = useState("");
   const [displayContent, setDisplayContent] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -92,7 +91,7 @@ const Publish = () => {
           >
             X
           </button>
-          <AssetPublish data={selectedFile}/> 
+          <AssetPublish data={selectedFile ? (selectedFile) : (displayContent)}/> 
         </div>
       </div>
     );
@@ -101,17 +100,6 @@ const Publish = () => {
   return (
     account && (
       <div className="publish">
-        {popUp && <div className="popup-overlay">
-        <div className="publish-popup-content">
-          <button
-            className="app-settings-close-button"
-            onClick={closePopUp}
-          >
-            X
-          </button>
-          <AssetPublish data={selectedFile} />
-        </div>
-      </div>}
         <div className="publish-header"></div>
         <div className="publish-event-selection-div">
           <div className="type-drop-down">
@@ -137,7 +125,11 @@ const Publish = () => {
           )}
         </div>
         <div className="publish-form-div">
-          {type === "Event" ? <EventForm /> : ""}
+          {type === "Event" ? 
+            <EventForm 
+              displayContent={setDisplayContent}
+              openPopUp={openPopUp}
+            /> : ""}
           {type === "Article" ? <ArticleForm /> : ""}
           {type === "Person" ? <PersonForm /> : ""}
           {type === "File Upload" ? (
