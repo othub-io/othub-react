@@ -654,6 +654,8 @@ const Product = ({ displayContent, openPopUp }) => {
                     ? "Product Name:"
                     : label === "image"
                     ? "Image URL:"
+                    : label === "url"
+                    ? "URL:"
                     : label === "description"
                     ? "Description:"
                     : label === "brand"
