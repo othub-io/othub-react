@@ -31,7 +31,7 @@
   .url-div {
     padding-left: 20px;
     display: inline-block;
-    width: 45%;
+    width: 40%;
   }
   
   .url-div input {
@@ -45,7 +45,8 @@
   .logo-div {
     padding-left: 20px;
     display: inline-block;
-    width: 45%;
+    width: 40%;
+    margin-left:8%;
   }
   
   .logo-div input {

@@ -9,6 +9,7 @@
     display: inline-block;
     width: 40%;
     margin-top:20px;
+    margin-left:8%;
   }
 
   .brand-div input {
@@ -17,6 +18,7 @@
     color: #6344df;
     font-weight: bold;
     margin-top: -10px;
+    margin-bottom: 20px;
   }
 
   .offers-div {
@@ -334,4 +336,56 @@
   .react-datepicker{
     position:fixed;
     z-index: 2;
+  }
+
+
+
+  @media(max-width:1460px){
+    .valid-date-offer {
+        padding-left: 0px;
+        display: inline-block;
+        width: 25%;
+        margin-top:20px;
+      }
+    
+      .valid-date-select{
+        width: 100%;
+        font-size: 16px;
+        color: #6344df;
+        font-weight: bold;
+        margin-top: -20px;
+        position: relative;
+      }
+    
+      .availability-offer {
+        padding-left: 30px;
+        display: inline-block;
+        width: 25%;
+        margin-top:20px;
+      }
+    
+      .availability-select{
+        width: 100%;
+        font-size: 16px;
+        color: #6344df;
+        font-weight: bold;
+        margin-top: -20px;
+        z-index: 2;
+      }
+    
+      .itemCondition-offer {
+        padding-left: 30px;
+        display: inline-block;
+        width: 25%;
+        margin-top:20px;
+      }
+    
+      .itemCondition-select {
+        width: 100%;
+        font-size: 16px;
+        color: #6344df;
+        font-weight: bold;
+        margin-top: -20px;
+        z-index: 2;
+      }
   }
