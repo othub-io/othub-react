@@ -1,0 +1,221 @@
+.name-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 40%;
+}
+
+.name-div input {
+  width: 100%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.image-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 45%;
+  margin-left: 3%;
+}
+
+.image-div input {
+  width: 100%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.description-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 91%;
+  padding-top: 15px;
+}
+
+.description-div textarea {
+  width: 100%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+  resize: none;
+}
+
+.location-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 95%;
+  padding-top: 15px;
+}
+
+.location-div input {
+  width: 42%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.location-div .address-fields {
+  width: 100%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+  display: inline-block;
+}
+
+.location-div .address-fields label {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.location-div .address-fields input {
+  width: 40%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.jobTitle-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 40%;
+  padding-top: 15px;
+}
+
+.jobTitle-div input {
+  width: 100%;
+  font-size: 20px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.worksFor-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 40%;
+  padding-top: 15px;
+  margin-left: 3%;
+}
+
+.worksFor-div input {
+  width: 100%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.relatedTo-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 95%;
+  padding-top: 15px;
+}
+
+.relatedTo-div label {
+  width: 20%;
+  font-size: 16px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+  display: inline-block;
+}
+
+.relatedTo-div input {
+  width: 90%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.sameAs-div {
+  padding-left: 20px;
+  display: inline-block;
+  width: 95%;
+  padding-top: 15px;
+}
+
+.sameAs-div label {
+  width: 20%;
+  font-size: 16px;
+  color: #6344df;
+  font-weight: bold;
+  margin-top: -10px;
+  display: inline-block;
+}
+
+.sameAs-div input {
+  width: 90%;
+  font-size: 18px;
+  color: #6344df;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.isPartOf-div {
+    padding-left: 20px;
+    display: inline-block;
+    width: 95%;
+    padding-top: 15px;
+  }
+  
+  .isPartOf-div label {
+    width: 20%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+    display: inline-block;
+  }
+  
+  .isPartOf-div input {
+    width: 90%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 10px;
+  }
+
+  .plus-button {
+    display: inline-block;
+    width: 87%;
+    float: right;
+    margin-top: -28px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .array-inputs {
+    max-height: 100px;
+    overflow: auto;
+    width: 95%;
+  }
+
+  .person-pub-button{
+    margin-top: 20px;
+    margin-bottom:20px;
+  }
+
+  @media(max-width:1536px){
+    .plus-button {
+        display: inline-block;
+        width: 80.25%;
+        float: right;
+        margin-top: -28px;
+        position: relative;
+        z-index: 1;
+      }
+  }

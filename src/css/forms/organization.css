@@ -1,0 +1,127 @@
+.type-div {
+    padding-left: 20px;
+    display: inline-block;
+    width: 90%;
+    margin-bottom:20px;
+  }
+
+  .type-div input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+  }
+
+  .alternativeName-div {
+    padding-left: 10%;
+    display: inline-block;
+    width: 40%;
+  }
+  
+  .alternativeName-div input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-bottom:20px;
+  }
+
+  .url-div {
+    padding-left: 20px;
+    display: inline-block;
+    width: 45%;
+  }
+  
+  .url-div input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+  }
+
+  .logo-div {
+    padding-left: 20px;
+    display: inline-block;
+    width: 45%;
+  }
+  
+  .logo-div input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+  }
+
+  .contactPoint-div {
+    max-height: 500px;
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    padding-top:20px;
+    z-index: 2;
+  }
+
+  .contactPoint-div label {
+    margin-left: 20px;
+  }
+
+  .contact-fields{
+    position: relative;
+    outline: #6344df solid 1px;
+    margin-bottom: 20px;
+    margin-left:20px;
+    width:95%;
+    height:120px;
+  }
+
+  .contact-fields input{
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+  }
+
+  .contact-plus-button {
+    display: inline-block;
+    width: 40%;
+    float: left;
+    margin-top: -30px;
+    position: relative;
+    z-index: 1;
+    margin-left:150px;
+    margin-bottom: -30px;
+  }
+
+  .contact-type {
+    display: inline-block;
+    width: 40%;
+    margin-top:-40px;
+  }
+
+  .contact-select {
+    width: 90%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -5px;
+    z-index: 500;
+    margin-left: 5%;
+  }
+
+  .contact-phone {
+    padding-left: 30px;
+    display: inline-block;
+    width: 45%;
+    margin-top:20px;
+  }
+
+  .contact-phone-input{
+    width: 90%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    z-index: 2;
+  }

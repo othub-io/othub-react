@@ -5,8 +5,7 @@ import NavBar from "./navigation/NavBar";
 import SideBar from "./navigation/SideBar";
 import Home from "./pages/home";
 import Assets from "./pages/assets";
-import Publish from "./pages/publish.js";
-//import Staking from "./pages/my-othub/staking.js";
+import Publish from "./pages/publish/index.js";
 import Analytics from "./pages/analytics.js";
 import NodeDashboard from "./pages/my-othub/node-dashboard.js";
 import Build from "./pages/my-othub/build.js";
@@ -26,12 +25,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/assets" element={<Assets />} />
-          <Route path="/publish-dev" element={<Publish />} />
+          <Route path="/publish" element={<Publish />} />
           <Route path="/my-othub/node-dashboard" element={<NodeDashboard />} />
           <Route path="/my-othub/build" element={<Build />} />
           <Route path="/my-othub/portal" element={<Portal />} />
           <Route path="/my-othub/inventory" element={<Inventory />} />
-          {/* <Route path="/staking-dev" element={<Staking />} /> */}
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/nodes" element={<Nodes />} />
           <Route path="*" element={<NotFound />} />

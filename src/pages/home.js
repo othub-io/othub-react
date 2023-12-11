@@ -160,34 +160,34 @@ const Home = () => {
           <div className="home-form">
             <div className="home-title">Network Statistics</div>
             <div className="total-assets">
-              Total Trac Spent
+              Assets Published
+              <br></br>
+              <div className="home-stats-info">{pub_count}</div>
+            </div>
+            <div className="home-total-stake">
+            TRAC Spent
               <br></br>
               <div className="home-stats-info">{totalTracSpent}</div>
             </div>
-            <div className="home-total-stake">
-              Total Stake
+            <div className="home-nodes">
+            Total Stake
               <br></br>
               <div className="home-stats-info">{totalStake}</div>
             </div>
-            <div className="home-nodes">
-              Nodes
-              <br></br>
-              <div className="home-stats-info">{data.v_nodes_length}</div>
-            </div>
             <div className="trac-spent">
-              Assets Published 24h
+            Assets Published 24h
               <br></br>
               <div className="home-stats-info">{totalPubs_24h}</div>
             </div>
             <div className="assets-24h">
-              Trac Spent 24h
+            Nodes
               <br></br>
-              <div className="home-stats-info">{totalSpent_24h}</div>
+              <div className="home-stats-info">{data.v_nodes_length}</div>
             </div>
             <div className="trac-spent-24h">
-              Avg Asset Size
+            TRAC Spent 24h
               <br></br>
-              <div className="home-stats-info">{avg_size}bytes</div>
+              <div className="home-stats-info">{totalSpent_24h}</div>
             </div>
           </div>
           <div className="home-chart">

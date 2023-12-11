@@ -29,7 +29,7 @@ const handleSignMessage = async (publicAddress, nonce) => {
   }
 };
 
-const MetamaskButton = () => {
+const MetamaskButton = (token) => {
   const { setIsLoading } = useContext(AccountContext);
 
   useEffect(() => {
