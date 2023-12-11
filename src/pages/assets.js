@@ -92,16 +92,16 @@ const Assets = () => {
     }));
   };
 
-//   if((chain_id !== "Origintrail Parachain Testnet" &&
-//   chain_id !== "Origintrail Parachain Mainnet") && chain_id){
-//     return(
-//     <div className="keys">
-//       <header className="keys-header">
-//         Connected with an unsupported chain. Please switch to
-//         Origintrail Parachain Testnet or Mainnet.
-//       </header>
-//     </div>)
-//   }
+  //   if((chain_id !== "Origintrail Parachain Testnet" &&
+  //   chain_id !== "Origintrail Parachain Mainnet") && chain_id){
+  //     return(
+  //     <div className="keys">
+  //       <header className="keys-header">
+  //         Connected with an unsupported chain. Please switch to
+  //         Origintrail Parachain Testnet or Mainnet.
+  //       </header>
+  //     </div>)
+  //   }
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
@@ -148,17 +148,14 @@ const Assets = () => {
         </div>
       )}
       <div className="asset-network-drop-down">
-              <select>
-                {networks.map((network) => (
-                  <option
-                    key={network.name}
-                    onClick={() => setNetwork(network.name)}
-                  >
-                    {network.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <select onChange={(e) => setNetwork(e.target.value)}>
+          {networks.map((network) => (
+            <option key={network.name} value={network.name}>
+              {network.name}
+            </option>
+          ))}
+        </select>
+      </div>
       {data ? (
         <header className="assets-header">
           <div className="assets-form">
