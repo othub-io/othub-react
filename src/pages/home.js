@@ -34,8 +34,8 @@ const Home = () => {
     async function fetchData() {
       try {
         let network_data = {
-          network: network
-        }
+          network: network,
+        };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`,
           network_data
@@ -84,14 +84,14 @@ const Home = () => {
       parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2)
     );
     totalStake = formatNumber(parseFloat(Number(data.totalStake).toFixed(2)));
-  }else{
-    return(
+  } else {
+    return (
       <div className="assets">
-          <div className="assets-header">
-            <Loading />
-          </div>
+        <div className="assets-header">
+          <Loading />
         </div>
-    )
+      </div>
+    );
   }
 
   const percentage = (data.pub_count / 10000000) * 100;
@@ -99,20 +99,16 @@ const Home = () => {
   return (
     <div className="home">
       <div className="header">
-            <div className="home-network-drop-down">
-              <select>
-                {networks.map((network) => (
-                  <option
-                    key={network.name}
-                    onClick={() => setNetwork(network.name)}
-                  >
-                    {network.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-          </div>
+        <div className="home-network-drop-down">
+          <select onChange={(e) => setNetwork(e.target.value)}>
+            {networks.map((network) => (
+              <option key={network.name} value={network.name}>
+                {network.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       {data && network ? (
         <div>
           {/* <div className="bar-header">
@@ -148,13 +144,13 @@ const Home = () => {
             <div className="bar-title">Road to 10 Million Assets</div>
           </div>   */}
           <div className="activity-feed">
-            <ActivityFeed 
-            data={[
-              {
-                network: network,
-                data: data
-              },
-            ]}
+            <ActivityFeed
+              data={[
+                {
+                  network: network,
+                  data: data,
+                },
+              ]}
             />
           </div>
           <div className="home-form">
@@ -165,37 +161,37 @@ const Home = () => {
               <div className="home-stats-info">{pub_count}</div>
             </div>
             <div className="home-total-stake">
-            TRAC Spent
+              TRAC Spent
               <br></br>
               <div className="home-stats-info">{totalTracSpent}</div>
             </div>
             <div className="home-nodes">
-            Total Stake
+              Total Stake
               <br></br>
               <div className="home-stats-info">{totalStake}</div>
             </div>
             <div className="trac-spent">
-            Assets Published 24h
+              Assets Published 24h
               <br></br>
               <div className="home-stats-info">{totalPubs_24h}</div>
             </div>
             <div className="assets-24h">
-            Nodes
+              Nodes
               <br></br>
               <div className="home-stats-info">{data.v_nodes_length}</div>
             </div>
             <div className="trac-spent-24h">
-            TRAC Spent 24h
+              TRAC Spent 24h
               <br></br>
               <div className="home-stats-info">{totalSpent_24h}</div>
             </div>
           </div>
           <div className="home-chart">
-              <CumPay data={network} />
-            </div>
+            <CumPay data={network} />
+          </div>
           <div className="home-chart">
-              <CumPubs data={network} />
-            </div>
+            <CumPubs data={network} />
+          </div>
         </div>
       ) : (
         <div className="assets">

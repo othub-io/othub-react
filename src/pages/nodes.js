@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css/nodes.css";
 import Loading from "../Loading";
 import axios from "axios";
-const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS)
+const networks = JSON.parse(process.env.REACT_APP_SUPPORTED_NETWORKS);
 let ext;
 
 ext = "http";
@@ -19,7 +19,7 @@ const Nodes = () => {
     async function fetchData() {
       try {
         const dater = {
-          network: network
+          network: network,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`,
@@ -38,12 +38,14 @@ const Nodes = () => {
   return (
     <div className="allnodes">
       <div className="nodes-network-drop-down">
-          <select>
-            {networks.map((network) => (
-              <option key={network.name} onClick={()=> setNetwork(network.name)}>{network.name}</option>
-            ))}
-          </select>
-        </div>
+        <select onChange={(e) => setNetwork(e.target.value)}>
+          {networks.map((network) => (
+            <option key={network.name} value={network.name}>
+              {network.name}
+            </option>
+          ))}
+        </select>
+      </div>
       {data ? (
         <header className="allnodes-header">
           {isMobile ? (
