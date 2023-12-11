@@ -16,7 +16,6 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 
 const types = ["File Upload", "Organization", "Product", "Person"];
 
-
 //REACT_APP_SUPPORTED_NETWORKS
 const Publish = () => {
   const [type, setType] = useState("File Upload");
@@ -27,13 +26,13 @@ const Publish = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
-    if(selectedFile){
+    if (selectedFile) {
       const reader = new FileReader();
       reader.onload = (event) => {
         const content = event.target.result;
         setDisplayContent(content);
       };
-      reader.readAsText(selectedFile)
+      reader.readAsText(selectedFile);
       hljs.highlightAll();
     }
   }, [selectedFile]);
@@ -43,8 +42,8 @@ const Publish = () => {
   };
 
   const closePopUp = () => {
-    setDisplayContent()
-    setType(types[0])
+    setDisplayContent();
+    setType(types[0]);
     setPopUp(false);
   };
 
@@ -86,13 +85,10 @@ const Publish = () => {
     return (
       <div className="popup-overlay">
         <div className="publish-popup-content">
-          <button
-            className="app-settings-close-button"
-            onClick={closePopUp}
-          >
+          <button className="app-settings-close-button" onClick={closePopUp}>
             X
           </button>
-          <AssetPublish data={selectedFile ? (selectedFile) : (displayContent)}/> 
+          <AssetPublish data={selectedFile ? selectedFile : displayContent} />
         </div>
       </div>
     );
@@ -105,9 +101,9 @@ const Publish = () => {
         <div className="publish-event-selection-div">
           <div className="type-drop-down">
             <span style={{ marginLeft: "20px" }}>Select Type:</span>
-            <select>
+            <select onChange={(e) => setType(e.target.value)}>
               {types.map((type) => (
-                <option key={type} onClick={() => setType(type, setDisplayContent(), setSelectedFile())}>
+                <option key={type} value={type}>
                   {type}
                 </option>
               ))}
@@ -129,26 +125,26 @@ const Publish = () => {
               displayContent={setDisplayContent}
               openPopUp={openPopUp}
             />} */}
-            {type === "Organization" && 
+          {type === "Organization" && (
             <OrganizationForm
               displayContent={setDisplayContent}
               openPopUp={openPopUp}
-             />}
-          {type === "Product" && 
+            />
+          )}
+          {type === "Product" && (
             <ProductForm
               displayContent={setDisplayContent}
               openPopUp={openPopUp}
-             />}
-          {type === "Person" && 
+            />
+          )}
+          {type === "Person" && (
             <PersonForm
               displayContent={setDisplayContent}
               openPopUp={openPopUp}
-             />}
-          {type === "File Upload" && (
-            <FileUpload
-              selectedFile={setSelectedFile}
-              openPopUp={openPopUp}
             />
+          )}
+          {type === "File Upload" && (
+            <FileUpload selectedFile={setSelectedFile} openPopUp={openPopUp} />
           )}
         </div>
       </div>
