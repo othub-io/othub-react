@@ -155,6 +155,7 @@ const isUrlValid = (url) => {
 const Product = ({ displayContent, openPopUp }) => {
   const [nameError, setNameError] = useState(null);
   const [imageError, setImageError] = useState(null);
+  const [urlError, setUrlError] = useState(null);
   const [ratingError, setRatingError] = useState(null);
   const [offerPriceError, setOfferPriceError] = useState(null);
   const [offerUrlError, setOfferUrlError] = useState(null);
@@ -163,11 +164,12 @@ const Product = ({ displayContent, openPopUp }) => {
     "@context": "https://schema.org",
     "@type": "Product",
     name: "",
-    image: "",
     brand: {
-      "@type": "Brand",
-      name: "",
-    },
+        "@type": "Brand",
+        name: "",
+      },
+    url: "",
+    image: "",
     description: "",
     offers: {
       "@type": "",
@@ -196,6 +198,9 @@ const Product = ({ displayContent, openPopUp }) => {
     const filteredFormData = Object.entries(formData)
       .filter(
         ([key, value]) => key !== "image" || (key === "image" && value !== "")
+      )
+      .filter(
+        ([key, value]) => key !== "url" || (key === "url" && value !== "")
       )
       .filter(
         ([key, value]) =>
@@ -382,6 +387,25 @@ const Product = ({ displayContent, openPopUp }) => {
         ) {
           setImageError();
         }
+
+        if (
+            key === "url" &&
+            !(isUrlValid(value) && value.startsWith("https://")) &&
+            value !== ""
+          ) {
+            setUrlError(`Invalid URL for ${key} field. Must use https.`);
+          }
+  
+          if (
+            !acc.hasOwnProperty("url") ||
+            (key === "url" &&
+              isUrlValid(value) &&
+              value.startsWith("https://")) ||
+            value === "" ||
+            !value
+          ) {
+            setUrlError();
+          }
 
         if (key === "aggregateRating") {
           let onlyNumbers = Object.values(value).every(
@@ -1066,8 +1090,14 @@ const Product = ({ displayContent, openPopUp }) => {
             <p>{nameError}</p>
           </div>
         )}
+        {urlError && (
+          <div className="file-error">
+            <p>{urlError}</p>
+          </div>
+        )}
         {!nameError &&
           !imageError &&
+          !urlError &&
           !ratingError &&
           !offerPriceError &&
           !offerUrlError &&
