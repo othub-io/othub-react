@@ -4,17 +4,17 @@ import "highlight.js/styles/googlecode.css";
 import "../../css/publish.css";
 import AssetPublish from "./assetPublish";
 import EventForm from "./templates/event";
-import ArticleForm from "./templates/article";
+import OrganizationForm from "./templates/organization";
+import ProductForm from "./templates/product";
 import PersonForm from "./templates/person";
 import FileUpload from "./templates/fileUpload";
-let ext;
 
-ext = "http";
+let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
-const types = ["File Upload", "Event", "Article", "Person"];
+const types = ["File Upload", "Organization", "Product", "Person"];
 
 
 //REACT_APP_SUPPORTED_NETWORKS
@@ -27,7 +27,6 @@ const Publish = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
-    hljs.highlightAll();
     if(selectedFile){
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -35,6 +34,7 @@ const Publish = () => {
         setDisplayContent(content);
       };
       reader.readAsText(selectedFile)
+      hljs.highlightAll();
     }
   }, [selectedFile]);
 
@@ -44,6 +44,7 @@ const Publish = () => {
 
   const closePopUp = () => {
     setDisplayContent()
+    setType(types[0])
     setPopUp(false);
   };
 
@@ -57,7 +58,7 @@ const Publish = () => {
     );
   }
 
-  if (window.matchMedia("(max-width: 1000px)").matches) {
+  if (window.matchMedia("(max-width: 1300px)").matches) {
     return (
       <div className="keys">
         <header className="keys-header">
@@ -106,7 +107,7 @@ const Publish = () => {
             <span style={{ marginLeft: "20px" }}>Select Type:</span>
             <select>
               {types.map((type) => (
-                <option key={type} onClick={() => setType(type)}>
+                <option key={type} onClick={() => setType(type, setDisplayContent(), setSelectedFile())}>
                   {type}
                 </option>
               ))}
@@ -114,31 +115,40 @@ const Publish = () => {
           </div>
         </div>
         <div className="publish-json-display-div">
-          {displayContent ? (
+          {displayContent && (
             <pre>
               <code className="json">
                 {JSON.stringify(JSON.parse(displayContent), null, 2)}
               </code>
             </pre>
-          ) : (
-            ""
           )}
         </div>
         <div className="publish-form-div">
-          {type === "Event" ? 
+          {/* {type === "Event" && 
             <EventForm 
               displayContent={setDisplayContent}
               openPopUp={openPopUp}
-            /> : ""}
-          {type === "Article" ? <ArticleForm /> : ""}
-          {type === "Person" ? <PersonForm /> : ""}
-          {type === "File Upload" ? (
+            />} */}
+            {type === "Organization" && 
+            <OrganizationForm
+              displayContent={setDisplayContent}
+              openPopUp={openPopUp}
+             />}
+          {type === "Product" && 
+            <ProductForm
+              displayContent={setDisplayContent}
+              openPopUp={openPopUp}
+             />}
+          {type === "Person" && 
+            <PersonForm
+              displayContent={setDisplayContent}
+              openPopUp={openPopUp}
+             />}
+          {type === "File Upload" && (
             <FileUpload
               selectedFile={setSelectedFile}
               openPopUp={openPopUp}
             />
-          ) : (
-            ""
           )}
         </div>
       </div>

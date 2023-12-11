@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TimePicker from 'react-time-picker';
-import 'react-time-picker/dist/TimePicker.css'; // Import the styles
-
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css"; // Import the styles
 
 const Event = ({ displayContent, openPopUp }) => {
-  const [formState, setFormState] = useState({});
   const [formData, setFormData] = useState({
     "@context": "https://schema.org",
     "@type": "Event",
@@ -18,19 +16,39 @@ const Event = ({ displayContent, openPopUp }) => {
     description: "",
     location: {
       "@type": "Place",
-      name: "", // Will be updated dynamically based on locationName
+      name: "",
+      address: "", // Add the address field
     },
   });
 
   useEffect(() => {
     const filteredFormData = Object.entries(formData)
-      .filter(([key, value]) => key !== "name" || (key === "name" && value !== ""))
-      .filter(([key, value]) => key !== "url" || (key === "url" && value !== ""))
-      .filter(([key, value]) => key !== "eventStatus" || (key === "eventStatus" && value !== ""))
-      .filter(([key, value]) => key !== "startDate" || (key === "startDate" && value !== null))
-      .filter(([key, value]) => key !== "endDate" || (key === "endDate" && value !== null))
-      .filter(([key, value]) => key !== "description" || (key === "description" && value !== ""))
-      .filter(([key, value]) => key !== "location" || (key === "location" && value.name !== ""))
+      .filter(
+        ([key, value]) => key !== "name" || (key === "name" && value !== "")
+      )
+      .filter(
+        ([key, value]) => key !== "url" || (key === "url" && value !== "")
+      )
+      .filter(
+        ([key, value]) =>
+          key !== "eventStatus" || (key === "eventStatus" && value !== "")
+      )
+      .filter(
+        ([key, value]) =>
+          key !== "startDate" || (key === "startDate" && value !== null)
+      )
+      .filter(
+        ([key, value]) =>
+          key !== "endDate" || (key === "endDate" && value !== null)
+      )
+      .filter(
+        ([key, value]) =>
+          key !== "description" || (key === "description" && value !== "")
+      )
+      .filter(
+        ([key, value]) =>
+          key !== "location" || (key === "location" && value.name !== "")
+      )
       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
     displayContent(JSON.stringify(filteredFormData));
@@ -42,7 +60,15 @@ const Event = ({ displayContent, openPopUp }) => {
         ...prevFormData,
         location: {
           ...prevFormData.location,
-          name: value, // Update location name based on user input
+          name: value,
+        },
+      }));
+    } else if (name === "address") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        location: {
+          ...prevFormData.location,
+          address: value,
         },
       }));
     } else {
@@ -76,9 +102,15 @@ const Event = ({ displayContent, openPopUp }) => {
                     onChange={(e) => handleFormInput(fieldName, e.target.value)}
                   >
                     <option value="">Event Status</option>
-                    <option value="https://schema.org/EventCancelled">Cancelled</option>
-                    <option value="https://schema.org/EventPostponed">Postponed</option>
-                    <option value="https://schema.org/EventScheduled">Scheduled</option>
+                    <option value="https://schema.org/EventCancelled">
+                      Cancelled
+                    </option>
+                    <option value="https://schema.org/EventPostponed">
+                      Postponed
+                    </option>
+                    <option value="https://schema.org/EventScheduled">
+                      Scheduled
+                    </option>
                   </select>
                 ) : fieldName === "startDate" || fieldName === "endDate" ? (
                   <DatePicker
@@ -93,13 +125,29 @@ const Event = ({ displayContent, openPopUp }) => {
                     onChange={(e) => handleFormInput(fieldName, e.target.value)}
                   />
                 ) : fieldName === "location" ? (
-                  <input
-                    type="text"
-                    name={fieldName}
-                    value={fieldValue.name}
-                    onChange={(e) => handleFormInput(fieldName, e.target.value)}
-                  />
-                ) : (
+                    <>
+                      <input
+                        type="text"
+                        name={fieldName}
+                        value={fieldValue.name}
+                        onChange={(e) => handleFormInput(fieldName, e.target.value)}
+                        placeholder="Enter Name"
+                      />
+                      {fieldValue.name && ( // Show the address input only if location name has a value
+                        <>
+                          <br />
+                          <br />
+                          <input
+                            type="text"
+                            name="address"
+                            value={fieldValue.address}
+                            onChange={(e) => handleFormInput("address", e.target.value)}
+                            placeholder="Enter address"
+                          />
+                        </>
+                      )}
+                    </>
+                  ) : (
                   <input
                     type="text"
                     name={fieldName}

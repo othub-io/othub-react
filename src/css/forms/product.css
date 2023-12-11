@@ -1,0 +1,337 @@
+.product-form {
+    width: 98%;
+    color: #6344df;
+    font-weight: bold;
+  }
+  
+  .brand-div {
+    padding-left: 20px;
+    display: inline-block;
+    width: 40%;
+    margin-top:20px;
+  }
+
+  .brand-div input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+  }
+
+  .offers-div {
+    padding-left: 20px;
+    display: inline-block;
+    width: 90%;
+    margin-top:20px;
+  }
+
+  .offer-select {
+    width: 45%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -5px;
+    z-index: 500;
+  }
+
+  .offer-url {
+    padding-left: 0px;
+    display: inline-block;
+    width: 60%;
+    margin-top:10px;
+  }
+
+  .offer-url input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+  }
+
+  .offer-priceCurrency {
+    padding-left: 0px;
+    display: inline-block;
+    width: 45%;
+    margin-top:15px;
+  }
+
+  .currency-select {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -5px;
+    position: relative;
+    z-index: 300;
+  }
+
+  .offer-price {
+    padding-left: 20px;
+    display: inline-block;
+    width: 40%;
+    margin-top:20px;
+  }
+
+  .offer-price input {
+    width: 50%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+  }
+
+  .valid-date-offer {
+    padding-left: 0px;
+    display: inline-block;
+    width: 30%;
+    margin-top:20px;
+  }
+
+  .valid-date-select{
+    width: 100%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+    position: relative;
+  }
+
+  .availability-offer {
+    padding-left: 30px;
+    display: inline-block;
+    width: 30%;
+    margin-top:20px;
+  }
+
+  .availability-select{
+    width: 100%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+    z-index: 2;
+  }
+
+  .itemCondition-offer {
+    padding-left: 30px;
+    display: inline-block;
+    width: 30%;
+    margin-top:20px;
+  }
+
+  .itemCondition-select {
+    width: 100%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+    z-index: 2;
+  }
+
+
+.review-inputs {
+    max-height: 500px;
+    overflow: auto;
+    width: 95%;
+  }
+
+  .rating-fields {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .rating-fields input {
+    width: 15%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-right:10px;
+  }
+
+  .aggregateRating-div{
+    margin-top:20px;
+    padding-left:20px;
+  }
+
+  .review-div {
+    max-height: 500px;
+    overflow: auto;
+    width: 100%;
+    padding-top:20px;
+    z-index: 500;
+  }
+
+  .review-div label {
+    margin-left: 20px;
+  }
+
+  .product-plus-button {
+    display: inline-block;
+    width: 40%;
+    float: left;
+    margin-top: -30px;
+    position: relative;
+    z-index: 1;
+    margin-left:14.5%;
+    margin-bottom: -30px;
+  }
+
+  .review-fields{
+    position: relative;
+    outline: #6344df solid 1px;
+    margin-bottom: 20px;
+    margin-left:20px;
+    width:95%;
+  }
+
+  .review-fields input{
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+  }
+
+  .offer-lowprice {
+    padding-left: 20px;
+    display: inline-block;
+    width: 15%;
+    margin-top:20px;
+  }
+
+  .offer-lowprice input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+  }
+
+  .offer-highprice {
+    padding-left: 20px;
+    display: inline-block;
+    width: 15%;
+    margin-top:20px;
+  }
+
+  .offer-highprice input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+  }
+
+  .offer-number {
+    padding-left: 20px;
+    display: inline-block;
+    width: 17%;
+    margin-top:20px;
+  }
+
+  .offer-number input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+  }
+
+  .review-name {
+    display: inline-block;
+    width: 40%;
+    margin-top:-40px;
+  }
+  
+  .review-name input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-left:20px;
+  }
+
+  .author-name {
+    display: inline-block;
+    width: 40%;
+    padding-top: 15px;
+  }
+
+  .author-name label{
+    margin-left:13%;
+  }
+  
+  .author-name input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-left:13%;
+  }
+
+  .publisher-name {
+    padding-left: 5%;
+    display: inline-block;
+    width: 40%;
+    padding-top: 15px;
+  }
+
+  .publisher-name label{
+    margin-left:15%;
+  }
+  
+  .publisher-name input {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-left:15%;
+  }
+
+  .publish-date {
+    padding-left: 8%;
+    display: inline-block;
+    width: 41%;
+    margin-top:20px;
+  }
+
+  .publish-date label{
+    padding-left: -15%;
+    display: inline-block;
+    width: 40%;
+    margin-top:20px;
+  }
+
+  .publish-date select{
+    width: 100%;
+    font-size: 16px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -20px;
+  }
+
+  .review-body {
+    display: inline-block;
+    width: 86%;
+    padding-top: 15px;
+    margin-left:5%;
+  }
+  
+  .review-body textarea {
+    width: 100%;
+    font-size: 18px;
+    color: #6344df;
+    font-weight: bold;
+    margin-top: -10px;
+    resize: none;
+    margin-bottom: 20px;
+  }
+
+  .react-datepicker{
+    position:fixed;
+    z-index: 2;
+  }

@@ -46,7 +46,7 @@ const AssetPublish = (selectedFile) => {
   const { setIsLoading, isLoading } = useContext(AccountContext);
   const account = localStorage.getItem("account");
   const chain_id = localStorage.getItem("chain_id");
-  const [inputValue, setInputValue] = useState("1");
+  const [inputValue, setInputValue] = useState(1);
   const [assetData, setAssetData] = useState("");
   const [cost, setCost] = useState(0);
   const [price, setPrice] = useState(0);
@@ -81,29 +81,8 @@ const AssetPublish = (selectedFile) => {
   useEffect(() => {
     async function readFile() {
       try {
-        if (selectedFile.data) {
-          setAssetData(selectedFile.data);
-
-          const data = {
-            asset: assetData,
-            network: network,
-            epochs: inputValue,
-          };
-          const dkg_bid_result = await axios
-            .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config)
-            .then((response) => {
-              // Handle the successful response here
-              return response;
-            })
-            .catch((error) => {
-              // Handle errors here
-              console.error(error);
-            });
-
-          setCost(Number(dkg_bid_result.data) / 1e18);
-        } 
-        
-        if(selectedFile && !selectedFile.data) {
+        const { data } = selectedFile;
+        if (data instanceof File) {
           const reader = new FileReader();
           reader.onload = async (event) => {
             const content = event.target.result;
@@ -127,16 +106,35 @@ const AssetPublish = (selectedFile) => {
 
             setCost(Number(dkg_bid_result.data) / 1e18);
           };
-          reader.readAsText(selectedFile);
+          reader.readAsText(selectedFile.data);
+        } else {
+          setAssetData(selectedFile.data);
+
+          console.log("eyo: " + selectedFile.data);
+          const data = {
+            asset: selectedFile.data,
+            network: network,
+            epochs: inputValue,
+          };
+          const dkg_bid_result = await axios
+            .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config)
+            .then((response) => {
+              // Handle the successful response here
+              return response;
+            })
+            .catch((error) => {
+              // Handle errors here
+              console.error(error);
+            });
+
+          setCost(Number(dkg_bid_result.data) / 1e18);
         }
 
-        if(cost === 0){
-          const rsp = await axios.get(
-            "https://api.coingecko.com/api/v3/coins/origintrail"
-          );
-  
-          setPrice(rsp.data.market_data.current_price.usd);
-        }
+        const rsp = await axios.get(
+          "https://api.coingecko.com/api/v3/coins/origintrail"
+        );
+
+        setPrice(rsp.data.market_data.current_price.usd);
       } catch (error) {
         console.error("Error preparing publish:", error);
       }
@@ -153,7 +151,6 @@ const AssetPublish = (selectedFile) => {
       const DkgClient = new DKG(node_options);
       let dkg_result;
 
-      console.log(assetData);
       let dkg_txn_data = JSON.parse(assetData);
 
       dkg_result = await DkgClient.asset
@@ -175,9 +172,10 @@ const AssetPublish = (selectedFile) => {
       setResult(pub_result);
       setIsLoading(false);
     } catch (error) {
+      console.log(error)
       let pub_result = {
         status: false,
-        result: error,
+        result: JSON.stringify(error),
         msg: `Asset Publish Failed!`,
       };
       setResult(pub_result);
@@ -185,9 +183,13 @@ const AssetPublish = (selectedFile) => {
     }
   };
 
+  // const handleEpochChange = async (e) => {
+  //   setInputValue(e.target.value);
+  // };
+
   const handleEpochChange = async (epochs) => {
-    setInputValue(epochs);
-  };
+     setInputValue(epochs);
+   };
 
   if (isLoading) {
     return <Loading data={"Please sign awaiting transaction(s)..."} />;
@@ -248,7 +250,7 @@ const AssetPublish = (selectedFile) => {
   }
 
   return (
-    !result && (
+    !result && selectedFile.data && (
       <div className="publish-asset">
         <div className="publish-asset-title">
           Are you sure you want to publish {selectedFile.data.name} to{" "}
@@ -257,6 +259,14 @@ const AssetPublish = (selectedFile) => {
         <div className="epoch-buttons">
           Epochs:
           <br></br>
+          {/* <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={inputValue}
+                  onChange={handleEpochChange}
+                  style={{ cursor: "pointer", width: "75%" }}
+                /> */}
           <button
             className="epoch-button"
             onClick={() => handleEpochChange("1")}
@@ -317,10 +327,72 @@ const AssetPublish = (selectedFile) => {
           >
             5
           </button>
+          <button
+            className="epoch-button"
+            onClick={() => handleEpochChange("6")}
+            name="timeframe"
+            style={
+              inputValue === "6"
+                ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                : {}
+            }
+          >
+            6
+          </button>
+          <button
+            className="epoch-button"
+            onClick={() => handleEpochChange("7")}
+            name="timeframe"
+            style={
+              inputValue === "7"
+                ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                : {}
+            }
+          >
+            7
+          </button>
+          <button
+            className="epoch-button"
+            onClick={() => handleEpochChange("8")}
+            name="timeframe"
+            style={
+              inputValue === "8"
+                ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                : {}
+            }
+          >
+            8
+          </button>
+          <button
+            className="epoch-button"
+            onClick={() => handleEpochChange("9")}
+            name="timeframe"
+            style={
+              inputValue === "9"
+                ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                : {}
+            }
+          >
+            9
+          </button>
+          <button
+            className="epoch-button"
+            onClick={() => handleEpochChange("10")}
+            name="timeframe"
+            style={
+              inputValue === "10"
+                ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                : {}
+            }
+          >
+            10
+          </button>
         </div>
         <div className="publish-asset-estimated-cost">
           <span style={{ fontSize: "16px" }}>
-            {formatBytes(selectedFile.data.size)}
+            {selectedFile.data instanceof File
+              ? formatBytes(selectedFile.data.size)
+              : formatBytes(new Blob([selectedFile.data]).size)}
             <br></br>x{inputValue} Epochs ({inputValue * 90} Days)<br></br>
             x3 Nodes<br></br>
             {cost !== 0
@@ -329,13 +401,15 @@ const AssetPublish = (selectedFile) => {
           </span>
         </div>
         <div className="publish-asset-button">
-          <button
-            onClick={() => handlePublish(assetData)}
-            type="submit"
-            className="publish-button"
-          >
-            <strong>Publish</strong>
-          </button>
+          {cost !== 0 && (
+            <button
+              onClick={() => handlePublish(assetData)}
+              type="submit"
+              className="publish-button"
+            >
+              <strong>Publish</strong>
+            </button>
+          )}
         </div>
       </div>
     )

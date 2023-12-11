@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const formatBytes = (bytes, decimals = 2) => {
   if (bytes === 0) return "0 Bytes";
@@ -15,34 +15,53 @@ const FileUpload = ({ selectedFile, openPopUp}) => {
   const [assetContent, setAssetContent] = useState(null);
   const [selectFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
+  const reader = new FileReader();
 
+  reader.onload = (event) => {
+    try {
+      const content = event.target.result;
+      const parsedContent = JSON.parse(content);
+      if (!parsedContent["@context"]) {
+        setError("File has no Schema context.");
+      } else {
+        setAssetContent(content);
+      }
+    } catch (jsonError) {
+      setError("Invalid JSON format. Please upload a valid JSON file.");
+    }
+  };
+  
   const handleFileChange = (event) => {
     try {
       selectedFile(null);
-      setAssetContent();
-      setSelectedFile();
-      setError();
+      setAssetContent(null);
+      setSelectedFile(null);
+      setError(null);
+      
       const file = event.target.files[0];
-
-      const reader = new FileReader();
+  
       reader.onload = (event) => {
-        const content = event.target.result;
-        if (!JSON.parse(content)["@context"]) {
-          setError(`File has no Schema context.`);
-        } else {
-          setAssetContent(content);
+        try {
+          const content = event.target.result;
+          const parsedContent = JSON.parse(content);
+  
+          if (!parsedContent["@context"]) {
+            setError("File has no Schema context.");
+          } else {
+            setAssetContent(content);
+            selectedFile(file);
+          }
+        } catch (jsonError) {
+          setError("Invalid JSON format. Please upload a valid JSON file.");
         }
       };
-
-      reader.onerror = () => {
-        setError("Invalid JSON file. Please check the file format.");
-      };
-
-      selectedFile(file);
+  
       setSelectedFile(file);
+      
+      // Read the file as text
       file !== null ? reader.readAsText(file) : setAssetContent(null);
     } catch (e) {
-      setError(e);
+      setError(e.message);
     }
   };
 
@@ -68,12 +87,10 @@ const FileUpload = ({ selectedFile, openPopUp}) => {
           <p>Invalid Json: {error}</p>
         </div>
       )}
-      {assetContent ? (
+      {assetContent && (
         <button className="upload-button" onClick={PopUp}>
           Publish
         </button>
-      ) : (
-        ""
       )}
     </div>
   );

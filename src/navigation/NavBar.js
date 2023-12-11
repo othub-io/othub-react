@@ -133,7 +133,7 @@ function NavBar() {
           )}
         </div>
 
-        <MetamaskButton />
+        <MetamaskButton token={localStorage.getItem("token")}/>
       </div>
     </nav>
   );

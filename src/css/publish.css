@@ -14,7 +14,7 @@
 }
 
 .type-drop-down {
-  width: 30%;
+  width: 40%;
   display: inline-block;
 }
 
@@ -105,6 +105,7 @@
   float:right;
   margin-top:20px;
   margin-right: 20px;
+  overflow: auto;
 }
 
 .selected-file{
@@ -233,4 +234,68 @@
 
 .publish-asset-link a{
   color: #6344df;
+}
+
+.publish-asset-error{
+  font-size: 14px;
+}
+
+@media(max-width:1536px){
+  .publish-event-selection-div {
+    width: 84%;
+    height: 100px;
+    margin-left: 12%;
+    margin-right: 1%;
+    outline: 2px solid #6344df;
+    border-radius: 2px 2px 2px 2px;
+    color: #6344df;
+    font-weight: bold;
+    float:right;
+    margin-right:25px;
+  }
+
+  .publish-form-div {
+    width: 46.5%;
+    height: 700px;
+    outline: 2px solid #6344df;
+    border-radius: 2px 2px 2px 2px;
+    display:inline-block;
+    float:right;
+    margin-top:20px;
+    margin-right: 20px;
+    overflow: auto;
+    margin-bottom: 50px;
+  }
+}
+
+@media(max-width:1366px){
+  .publish-event-selection-div {
+    width: 82%;
+    height: 100px;
+    margin-left: 12%;
+    margin-right: 1%;
+    outline: 2px solid #6344df;
+    border-radius: 2px 2px 2px 2px;
+    color: #6344df;
+    font-weight: bold;
+    float:right;
+    margin-right:25px;
+  }
+
+  .publish-form-div {
+    width: 44.5%;
+    height: 700px;
+    outline: 2px solid #6344df;
+    border-radius: 2px 2px 2px 2px;
+    display:inline-block;
+    float:right;
+    margin-top:20px;
+    margin-right: 20px;
+    overflow: auto;
+    margin-bottom: 50px;
+  }
+
+  .upload-button {
+    width: 18%;
+  }
 }
