@@ -1,20 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AccountProvider } from "./AccountContext";
-import NavBar from "./navigation/NavBar";
-import SideBar from "./navigation/SideBar";
-import Home from "./pages/home";
-import Assets from "./pages/assets";
-import Publish from "./pages/publish/index.js";
-import Analytics from "./pages/analytics.js";
-import NodeDashboard from "./pages/my-othub/node-dashboard.js";
-import Build from "./pages/my-othub/build.js";
-import Portal from "./pages/my-othub/portal";
-import Inventory from "./pages/my-othub/inventory";
-import Nodes from "./pages/nodes";
-import Footer from "./navigation/Footer";
+import NavBar from "./components/navigation/NavBar";
+import SideBar from "./components/navigation/SideBar";
+import Home from "./components/home/index.js";
+import Assets from "./components/assets/index.js";
+import Publish from "./components/publish/index.js";
+import Analytics from "./components/analytics/index.js";
+import NodeDashboard from "./components/my-othub/node-dashboard/index.js";
+import Build from "./components/my-othub/build/index.js";
+import Portal from "./components/my-othub/portal/index.js";
+import Inventory from "./components/my-othub/inventory/index.js";
+import Nodes from "./components/nodes/index.js";
+import Footer from "./components/navigation/Footer";
 
-import NotFound from "./pages/notFound";
+import NotFound from "./components/effects/notFound.js";
 
 function App() {
   return (
