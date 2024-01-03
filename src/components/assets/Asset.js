@@ -33,7 +33,7 @@ const Asset = (on_chain) => {
   link_type = 'origintrail'
   explorer_url = 'https://dkg.origintrail.io'
 
-  if(chain_id === 'Origintrail Parachain Testnet'){
+  if(chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Chiado Testnet'){
     link_type =  'origintrail-testnet'
     explorer_url = 'https://dkg-testnet.origintrail.io'
   }
@@ -55,7 +55,7 @@ const Asset = (on_chain) => {
       try {
         const request_data = {
           ual: asset_data.UAL,
-          network: chain_id
+          blockchain: localStorage.getItem("blockchain") 
         }
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,

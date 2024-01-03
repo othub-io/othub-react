@@ -1,22 +1,3 @@
-.home {
-  text-align: left;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  font-family: 'Roboto', sans-serif;
-}
-
-.header {
-  padding-top:80px;
-  padding-left:230px;
-  font-size: 28px;
-  font-family: 'Roboto', sans-serif;
-  color: #6344df;
-  font-weight:bold;
-}
-
 .home-title{
   font-size: 28px;
   font-weight: bold;
@@ -75,7 +56,7 @@
 .activity-feed-timestamp{
   font-weight: bold;
   font-size: 10px;
-  width: 20%;
+  width: 15%;
   display: inline-block;
   color:#cccccc;
 }
@@ -86,8 +67,40 @@
   font-size: 10px;
   margin-left: -50px;
   color:#cccccc;
-  width: 68%;
+  width: 60%;
   text-align: left;
+}
+
+.activity-feed-blockchain-2043{
+  color: #fb5deb;
+  font-weight: bold;
+  font-size: 10px;
+  width:14%;
+  display: inline-block;
+}
+
+.activity-feed-blockchain-100{
+  color: #133629;
+  font-weight: bold;
+  font-size: 10px;
+  width:14%;
+  display: inline-block;
+}
+
+.activity-feed-blockchain-20430{
+  color: #fb5deb;
+  font-weight: bold;
+  font-size: 10px;
+  width:14%;
+  display: inline-block;
+}
+
+.activity-feed-blockchain-10200{
+  color: #133629;
+  font-weight: bold;
+  font-size: 10px;
+  width:14%;
+  display: inline-block;
 }
 
 .activity-feed-event-name-AssetCreated{
@@ -131,7 +144,7 @@
 }
 
 .activity-feed-event-name-ProofSubmitted{
-  color: rgb(19, 183, 133);
+  color:#cccccc;
   width: 28%;
   display: inline-block;
   font-weight: bold;
@@ -151,7 +164,7 @@
 }
 
 .activity-feed-event-CommitSubmitted{
-  color: rgb(218, 75, 187);
+  color:#cccccc;
   width: 16%;
   display: inline-block;
   font-weight: bold;
@@ -161,7 +174,7 @@
 }
 
 .activity-feed-event-name-CommitSubmitted{
-  color: rgb(218, 75, 187);
+  color:#cccccc;
   width: 28%;
   display: inline-block;
   font-weight: bold;
@@ -276,7 +289,7 @@
 .total-stats-home-div{
   outline: 2px solid #2f1e5c;
   height:95%;
-  width: 200px;
+  width: 245px;
   display: inline-block;
   border-radius: 5px 5px 5px 5px;
   margin-right:10px;
@@ -288,7 +301,7 @@
 .d100-home-div{
   outline: 2px solid #133629;
   height:95%;
-  width: 200px;
+  width: 245px;
   display: inline-block;
   border-radius: 5px 5px 5px 5px;
   margin-right:10px;
@@ -300,7 +313,7 @@
 .d2043-home-div{
   outline: 2px solid #fb5deb;
   height:95%;
-  width: 200px;
+  width: 245px;
   display: inline-block;
   border-radius: 5px 5px 5px 5px;
   margin-right:10px;

@@ -74,6 +74,10 @@ const MetamaskButton = (token) => {
               readable_chain_id = `Origintrail Parachain Testnet`;
             } else if (newChain === "0x7fb") {
               readable_chain_id = "Origintrail Parachain Mainnet";
+            } else if (newChain === "0x64") {
+              readable_chain_id = "Gnosis Mainnet";
+            } else if (newChain === "0x27D8") {
+              readable_chain_id = "Chiado Testnet";
             } else {
               readable_chain_id = "Unsupported Chain";
             }
@@ -127,6 +131,10 @@ const MetamaskButton = (token) => {
             readable_chain_id = `Origintrail Parachain Testnet`;
           } else if (activeChainId === "0x7fb") {
             readable_chain_id = "Origintrail Parachain Mainnet";
+          } else if (activeChainId === "0x64") {
+            readable_chain_id = "Gnosis Mainnet";
+          } else if (activeChainId === "0x27D8") {
+            readable_chain_id = "Chiado Testnet";
           } else {
             readable_chain_id = "Unsupported Chain";
           }

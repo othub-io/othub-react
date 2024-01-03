@@ -27,7 +27,7 @@ ChartJS.register(
   Legend
 );
 
-const NodeCommits = (node_data) => {
+const NodeCommits = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -36,7 +36,7 @@ const NodeCommits = (node_data) => {
   let link_type = "origintrail";
   let explorer_url = "https://dkg.origintrail.io";
 
-  if (node_data.data[0].network === "Origintrail Parachain Testnet") {
+  if (settings.data[0].network === "Origintrail Parachain Testnet") {
     link_type = "origintrail-testnet";
     explorer_url = "https://dkg-testnet.origintrail.io";
   }
@@ -45,17 +45,17 @@ const NodeCommits = (node_data) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        setisLoading(true);
         const params = {
-          network: node_data.data[0].network,
+          network: settings.data[0].network,
+          blockchain: settings.data[0].blockchain,
         };
 
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/activityFeed`,
           params
         );
-        setData(response.data.chart_data);
-        setisLoading(false);
+
+        setData(response.data.activity_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -66,7 +66,7 @@ const NodeCommits = (node_data) => {
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [node_data]);
+  }, [settings]);
 
   if (!data) {
     return (<Loading />)
@@ -81,6 +81,9 @@ const NodeCommits = (node_data) => {
             <div className="activity-feed-list-item">
               <div className="activity-feed-timestamp">
                 {record.datetime ? (record.datetime.slice(0, -5)) : ("")}
+              </div>
+              <div className={`activity-feed-blockchain-${record.chain_id}`}>
+                {record.chain_id == "100" ? ("Gnosis") : record.chain_id == "10200" ? ("Chiado") : record.chain_id == "2043" ? ("OTP Mainnet") : record.chain_id == "20430" ? ("OTP Testnet") : ""}
               </div>
               <div className="activity-feed-head">
                   <div>
@@ -97,19 +100,19 @@ const NodeCommits = (node_data) => {
                       href={sub_scan_link + "/tx/" + record.transactionHash}
                       style={{ color: "#cccccc", textDecoration: "none" }}
                     >
-                      {window.matchMedia("(max-width: 440px)").matches ? ("") : (" | Txn: " + record.transactionHash.substring(0, 12)+"...")}
+                      {window.matchMedia("(max-width: 440px)").matches ? ("") : (" | Tx: " + record.transactionHash.substring(0, 12)+"...")}
                     </a>
                   </div>
               </div>
               <div
                 className={`activity-feed-event-${record.eventName}`}
               >
-                {record.eventName === "AssetCreated" ?  (`Paid ${Number(record.eventValue1).toFixed(5)} Trac`) : ("")}
-                {record.eventName === "AssetUpdated" ?  (`Paid ${Number(record.eventValue1).toFixed(5)} Trac`) : ("")}
-                {record.eventName === "AssetTransfered" ?  (`Paid ${Number(record.eventValue1).toFixed(5)} Trac`) : ("")}
+                {record.eventName === "AssetCreated" ?  (`Paid ${Number(record.eventValue1).toFixed(3)} Trac`) : ("")}
+                {record.eventName === "AssetUpdated" ?  (`Paid ${Number(record.eventValue1).toFixed(3)} Trac`) : ("")}
+                {record.eventName === "AssetTransfered" ?  (`Paid ${Number(record.eventValue1).toFixed(3)} Trac`) : ("")}
                 {record.eventName === "AssetBurnt" ?  (`Asset Burnt`) : ("")}
-                {record.eventName === "CommitSubmitted" ?  (`Est. Earning ${Number(record.eventValue1).toFixed(5)} Trac`) : ("")}
-                {record.eventName === "ProofSubmitted" ?  (`Rewarded ${Number(record.eventValue1).toFixed(5)} Trac`) : ("")}
+                {record.eventName === "CommitSubmitted" ?  (`Est. Earn ${Number(record.eventValue1).toFixed(3)} Trac`) : ("")}
+                {record.eventName === "ProofSubmitted" ?  (`Reward ${Number(record.eventValue1).toFixed(3)} Trac`) : ("")}
               </div>
             </div>
           ))}

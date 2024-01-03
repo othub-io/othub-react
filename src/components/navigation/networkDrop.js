@@ -13,6 +13,8 @@ const NetworkDrop = ({ network, blockchain }) => {
   useEffect(() => {
     async function fetchData() {
       try {
+        localStorage.removeItem("blockchain", "");
+
         const request_data = {
           network: "DKG Mainnet",
         };

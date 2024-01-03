@@ -29,8 +29,16 @@ const Assets = () => {
     limit: "100",
   });
 
-  const [network, setNetwork] = useState(localStorage.getItem("network") ? (localStorage.getItem("network") ) : ("DKG Mainnet"));
-  const [blockchain, setBlockchain] = useState(localStorage.getItem("blockchain") ? (localStorage.getItem("blockchain") ) : (null));
+  const [network, setNetwork] = useState(
+    localStorage.getItem("network")
+      ? localStorage.getItem("network")
+      : "DKG Mainnet"
+  );
+  const [blockchain, setBlockchain] = useState(
+    localStorage.getItem("blockchain")
+      ? localStorage.getItem("blockchain")
+      : null
+  );
 
   const queryParameters = new URLSearchParams(window.location.search);
   const provided_ual = queryParameters.get("ual");
@@ -40,7 +48,7 @@ const Assets = () => {
       try {
         const request_data = {
           network: network,
-          blockchain: blockchain
+          blockchain: blockchain,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
@@ -59,8 +67,7 @@ const Assets = () => {
           } else {
             const pubs_response = await axios.post(
               `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
-              { network: network, ual: provided_ual,
-                blockchain: blockchain }
+              { network: network, ual: provided_ual, blockchain: blockchain }
             );
 
             if (pubs_response.data.v_pubs[0] !== "") {
@@ -109,7 +116,7 @@ const Assets = () => {
             order: filterInput.order,
             limit: filterInput.limit,
             network: network,
-            blockchain: blockchain
+            blockchain: blockchain,
           };
           const response = await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
@@ -129,151 +136,149 @@ const Assets = () => {
     setData("");
   };
 
-  return (
-    <div className="assets">
-      {isAssetOpen && inputValue && (
-        <div className="popup-overlay">
-          <div className="inv-assets-popup-content">
-            <button className="assets-close-button" onClick={closeAssetPopup}>
-              X
-            </button>
-            <Asset data={inputValue} />
-          </div>
+  if (isAssetOpen && inputValue) {
+    return (
+      <div className="popup-overlay">
+        <div className="inv-assets-popup-content">
+          <button className="assets-close-button" onClick={closeAssetPopup}>
+            X
+          </button>
+          <Asset data={inputValue} />
         </div>
-      )}
-      <NetworkDrop
-              network={setNetwork}
-              blockchain={setBlockchain}
+      </div>
+    );
+  }
+  return (
+    <div className="main">
+      <div className="header">
+        <NetworkDrop network={setNetwork} blockchain={setBlockchain} />
+      </div>
+      <div className="assets-form">
+        <form onSubmit={handleFilterSubmit}>
+          <div>
+            UAL<br></br>
+            <input
+              type="text"
+              name="ual"
+              value={filterInput.ual}
+              onChange={handleFilterInput}
+              maxLength="100"
             />
+          </div>
+          <br></br>
+          <div>
+            Creator<br></br>
+            <input
+              type="text"
+              name="creator"
+              value={filterInput.creator}
+              onChange={handleFilterInput}
+              maxLength="100"
+            />
+          </div>
+          <br></br>
+          <div>
+            Node ID<br></br>
+            <input
+              type="text"
+              name="node_id"
+              value={filterInput.node_id}
+              onChange={handleFilterInput}
+              maxLength="100"
+            />
+          </div>
+          <div className="asset-limit">
+            Limit: {filterInput.limit}
+            <br></br>
+            <input
+              name="limit"
+              type="range"
+              min="0"
+              max="1000"
+              value={filterInput.limit}
+              onChange={handleFilterInput}
+              style={{ cursor: "pointer", width: "75%" }}
+            />
+          </div>
+          <div className="radios">
+            Sort:<br></br>
+            <input
+              type="radio"
+              name="order"
+              value="block_ts_hour"
+              onChange={handleFilterInput}
+              maxLength="100"
+            />
+            Mint Date<br></br>
+            <input
+              type="radio"
+              name="order"
+              value="epochs_number"
+              onChange={handleFilterInput}
+              maxLength="100"
+            />
+            Expire Date<br></br>
+            <input
+              type="radio"
+              name="order"
+              value="size"
+              onChange={handleFilterInput}
+              maxLength="100"
+            />
+            Size<br></br>
+            <input
+              type="radio"
+              name="order"
+              value="token_amount"
+              onChange={handleFilterInput}
+              maxLength="100"
+            />
+            Cost
+          </div>
+          <button type="submit">Apply</button>
+        </form>
+      </div>
       {data ? (
-        <header className="assets-header">
-          <div className="assets-form">
-            <form onSubmit={handleFilterSubmit}>
-              <div>
-                UAL<br></br>
-                <input
-                  type="text"
-                  name="ual"
-                  value={filterInput.ual}
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
+        <div className="asset-card-container">
+          {data.v_pubs.map((pub) => (
+            <button
+              onClick={() => openAssetPopup(pub)}
+              className={`asset-card-id${pub.chain_id}`}
+              key={pub.UAL}
+            >
+              <div className={`card-token-id${pub.chain_id}`}>
+                {pub.token_id}
               </div>
-              <br></br>
-              <div>
-                Creator<br></br>
-                <input
-                  type="text"
-                  name="creator"
-                  value={filterInput.creator}
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
+              <div className={`card-image-id${pub.chain_id}`}>
+                <img
+                  className="card-img"
+                  src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`}
+                  alt="KA"
+                ></img>
               </div>
-              <br></br>
-              <div>
-                Node ID<br></br>
-                <input
-                  type="text"
-                  name="node_id"
-                  value={filterInput.node_id}
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
+              <div className={`card-size-id${pub.chain_id}`}>
+                {pub.size}bytes
               </div>
-              <div className="asset-limit">
-                Limit: {filterInput.limit}
-                <br></br>
-                <input
-                  name="limit"
-                  type="range"
-                  min="0"
-                  max="50000"
-                  value={filterInput.limit}
-                  onChange={handleFilterInput}
-                  style={{ cursor: "pointer", width: "75%" }}
-                />
+              <div className={`card-cost-id${pub.chain_id}`}>
+                {pub.token_amount.toFixed(2)} Trac
               </div>
-              <div className="radios">
-                Sort:<br></br>
-                <input
-                  type="radio"
-                  name="order"
-                  value="block_ts_hour"
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
-                Mint Date<br></br>
-                <input
-                  type="radio"
-                  name="order"
-                  value="epochs_number"
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
-                Expire Date<br></br>
-                <input
-                  type="radio"
-                  name="order"
-                  value="size"
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
-                Size<br></br>
-                <input
-                  type="radio"
-                  name="order"
-                  value="token_amount"
-                  onChange={handleFilterInput}
-                  maxLength="100"
-                />
-                Cost
+              <div className={`card-expires-id${pub.chain_id}`}>
+                Exp. in{" "}
+                {Math.ceil(
+                  (new Date(pub.block_ts_hour).getTime() +
+                    Number(pub.epochs_number) *
+                      (Number(pub.epoch_length_days) * 24 * 60 * 60 * 1000) -
+                    Math.abs(new Date())) /
+                    (1000 * 60 * 60 * 24)
+                )}
+                d
               </div>
-              <button type="submit">Apply</button>
-            </form>
-          </div>
-          <div className="assets-result-count">
-            {data.v_pubs.length} results
-          </div>
-          <div className="asset-card-container">
-            {data.v_pubs.map((pub) => (
-              <button
-                onClick={() => openAssetPopup(pub)}
-                className="asset-card"
-                key={pub.UAL}
-              >
-                <div className="card-token">{pub.token_id}</div>
-                <div className="card-image">
-                  <img
-                    className="card-img"
-                    src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`}
-                    alt="KA"
-                  ></img>
-                </div>
-                <div className="card-size">{pub.size}bytes</div>
-                <div className="card-cost">
-                  {pub.token_amount.toFixed(2)} Trac
-                </div>
-                <div className="card-expires">
-                  Exp. in{" "}
-                  {Math.ceil(
-                    (new Date(pub.block_ts_hour).getTime() +
-                      Number(pub.epochs_number) *
-                        (Number(pub.epoch_length_days) * 24 * 60 * 60 * 1000) -
-                      Math.abs(new Date())) /
-                      (1000 * 60 * 60 * 24)
-                  )}
-                  d
-                </div>
-              </button>
-            ))}
-          </div>
-        </header>
+            </button>
+          ))}
+        </div>
       ) : (
-        <div className="assets">
-          <div className="assets-header">
-            <Loading />
-          </div>
+        <div className="asset-card-container">
+          <Loading />
         </div>
       )}
     </div>

@@ -36,14 +36,14 @@ const CumPay = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
           network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+          blockchain: settings.data[0].blockchain,
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/cumGraph`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/cumPay`,
           time_data
         );
+
         setData(response.data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -55,10 +55,12 @@ const CumPay = (settings) => {
     fetchData();
   }, [settings]);
 
-  let labels = [];
-  let cumulativeTotalTracSpent = [];
-  let cumulativePubs = [];
-  let cumulativePayout = [];
+  let cumulativePayout_obj = [];
+
+  const formattedData = {
+    datasets: [],
+  };
+
   if (data) {
     let format = "DD MMM";
     if (inputValue === "24h") {
@@ -71,44 +73,71 @@ const CumPay = (settings) => {
       format = "DD MMM";
     }
 
-    labels = data.map((item) => moment(item.date).format(format));
-    cumulativeTotalTracSpent = data.map(
-      (item) => item.cumulativeTotalTracSpent
-    );
-    cumulativePubs = data.map((item) => item.cumulativePubs);
-    cumulativePayout = data.map((item) => item.cumulativePayout);
-  } else {
-    return <Loading />;
-  }
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.cum_total
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  // Extract labels and data from the dataset
-  const formattedData = {
-    labels: labels,
-    datasets: [
-        {
-            label: "TRAC Spent",
-            data: cumulativeTotalTracSpent,
-            fill: false,
-            borderColor: "#6344df",
-            backgroundColor: "#6344df",
-          },
-      {
-        label: "TRAC Rewarded",
-        data: cumulativePayout,
+    formattedData.labels = formattedDates;
+
+    let chain_color;
+    for (const blockchain of data) {
+      if (
+        blockchain.blockchain_name === "Total" &&
+        settings.data[0].blockchain
+      ) {
+        continue;
+      }
+
+      let cumPay = blockchain.cum_total.map((item) => item.cumulativePayouts);
+      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet") {
+        chain_color = "#fb5deb";
+      }
+
+      if (blockchain.blockchain_name === "Gnosis Mainnet") {
+        chain_color = "#133629";
+      }
+
+      if (blockchain.blockchain_name === "Total") {
+        chain_color = "#2f1e5c";
+      }
+
+      cumulativePayout_obj = {
+        label: blockchain.blockchain_name,
+        data: cumPay,
         fill: false,
-        borderColor: "#df6344",
-        backgroundColor: "#df6344",
-      },
-    ],
-  };
+        borderColor: chain_color,
+        backgroundColor: chain_color,
+        type: "line",
+      };
+      formattedData.datasets.push(cumulativePayout_obj);
+    }
+  }
 
   const options = {
     scales: {
       y: {
         beginAtZero: false, // Start the scale at 0
+        title: {
+          display: true,
+          text: "TRAC", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
         ticks: {
           callback: function (value, index, values) {
             if (value >= 1000000) {
@@ -135,20 +164,46 @@ const CumPay = (settings) => {
   };
 
   return (
-    <div className="home-chart">
+    <div>
       {data ? (
         <div className="chart-widget">
-            <div className="home-chart-name">Cumulative TRAC spent on asset publishing and TRAC rewarded</div>
-            <br></br>
+          <div className="home-chart-name">
+            Cumulative TRAC spent on asset publishing and TRAC rewarded
+          </div>
+          <br></br>
           <div className="chart-port">
             <Line
               data={formattedData}
               options={options}
               height={
-                window.matchMedia("(max-width: 380px)").matches ? "170" : window.matchMedia("(max-width: 400px)").matches ? "160" : window.matchMedia("(max-width: 420px)").matches ? "140" : window.matchMedia("(max-width: 480px)").matches ? "100" : (window.matchMedia("(max-width: 1366px)").matches ? "140" : (window.matchMedia("(max-width: 1536px)").matches ? "110" : "100"))
+                window.matchMedia("(max-width: 380px)").matches
+                  ? "120"
+                  : window.matchMedia("(max-width: 400px)").matches
+                  ? "170"
+                  : window.matchMedia("(max-width: 420px)").matches
+                  ? "150"
+                  : window.matchMedia("(max-width: 480px)").matches
+                  ? "110"
+                  : window.matchMedia("(max-width: 1366px)").matches
+                  ? "140"
+                  : window.matchMedia("(max-width: 1536px)").matches
+                  ? "110"
+                  : "100"
               }
               width={
-                window.matchMedia("(max-width: 380px)").matches ? "260" : window.matchMedia("(max-width: 400px)").matches ? "260" : window.matchMedia("(max-width: 420px)").matches ? "240" : window.matchMedia("(max-width: 480px)").matches ? "200" : (window.matchMedia("(max-width: 1366px)").matches ? "200" : (window.matchMedia("(max-width: 1536px)").matches ? "200" : "200"))
+                window.matchMedia("(max-width: 380px)").matches
+                  ? "180"
+                  : window.matchMedia("(max-width: 400px)").matches
+                  ? "260"
+                  : window.matchMedia("(max-width: 420px)").matches
+                  ? "240"
+                  : window.matchMedia("(max-width: 480px)").matches
+                  ? "200"
+                  : window.matchMedia("(max-width: 1366px)").matches
+                  ? "200"
+                  : window.matchMedia("(max-width: 1536px)").matches
+                  ? "200"
+                  : "200"
               }
             />
           </div>

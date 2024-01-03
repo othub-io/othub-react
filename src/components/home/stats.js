@@ -8,20 +8,9 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
-function formatNumber(number) {
-  if (number >= 1000) {
-    const suffixes = ["", "K", "M", "B", "T"];
-    const suffixIndex = Math.floor(Math.log10(number) / 3);
-    const shortNumber =
-      suffixIndex !== 0 ? number / Math.pow(1000, suffixIndex) : number;
-    const roundedNumber = Math.round(shortNumber * 10) / 10;
-    return roundedNumber.toString().replace(/\.0$/, "") + suffixes[suffixIndex];
-  }
-  return number.toString();
-}
-
 const Stats = (settings) => {
   const [stats, setStats] = useState("");
+  const [price, setPrice] = useState("");
   let total_pub_count = 0
   let total_stake = 0
   let total_trac_spent = 0
@@ -32,9 +21,10 @@ const Stats = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log(settings.data[0].network)
+        setStats("")
         const request_data = {
           network: settings.data[0].network,
+          blockchain: settings.data[0].blockchain,
         };
 
         const response = await axios.post(
@@ -42,8 +32,20 @@ const Stats = (settings) => {
           request_data
         );
 
-        console.log(response.data)
         setStats(response.data);
+
+        const rsp = await axios.get(
+            "https://api.coingecko.com/api/v3/coins/origintrail"
+          );
+  
+        if(settings.data[0].network === 'DKG Mainnet'){
+            const rsp = await axios.get(
+                "https://api.coingecko.com/api/v3/coins/origintrail"
+              );
+              setPrice(rsp.data.market_data.current_price.usd);
+        }else{
+            setPrice(0.000000001)
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -51,32 +53,6 @@ const Stats = (settings) => {
 
     fetchData();
   }, [settings]);
-
-  //   if (stats) {
-  //     pub_count = formatNumber(parseFloat(data.pub_count));
-  //     totalTracSpent = formatNumber(
-  //       parseFloat(Number(data.totalTracSpent).toFixed(2))
-  //     );
-  //     totalPubs_24h = formatNumber(
-  //       parseFloat(data.v_pubs_stats_last24h[0].totalPubs)
-  //     );
-  //     totalSpent_24h = formatNumber(
-  //       parseFloat(data.v_pubs_stats_last24h[0].totalTracSpent).toFixed(2)
-  //     );
-  //     avg_size = formatNumber(
-  //       parseFloat(data.v_pubs_stats_last24h[0].avgPubSize).toFixed(0)
-  //     );
-  //     avg_epochs = formatNumber(
-  //       parseFloat(data.v_pubs_stats_last24h[0].avgEpochsNumber).toFixed(1)
-  //     );
-  //     avg_ask = formatNumber(
-  //       parseFloat(data.v_pubs_stats_last24h[0].avgPubPrice).toFixed(2)
-  //     );
-  //     avg_big = formatNumber(
-  //       parseFloat(data.v_pubs_stats_last24h[0].avgBid).toFixed(2)
-  //     );
-  //     totalStake = formatNumber(parseFloat(Number(data.totalStake).toFixed(2)));
-  //   }
 
   if(stats !== ""){
     for(const blockchain of stats){
@@ -91,46 +67,47 @@ const Stats = (settings) => {
 
   return stats ? (
     <div className="home-stats">
-       <div key="total_stats" className={`total-stats-home-div`}>
+       {!localStorage.getItem("blockchain") && <div key="total_stats" className={`total-stats-home-div`}>
             <div className="chain-logo">
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=origintrail_logo-dark_purple.png`}
-                alt="ot-logo"
+                alt="Origintrail Network"
                 width="100"
                 ></img><span>{settings.data[0].network.substring(4)}</span>
             </div>
             <div className="chain-assets">
-                Total Assets:<br/>
+                Assets:<br/>
                 <span>{total_pub_count}</span>
             </div>
             <div className="chain-stake">
-                Total Stake:<br/>
-                <span>{total_stake}</span>
-            </div>
-            <div className="chain-stake">
-                Total Trac Spent:<br/>
-                <span>{total_trac_spent}</span>
-            </div>
-            <div className="chain-stake">
-                Total Nodes:<br/>
-                <span>{nodes}</span>
-            </div>
-            <div className="chain-stake">
-                Total Assets Last 24h:<br/>
+                Assets Last 24h:<br/>
                 <span>{pubs_stats_last24h}</span>
             </div>
             <div className="chain-stake">
-                Total TRAC Spent Last 24h:<br/>
-                <span>{total_trac_spent24h}</span>
+                Active Nodes:<br/>
+                <span>{nodes}</span>
             </div>
-        </div>
+            <div className="chain-stake">
+                TRAC Spent Last 24h:<br/>
+                <span>{`${total_trac_spent24h.toFixed(2)} ($${(total_trac_spent24h.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                Trac Spent:<br/>
+                <span>{`${total_trac_spent.toFixed(2)} ($${(total_trac_spent.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                Network Stake:<br/>
+                <span>{`${total_stake.toFixed(2)} ($${(total_stake.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+        </div>}
       {stats.map((blockchain) => (
-        <div key={blockchain.blockchain_name} className={`d${blockchain.blockchain_id}-home-div`}>
+        <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-home-div`}>
             <div className="chain-logo">
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
-                alt={`id${blockchain.blockchain_id}-logo`}
+                alt={blockchain.chain_name}
                 width="150"
+                height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
                 ></img>
             </div>
             <div className="chain-assets">
@@ -138,30 +115,30 @@ const Stats = (settings) => {
                 <span>{blockchain.pub_count}</span>
             </div>
             <div className="chain-stake">
-                Stake:<br/>
-                <span>{blockchain.totalStake}</span>
-            </div>
-            <div className="chain-stake">
-                Trac Spent:<br/>
-                <span>{blockchain.totalTracSpent}</span>
-            </div>
-            <div className="chain-stake">
-                Nodes:<br/>
-                <span>{blockchain.nodes}</span>
-            </div>
-            <div className="chain-stake">
                 Assets Last 24h:<br/>
                 <span>{blockchain.pubs_stats_last24h[0].totalPubs}</span>
             </div>
             <div className="chain-stake">
+                Active Nodes:<br/>
+                <span>{blockchain.nodes}</span>
+            </div>
+            <div className="chain-stake">
                 TRAC Spent Last 24h:<br/>
-                <span>{blockchain.pubs_stats_last24h[0].totalTracSpent}</span>
+                <span>{`${blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(2)} ($${(blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                Trac Spent:<br/>
+                <span>{`${blockchain.totalTracSpent.toFixed(2)} ($${(blockchain.totalTracSpent.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                Network Stake:<br/>
+                <span>{`${blockchain.totalStake.toFixed(2)} ($${(blockchain.totalStake.toFixed(2) * price).toFixed(2)})`}</span>
             </div>
         </div>
       ))}
     </div>
   ) : (
-    <div className="home-form">
+    <div className="home-stats">
         <Loading />
     </div>
   );

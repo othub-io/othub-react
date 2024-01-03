@@ -17,16 +17,30 @@ const config = {
   },
 };
 
-const testnet_node_options = {
+const otp_testnet_node_options = {
   endpoint: process.env.REACT_APP_OTNODE_HOST,
-  port: process.env.REACT_APP_OTNODE_TESTNET_PORT,
+  port: process.env.REACT_APP_OTP_TESTNET_PORT,
   useSSL: true,
   maxNumberOfRetries: 100,
 };
 
-const mainnet_node_options = {
+const otp_mainnet_node_options = {
   endpoint: process.env.REACT_APP_OTNODE_HOST,
-  port: process.env.REACT_APP_OTNODE_MAINNET_PORT,
+  port: process.env.REACT_APP_OTP_MAINNET_PORT,
+  useSSL: true,
+  maxNumberOfRetries: 100,
+};
+
+const gno_testnet_node_options = {
+  endpoint: process.env.REACT_APP_OTNODE_HOST,
+  port: process.env.REACT_APP_GNO_TESTNET_PORT,
+  useSSL: true,
+  maxNumberOfRetries: 100,
+};
+
+const gno_mainnet_node_options = {
+  endpoint: process.env.REACT_APP_OTNODE_HOST,
+  port: process.env.REACT_APP_GNO_MAINNET_PORT,
   useSSL: true,
   maxNumberOfRetries: 100,
 };
@@ -55,19 +69,34 @@ const AssetPublish = (selectedFile) => {
   let node_options;
   let network;
   let explorer_url = "https://dkg.origintrail.io";
+  let env = "mainnet"
 
   if (connected_blockchain === "Origintrail Parachain Testnet") {
-    network = "otp::testnet";
-    node_options = testnet_node_options;
+    network = "otp::20430";
+    node_options = otp_testnet_node_options;
     explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet"
+  }
+
+  if (connected_blockchain === "Chiado Testnet") {
+    network = "gno::10200";
+    node_options = gno_testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet"
   }
 
   if (connected_blockchain === "Origintrail Parachain Mainnet") {
-    network = "otp::mainnet";
-    node_options = mainnet_node_options;
+    network = "otp::2043";
+    node_options = otp_mainnet_node_options;
+  }
+
+  if (connected_blockchain === "Gnosis Mainnet") {
+    network = "gno::100";
+    node_options = gno_mainnet_node_options;
   }
 
   const dkgOptions = {
+    environment: env,
     epochsNum: inputValue,
     maxNumberOfRetries: 30,
     frequency: 2,

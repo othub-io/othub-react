@@ -69,13 +69,18 @@ const Publish = () => {
 
   if (
     connected_blockchain !== "Origintrail Parachain Testnet" &&
-    connected_blockchain !== "Origintrail Parachain Mainnet"
+    connected_blockchain !== "Origintrail Parachain Mainnet"&&
+    connected_blockchain !== "Chiado Testnet"&&
+    connected_blockchain !== "Gnosis Mainnet"
   ) {
     return (
       <div className="keys">
         <header className="keys-header">
-          Connected with an unsupported chain. Please switch to Origintrail
-          Parachain Testnet or Mainnet.
+          Connected with an unsupported blockchain. Supported blockchains are:<br/>
+          OriginTrail Parachain Testnet<br/>
+          OriginTrail Parachain Mainnet<br/>
+          Chiado Testnet<br/>
+          Gnosis Mainnet<br/>
         </header>
       </div>
     );
