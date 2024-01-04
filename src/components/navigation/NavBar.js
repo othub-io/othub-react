@@ -10,6 +10,8 @@ let back_admin_key;
 let addr;
 let chain;
 let url;
+let aurl;
+let burl;
 let ext;
 
 ext = "http";
@@ -18,7 +20,7 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 }
 
 function NavBar() {
-  const { isLoading, balance, setBalance, } = useContext(AccountContext);
+  const { isLoading, balance, setBalance } = useContext(AccountContext);
 
   const account = localStorage.getItem("account");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
@@ -36,29 +38,89 @@ function NavBar() {
           if (connected_blockchain === "Origintrail Parachain Mainnet") {
             url = "https://origintrail.api.subscan.io/api/scan/account/tokens";
           }
+
+          if (connected_blockchain === "Gnosis Mainnet") {
+            aurl =
+              "https://gnosis.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b/token-balances";
+            burl =
+              "https://gnosis.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b";
+          }
+
+          if (connected_blockchain === "Chiado Testnet") {
+            aurl =
+              "https://gnosis-chiado.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b/token-balances";
+            burl =
+              "https://gnosis-chiado.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b";
+          }
         }
 
-        const data = {
-          address: account,
-        };
+        if (
+          connected_blockchain === "Origintrail Parachain Testnet" ||
+          connected_blockchain === "Origintrail Parachain Mainnet"
+        ) {
+          const data = {
+            address: account,
+          };
 
-        const account_balance = await axios
-          .post(url, data, {
-            headers: {
-              "Content-Type": "application/json",
-              "X-API-Key": process.env.REACT_APP_SUBSCAN_KEY,
-            },
-          })
-          .then(function (response) {
-            // Handle the successful response here
-            return response.data;
-          })
-          .catch(function (error) {
-            // Handle errors here
-            console.error(error);
-          });
+          let account_balance = await axios
+            .post(url, data, {
+              headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": process.env.REACT_APP_SUBSCAN_KEY,
+              },
+            })
+            .then(function (response) {
+              // Handle the successful response here
+              return response.data;
+            })
+            .catch(function (error) {
+              // Handle errors here
+              console.error(error);
+            });
 
-        setBalance(account_balance.data);
+            setBalance(account_balance.data);
+        }
+
+        if (
+          connected_blockchain === "Chiado Testnet" ||
+          connected_blockchain === "Gnosis Mainnet"
+        ) {
+          let xdai_balance = await axios
+            .get(burl)
+            .then(function (response) {
+              // Handle the successful response here
+              return response.data;
+            })
+            .catch(function (error) {
+              // Handle errors here
+              console.error(error);
+            });
+
+            let token_balance = await axios
+            .get(aurl)
+            .then(function (response) {
+              // Handle the successful response here
+              return response.data;
+            })
+            .catch(function (error) {
+              // Handle errors here
+              console.error(error);
+            });
+
+            let trac_balance;
+            for(const token of token_balance){
+              if(token.token.symbol === "TRAC"){
+                trac_balance = token.value
+              }
+            }
+
+            let account_balance ={
+              xdai: xdai_balance.coin_balance,
+              trac: trac_balance
+            }
+            setBalance(account_balance);
+        }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -83,10 +145,6 @@ function NavBar() {
     }),
   };
 
-  if (isLoading) {
-    <Loading />;
-  }
-
   return (
     <nav>
       <div className="navbar">
@@ -109,14 +167,17 @@ function NavBar() {
             <span style={connectionStyle}>{chain}</span>
           </div>
 
-          {account && balance ? (
+          {account &&
+          balance &&
+          (connected_blockchain === "Origintrail Parachain Mainnet" ||
+            connected_blockchain === "Origintrail Parachain Testnet") ? (
             <div className="balance">
               {balance.native ? (
                 <span>
                   {(balance.native[0].balance / 1000000000000).toFixed(4)} OTP
                 </span>
               ) : (
-                <span></span>
+                <span>0 OTP</span>
               )}
               <br></br>
               {balance.ERC20 ? (
@@ -125,15 +186,28 @@ function NavBar() {
                   TRAC
                 </span>
               ) : (
-                <span>0</span>
+                <span>0 TRAC</span>
               )}
             </div>
           ) : (
-            <div></div>
+            ""
+          )}
+
+          {account &&
+          balance &&
+          (connected_blockchain === "Gnosis Mainnet" ||
+            connected_blockchain === "Chiado Testnet") ? (
+            <div className="balance">
+              <span>{balance.xdai ? (balance.xdai / 1000000000000000000).toFixed(4) : (0)} xDai</span>
+                <br />
+                <span>{balance.trac ? (balance.trac / 1000000000000000000).toFixed(4) : (0)} TRAC</span>
+            </div>
+          ) : (
+            ""
           )}
         </div>
 
-        <MetamaskButton token={localStorage.getItem("token")}/>
+        <MetamaskButton token={localStorage.getItem("token")} />
       </div>
     </nav>
   );

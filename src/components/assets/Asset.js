@@ -21,7 +21,6 @@ let sub_scan_link
 let link_type
 
 const Asset = (on_chain) => {
-  const chain_id = localStorage.getItem('chain_id')
   const [assetHistory, setAssetHistory] = useState("");
   const isMobile = window.matchMedia('(max-width: 480px)').matches
   let winners
@@ -33,7 +32,7 @@ const Asset = (on_chain) => {
   link_type = 'origintrail'
   explorer_url = 'https://dkg.origintrail.io'
 
-  if(chain_id === 'Origintrail Parachain Testnet' || chain_id === 'Chiado Testnet'){
+  if(localStorage.getItem('network') === 'DKG Testnet'){
     link_type =  'origintrail-testnet'
     explorer_url = 'https://dkg-testnet.origintrail.io'
   }
@@ -55,7 +54,7 @@ const Asset = (on_chain) => {
       try {
         const request_data = {
           ual: asset_data.UAL,
-          blockchain: localStorage.getItem("blockchain") 
+          blockchain: asset_data.chain_name
         }
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
