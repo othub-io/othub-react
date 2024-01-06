@@ -24,12 +24,14 @@ const Charts = () => {
 
   return (
     network && (
-      <div className="charts">
-        <div className="charts-header">
-        <NetworkDrop
+      <div className="main">
+        <div className="header">
+            <NetworkDrop
               network={setNetwork}
               blockchain={setBlockchain}
             />
+        </div>
+        <div className="charts-body">
           <div className="chart-container">
             <AssetsMinted data={[{network: network, blockchain: blockchain}]} />
           </div>
@@ -51,9 +53,9 @@ const Charts = () => {
           <div className="chart-container">
             <Epochs data={[{network: network, blockchain: blockchain}]} />
           </div>
-          <div className="chart-container">
+          {/* <div className="chart-container">
             <NodeStake data={[{network: network, blockchain: blockchain}]} />
-          </div>
+          </div> */}
         </div>
       </div>
     )

@@ -67,7 +67,7 @@ const InvAsset = (txn) => {
   explorer_url = "https://dkg.origintrail.io";
   let node_options = mainnet_node_options;
 
-  if (connected_blockchain === "Origintrail Parachain Testnet") {
+  if (connected_blockchain === "Origintrail Parachain Testnet" || connected_blockchain === "Chiado Testnet") {
     link_type = "origintrail-testnet";
     explorer_url = "https://dkg-testnet.origintrail.io";
     node_options = testnet_node_options;

@@ -36,7 +36,7 @@ const Payouts = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
+          timeframe: "",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
         };
@@ -60,7 +60,7 @@ const Payouts = (settings) => {
       setisLoading(true)
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
       };
@@ -75,45 +75,83 @@ const Payouts = (settings) => {
     }
   };
 
-  let labels = [];
-  let payouts = [];
-  if (data) {
-    let format = "MMM YY"
-    if(inputValue === "24h"){
-      format = 'HH:00'
-    }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
-    }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
-    }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
-    }
-
-    labels = data.map((item) => moment(item.date).format(format));
-    payouts = data.map((item) => item.payouts);
-  }else{
-    return (<Loading />)
-  }
-
   if(isLoading){
     return (<Loading />)
   }
-  // Extract labels and data from the dataset
+
   const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Rewards",
+    datasets: [],
+  };
+
+  if (data) {
+    let format = "MMM YY";
+    if (inputValue === "24h") {
+      format = "HH:00";
+    }
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
+    }
+    if (inputValue === "30d") {
+      format = "DD MMM";
+    }
+    if (inputValue === "6m") {
+      format = "DD MMM";
+    }
+
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
+
+    formattedData.labels = formattedDates;
+
+    let chain_color;
+    let chain_color2;
+    let payouts;
+    for (const blockchain of data) {
+      payouts = blockchain.chart_data.map(
+        (item) => item.payouts
+      );
+
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
+        chain_color = "#fb5deb";
+        chain_color2 = "#fac3f4"
+      }
+
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
+        chain_color = "#133629";
+        chain_color2 = "#5abf9a"
+      }
+
+      let payouts_obj = {
+        label: blockchain.blockchain_name,
         data: payouts,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df"
-      }
-    ],
-  };
+        borderColor: chain_color,
+        backgroundColor: chain_color,
+      };
+
+      formattedData.datasets.push(payouts_obj);
+    }
+  }
 
   const options = {
     scales: {
@@ -121,35 +159,37 @@ const Payouts = (settings) => {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
         title: {
-            display: true,
-            text: "TRAC", // Add your X-axis label here
-            color: "#6344df", // Label color
-            font: {
-              size: 12, // Label font size
-            },
+          display: true,
+          text: "TRAC", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
           },
-          ticks: {
-            callback: function (value, index, values) {
-              if (value >= 1000000) {
-                return (value / 1000000).toFixed(1) + "M";
-              } else if (value >= 1000) {
-                return (value / 1000).toFixed(1) + "K";
-              } else {
-                return value;
-              }
-            },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
           },
+        },
       },
       x: {
-        title: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        title: { // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        },
-      }
+        }
+      },
     },
   };
 

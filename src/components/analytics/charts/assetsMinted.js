@@ -36,7 +36,7 @@ const AssetsMinted = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
+          timeframe: "",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
         };
@@ -55,12 +55,16 @@ const AssetsMinted = (settings) => {
     fetchData();
   }, [settings]);
 
+  if(isLoading){
+    return (<Loading />)
+  }
+
   const changeTimeFrame = async (timeframe) => {
     try {
       setisLoading(true)
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
       };
@@ -75,8 +79,10 @@ const AssetsMinted = (settings) => {
     }
   };
 
-  let labels = [];
-  let pubCounts = [];
+  const formattedData = {
+    datasets: [],
+  };
+
   if (data) {
     let format = "MMM YY"
     if(inputValue === "24h"){
@@ -92,40 +98,61 @@ const AssetsMinted = (settings) => {
       format = 'DD MMM'
     }
 
-    labels = data.map((item) => moment(item.date).format(format));
-    pubCounts = data.map((item) => item.totalPubs);
-  }else{
-    return (<Loading />)
-  }
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
 
-  if(isLoading){
-    return (<Loading />)
-  }
+    formattedData.labels = formattedDates;
 
-  // Extract labels and data from the dataset
-  const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Assets",
+    let chain_color;
+    let pubCounts_obj;
+    for (const blockchain of data) {
+      let pubCounts = blockchain.chart_data.map((item) => item.totalPubs);
+      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet" || blockchain.blockchain_name === "Origintrail Parachain Testnet") {
+        chain_color = "#fb5deb";
+      }
+
+      if (blockchain.blockchain_name === "Gnosis Mainnet" || blockchain.blockchain_name === "Chiado Testnet") {
+        chain_color = "#133629";
+      }
+
+      pubCounts_obj = {
+        label: blockchain.blockchain_name,
         data: pubCounts,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df"
-      },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
-    ],
-  };
+        borderColor: chain_color,
+        backgroundColor: chain_color
+      };
+      formattedData.datasets.push(pubCounts_obj);
+    }
+  }
 
   const options = {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        title: {
+          display: true,
+          text: "Assets", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
         ticks: {
           callback: function (value, index, values) {
             if (value >= 1000000) {
@@ -139,15 +166,17 @@ const AssetsMinted = (settings) => {
         },
       },
       x: {
-        title: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        title: { // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        },
-      }
+        }
+      },
     },
   };
 

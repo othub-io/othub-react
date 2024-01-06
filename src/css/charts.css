@@ -7,13 +7,13 @@
   font-family: "Roboto", sans-serif;
 }
 
-.charts-header {
+.charts-body {
   font-size: calc(10px + 2vmin);
   z-index: 10;
   color: #6344df;
   height: 85vh;
   width:87%;
-  margin-top: 5%;
+  margin-top: 10px;
   margin-left: 12%;
   overflow: auto;
   padding-left: 3px;
@@ -31,6 +31,7 @@
   border-radius: 10px 10px 10px 10px;
   display: inline-block;
   float: left;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .chart-name{
@@ -44,6 +45,13 @@
     height:380px;
 }
 
+.chart-filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
 .chart-filter-button{
     background-color: #FFFFFF;
     border: none;
@@ -53,6 +61,7 @@
     cursor: pointer;
     margin-left:10px;
     font-weight: bold;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .chart-filter-button:hover {

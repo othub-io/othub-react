@@ -36,7 +36,7 @@ const TracSpent = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
+          timeframe: "",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain 
         };
@@ -60,7 +60,7 @@ const TracSpent = (settings) => {
         setisLoading(true)
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
       };
@@ -75,8 +75,14 @@ const TracSpent = (settings) => {
     }
   };
 
-  let labels = [];
-  let totalTracSpent = [];
+  if(isLoading){
+    return (<Loading />)
+  }
+
+  const formattedData = {
+    datasets: [],
+  };
+
   if (data) {
     let format = "MMM YY"
     if(inputValue === "24h"){
@@ -92,64 +98,84 @@ const TracSpent = (settings) => {
       format = 'DD MMM'
     }
 
-    labels = data.map((item) => moment(item.date).format(format));
-    totalTracSpent = data.map((item) => item.totalTracSpent);
-  }else{
-    return (<Loading />)
-  }
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
 
-  if(isLoading){
-    return (<Loading />)
-  }
+    formattedData.labels = formattedDates;
 
-  // Extract labels and data from the dataset
-  const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "TRAC",
+    let chain_color;
+    let totalTracSpent_obj;
+    for (const blockchain of data) {
+      let totalTracSpent = blockchain.chart_data.map((item) => item.totalTracSpent);
+      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet" || blockchain.blockchain_name === "Origintrail Parachain Testnet") {
+        chain_color = "#fb5deb";
+      }
+
+      if (blockchain.blockchain_name === "Gnosis Mainnet" || blockchain.blockchain_name === "Chiado Testnet") {
+        chain_color = "#133629";
+      }
+
+      totalTracSpent_obj = {
+        label: blockchain.blockchain_name,
         data: totalTracSpent,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df"
-      },
-      // {
-      //   label: 'Expiring',
-      //   data: expCounts,
-      //   fill: false,
-      //   borderColor: '#000000',
-      // },
-    ],
-  };
-
+        borderColor: chain_color,
+        backgroundColor: chain_color
+      };
+      formattedData.datasets.push(totalTracSpent_obj);
+    }
+  }
   const options = {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
-        ticks: {
-            callback: function (value, index, values) {
-              if (value >= 1000000) {
-                return (value / 1000000).toFixed(1) + "M";
-              } else if (value >= 1000) {
-                return (value / 1000).toFixed(1) + "K";
-              } else {
-                return value;
-              }
-            },
+        stacked: true,
+        title: {
+          display: true,
+          text: "TRAC", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
           },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
       },
       x: {
-        title: {
-          beginAtZero: true, // Start the scale at 0
-          stacked: true,
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        title: { // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        },
-      }
+        }
+      },
     },
   };
 

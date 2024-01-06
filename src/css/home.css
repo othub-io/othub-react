@@ -235,6 +235,7 @@
   display: inline-block;
   z-index: 500;
   float: right;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .home-chart-name{
@@ -259,6 +260,7 @@
   border-radius: 2px 2px 2px 2px;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .home-network-drop-down select:hover{
@@ -296,6 +298,7 @@
   position: relative;
   background-color: rgba(47,30,92, 0.1);
   color: #2f1e5c;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .d100-home-div{
@@ -308,6 +311,7 @@
   position: relative;
   background-color: rgba(19, 54, 41, 0.1);
   color: #133629;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .d2043-home-div{
@@ -320,6 +324,7 @@
   position: relative;
   background-color: rgba(251, 93, 235, 0.1);
   color: #fb5deb;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .chain-logo{

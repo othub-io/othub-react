@@ -36,9 +36,9 @@ const Earnings = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
+          timeframe: "",
           network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+          blockchain: settings.data[0].blockchain,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
@@ -57,72 +57,112 @@ const Earnings = (settings) => {
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+        timeframe: timeframe,
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
-  let labels = [];
-  let estimatedEarnings1stEpochOnly = [];
-  let estimatedEarnings2plusEpochs = [];
-  if (data) {
-    let format = "MMM YY"
-    if(inputValue === "24h"){
-      format = 'HH:00'
-    }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
-    }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
-    }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
-    }
-
-    labels = data.map((item) => moment(item.date).format(format));
-    estimatedEarnings1stEpochOnly = data.map((item) => item.estimatedEarnings1stEpochOnly);
-    estimatedEarnings2plusEpochs = data.map((item) => item.estimatedEarnings2plusEpochs);
-  }else{
-    return (<Loading />)
-  }
-
-  if(isLoading){
-    return (<Loading />)
-  }
-  // Extract labels and data from the dataset
   const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Earnings 1st Epoch",
+    datasets: [],
+  };
+
+  if (data) {
+    let format = "MMM YY";
+    if (inputValue === "24h") {
+      format = "HH:00";
+    }
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
+    }
+    if (inputValue === "30d") {
+      format = "DD MMM";
+    }
+    if (inputValue === "6m") {
+      format = "DD MMM";
+    }
+
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
+
+    formattedData.labels = formattedDates;
+
+    let chain_color;
+    let chain_color2;
+    let estimatedEarnings1stEpochOnly;
+    let estimatedEarnings2plusEpochs;
+    for (const blockchain of data) {
+      estimatedEarnings1stEpochOnly = blockchain.chart_data.map(
+        (item) => item.estimatedEarnings1stEpochOnly
+      );
+      estimatedEarnings2plusEpochs = blockchain.chart_data.map(
+        (item) => item.estimatedEarnings2plusEpochs
+      );
+
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
+        chain_color = "#fb5deb";
+        chain_color2 = "#fac3f4"
+      }
+
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
+        chain_color = "#133629";
+        chain_color2 = "#5abf9a"
+      }
+
+      let estimatedEarnings1stEpochOnly_obj = {
+        label: blockchain.blockchain_name + " 1st Epoch",
         data: estimatedEarnings1stEpochOnly,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df"
-      },
-      {
-        label: "Earnings 2nd+ Epochs",
+        borderColor: chain_color,
+        backgroundColor: chain_color,
+      };
+
+      formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
+
+      let estimatedEarnings2plusEpochs_obj = {
+        label: blockchain.blockchain_name + " 2nd+ Epoch",
         data: estimatedEarnings2plusEpochs,
         fill: false,
-        borderColor: "#df6344",
-        backgroundColor: "#df6344"
-      }
-    ],
-  };
+        borderColor: chain_color2,
+        backgroundColor: chain_color2,
+        type: 'line'
+      };
+
+      formattedData.datasets.push(estimatedEarnings2plusEpochs_obj);
+    }
+  }
 
   const options = {
     scales: {
@@ -250,7 +290,7 @@ const Earnings = (settings) => {
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );

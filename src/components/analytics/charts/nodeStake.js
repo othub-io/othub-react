@@ -78,7 +78,6 @@ const NodeStake = (settings) => {
   let labels = [];
   let nodesStake = [];
   let nodesWithMoreThan50kStake = [];
-  let nodesWithLessThan50kStake = [];
   if (data) {
     let format = "DD MMM";
     if (inputValue === "24h") {
@@ -95,9 +94,6 @@ const NodeStake = (settings) => {
     nodesStake = data.map((item) => item.nodesStake);
     nodesWithMoreThan50kStake = data.map(
       (item) => item.nodesWithMoreThan50kStake
-    );
-    nodesWithLessThan50kStake = data.map(
-      (item) => item.nodesWithLessThan50kStake
     );
   } else {
     return <Loading />;
@@ -118,14 +114,6 @@ const NodeStake = (settings) => {
         backgroundColor: "#df6344",
         yAxisID: "line-y-axis",
         type: "line",
-      },
-      {
-        label: "Inactive",
-        data: nodesWithLessThan50kStake,
-        fill: false,
-        borderColor: "#56a4ff",
-        backgroundColor: "#56a4ff",
-        yAxisID: "bar-y-axis",
       },
       {
         label: "Active",

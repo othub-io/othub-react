@@ -53,30 +53,30 @@ const AssetPublish = (selectedFile) => {
   const [result, setResult] = useState("");
 
   let node_options = mainnet_node_options;
-  let network;
+  let blockchain;
   let explorer_url = "https://dkg.origintrail.io";
   let env = "mainnet"
 
   if (connected_blockchain === "Origintrail Parachain Testnet") {
-    network = "otp::20430";
+    blockchain = "otp:20430";
     node_options = testnet_node_options;
     explorer_url = "https://dkg-testnet.origintrail.io";
     env = "testnet"
   }
 
   if (connected_blockchain === "Chiado Testnet") {
-    network = "gnosis::10200";
+    blockchain = "gnosis:10200";
     node_options = testnet_node_options;
     explorer_url = "https://dkg-testnet.origintrail.io";
     env = "testnet"
   }
 
   if (connected_blockchain === "Origintrail Parachain Mainnet") {
-    network = "otp::2043";
+    blockchain = "otp:2043";
   }
 
   if (connected_blockchain === "Gnosis Mainnet") {
-    network = "gnosis::100";
+    blockchain = "gnosis:100";
   }
 
   const dkgOptions = {
@@ -86,8 +86,7 @@ const AssetPublish = (selectedFile) => {
     frequency: 2,
     contentType: "all",
     blockchain: {
-      name: network,
-      publicKey: account,
+      name: blockchain,
     },
   };
 
@@ -103,9 +102,10 @@ const AssetPublish = (selectedFile) => {
 
             const data = {
               asset: content,
-              network: network,
+              network: blockchain,
               epochs: inputValue,
             };
+            console.log(data)
             const dkg_bid_result = await axios
               .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config)
               .then((response) => {
@@ -123,10 +123,9 @@ const AssetPublish = (selectedFile) => {
         } else {
           setAssetData(selectedFile.data);
 
-          console.log("eyo: " + selectedFile.data);
           const data = {
             asset: selectedFile.data,
-            network: network,
+            network: blockchain,
             epochs: inputValue,
           };
           const dkg_bid_result = await axios

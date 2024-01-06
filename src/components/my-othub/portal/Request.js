@@ -52,15 +52,19 @@ const Request = (txn) => {
       setIsLoading(true);
       let node_options;
       if (
-        txn.network === "otp::testnet" &&
-        connected_blockchain === "Origintrail Parachain Testnet"
+        (txn.network === "otp:20430" &&
+        connected_blockchain === "Origintrail Parachain Testnet") ||
+        (txn.network === "gnosis:10200" &&
+        connected_blockchain === "Chiado Testnet")
       ) {
         node_options = testnet_node_options;
       }
 
       if (
-        txn.network === "otp::mainnet" &&
-        connected_blockchain === "Origintrail Parachain Mainnet"
+        (txn.network === "otp:2043" &&
+        connected_blockchain === "Origintrail Parachain Mainnet") ||
+        (txn.network === "gnosis:100" &&
+        connected_blockchain === "Gnosis Mainnet")
       ) {
         node_options = mainnet_node_options;
       }
@@ -240,9 +244,9 @@ const Request = (txn) => {
 
   if (
     (connected_blockchain === "Origintrail Parachain Testnet" &&
-      txn.network !== "otp::testnet") ||
+      txn.network !== "otp:testnet") ||
     (connected_blockchain === "Origintrail Parachain Mainnet" &&
-      txn.network !== "otp::mainnet")
+      txn.network !== "otp:mainnet")
   ) {
     return <div className="invalid">Invalid network.</div>;
   }

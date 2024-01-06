@@ -36,7 +36,7 @@ const AssetCost = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
+          timeframe: "",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
         };
@@ -60,7 +60,7 @@ const AssetCost = (settings) => {
       setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
       };
@@ -75,11 +75,16 @@ const AssetCost = (settings) => {
     }
   };
 
-  let labels = [];
-  let avgBid = [];
-  let avgPubPrice = [];
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const formattedData = {
+    datasets: [],
+  };
+
   if (data) {
-    let format = "DD MMM";
+    let format = "MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
     }
@@ -89,61 +94,138 @@ const AssetCost = (settings) => {
     if (inputValue === "30d") {
       format = "DD MMM";
     }
+    if (inputValue === "6m") {
+      format = "DD MMM";
+    }
 
-    labels = data.map((item) => moment(item.date).format(format));
-    avgPubPrice = data.map((item) => item.avgPubPrice);
-    avgBid = data.map((item) => item.avgBid);
-  } else {
-    return <Loading />;
-  }
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
 
-  if (isLoading) {
-    return <Loading />;
-  }
+    formattedData.labels = formattedDates;
 
-  // Extract labels and data from the dataset
-  const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Cost",
+    let chain_color;
+    let chain_color2;
+    let avgPubPrice;
+    let avgBid;
+    for (const blockchain of data) {
+      avgPubPrice = blockchain.chart_data.map((item) => item.avgPubPrice);
+      avgBid = blockchain.chart_data.map((item) => item.avgBid);
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
+        chain_color = "#fb5deb";
+        chain_color2 = "#fac3f4"
+      }
+
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
+        chain_color = "#133629";
+        chain_color2 = "#5abf9a"
+      }
+
+      let avgPubPrice_obj = {
+        label: blockchain.blockchain_name + " Cost (TRAC)",
         data: avgPubPrice,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df",
-      },
-      {
-        label: "Bid",
+        borderColor: chain_color,
+        backgroundColor: chain_color,
+        yAxisID: "bar-y-axis",
+      };
+
+      formattedData.datasets.push(avgPubPrice_obj);
+
+      let avgBid_obj = {
+        label: blockchain.blockchain_name + " Bid",
         data: avgBid,
         fill: false,
-        borderColor: "#df6344",
-        backgroundColor: "#df6344",
-      },
-    ],
-  };
+        borderColor: chain_color2,
+        backgroundColor: chain_color2,
+        yAxisID: "line-y-axis",
+        type: "line",
+      };
+
+      formattedData.datasets.push(avgBid_obj);
+    }
+  }
 
   const options = {
     scales: {
-      y: {
+      "bar-y-axis": {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        position: "right",
         title: {
           display: true,
-          text: "TRAC", // Add your X-axis label here
+          text: "Cost", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
         },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
+      },
+      "line-y-axis": {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        position: "left",
+        title: {
+          display: true,
+          text: "Bid", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
       },
       x: {
-        title: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        title: { // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        },
+        }
       },
     },
   };
@@ -154,7 +236,7 @@ const AssetCost = (settings) => {
         <div className="chart-widget">
           <div className="chart-name">Avg asset cost and avg bid</div>
           <div className="chart-port">
-            <Line data={formattedData} options={options} />
+            <Bar data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
             <button

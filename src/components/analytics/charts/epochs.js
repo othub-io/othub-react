@@ -36,7 +36,7 @@ const Epochs = (settings) => {
     async function fetchData() {
       try {
         const time_data = {
-          timeframe: inputValue,
+          timeframe: "",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
         };
@@ -60,7 +60,7 @@ const Epochs = (settings) => {
       setisLoading(true)
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
       };
@@ -75,10 +75,16 @@ const Epochs = (settings) => {
     }
   };
 
-  let labels = [];
-  let epochs = [];
+  if(isLoading){
+    return (<Loading />)
+  }
+
+  const formattedData = {
+    datasets: [],
+  };
+
   if (data) {
-    let format = "DD MMM"
+    let format = "MMM YY"
     if(inputValue === "24h"){
       format = 'HH:00'
     }
@@ -88,31 +94,51 @@ const Epochs = (settings) => {
     if(inputValue === "30d"){
       format = 'DD MMM'
     }
+    if(inputValue === "6m"){
+      format = 'DD MMM'
+    }
 
-    labels = data.map((item) => moment(item.date).format(format));
-    epochs = data.map((item) => item.avgEpochsNumber);
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
 
-  }else{
-    return (<Loading />)
-  }
+    formattedData.labels = formattedDates;
 
-  if(isLoading){
-    return (<Loading />)
-  }
+    let chain_color;
+    let epochs_obj;
+    for (const blockchain of data) {
+      let epochs = blockchain.chart_data.map((item) => item.avgEpochsNumber);
+      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet" || blockchain.blockchain_name === "Origintrail Parachain Testnet") {
+        chain_color = "#fb5deb";
+      }
 
-  // Extract labels and data from the dataset
-  const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Epochs",
+      if (blockchain.blockchain_name === "Gnosis Mainnet" || blockchain.blockchain_name === "Chiado Testnet") {
+        chain_color = "#133629";
+      }
+
+      epochs_obj = {
+        label: blockchain.blockchain_name + " Epochs",
         data: epochs,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df"
-      }
-    ],
-  };
+        borderColor: chain_color,
+        backgroundColor: chain_color
+      };
+      formattedData.datasets.push(epochs_obj);
+    }
+  }
 
   const options = {
     scales: {
