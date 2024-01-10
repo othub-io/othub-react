@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import Loading from "../effects/Loading";
+import Loading from "../../effects/Loading";
 let ext;
 
 ext = "http";
@@ -11,12 +11,14 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 const Stats = (settings) => {
   const [stats, setStats] = useState("");
   const [price, setPrice] = useState("");
-  let total_pub_count = 0
-  let total_stake = 0
-  let total_trac_spent = 0
+  let pubs_commited = 0
+  let pubs_commited_24h = 0
+  let earnings = 0
+  let earnings_24h = 0
+  let payouts = 0
+  let payouts_24h = 0
+  let totalStake = 0
   let nodes = 0
-  let pubs_stats_last24h = 0
-  let total_trac_spent24h = 0
 
   useEffect(() => {
     async function fetchData() {
@@ -25,14 +27,15 @@ const Stats = (settings) => {
         const request_data = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
-          nodes: settings.data[0].nodes ? (settings.data[0].nodes) : ("")
+          nodes: settings.data[0].nodes
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
           request_data
         );
 
+        console.log(response.data)
         setStats(response.data);
 
         const rsp = await axios.get(
@@ -57,18 +60,20 @@ const Stats = (settings) => {
 
   if(stats !== ""){
     for(const blockchain of stats){
-        total_pub_count = total_pub_count + blockchain.pub_count
-        total_stake = total_stake + blockchain.totalStake
-        total_trac_spent = total_trac_spent + blockchain.totalTracSpent
-        nodes = nodes + blockchain.nodes
-        pubs_stats_last24h = pubs_stats_last24h + Number(blockchain.pubs_stats_last24h[0].totalPubs)
-        total_trac_spent24h = total_trac_spent24h + Number(blockchain.pubs_stats_last24h[0].totalTracSpent)
+      pubs_commited = pubs_commited + blockchain.pubs_commited
+      pubs_commited_24h = pubs_commited_24h + blockchain.pubs_commited_24h
+      earnings = earnings + blockchain.earnings
+      earnings_24h = earnings_24h + blockchain.earnings_24h
+      payouts = payouts + Number(blockchain.payouts)
+      payouts_24h = payouts_24h + Number(blockchain.payouts_24h)
+      totalStake = totalStake + blockchain.totalStake
+      nodes = nodes + blockchain.nodes
     }
   }
 
   return stats ? (
-    <div className="home-stats">
-       {!localStorage.getItem("blockchain") && <div key="total_stats" className={`total-stats-home-div`}>
+    <div className="node-stats">
+       {stats.length > 1 && !settings.data[0].nodeSelected && <div key="total_stats" className={`total-stats-node-div`}>
             <div className="chain-logo">
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=origintrail_logo-dark_purple.png`}
@@ -76,33 +81,41 @@ const Stats = (settings) => {
                 width="100"
                 ></img><span>{settings.data[0].network.substring(4)}</span>
             </div>
-            <div className="chain-assets">
-                Assets:<br/>
-                <span>{total_pub_count}</span>
-            </div>
-            <div className="chain-stake">
-                Assets Last 24h:<br/>
-                <span>{pubs_stats_last24h}</span>
-            </div>
             <div className="chain-stake">
                 Active Nodes:<br/>
                 <span>{nodes}</span>
             </div>
-            <div className="chain-stake">
-                TRAC Spent Last 24h:<br/>
-                <span>{`${total_trac_spent24h.toFixed(2)} ($${(total_trac_spent24h.toFixed(2) * price).toFixed(2)})`}</span>
+            <div className="chain-assets">
+                Total Pubs:<br/>
+                <span>{pubs_commited}</span>
             </div>
             <div className="chain-stake">
-                Trac Spent:<br/>
-                <span>{`${total_trac_spent.toFixed(2)} ($${(total_trac_spent.toFixed(2) * price).toFixed(2)})`}</span>
+                Pubs Last 24h:<br/>
+                <span>{pubs_commited_24h}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Earnings:<br/>
+                <span>{`${earnings.toFixed(2)} ($${(earnings.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Earnings Last 24h:<br/>
+                <span>{`${earnings_24h.toFixed(2)} ($${(earnings_24h.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Rewards:<br/>
+                <span>{`${payouts.toFixed(2)} ($${(payouts.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Rewards Last 24h:<br/>
+                <span>{`${payouts_24h.toFixed(2)} ($${(payouts_24h.toFixed(2) * price).toFixed(2)})`}</span>
             </div>
             <div className="chain-stake">
                 Network Stake:<br/>
-                <span>{`${total_stake.toFixed(2)} ($${(total_stake.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${totalStake.toFixed(2)} ($${(totalStake.toFixed(2) * price).toFixed(2)})`}</span>
             </div>
         </div>}
       {stats.map((blockchain) => (
-        <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-home-div`}>
+        <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-node-div`}>
             <div className="chain-logo">
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
@@ -111,25 +124,33 @@ const Stats = (settings) => {
                 height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
                 ></img>
             </div>
-            <div className="chain-assets">
-                Assets:<br/>
-                <span>{blockchain.pub_count}</span>
-            </div>
-            <div className="chain-stake">
-                Assets Last 24h:<br/>
-                <span>{blockchain.pubs_stats_last24h[0].totalPubs}</span>
-            </div>
             <div className="chain-stake">
                 Active Nodes:<br/>
                 <span>{blockchain.nodes}</span>
             </div>
-            <div className="chain-stake">
-                TRAC Spent Last 24h:<br/>
-                <span>{`${blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(2)} ($${(blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(2) * price).toFixed(2)})`}</span>
+            <div className="chain-assets">
+                Pubs:<br/>
+                <span>{blockchain.pubs_commited}</span>
             </div>
             <div className="chain-stake">
-                Trac Spent:<br/>
-                <span>{`${blockchain.totalTracSpent.toFixed(2)} ($${(blockchain.totalTracSpent.toFixed(2) * price).toFixed(2)})`}</span>
+                Pubs Last 24h:<br/>
+                <span>{blockchain.pubs_commited_24h}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Earnings:<br/>
+                <span>{`${blockchain.earnings.toFixed(2)} ($${(blockchain.earnings.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Earnings Last 24h:<br/>
+                <span>{`${blockchain.earnings_24h.toFixed(2)} ($${(blockchain.earnings_24h.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Rewards:<br/>
+                <span>{`${blockchain.payouts.toFixed(2)} ($${(blockchain.payouts.toFixed(2) * price).toFixed(2)})`}</span>
+            </div>
+            <div className="chain-stake">
+                 TRAC Rewards Last 24h:<br/>
+                <span>{`${blockchain.payouts_24h.toFixed(2)} ($${(blockchain.payouts_24h.toFixed(2) * price).toFixed(2)})`}</span>
             </div>
             <div className="chain-stake">
                 Blockchain Stake:<br/>

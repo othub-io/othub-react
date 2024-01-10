@@ -60,7 +60,7 @@ const NodeStake = (settings) => {
       setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
-        timeframe: inputValue,
+        timeframe: timeframe,
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain
       };
@@ -75,11 +75,16 @@ const NodeStake = (settings) => {
     }
   };
 
-  let labels = [];
-  let nodesStake = [];
-  let nodesWithMoreThan50kStake = [];
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const formattedData = {
+    datasets: [],
+  };
+
   if (data) {
-    let format = "DD MMM";
+    let format = "MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
     }
@@ -89,53 +94,87 @@ const NodeStake = (settings) => {
     if (inputValue === "30d") {
       format = "DD MMM";
     }
+    if (inputValue === "6m") {
+      format = "DD MMM";
+    }
 
-    labels = data.map((item) => moment(item.date).format(format));
-    nodesStake = data.map((item) => item.nodesStake);
-    nodesWithMoreThan50kStake = data.map(
-      (item) => item.nodesWithMoreThan50kStake
-    );
-  } else {
-    return <Loading />;
-  }
+    const uniqueDates = new Set();
+    const formattedDates = [];
+    for (const blockchain of data) {
+      blockchain.chart_data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
+    }
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  // Extract labels and data from the dataset
-  const formattedData = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Stake in TRAC",
-        data: nodesStake,
+    formattedData.labels = formattedDates;
+
+    let chain_color;
+    let chain_color2;
+    let nodeStake;
+    let nodesWithMoreThan50kStake;
+    for (const blockchain of data) {
+      nodeStake = blockchain.chart_data.map((item) => item.combinedNodesStake);
+      nodesWithMoreThan50kStake = blockchain.chart_data.map((item) => item.nodesWithMoreThan50kStake);
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
+        chain_color = "#fb5deb";
+        chain_color2 = "#fac3f4"
+      }
+
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
+        chain_color = "#133629";
+        chain_color2 = "#5abf9a"
+      }
+
+      let nodeStake_obj = {
+        label: blockchain.blockchain_name + " Stake",
+        data: nodeStake,
         fill: false,
-        borderColor: "#df6344",
-        backgroundColor: "#df6344",
-        yAxisID: "line-y-axis",
-        type: "line",
-      },
-      {
-        label: "Active",
+        borderColor: chain_color,
+        backgroundColor: chain_color,
+        yAxisID: "bar-y-axis"
+      };
+
+      formattedData.datasets.push(nodeStake_obj);
+      
+      let nodesWithMoreThan50kStake_obj = {
+        label: blockchain.blockchain_name + " Nodes",
         data: nodesWithMoreThan50kStake,
         fill: false,
-        borderColor: "#6344df",
-        backgroundColor: "#6344df",
-        yAxisID: "bar-y-axis",
-      }
-    ],
-  };
+        borderColor: chain_color2,
+        backgroundColor: chain_color2,
+        yAxisID: "line-y-axis",
+        type: "line",
+      };
+
+      formattedData.datasets.unshift(nodesWithMoreThan50kStake_obj);
+    }
+  }
 
   const options = {
     scales: {
       "line-y-axis": {
-        position: "right",
+        position: "left",
         beginAtZero: true,
         title: {
             // Start the scale at 0
             display: true,
-            text: "Stake", // Add your X-axis label here
-            color: "#df6344", // Label color
+            text: "Nodes", // Add your X-axis label here
+            color: "#6344df", // Label color
             font: {
               size: 12, // Label font size
             },
@@ -153,16 +192,28 @@ const NodeStake = (settings) => {
           },
       },
       "bar-y-axis": {
-        position: "left",
+        position: "right",
         beginAtZero: true,
+        stacked: true,
         title: {
             // Start the scale at 0
             display: true,
-            text: "Nodes", // Add your X-axis label here
+            text: "Stake", // Add your X-axis label here
             color: "#6344df", // Label color
             font: {
               size: 12, // Label font size
             }
+          },
+          ticks: {
+            callback: function (value, index, values) {
+              if (value >= 1000000) {
+                return (value / 1000000).toFixed(1) + "M";
+              } else if (value >= 1000) {
+                return (value / 1000).toFixed(1) + "K";
+              } else {
+                return value;
+              }
+            },
           },
       },
       x: {
@@ -187,7 +238,7 @@ const NodeStake = (settings) => {
         <div className="chart-widget">
           <div className="chart-name">Number of nodes and combined nodes stake</div>
           <div className="chart-port">
-            <Line data={formattedData} options={options} />
+            <Bar data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
             <button

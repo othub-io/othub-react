@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../effects/Loading";
+import Loading from "../../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -54,6 +54,7 @@ const CumPubsCommited = (node_data) => {
         //   time_data
         // );
         // setData(response.data.chart_data);
+        console.log('NODE DATA: '+JSON.stringify(node_data.data))
         setData(node_data.data[0].data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -35,16 +35,7 @@ const Epochs = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          timeframe: "",
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
-        };
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
-          time_data
-        );
-        setData(response.data.chart_data);
+        setData(settings.data[0].assetData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -150,6 +141,17 @@ const Epochs = (settings) => {
             color: "#6344df", // Label color
             font: {
               size: 12, // Label font size
+            },
+          },
+          ticks: {
+            callback: function (value, index, values) {
+              if (value >= 1000000) {
+                return (value / 1000000).toFixed(1) + "M";
+              } else if (value >= 1000) {
+                return (value / 1000).toFixed(1) + "K";
+              } else {
+                return value;
+              }
             },
           },
       },

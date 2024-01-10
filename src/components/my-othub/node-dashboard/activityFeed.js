@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../effects/Loading";
+import Loading from "../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -74,9 +74,9 @@ const NodeCommits = (settings) => {
 
   return (
     data && (
-      <div className="activity-feed">
+      <div className="node-activity-feed">
         <div className="activity-feed-title"></div>
-        <div className="activity-feed-list">
+        <div className="node-activity-feed-list">
           {data.map((record) => (
             <div className="activity-feed-list-item">
               <div className="activity-feed-timestamp">

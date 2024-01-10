@@ -56,7 +56,7 @@ const NetworkDrop = ({ network, blockchain }) => {
   };
 
   return (
-    <div>
+    <div className="header-seg1">
       <div className="home-network-drop-down">
         <select onChange={(e) => handleNetworkChange(e.target.value)}>
           <option key={"DKG Mainnet"} value={"DKG Mainnet"}>

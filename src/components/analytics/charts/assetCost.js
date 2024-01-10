@@ -35,16 +35,7 @@ const AssetCost = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          timeframe: "",
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
-        };
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
-          time_data
-        );
-        setData(response.data.chart_data);
+        setData(settings.data[0].assetData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -140,17 +131,6 @@ const AssetCost = (settings) => {
         chain_color2 = "#5abf9a"
       }
 
-      let avgPubPrice_obj = {
-        label: blockchain.blockchain_name + " Cost (TRAC)",
-        data: avgPubPrice,
-        fill: false,
-        borderColor: chain_color,
-        backgroundColor: chain_color,
-        yAxisID: "bar-y-axis",
-      };
-
-      formattedData.datasets.push(avgPubPrice_obj);
-
       let avgBid_obj = {
         label: blockchain.blockchain_name + " Bid",
         data: avgBid,
@@ -161,7 +141,18 @@ const AssetCost = (settings) => {
         type: "line",
       };
 
-      formattedData.datasets.push(avgBid_obj);
+      formattedData.datasets.unshift(avgBid_obj);
+
+      let avgPubPrice_obj = {
+        label: blockchain.blockchain_name + " Cost (TRAC)",
+        data: avgPubPrice,
+        fill: false,
+        borderColor: chain_color,
+        backgroundColor: chain_color,
+        yAxisID: "bar-y-axis",
+      };
+
+      formattedData.datasets.push(avgPubPrice_obj);
     }
   }
 
@@ -170,10 +161,10 @@ const AssetCost = (settings) => {
       "bar-y-axis": {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
-        position: "right",
+        position: "left",
         title: {
           display: true,
-          text: "Cost", // Add your X-axis label here
+          text: "Cost (TRAC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -192,28 +183,28 @@ const AssetCost = (settings) => {
         },
       },
       "line-y-axis": {
-        beginAtZero: true, // Start the scale at 0
-        stacked: true,
-        position: "left",
+        position: "right",
+        beginAtZero: true,
         title: {
-          display: true,
-          text: "Bid", // Add your X-axis label here
-          color: "#6344df", // Label color
-          font: {
-            size: 12, // Label font size
+            // Start the scale at 0
+            display: true,
+            text: "Bid", // Add your X-axis label here
+            color: "#6344df", // Label color
+            font: {
+              size: 12, // Label font size
+            },
           },
-        },
-        ticks: {
-          callback: function (value, index, values) {
-            if (value >= 1000000) {
-              return (value / 1000000).toFixed(1) + "M";
-            } else if (value >= 1000) {
-              return (value / 1000).toFixed(1) + "K";
-            } else {
-              return value;
-            }
+          ticks: {
+            callback: function (value, index, values) {
+              if (value >= 1000000) {
+                return (value / 1000000).toFixed(1) + "M";
+              } else if (value >= 1000) {
+                return (value / 1000).toFixed(1) + "K";
+              } else {
+                return value;
+              }
+            },
           },
-        },
       },
       x: {
         beginAtZero: true, // Start the scale at 0

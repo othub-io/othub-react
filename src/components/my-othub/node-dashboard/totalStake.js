@@ -38,7 +38,7 @@ const TotalStake = (node_data) => {
         const time_data = {
           timeframe: "All",
           network: node_data.data[0].network,
-          nodeId: node_data.data[0].nodeId,
+          nodeId: node_data.data[0].nodeId.chain_name,
           public_address: node_data.data[0].public_address,
         };
 
@@ -47,6 +47,7 @@ const TotalStake = (node_data) => {
           time_data
         );
 
+        console.log(response.data.chart_data)
         setData(response.data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);

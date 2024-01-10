@@ -35,16 +35,7 @@ const Payouts = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          timeframe: "",
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
-        };
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
-          time_data
-        );
-        setData(response.data.chart_data);
+        setData(settings.data[0].earningData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

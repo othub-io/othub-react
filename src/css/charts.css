@@ -98,6 +98,17 @@
     cursor: pointer;
     font-weight: bold;
 }
+.spacer{
+    margin-top: .5%;
+  padding-top: 1%;
+  margin-right: .5%;
+  height: 30px;
+  width:48%;
+  padding-left: 1%;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  float: left;
+}
 
 @media(max-width:1536px){
     .charts {
