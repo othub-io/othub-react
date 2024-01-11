@@ -5,12 +5,12 @@ import "../../../css/main.css";
 import "../../../css/nodeDashboard.css";
 import Loading from "../../effects/Loading";
 import CumPubs from "../../home/cumPubs";
-import TotalRewards from "./charts/totalRewards";
 import ActivityFeed from "./activityFeed";
 import Stats from "./stats";
 import NetworkDrop from "../../navigation/networkDrop";
 import NodeSettings from "./NodeSettings";
 import CumRewards from "./charts/cumRewards";
+import PubsCommited from "./charts/pubsCommited";
 let ext;
 
 ext = "http";
@@ -41,7 +41,7 @@ const NodeDashboard = () => {
       try {
         setIsLoading(true);
         if (account && network) {
-            setNodeFilter("");
+          setNodeFilter("");
           const request_data = {
             network: network,
             blockchain: blockchain,
@@ -58,10 +58,10 @@ const NodeDashboard = () => {
 
           nodes.push({
             nodeId: 12,
-            tokenName: 'test2',
+            tokenName: "test2",
             blockchain_name: "Gnosis Mainnet",
-            blockchain_id: "100"
-          })
+            blockchain_id: "100",
+          });
 
           for (const blockchain of response.data.nodes) {
             if (blockchain.nodes.length > 0) {
@@ -72,11 +72,11 @@ const NodeDashboard = () => {
                 nodes.push(node);
 
                 nodes.push({
-                    nodeId: 67,
-                    tokenName: 'test2',
-                    blockchain_name: blockchain.blockchain_name,
-                    blockchain_id: blockchain.blockchain_id
-                  })
+                  nodeId: 67,
+                  tokenName: "test2",
+                  blockchain_name: blockchain.blockchain_name,
+                  blockchain_id: blockchain.blockchain_id,
+                });
               }
             }
           }
@@ -87,7 +87,7 @@ const NodeDashboard = () => {
 
           const time_data = {
             timeframe: "All",
-            nodes: nodes
+            nodes: nodes,
           };
           const response1 = await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
@@ -116,27 +116,26 @@ const NodeDashboard = () => {
   };
 
   const ndfltr = async (node_selection) => {
-    if(node_selection === "a"){
-        setNodeFilter(nodeList);
-        node_selection = nodeList
-        setNodeSelected(false)
-    }else{
-        setNodeFilter(node_selection);
-        node_selection = node_selection
-        setNodeSelected(true)
+    if (node_selection === "a") {
+      setNodeFilter(nodeList);
+      node_selection = nodeList;
+      setNodeSelected(false);
+    } else {
+      setNodeFilter(node_selection);
+      node_selection = node_selection;
+      setNodeSelected(true);
     }
 
     const time_data = {
-        timeframe: "All",
-        nodes: node_selection
-      };
-      const response1 = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
-        time_data,
-        config
-      );
-      setData(response1.data);
-
+      timeframe: "All",
+      nodes: node_selection,
+    };
+    const response1 = await axios.post(
+      `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
+      time_data,
+      config
+    );
+    setData(response1.data);
   };
 
   if (isNodeSettingsOpen) {
@@ -173,15 +172,15 @@ const NodeDashboard = () => {
           <div className="home-network-drop-down">
             {nodeList.length !== 0 && (
               <select onChange={(e) => ndfltr(JSON.parse(e.target.value))}>
-              <option key={"none"} value={JSON.stringify("a")}>
-                Node Selection
-              </option>
-              {nodeList.map((node) => (
-                <option key={node.nodeId} value={JSON.stringify([node])}>
-                  {node.tokenName}
+                <option key={"none"} value={JSON.stringify("a")}>
+                  Node Selection
                 </option>
-              ))}
-            </select>
+                {nodeList.map((node) => (
+                  <option key={node.nodeId} value={JSON.stringify([node])}>
+                    {node.tokenName}
+                  </option>
+                ))}
+              </select>
             )}
           </div>
           <div className="notification-button">
@@ -208,34 +207,41 @@ const NodeDashboard = () => {
                 network: network,
                 blockchain: blockchain,
                 nodes: nodeFilter,
-                nodeSelected: nodeSelected
+                nodeSelected: nodeSelected,
               },
             ]}
           />
           <div className="home-chart">
             <CumRewards
-                data={[
-                    {
-                        network: network,
-                        blockchain: blockchain,
-                        nodes: nodeFilter,
-                        nodeSelected: nodeSelected,
-                        public_address: account,
-                        data: data,
-                    },
-                ]}
-                />
-            </div>
-          {/* <div className="home-chart">
-            <CumPubs
               data={[
                 {
                   network: network,
                   blockchain: blockchain,
+                  nodes: nodeFilter,
+                  nodeSelected: nodeSelected,
+                  public_address: account,
+                  node_data: data,
                 },
               ]}
             />
-            </div> */}
+          </div>
+          <div className="home-chart">
+            <PubsCommited
+              data={[
+                {
+                  network: network,
+                  blockchain: blockchain,
+                  nodes: nodeFilter,
+                  nodeSelected: nodeSelected,
+                  public_address: account,
+                  node_data: data,
+                },
+              ]}
+            />
+          </div>
+          <div className="spacer">
+            
+          </div>
         </div>
       ) : (
         <div>

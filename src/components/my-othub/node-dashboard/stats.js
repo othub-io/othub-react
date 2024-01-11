@@ -35,7 +35,6 @@ const Stats = (settings) => {
           request_data
         );
 
-        console.log(response.data)
         setStats(response.data);
 
         const rsp = await axios.get(

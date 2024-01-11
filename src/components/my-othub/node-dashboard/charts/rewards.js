@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../effects/Loading";
+import Loading from "../../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {

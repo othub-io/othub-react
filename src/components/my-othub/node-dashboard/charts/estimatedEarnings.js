@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../effects/Loading";
+import Loading from "../../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -29,13 +29,13 @@ ChartJS.register(
 
 function generateRandomColor() {
   // Generate a random hexadecimal color code
-  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-
+  const randomColor = Math.floor(Math.random()*16777215).toString(16);
+  
   // Pad the color code with zeros if needed
-  return "#" + "0".repeat(6 - randomColor.length) + randomColor;
+  return '#' + '0'.repeat(6 - randomColor.length) + randomColor;
 }
 
-const PubsCommited = (node_data) => {
+const EstimatedEarnings = (node_data) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -89,7 +89,8 @@ const PubsCommited = (node_data) => {
     datasets: [],
   };
 
-  let pubsCommited_obj = [];
+  let estimatedEarnings_obj = [];
+  let estimatedEarnings1stEpochOnly_obj = [];
   if (data) {
     let format = "MMM YY";
     if (inputValue === "24h") {
@@ -119,45 +120,77 @@ const PubsCommited = (node_data) => {
     })
     .map((item) => moment(item.date).format(format));
 
+    let final_earnings = []
+    let dates = new Set(data.map((item) => item.date));
+    for (const date of dates) {
+      let estimatedEarnings = 0
+      for (const item of data) {
+        if(item.date === date){
+          estimatedEarnings = item.estimatedEarnings + estimatedEarnings
+        }
+      }
+      final_earnings.push(estimatedEarnings)
+    }
+
+    estimatedEarnings_obj = {
+      label: "Total Estimated Earnings",
+      data: final_earnings,
+      fill: false,
+      borderColor: "#6344df",
+      backgroundColor: "#6344df",
+      type: "line",
+    };
+    formattedData.datasets.push(estimatedEarnings_obj);
+
     let tokenNames = new Set(data.map((item) => item.tokenName));
     for (const tokenName of tokenNames) {
       let randomHexColor = generateRandomColor();
-      const pubsCommited = data
+      const estimatedEarnings1stEpochOnly = data
         .filter((item) => item.tokenName === tokenName)
-        .map((item) => item.pubsCommited);
+        .map((item) => item.estimatedEarnings1stEpochOnly);
 
-        if(pubsCommited.length !== formattedData.labels.length){
-          for(let i = 0; i < (Number(formattedData.labels.length) - Number(pubsCommited.length)); i++){
-            pubsCommited.unshift(0);
+        if(estimatedEarnings1stEpochOnly.length !== formattedData.labels.length){
+          for(let i = 0; i < (Number(formattedData.labels.length) - Number(estimatedEarnings1stEpochOnly.length)); i++){
+            estimatedEarnings1stEpochOnly.unshift(0);
           }
         }
 
-        pubsCommited_obj = {
-          label: tokenName,
-          data: pubsCommited,
+        estimatedEarnings1stEpochOnly_obj = {
+          label: tokenName + ' Earnings 1st Epoch Only',
+          data: estimatedEarnings1stEpochOnly,
           fill: false,
           borderColor: randomHexColor,
           backgroundColor: randomHexColor,
         };
   
-        formattedData.datasets.push(pubsCommited_obj);
+        formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
     }
   } else {
-    return <Loading />;
+    return (<Loading />)
   }
 
   if (isLoading) {
-    return <Loading />;
+    return (<Loading />)
   }
 
   const options = {
     scales: {
-      y: {
-        beginAtZero: true, // Start the scale at 0
+      x: {
         stacked: true,
         title: {
           display: true,
-          text: "Assets", // Add your X-axis label here
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+      },
+      y: {
+        stacked: true,
+        title: {
+          display: true,
+          text: "TRAC", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -175,19 +208,6 @@ const PubsCommited = (node_data) => {
           },
         },
       },
-      x: {
-        beginAtZero: true, // Start the scale at 0
-        stacked: true,
-        title: {
-          // Start the scale at 0
-          display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
-          color: "#6344df", // Label color
-          font: {
-            size: 12, // Label font size
-          },
-        },
-      },
     },
   };
 
@@ -195,7 +215,7 @@ const PubsCommited = (node_data) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Pubs Commited</div>
+          <div className="chart-name">Estimated Earnings</div>
           <div className="chart-port">
             <Bar
               data={formattedData}
@@ -316,4 +336,4 @@ const PubsCommited = (node_data) => {
   );
 };
 
-export default PubsCommited;
+export default EstimatedEarnings;

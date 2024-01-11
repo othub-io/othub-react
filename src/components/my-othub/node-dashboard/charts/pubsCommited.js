@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../effects/Loading";
+import Loading from "../../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -29,13 +29,13 @@ ChartJS.register(
 
 function generateRandomColor() {
   // Generate a random hexadecimal color code
-  const randomColor = Math.floor(Math.random()*16777215).toString(16);
-  
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
   // Pad the color code with zeros if needed
-  return '#' + '0'.repeat(6 - randomColor.length) + randomColor;
+  return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const EstimatedEarnings = (node_data) => {
+const PubsCommited = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -54,7 +54,7 @@ const EstimatedEarnings = (node_data) => {
         //   time_data
         // );
         // setData(response.data.chart_data);
-        setData(node_data.data[0].data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -62,7 +62,7 @@ const EstimatedEarnings = (node_data) => {
 
     setInputValue("");
     fetchData();
-  }, [node_data]);
+  }, [settings]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
@@ -70,12 +70,10 @@ const EstimatedEarnings = (node_data) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: node_data.data[0].network,
-        nodeId: node_data.data[0].nodeId,
-        public_address: node_data.data[0].public_address,
+        nodes: settings.data[0].nodes
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -89,8 +87,6 @@ const EstimatedEarnings = (node_data) => {
     datasets: [],
   };
 
-  let estimatedEarnings_obj = [];
-  let estimatedEarnings1stEpochOnly_obj = [];
   if (data) {
     let format = "MMM YY";
     if (inputValue === "24h") {
@@ -107,90 +103,82 @@ const EstimatedEarnings = (node_data) => {
     }
 
     const uniqueDates = new Set();
-
-    formattedData.labels = data
-    .filter((item) => {
-      const formattedDate = moment(item.date).format(format);
-      // Check if the formatted date is unique
-      if (!uniqueDates.has(formattedDate)) {
-        uniqueDates.add(formattedDate);
-        return true;
-      }
-      return false;
-    })
-    .map((item) => moment(item.date).format(format));
-
-    let final_earnings = []
-    let dates = new Set(data.map((item) => item.date));
-    for (const date of dates) {
-      let estimatedEarnings = 0
-      for (const item of data) {
-        if(item.date === date){
-          estimatedEarnings = item.estimatedEarnings + estimatedEarnings
-        }
-      }
-      final_earnings.push(estimatedEarnings)
-    }
-
-    estimatedEarnings_obj = {
-      label: "Total Estimated Earnings",
-      data: final_earnings,
-      fill: false,
-      borderColor: "#6344df",
-      backgroundColor: "#6344df",
-      type: "line",
-    };
-    formattedData.datasets.push(estimatedEarnings_obj);
-
-    let tokenNames = new Set(data.map((item) => item.tokenName));
-    for (const tokenName of tokenNames) {
-      let randomHexColor = generateRandomColor();
-      const estimatedEarnings1stEpochOnly = data
-        .filter((item) => item.tokenName === tokenName)
-        .map((item) => item.estimatedEarnings1stEpochOnly);
-
-        if(estimatedEarnings1stEpochOnly.length !== formattedData.labels.length){
-          for(let i = 0; i < (Number(formattedData.labels.length) - Number(estimatedEarnings1stEpochOnly.length)); i++){
-            estimatedEarnings1stEpochOnly.unshift(0);
+    const formattedDates = [];
+    
+    for (const blockchain of data) {
+      blockchain.data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
           }
-        }
-
-        estimatedEarnings1stEpochOnly_obj = {
-          label: tokenName + ' Earnings 1st Epoch Only',
-          data: estimatedEarnings1stEpochOnly,
-          fill: false,
-          borderColor: randomHexColor,
-          backgroundColor: randomHexColor,
-        };
-  
-        formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
     }
-  } else {
-    return (<Loading />)
-  }
 
-  if (isLoading) {
-    return (<Loading />)
+    formattedData.labels = formattedDates;
+
+    let chain_color;
+    let border_color;
+    let tokenNames;
+    let pubsCommited_obj;
+
+    for (const blockchain of data) {
+      tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+      for (const tokenName of tokenNames) {
+        //let randomHexColor = generateRandomColor();
+        const pubsCommited =blockchain.data
+          .filter((item) => item.tokenName === tokenName)
+          .map((item) => item.pubsCommited);
+
+          if(pubsCommited.length !== formattedData.labels.length){
+            for(let i = 0; i < (Number(formattedData.labels.length) - Number(pubsCommited.length)); i++){
+              pubsCommited.unshift(0);
+            }
+          }
+
+          if (
+            blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+            blockchain.blockchain_name === "Origintrail Parachain Testnet"
+          ) {
+            chain_color = "#fb5deb";
+            border_color = "rgba(251, 93, 235, 0.1)"
+          }
+    
+          if (
+            blockchain.blockchain_name === "Gnosis Mainnet" ||
+            blockchain.blockchain_name === "Chiado Testnet"
+          ) {
+            chain_color = "#133629";
+            border_color = "rgba(19, 54, 41, 0.1)"
+          }
+
+          pubsCommited_obj = {
+            label: tokenName,
+            data: pubsCommited,
+            fill: false,
+            borderColor: border_color,
+            backgroundColor: chain_color,
+            borderWidth: 1, // Bar outline width
+          };
+    
+          formattedData.datasets.push(pubsCommited_obj);
+      }
+    }
   }
 
   const options = {
     scales: {
-      x: {
-        stacked: true,
-        title: {
-          display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
-          color: "#6344df", // Label color
-          font: {
-            size: 12, // Label font size
-          },
-        },
-      },
       y: {
+        beginAtZero: true, // Start the scale at 0
         stacked: true,
         title: {
           display: true,
-          text: "TRAC", // Add your X-axis label here
+          text: "Assets", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -208,6 +196,19 @@ const EstimatedEarnings = (node_data) => {
           },
         },
       },
+      x: {
+        beginAtZero: true, // Start the scale at 0
+        stacked: true,
+        title: {
+          // Start the scale at 0
+          display: true,
+          text: "Datetime (UTC)", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+      },
     },
   };
 
@@ -215,7 +216,8 @@ const EstimatedEarnings = (node_data) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Estimated Earnings</div>
+          <br></br>
+          <div className="chart-name">Pubs Commited</div>
           <div className="chart-port">
             <Bar
               data={formattedData}
@@ -252,7 +254,7 @@ const EstimatedEarnings = (node_data) => {
               }
             />
           </div>
-          <div className="ee-chart-filter">
+          <div className="chart-filter">
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
@@ -336,4 +338,4 @@ const EstimatedEarnings = (node_data) => {
   );
 };
 
-export default EstimatedEarnings;
+export default PubsCommited;

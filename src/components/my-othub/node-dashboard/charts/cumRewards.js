@@ -35,7 +35,7 @@ function generateRandomColor() {
   return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const CumPubsCommited = (node_data) => {
+const CumPubsCommited = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -54,8 +54,7 @@ const CumPubsCommited = (node_data) => {
         //   time_data
         // );
         // setData(response.data.chart_data);
-        console.log('NODE DATA: '+JSON.stringify(node_data.data))
-        setData(node_data.data[0].data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -63,7 +62,7 @@ const CumPubsCommited = (node_data) => {
 
     setInputValue("");
     fetchData();
-  }, [node_data]);
+  }, [settings]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
@@ -71,12 +70,10 @@ const CumPubsCommited = (node_data) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: node_data.data[0].network,
-        nodeId: node_data.data[0].nodeId,
-        public_address: node_data.data[0].public_address,
+        nodes: settings.data[0].nodes
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -90,7 +87,6 @@ const CumPubsCommited = (node_data) => {
     datasets: [],
   };
 
-  let cumPayouts_obj = [];
   if (data) {
     let format = "MMM YY";
     if (inputValue === "24h") {
@@ -107,46 +103,71 @@ const CumPubsCommited = (node_data) => {
     }
 
     const uniqueDates = new Set();
-
-    formattedData.labels = data
-    .filter((item) => {
-      const formattedDate = moment(item.date).format(format);
-      // Check if the formatted date is unique
-      if (!uniqueDates.has(formattedDate)) {
-        uniqueDates.add(formattedDate);
-        return true;
-      }
-      return false;
-    })
-    .map((item) => moment(item.date).format(format));
-
-    let final_payouts = []
-    let dates = new Set(data.map((item) => item.date));
-    for (const obj of dates) {
-      let cumPayouts = 0
-      for (const item of data) {
-        if(item.date === obj){
-          cumPayouts = item.cumulativePayouts + cumPayouts
-        }
-      }
-      final_payouts.push(cumPayouts)
+    const formattedDates = [];
+    
+    for (const blockchain of data) {
+      blockchain.data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
     }
 
-    cumPayouts_obj = {
-      label: "Total Rewards",
-      data: final_payouts,
-      fill: false,
-      borderColor: "#6344df",
-      backgroundColor: "#6344df",
-      type: "line",
-    };
-    formattedData.datasets.push(cumPayouts_obj);
-  } else {
-    return (<Loading />)
-  }
+    formattedData.labels = formattedDates;
 
-  if (isLoading) {
-    return (<Loading />)
+    let chain_color;
+    let final_payouts_obj;
+    let final_payouts = [];
+    let dates;
+    let tokenNames;
+
+    for (const blockchain of data) {
+      dates = formattedDates
+      tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+
+      for (const tokenName of tokenNames) {
+        final_payouts = [];
+        for (const obj of dates) {
+          for (const item of blockchain.data) {
+            if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+              final_payouts.push(item.cumulativePayouts)
+            }
+          }
+        }
+
+        if (
+          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        ) {
+          chain_color = "#fb5deb";
+        }
+  
+        if (
+          blockchain.blockchain_name === "Gnosis Mainnet" ||
+          blockchain.blockchain_name === "Chiado Testnet"
+        ) {
+          chain_color = "#133629";
+        }
+  
+        console.log(blockchain.data);
+        final_payouts_obj = {
+          label: tokenName,
+          data: final_payouts,
+          fill: false,
+          borderColor: chain_color,
+          backgroundColor: chain_color,
+        };
+
+        formattedData.datasets.push(final_payouts_obj);
+      }
+    }
   }
 
   const options = {
@@ -194,6 +215,7 @@ const CumPubsCommited = (node_data) => {
     <div>
       {data ? (
         <div className="chart-widget">
+          <br></br>
           <div className="chart-name">Cumulative Node Rewards</div>
           <div className="chart-port">
             <Line
@@ -231,7 +253,7 @@ const CumPubsCommited = (node_data) => {
               }
             />
           </div>
-          <div className="ee-chart-filter">
+          <div className="chart-filter">
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
