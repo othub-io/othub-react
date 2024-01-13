@@ -136,7 +136,7 @@ const PubsCommited = (settings) => {
           .map((item) => item.pubsCommited);
 
           if(pubsCommited.length !== formattedData.labels.length){
-            for(let i = 0; i < (Number(formattedData.labels.length) - Number(pubsCommited.length)); i++){
+            for(let i = 0; i < (Number(formattedData.labels.length) - Number(pubsCommited.length)) + 1; i++){
               pubsCommited.unshift(0);
             }
           }
@@ -145,16 +145,16 @@ const PubsCommited = (settings) => {
             blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
             blockchain.blockchain_name === "Origintrail Parachain Testnet"
           ) {
-            chain_color = "#fb5deb";
-            border_color = "rgba(251, 93, 235, 0.1)"
+            border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
           }
     
           if (
             blockchain.blockchain_name === "Gnosis Mainnet" ||
             blockchain.blockchain_name === "Chiado Testnet"
           ) {
-            chain_color = "#133629";
-            border_color = "rgba(19, 54, 41, 0.1)"
+            border_color = "#133629";
+            chain_color = "rgba(19, 54, 41, 0.1)"
           }
 
           pubsCommited_obj = {
@@ -163,7 +163,7 @@ const PubsCommited = (settings) => {
             fill: false,
             borderColor: border_color,
             backgroundColor: chain_color,
-            borderWidth: 1, // Bar outline width
+            borderWidth: 2, // Bar outline width
           };
     
           formattedData.datasets.push(pubsCommited_obj);
@@ -216,7 +216,6 @@ const PubsCommited = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <br></br>
           <div className="chart-name">Pubs Commited</div>
           <div className="chart-port">
             <Bar

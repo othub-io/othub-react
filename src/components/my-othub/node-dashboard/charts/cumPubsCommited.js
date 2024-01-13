@@ -35,7 +35,7 @@ function generateRandomColor() {
   return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const CumPubsCommited = (node_data) => {
+const CumPubsCommited = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -54,7 +54,7 @@ const CumPubsCommited = (node_data) => {
         //   time_data
         // );
         // setData(response.data.chart_data);
-        setData(node_data.data[0].data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -62,7 +62,7 @@ const CumPubsCommited = (node_data) => {
 
     setInputValue("");
     fetchData();
-  }, [node_data]);
+  }, [settings]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
@@ -70,12 +70,10 @@ const CumPubsCommited = (node_data) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: node_data.data[0].network,
-        nodeId: node_data.data[0].nodeId,
-        public_address: node_data.data[0].public_address,
+        nodes: settings.data[0].nodes,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -89,7 +87,6 @@ const CumPubsCommited = (node_data) => {
     datasets: [],
   };
 
-  let cumPubs_obj = [];
   if (data) {
     let format = "MMM YY";
     if (inputValue === "24h") {
@@ -106,46 +103,86 @@ const CumPubsCommited = (node_data) => {
     }
 
     const uniqueDates = new Set();
+    const formattedDates = [];
 
-    formattedData.labels = data
-    .filter((item) => {
-      const formattedDate = moment(item.date).format(format);
-      // Check if the formatted date is unique
-      if (!uniqueDates.has(formattedDate)) {
-        uniqueDates.add(formattedDate);
-        return true;
-      }
-      return false;
-    })
-    .map((item) => moment(item.date).format(format));
-
-    let final_pubs = []
-    let dates = new Set(data.map((item) => item.date));
-    for (const obj of dates) {
-      let cumPubs = 0
-      for (const item of data) {
-        if(item.date === obj){
-          cumPubs = item.cumulativePubsCommited + cumPubs
-        }
-      }
-      final_pubs.push(cumPubs)
+    for (const blockchain of data) {
+      blockchain.data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
     }
 
-    cumPubs_obj = {
-      label: "Total Pubs",
-      data: final_pubs,
-      fill: false,
-      borderColor: "#6344df",
-      backgroundColor: "#6344df",
-      type: "line",
-    };
-    formattedData.datasets.push(cumPubs_obj);
-  } else {
-    return <Loading />;
-  }
+    formattedData.labels = formattedDates;
 
-  if (isLoading) {
-    return <Loading />;
+    let border_color;
+    let chain_color;
+    let cumPubs_obj;
+    let final_pubs
+    let dates;
+    let tokenNames;
+
+    for (const blockchain of data) {
+      dates = formattedDates
+      tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+
+      for (const tokenName of tokenNames) {
+        final_pubs = [];
+        for (const obj of dates) {
+          for (const item of blockchain.data) {
+            if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+              final_pubs.push(item.cumulativePubsCommited)
+            }
+          }
+        }
+  
+        if (final_pubs.length !== formattedData.labels.length) {
+          for (
+            let i = 0;
+            i <
+            Number(formattedData.labels.length) -
+              Number(final_pubs.length) + 1;
+            i++
+          ) {
+            final_pubs.unshift(0);
+          }
+        }
+
+        if (
+          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        ) {
+          chain_color = "#fb5deb";
+          border_color = "rgba(251, 93, 235, 0.1)"
+        }
+  
+        if (
+          blockchain.blockchain_name === "Gnosis Mainnet" ||
+          blockchain.blockchain_name === "Chiado Testnet"
+        ) {
+          chain_color = "#133629";
+          border_color = "rgba(19, 54, 41, 0.1)"
+        }
+
+        cumPubs_obj = {
+          label: tokenName + " Total Pubs",
+          data: final_pubs,
+          fill: false,
+          borderColor: chain_color,
+          backgroundColor: chain_color,
+          type: "line",
+          borderWidth: 2,
+        };
+        formattedData.datasets.push(cumPubs_obj);
+      }
+    }
   }
 
   const options = {
@@ -230,7 +267,7 @@ const CumPubsCommited = (node_data) => {
               }
             />
           </div>
-          <div className="ee-chart-filter">
+          <div className="chart-filter">
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}

@@ -11,6 +11,10 @@ import NetworkDrop from "../../navigation/networkDrop";
 import NodeSettings from "./NodeSettings";
 import CumRewards from "./charts/cumRewards";
 import PubsCommited from "./charts/pubsCommited";
+import Rewards from "./charts/rewards";
+import CumPubsCommited from "./charts/cumPubsCommited";
+import EstimatedEarnings from "./charts/estimatedEarnings";
+import NodeStake from "./charts/nodeStake";
 let ext;
 
 ext = "http";
@@ -40,6 +44,7 @@ const NodeDashboard = () => {
     async function fetchData() {
       try {
         setIsLoading(true);
+
         if (account && network) {
           setNodeFilter("");
           const request_data = {
@@ -105,7 +110,7 @@ const NodeDashboard = () => {
     }
 
     fetchData();
-  }, [account, blockchain, network]);
+  }, [account, blockchain, network,nodeSelected]);
 
   const openNodeSettings = () => {
     setIsNodeSettingsOpen(true);
@@ -122,10 +127,10 @@ const NodeDashboard = () => {
       setNodeSelected(false);
     } else {
       setNodeFilter(node_selection);
-      node_selection = node_selection;
       setNodeSelected(true);
     }
 
+    console.log(node_selection)
     const time_data = {
       timeframe: "All",
       nodes: node_selection,
@@ -135,7 +140,7 @@ const NodeDashboard = () => {
       time_data,
       config
     );
-    setData(response1.data);
+    setData(response1.data.chart_data);
   };
 
   if (isNodeSettingsOpen) {
@@ -148,7 +153,7 @@ const NodeDashboard = () => {
           >
             X
           </button>
-          <NodeSettings />
+          <NodeSettings data={nodeList}/>
         </div>
       </div>
     );
@@ -197,6 +202,10 @@ const NodeDashboard = () => {
               {
                 network: network,
                 blockchain: blockchain,
+                nodes: nodeFilter,
+                nodeSelected: nodeSelected,
+                public_address: account,
+                node_data: data,
               },
             ]}
           />
@@ -211,36 +220,92 @@ const NodeDashboard = () => {
               },
             ]}
           />
-          <div className="home-chart">
-            <CumRewards
-              data={[
-                {
-                  network: network,
-                  blockchain: blockchain,
-                  nodes: nodeFilter,
-                  nodeSelected: nodeSelected,
-                  public_address: account,
-                  node_data: data,
-                },
-              ]}
-            />
-          </div>
-          <div className="home-chart">
-            <PubsCommited
-              data={[
-                {
-                  network: network,
-                  blockchain: blockchain,
-                  nodes: nodeFilter,
-                  nodeSelected: nodeSelected,
-                  public_address: account,
-                  node_data: data,
-                },
-              ]}
-            />
-          </div>
-          <div className="spacer">
-            
+          <div className="node-dashboard-charts-body">
+            <div className="chart-container">
+              <Rewards
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                    nodes: nodeFilter,
+                    nodeSelected: nodeSelected,
+                    public_address: account,
+                    node_data: data,
+                  },
+                ]}
+              />
+            </div>
+            <div className="chart-container">
+              <PubsCommited
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                    nodes: nodeFilter,
+                    nodeSelected: nodeSelected,
+                    public_address: account,
+                    node_data: data,
+                  },
+                ]}
+              />
+            </div>
+            <div className="chart-container">
+              <CumRewards
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                    nodes: nodeFilter,
+                    nodeSelected: nodeSelected,
+                    public_address: account,
+                    node_data: data,
+                  },
+                ]}
+              />
+            </div>
+            <div className="chart-container">
+              <CumPubsCommited
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                    nodes: nodeFilter,
+                    nodeSelected: nodeSelected,
+                    public_address: account,
+                    node_data: data,
+                  },
+                ]}
+              />
+            </div>
+            <div className="chart-container">
+              <EstimatedEarnings
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                    nodes: nodeFilter,
+                    nodeSelected: nodeSelected,
+                    public_address: account,
+                    node_data: data,
+                  },
+                ]}
+              />
+            </div>
+            <div className="chart-container">
+              <NodeStake
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                    nodes: nodeFilter,
+                    nodeSelected: nodeSelected,
+                    public_address: account,
+                    node_data: data,
+                  },
+                ]}
+              />
+            </div>
+            <div className="spacer"></div>
           </div>
         </div>
       ) : (

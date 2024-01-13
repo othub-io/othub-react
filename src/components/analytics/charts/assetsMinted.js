@@ -46,25 +46,25 @@ const AssetsMinted = (settings) => {
     fetchData();
   }, [settings]);
 
-  if(isLoading){
-    return (<Loading />)
+  if (isLoading) {
+    return <Loading />;
   }
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -75,18 +75,18 @@ const AssetsMinted = (settings) => {
   };
 
   if (data) {
-    let format = "MMM YY"
-    if(inputValue === "24h"){
-      format = 'HH:00'
+    let format = "MMM YY";
+    if (inputValue === "24h") {
+      format = "HH:00";
     }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
     }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
+    if (inputValue === "30d") {
+      format = "DD MMM";
     }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
+    if (inputValue === "6m") {
+      format = "DD MMM";
     }
 
     const uniqueDates = new Set();
@@ -108,24 +108,34 @@ const AssetsMinted = (settings) => {
 
     formattedData.labels = formattedDates;
 
+    let border_color;
     let chain_color;
     let pubCounts_obj;
     for (const blockchain of data) {
       let pubCounts = blockchain.chart_data.map((item) => item.totalPubs);
-      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet" || blockchain.blockchain_name === "Origintrail Parachain Testnet") {
-        chain_color = "#fb5deb";
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
+        border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
       }
 
-      if (blockchain.blockchain_name === "Gnosis Mainnet" || blockchain.blockchain_name === "Chiado Testnet") {
-        chain_color = "#133629";
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
+        border_color = "#133629";
+            chain_color = "rgba(19, 54, 41, 0.1)"
       }
 
       pubCounts_obj = {
         label: blockchain.blockchain_name,
         data: pubCounts,
         fill: false,
-        borderColor: chain_color,
-        backgroundColor: chain_color
+        borderColor: border_color,
+        backgroundColor: chain_color,
+        borderWidth: 2
       };
       formattedData.datasets.push(pubCounts_obj);
     }
@@ -159,14 +169,15 @@ const AssetsMinted = (settings) => {
       x: {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
-        title: { // Start the scale at 0
+        title: {
+          // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        }
+        },
       },
     },
   };
@@ -257,7 +268,7 @@ const AssetsMinted = (settings) => {
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );

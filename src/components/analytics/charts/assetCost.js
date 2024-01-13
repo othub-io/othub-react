@@ -52,8 +52,8 @@ const AssetCost = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
@@ -108,6 +108,7 @@ const AssetCost = (settings) => {
 
     formattedData.labels = formattedDates;
 
+    let border_color;
     let chain_color;
     let chain_color2;
     let avgPubPrice;
@@ -119,26 +120,27 @@ const AssetCost = (settings) => {
         blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
         blockchain.blockchain_name === "Origintrail Parachain Testnet"
       ) {
-        chain_color = "#fb5deb";
-        chain_color2 = "#fac3f4"
+        border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
       }
 
       if (
         blockchain.blockchain_name === "Gnosis Mainnet" ||
         blockchain.blockchain_name === "Chiado Testnet"
       ) {
-        chain_color = "#133629";
-        chain_color2 = "#5abf9a"
+        border_color = "#133629";
+            chain_color = "rgba(19, 54, 41, 0.1)"
       }
 
       let avgBid_obj = {
         label: blockchain.blockchain_name + " Bid",
         data: avgBid,
         fill: false,
-        borderColor: chain_color2,
-        backgroundColor: chain_color2,
+        borderColor: border_color,
+        backgroundColor: border_color,
         yAxisID: "line-y-axis",
         type: "line",
+        borderWidth: 2
       };
 
       formattedData.datasets.unshift(avgBid_obj);
@@ -147,9 +149,10 @@ const AssetCost = (settings) => {
         label: blockchain.blockchain_name + " Cost (TRAC)",
         data: avgPubPrice,
         fill: false,
-        borderColor: chain_color,
+        borderColor: border_color,
         backgroundColor: chain_color,
         yAxisID: "bar-y-axis",
+        borderWidth: 2
       };
 
       formattedData.datasets.push(avgPubPrice_obj);
@@ -186,37 +189,38 @@ const AssetCost = (settings) => {
         position: "right",
         beginAtZero: true,
         title: {
-            // Start the scale at 0
-            display: true,
-            text: "Bid", // Add your X-axis label here
-            color: "#6344df", // Label color
-            font: {
-              size: 12, // Label font size
-            },
+          // Start the scale at 0
+          display: true,
+          text: "Bid", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
           },
-          ticks: {
-            callback: function (value, index, values) {
-              if (value >= 1000000) {
-                return (value / 1000000).toFixed(1) + "M";
-              } else if (value >= 1000) {
-                return (value / 1000).toFixed(1) + "K";
-              } else {
-                return value;
-              }
-            },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
           },
+        },
       },
       x: {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
-        title: { // Start the scale at 0
+        title: {
+          // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        }
+        },
       },
     },
   };

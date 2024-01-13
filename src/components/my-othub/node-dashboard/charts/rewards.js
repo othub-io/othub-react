@@ -35,7 +35,7 @@ function generateRandomColor() {
   return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const NodeRewards = (node_data) => {
+const NodeRewards = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -54,7 +54,7 @@ const NodeRewards = (node_data) => {
         //   time_data
         // );
         // setData(response.data.chart_data);
-        setData(node_data.data[0].data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -62,7 +62,7 @@ const NodeRewards = (node_data) => {
 
     setInputValue("");
     fetchData();
-  }, [node_data]);
+  }, [settings]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
@@ -70,12 +70,10 @@ const NodeRewards = (node_data) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: node_data.data[0].network,
-        nodeId: node_data.data[0].nodeId,
-        public_address: node_data.data[0].public_address,
+        nodes: settings.data[0].nodes
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -106,48 +104,71 @@ const NodeRewards = (node_data) => {
     }
 
     const uniqueDates = new Set();
-
-    formattedData.labels = data
-    .filter((item) => {
-      const formattedDate = moment(item.date).format(format);
-      // Check if the formatted date is unique
-      if (!uniqueDates.has(formattedDate)) {
-        uniqueDates.add(formattedDate);
-        return true;
-      }
-      return false;
-    })
-    .map((item) => moment(item.date).format(format));
-
-    let tokenNames = new Set(data.map((item) => item.tokenName));
-    for (const tokenName of tokenNames) {
-      let randomHexColor = generateRandomColor();
-      const payouts = data
-        .filter((item) => item.tokenName === tokenName)
-        .map((item) => item.payouts);
-
-        if(payouts.length !== formattedData.labels.length){
-          for(let i = 0; i < (Number(formattedData.labels.length) - Number(payouts.length)); i++){
-            payouts.unshift(0);
+    const formattedDates = [];
+    console.log(data)
+    for (const blockchain of data) {
+      blockchain.data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
           }
-        }
-
-        payouts_obj = {
-          label: tokenName + ' Rewards',
-          data: payouts,
-          fill: false,
-          borderColor: randomHexColor,
-          backgroundColor: randomHexColor,
-        };
-  
-        formattedData.datasets.push(payouts_obj);
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
     }
-  } else {
-    return (<Loading />)
-  }
 
-  if (isLoading) {
-    return (<Loading />)
+    formattedData.labels = formattedDates;
+
+    let border_color;
+    let chain_color;
+    let payouts_obj;
+
+    for (const blockchain of data) {
+      let tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+      for (const tokenName of tokenNames) {
+        //let randomHexColor = generateRandomColor();
+        const payouts = blockchain.data
+          .filter((item) => item.tokenName === tokenName)
+          .map((item) => item.payouts);
+
+          if(payouts.length !== formattedData.labels.length){
+            for(let i = 0; i < (Number(formattedData.labels.length) - Number(payouts.length)) + 1; i++){
+              payouts.unshift(0);
+            }
+          }
+
+          if (
+            blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+            blockchain.blockchain_name === "Origintrail Parachain Testnet"
+          ) {
+            border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
+          }
+    
+          if (
+            blockchain.blockchain_name === "Gnosis Mainnet" ||
+            blockchain.blockchain_name === "Chiado Testnet"
+          ) {
+            border_color = "#133629";
+            chain_color = "rgba(19, 54, 41, 0.1)"
+          }
+
+          payouts_obj = {
+            label: tokenName + ' Rewards',
+            data: payouts,
+            fill: false,
+            borderColor: border_color,
+            backgroundColor: chain_color,
+            borderWidth: 2,
+          };
+    
+          formattedData.datasets.push(payouts_obj);
+      }
+    }
   }
 
   const options = {
@@ -232,7 +253,7 @@ const NodeRewards = (node_data) => {
               }
             />
           </div>
-          <div className="ee-chart-filter">
+          <div className="chart-filter">
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}

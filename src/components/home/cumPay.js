@@ -62,7 +62,7 @@ const CumPay = (settings) => {
   };
 
   if (data) {
-    let format = "DD MMM";
+    let format = "MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
     }
@@ -121,6 +121,7 @@ const CumPay = (settings) => {
         borderColor: chain_color,
         backgroundColor: chain_color,
         type: "line",
+        borderWidth: 2
       };
       formattedData.datasets.push(cumulativePayout_obj);
     }

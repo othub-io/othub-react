@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { AccountContext } from "../../AccountContext";
 import detectEthereumProvider from "@metamask/detect-provider";
 import "../../css/navigation/metamaskButton.css";
+import { jwtDecode, InvalidTokenError } from 'jwt-decode';
 import axios from "axios";
 import Web3 from "web3";
 let readable_chain_id;
@@ -29,10 +30,24 @@ const handleSignMessage = async (publicAddress, nonce) => {
   }
 };
 
-const MetamaskButton = (token) => {
+const MetamaskButton = () => {
   const { setIsLoading } = useContext(AccountContext);
 
   useEffect(() => {
+
+    if (localStorage.getItem("token")) {
+      const decodedToken = jwtDecode(localStorage.getItem("token"));
+      const currentTime = Date.now() / 1000; // Convert milliseconds to seconds
+
+      if (decodedToken.exp < currentTime) {
+        setIsLoading(true)
+        localStorage.removeItem("token", "");
+        localStorage.removeItem("connected_blockchain", "");
+        localStorage.removeItem("account", "");
+      }
+      return;
+    }
+
     const checkConnection = async () => {
       try {
         const provider = await detectEthereumProvider();
@@ -126,7 +141,6 @@ const MetamaskButton = (token) => {
 
           //set token in localstorage
           localStorage.setItem("token", responseSign.data.token);
-            console.log(activeChainId)
           if (activeChainId === "0x4fce") {
             readable_chain_id = `Origintrail Parachain Testnet`;
           } else if (activeChainId === "0x7fb") {

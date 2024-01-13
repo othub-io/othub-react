@@ -162,11 +162,10 @@ function NavBar() {
         </h1>
         <br></br>
         <div className="connection-info">
-          <div className="addr-chain">
+          {account && <div className="addr-chain">
             <span style={connectionStyle}>{addr}</span>
             <span style={connectionStyle}>{chain}</span>
-          </div>
-
+          </div>}
           {account &&
           balance &&
           (connected_blockchain === "Origintrail Parachain Mainnet" ||
@@ -207,7 +206,7 @@ function NavBar() {
           )}
         </div>
 
-        <MetamaskButton token={localStorage.getItem("token")} />
+        <MetamaskButton />
       </div>
     </nav>
   );

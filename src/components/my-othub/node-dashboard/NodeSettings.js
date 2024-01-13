@@ -14,11 +14,12 @@ const config = {
   },
 };
 
-const NodeSettings = () => {
+const NodeSettings = (settings) => {
   const [data, setData] = useState("");
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
   const account = localStorage.getItem("account");
   const chain_id = localStorage.getItem("chain_id");
+  const [saved, setSaved] = useState(false);
   const [inputValue, setInputValue] = useState({
     telegram_id: "",
     bot_token: ""
@@ -27,9 +28,10 @@ const NodeSettings = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+        console.log(settings)
         if (account) {
           const request_data = {
-            network: chain_id,
+            nodes: settings.data
           };
 
           const response = await axios
@@ -96,19 +98,19 @@ const NodeSettings = () => {
       const fetchFilteredData = async () => {
         try {
           const request_data = {
-            network: chain_id,
+            nodes: settings.data,
             sendScript: "yes",
             telegramID: inputValue.telegram_id,
             botToken: inputValue.bot_token,
           };
 
-          console.log(request_data)
           const response = await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeSettings`,
             request_data,
             config
           );
           setData(response.data);
+          setSaved(true)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -150,7 +152,9 @@ const NodeSettings = () => {
                 />
               </div>
               <br></br>
-              <button type="submit">Save</button>
+              {saved ? (<div className="saved-notif">
+                Notification settings saved!
+              </div>) : (<button type="submit">Save</button>)}
               <br></br>
             </form>
         </div>

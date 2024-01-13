@@ -80,11 +80,11 @@ const Stats = (settings) => {
                 width="100"
                 ></img><span>{settings.data[0].network.substring(4)}</span>
             </div>
-            <div className="chain-stake">
+            <div className="chain-assets">
                 Active Nodes:<br/>
                 <span>{nodes}</span>
             </div>
-            <div className="chain-assets">
+            <div className="chain-stake">
                 Total Pubs:<br/>
                 <span>{pubs_commited}</span>
             </div>
@@ -123,11 +123,11 @@ const Stats = (settings) => {
                 height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
                 ></img>
             </div>
-            <div className="chain-stake">
+            <div className="chain-assets">
                 Active Nodes:<br/>
                 <span>{blockchain.nodes}</span>
             </div>
-            <div className="chain-assets">
+            <div className="chain-stake">
                 Pubs:<br/>
                 <span>{blockchain.pubs_commited}</span>
             </div>

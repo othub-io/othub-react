@@ -38,7 +38,7 @@ const NodeStake = (settings) => {
         const time_data = {
           timeframe: inputValue,
           network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+          blockchain: settings.data[0].blockchain,
         };
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/nodeStake`,
@@ -61,8 +61,8 @@ const NodeStake = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/nodeStake`,
@@ -117,48 +117,53 @@ const NodeStake = (settings) => {
 
     formattedData.labels = formattedDates;
 
+    let border_color;
     let chain_color;
     let chain_color2;
     let nodeStake;
     let nodesWithMoreThan50kStake;
     for (const blockchain of data) {
       nodeStake = blockchain.chart_data.map((item) => item.combinedNodesStake);
-      nodesWithMoreThan50kStake = blockchain.chart_data.map((item) => item.nodesWithMoreThan50kStake);
+      nodesWithMoreThan50kStake = blockchain.chart_data.map(
+        (item) => item.nodesWithMoreThan50kStake
+      );
       if (
         blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
         blockchain.blockchain_name === "Origintrail Parachain Testnet"
       ) {
-        chain_color = "#fb5deb";
-        chain_color2 = "#fac3f4"
+        border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
       }
 
       if (
         blockchain.blockchain_name === "Gnosis Mainnet" ||
         blockchain.blockchain_name === "Chiado Testnet"
       ) {
-        chain_color = "#133629";
-        chain_color2 = "#5abf9a"
+        border_color = "#133629";
+            chain_color = "rgba(19, 54, 41, 0.1)"
       }
 
       let nodeStake_obj = {
         label: blockchain.blockchain_name + " Stake",
         data: nodeStake,
         fill: false,
-        borderColor: chain_color,
+        borderColor: border_color,
         backgroundColor: chain_color,
-        yAxisID: "bar-y-axis"
+        yAxisID: "bar-y-axis",
+        borderWidth: 2
       };
 
       formattedData.datasets.push(nodeStake_obj);
-      
+
       let nodesWithMoreThan50kStake_obj = {
         label: blockchain.blockchain_name + " Nodes",
         data: nodesWithMoreThan50kStake,
         fill: false,
-        borderColor: chain_color2,
-        backgroundColor: chain_color2,
+        borderColor: border_color,
+        backgroundColor: border_color,
         yAxisID: "line-y-axis",
         type: "line",
+        borderWidth: 2
       };
 
       formattedData.datasets.unshift(nodesWithMoreThan50kStake_obj);
@@ -171,50 +176,50 @@ const NodeStake = (settings) => {
         position: "left",
         beginAtZero: true,
         title: {
-            // Start the scale at 0
-            display: true,
-            text: "Nodes", // Add your X-axis label here
-            color: "#6344df", // Label color
-            font: {
-              size: 12, // Label font size
-            },
+          // Start the scale at 0
+          display: true,
+          text: "Nodes", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
           },
-          ticks: {
-            callback: function (value, index, values) {
-              if (value >= 1000000) {
-                return (value / 1000000).toFixed(1) + "M";
-              } else if (value >= 1000) {
-                return (value / 1000).toFixed(1) + "K";
-              } else {
-                return value;
-              }
-            },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
           },
+        },
       },
       "bar-y-axis": {
         position: "right",
         beginAtZero: true,
         stacked: true,
         title: {
-            // Start the scale at 0
-            display: true,
-            text: "Stake", // Add your X-axis label here
-            color: "#6344df", // Label color
-            font: {
-              size: 12, // Label font size
+          // Start the scale at 0
+          display: true,
+          text: "Stake", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
             }
           },
-          ticks: {
-            callback: function (value, index, values) {
-              if (value >= 1000000) {
-                return (value / 1000000).toFixed(1) + "M";
-              } else if (value >= 1000) {
-                return (value / 1000).toFixed(1) + "K";
-              } else {
-                return value;
-              }
-            },
-          },
+        },
       },
       x: {
         beginAtZero: true,
@@ -236,7 +241,9 @@ const NodeStake = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Number of nodes and combined nodes stake</div>
+          <div className="chart-name">
+            Number of nodes and combined nodes stake
+          </div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>

@@ -48,26 +48,26 @@ const Payouts = (settings) => {
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
-  if(isLoading){
-    return (<Loading />)
+  if (isLoading) {
+    return <Loading />;
   }
 
   const formattedData = {
@@ -108,36 +108,35 @@ const Payouts = (settings) => {
 
     formattedData.labels = formattedDates;
 
+    let border_color;
     let chain_color;
-    let chain_color2;
     let payouts;
     for (const blockchain of data) {
-      payouts = blockchain.chart_data.map(
-        (item) => item.payouts
-      );
+      payouts = blockchain.chart_data.map((item) => item.payouts);
 
       if (
         blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
         blockchain.blockchain_name === "Origintrail Parachain Testnet"
       ) {
-        chain_color = "#fb5deb";
-        chain_color2 = "#fac3f4"
+        border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
       }
 
       if (
         blockchain.blockchain_name === "Gnosis Mainnet" ||
         blockchain.blockchain_name === "Chiado Testnet"
       ) {
-        chain_color = "#133629";
-        chain_color2 = "#5abf9a"
+        border_color = "#133629";
+            chain_color = "rgba(19, 54, 41, 0.1)"
       }
 
       let payouts_obj = {
         label: blockchain.blockchain_name,
         data: payouts,
         fill: false,
-        borderColor: chain_color,
+        borderColor: border_color,
         backgroundColor: chain_color,
+        borderWidth: 2
       };
 
       formattedData.datasets.push(payouts_obj);
@@ -172,14 +171,15 @@ const Payouts = (settings) => {
       x: {
         beginAtZero: true, // Start the scale at 0
         stacked: true,
-        title: { // Start the scale at 0
+        title: {
+          // Start the scale at 0
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
           },
-        }
+        },
       },
     },
   };
@@ -270,7 +270,7 @@ const Payouts = (settings) => {
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );

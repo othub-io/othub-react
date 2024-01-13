@@ -48,26 +48,26 @@ const Epochs = (settings) => {
 
   const changeTimeFrame = async (timeframe) => {
     try {
-      setisLoading(true)
+      setisLoading(true);
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
         time_data
       );
       setData(response.data.chart_data);
-      setisLoading(false)
+      setisLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
-  if(isLoading){
-    return (<Loading />)
+  if (isLoading) {
+    return <Loading />;
   }
 
   const formattedData = {
@@ -75,18 +75,18 @@ const Epochs = (settings) => {
   };
 
   if (data) {
-    let format = "MMM YY"
-    if(inputValue === "24h"){
-      format = 'HH:00'
+    let format = "MMM YY";
+    if (inputValue === "24h") {
+      format = "HH:00";
     }
-    if(inputValue === "7d"){
-      format = 'ddd HH:00'
+    if (inputValue === "7d") {
+      format = "ddd HH:00";
     }
-    if(inputValue === "30d"){
-      format = 'DD MMM'
+    if (inputValue === "30d") {
+      format = "DD MMM";
     }
-    if(inputValue === "6m"){
-      format = 'DD MMM'
+    if (inputValue === "6m") {
+      format = "DD MMM";
     }
 
     const uniqueDates = new Set();
@@ -108,16 +108,25 @@ const Epochs = (settings) => {
 
     formattedData.labels = formattedDates;
 
+    let border_color;
     let chain_color;
     let epochs_obj;
     for (const blockchain of data) {
       let epochs = blockchain.chart_data.map((item) => item.avgEpochsNumber);
-      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet" || blockchain.blockchain_name === "Origintrail Parachain Testnet") {
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
         chain_color = "#fb5deb";
+        border_color = "rgba(251, 93, 235, 0.1)";
       }
 
-      if (blockchain.blockchain_name === "Gnosis Mainnet" || blockchain.blockchain_name === "Chiado Testnet") {
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
         chain_color = "#133629";
+        border_color = "rgba(19, 54, 41, 0.1)";
       }
 
       epochs_obj = {
@@ -125,7 +134,8 @@ const Epochs = (settings) => {
         data: epochs,
         fill: false,
         borderColor: chain_color,
-        backgroundColor: chain_color
+        backgroundColor: chain_color,
+        borderWidth: 2
       };
       formattedData.datasets.push(epochs_obj);
     }
@@ -136,24 +146,24 @@ const Epochs = (settings) => {
       y: {
         beginAtZero: true, // Start the scale at 0
         title: {
-            display: true,
-            text: "Epochs", // Add your X-axis label here
-            color: "#6344df", // Label color
-            font: {
-              size: 12, // Label font size
-            },
+          display: true,
+          text: "Epochs", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
           },
-          ticks: {
-            callback: function (value, index, values) {
-              if (value >= 1000000) {
-                return (value / 1000000).toFixed(1) + "M";
-              } else if (value >= 1000) {
-                return (value / 1000).toFixed(1) + "K";
-              } else {
-                return value;
-              }
-            },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
           },
+        },
       },
       x: {
         title: {
@@ -164,7 +174,7 @@ const Epochs = (settings) => {
             size: 12, // Label font size
           },
         },
-      }
+      },
     },
   };
 
@@ -254,7 +264,7 @@ const Epochs = (settings) => {
       ) : (
         <div className="chart-widget">
           <Loading />
-        </div> 
+        </div>
       )}
     </div>
   );

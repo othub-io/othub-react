@@ -122,9 +122,10 @@ const CumPubsCommited = (settings) => {
 
     formattedData.labels = formattedDates;
 
+    let border_color
     let chain_color;
     let final_payouts_obj;
-    let final_payouts = [];
+    let final_payouts
     let dates;
     let tokenNames;
 
@@ -142,11 +143,24 @@ const CumPubsCommited = (settings) => {
           }
         }
 
+        if (final_payouts.length !== formattedData.labels.length) {
+          for (
+            let i = 0;
+            i <
+            Number(formattedData.labels.length) -
+              Number(final_payouts.length) + 1;
+            i++
+          ) {
+            final_payouts.unshift(0);
+          }
+        }
+
         if (
           blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
           blockchain.blockchain_name === "Origintrail Parachain Testnet"
         ) {
           chain_color = "#fb5deb";
+          border_color = "rgba(251, 93, 235, 0.1)"
         }
   
         if (
@@ -154,15 +168,16 @@ const CumPubsCommited = (settings) => {
           blockchain.blockchain_name === "Chiado Testnet"
         ) {
           chain_color = "#133629";
+          border_color = "rgba(19, 54, 41, 0.1)"
         }
   
-        console.log(blockchain.data);
         final_payouts_obj = {
           label: tokenName,
           data: final_payouts,
           fill: false,
           borderColor: chain_color,
           backgroundColor: chain_color,
+          borderWidth: 2,
         };
 
         formattedData.datasets.push(final_payouts_obj);
@@ -215,7 +230,6 @@ const CumPubsCommited = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <br></br>
           <div className="chart-name">Cumulative Node Rewards</div>
           <div className="chart-port">
             <Line

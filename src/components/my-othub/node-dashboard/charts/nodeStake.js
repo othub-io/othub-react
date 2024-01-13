@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../effects/Loading";
+import Loading from "../../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -27,7 +27,7 @@ ChartJS.register(
   Legend
 );
 
-const Earnings = (settings) => {
+const NodeStake = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -35,13 +35,23 @@ const Earnings = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        setData(settings.data[0].earningData);
+        // const time_data = {
+        //   timeframe: inputValue,
+        //   network: node_data.data[0].network,
+        //   nodeId: node_data.data[0].nodeId,
+        //   public_address: node_data.data[0].public_address,
+        // };
+        // const response = await axios.post(
+        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        //   time_data
+        // );
+        // setData(response.data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setData("");
     setInputValue("");
     fetchData();
   }, [settings]);
@@ -52,11 +62,10 @@ const Earnings = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: settings.data[0].network,
-        blockchain: settings.data[0].blockchain,
+        nodes: settings.data[0].nodes,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -88,7 +97,7 @@ const Earnings = (settings) => {
     const uniqueDates = new Set();
     const formattedDates = [];
     for (const blockchain of data) {
-      blockchain.chart_data
+      blockchain.data
         .filter((item) => {
           const formattedDate = moment(item.date).format(format);
           // Check if the formatted date is unique
@@ -106,16 +115,26 @@ const Earnings = (settings) => {
 
     let border_color;
     let chain_color;
-    let estimatedEarnings1stEpochOnly;
-    let estimatedEarnings2plusEpochs;
-    for (const blockchain of data) {
-      estimatedEarnings1stEpochOnly = blockchain.chart_data.map(
-        (item) => item.estimatedEarnings1stEpochOnly
-      );
-      estimatedEarnings2plusEpochs = blockchain.chart_data.map(
-        (item) => item.estimatedEarnings2plusEpochs
-      );
+    let nodeStake;
+    let nodesWithMoreThan50kStake;
+    let dates = formattedDates;
 
+    for (const blockchain of data) {
+      let total_nodeStake = [];
+      for (const date of dates) {
+        let nodeStake = 0;
+          for (const item of blockchain.data) {
+            if (moment(item.date).format(format) === date) {
+              nodeStake = item.nodeStake + nodeStake;
+            }
+          }
+          total_nodeStake.push(nodeStake);
+      }
+
+      // nodeStake = blockchain.data.map((item) => item.nodeStake);
+      // nodesWithMoreThan50kStake = blockchain.data.map(
+      //   (item) => item.nodesWithMoreThan50kStake
+      // );
       if (
         blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
         blockchain.blockchain_name === "Origintrail Parachain Testnet"
@@ -132,9 +151,9 @@ const Earnings = (settings) => {
             chain_color = "rgba(19, 54, 41, 0.1)"
       }
 
-      let estimatedEarnings2plusEpochs_obj = {
-        label: blockchain.blockchain_name + " 2nd+ Epoch",
-        data: estimatedEarnings2plusEpochs,
+      let nodeStake_obj = {
+        label: blockchain.blockchain_name + " Stake",
+        data: total_nodeStake,
         fill: false,
         borderColor: border_color,
         backgroundColor: border_color,
@@ -143,26 +162,107 @@ const Earnings = (settings) => {
         borderWidth: 2
       };
 
-      formattedData.datasets.unshift(estimatedEarnings2plusEpochs_obj);
+      formattedData.datasets.push(nodeStake_obj);
 
-      let estimatedEarnings1stEpochOnly_obj = {
-        label: blockchain.blockchain_name + " 1st Epoch",
-        data: estimatedEarnings1stEpochOnly,
-        fill: false,
-        borderColor: border_color,
-        backgroundColor: chain_color,
-        borderWidth: 2
-      };
+      // let nodesWithMoreThan50kStake_obj = {
+      //   label: blockchain.blockchain_name + " Nodes",
+      //   data: nodesWithMoreThan50kStake,
+      //   fill: false,
+      //   borderColor: border_color,
+      //   backgroundColor: border_color,
+      //   yAxisID: "line-y-axis",
+      //   type: "line",
+      //   borderWidth: 2
+      // };
 
-      formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
+      // formattedData.datasets.unshift(nodesWithMoreThan50kStake_obj);
+    }
+
+    for (const blockchain of data) {
+      let tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+      for (const tokenName of tokenNames) {
+        let final_stake = [];
+        for (const obj of dates) {
+          for (const item of blockchain.data) {
+            if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+              final_stake.push(item.nodeStake)
+            }
+          }
+        }
+
+        if (final_stake.length !== formattedData.labels.length) {
+          for (
+            let i = 0;
+            i <
+            Number(formattedData.labels.length) -
+              Number(final_stake.length) + 1;
+            i++
+          ) {
+            final_stake.unshift(0);
+          }
+        }
+
+        if (
+          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        ) {
+          border_color = "#fb5deb";
+          chain_color = "rgba(251, 93, 235, 0.1)"
+        }
+  
+        if (
+          blockchain.blockchain_name === "Gnosis Mainnet" ||
+          blockchain.blockchain_name === "Chiado Testnet"
+        ) {
+          border_color = "#133629";
+          chain_color = "rgba(19, 54, 41, 0.1)"
+        }
+  
+        let final_stake_obj = {
+          label: tokenName,
+          data: final_stake,
+          fill: false,
+          borderColor: border_color,
+          backgroundColor: chain_color,
+          borderWidth: 2,
+          yAxisID: "bar-y-axis",
+        };
+
+        formattedData.datasets.push(final_stake_obj);
+      }
     }
   }
 
   const options = {
     scales: {
       "line-y-axis": {
+        position: "left",
+        beginAtZero: true,
+        title: {
+          // Start the scale at 0
+          display: true,
+          text: "Total Stake", // Add your X-axis label here
+          color: "#6344df", // Label color
+          font: {
+            size: 12, // Label font size
+          },
+        },
+        ticks: {
+          callback: function (value, index, values) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M";
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "K";
+            } else {
+              return value;
+            }
+          },
+        },
+      },
+      "bar-y-axis": {
         position: "right",
         beginAtZero: true,
+        stacked: true,
         title: {
           // Start the scale at 0
           display: true,
@@ -185,12 +285,12 @@ const Earnings = (settings) => {
         },
       },
       x: {
-        beginAtZero: true, // Start the scale at 0
+        beginAtZero: true,
         stacked: true,
         title: {
           // Start the scale at 0
           display: true,
-          text: "Datetime (UTC)", // Add your X-axis label here
+          text: "Date (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -204,35 +304,13 @@ const Earnings = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Combined Node Earnings</div>
+          <div className="chart-name">
+            Node Stakes
+          </div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
-            <button
-              className="chart-filter-button"
-              onClick={() => changeTimeFrame("24h")}
-              name="timeframe"
-              style={
-                inputValue === "24h"
-                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
-                  : {}
-              }
-            >
-              24h
-            </button>
-            <button
-              className="chart-filter-button"
-              onClick={() => changeTimeFrame("7d")}
-              name="timeframe"
-              style={
-                inputValue === "7d"
-                  ? { color: "#FFFFFF", backgroundColor: "#6344df" }
-                  : {}
-              }
-            >
-              7d
-            </button>
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("30d")}
@@ -292,4 +370,4 @@ const Earnings = (settings) => {
   );
 };
 
-export default Earnings;
+export default NodeStake;

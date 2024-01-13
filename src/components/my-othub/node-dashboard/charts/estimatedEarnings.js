@@ -29,13 +29,13 @@ ChartJS.register(
 
 function generateRandomColor() {
   // Generate a random hexadecimal color code
-  const randomColor = Math.floor(Math.random()*16777215).toString(16);
-  
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
   // Pad the color code with zeros if needed
-  return '#' + '0'.repeat(6 - randomColor.length) + randomColor;
+  return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const EstimatedEarnings = (node_data) => {
+const EstimatedEarnings = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -54,7 +54,7 @@ const EstimatedEarnings = (node_data) => {
         //   time_data
         // );
         // setData(response.data.chart_data);
-        setData(node_data.data[0].data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -62,7 +62,7 @@ const EstimatedEarnings = (node_data) => {
 
     setInputValue("");
     fetchData();
-  }, [node_data]);
+  }, [settings]);
 
   const changeTimeFrame = async (timeframe) => {
     try {
@@ -70,12 +70,10 @@ const EstimatedEarnings = (node_data) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        network: node_data.data[0].network,
-        nodeId: node_data.data[0].nodeId,
-        public_address: node_data.data[0].public_address,
+        nodes: settings.data[0].nodes,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -90,7 +88,6 @@ const EstimatedEarnings = (node_data) => {
   };
 
   let estimatedEarnings_obj = [];
-  let estimatedEarnings1stEpochOnly_obj = [];
   if (data) {
     let format = "MMM YY";
     if (inputValue === "24h") {
@@ -107,70 +104,120 @@ const EstimatedEarnings = (node_data) => {
     }
 
     const uniqueDates = new Set();
+    const formattedDates = [];
 
-    formattedData.labels = data
-    .filter((item) => {
-      const formattedDate = moment(item.date).format(format);
-      // Check if the formatted date is unique
-      if (!uniqueDates.has(formattedDate)) {
-        uniqueDates.add(formattedDate);
-        return true;
-      }
-      return false;
-    })
-    .map((item) => moment(item.date).format(format));
-
-    let final_earnings = []
-    let dates = new Set(data.map((item) => item.date));
-    for (const date of dates) {
-      let estimatedEarnings = 0
-      for (const item of data) {
-        if(item.date === date){
-          estimatedEarnings = item.estimatedEarnings + estimatedEarnings
-        }
-      }
-      final_earnings.push(estimatedEarnings)
+    for (const blockchain of data) {
+      blockchain.data
+        .filter((item) => {
+          const formattedDate = moment(item.date).format(format);
+          // Check if the formatted date is unique
+          if (!uniqueDates.has(formattedDate)) {
+            uniqueDates.add(formattedDate);
+            formattedDates.push(formattedDate);
+            return true;
+          }
+          return false;
+        })
+        .map((item) => moment(item.date).format(format));
     }
 
-    estimatedEarnings_obj = {
-      label: "Total Estimated Earnings",
-      data: final_earnings,
-      fill: false,
-      borderColor: "#6344df",
-      backgroundColor: "#6344df",
-      type: "line",
-    };
-    formattedData.datasets.push(estimatedEarnings_obj);
+    formattedData.labels = formattedDates;
 
-    let tokenNames = new Set(data.map((item) => item.tokenName));
-    for (const tokenName of tokenNames) {
-      let randomHexColor = generateRandomColor();
-      const estimatedEarnings1stEpochOnly = data
-        .filter((item) => item.tokenName === tokenName)
-        .map((item) => item.estimatedEarnings1stEpochOnly);
+    let final_earnings = [];
+    let dates = formattedDates;
 
-        if(estimatedEarnings1stEpochOnly.length !== formattedData.labels.length){
-          for(let i = 0; i < (Number(formattedData.labels.length) - Number(estimatedEarnings1stEpochOnly.length)); i++){
-            estimatedEarnings1stEpochOnly.unshift(0);
+    let border_color;
+    let chain_color;
+    for (const blockchain of data) {
+      final_earnings = [];
+      for (const date of dates) {
+        let estimatedEarnings1stEpochOnly = 0;
+          for (const item of blockchain.data) {
+            if (moment(item.date).format(format) === date) {
+              estimatedEarnings1stEpochOnly = item.estimatedEarnings1stEpochOnly + estimatedEarnings1stEpochOnly;
+            }
+          }
+        final_earnings.push(estimatedEarnings1stEpochOnly);
+      }
+
+      if (
+        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+      ) {
+        border_color = "#fb5deb";
+        chain_color = "rgba(251, 93, 235, 0.1)";
+      }
+
+      if (
+        blockchain.blockchain_name === "Gnosis Mainnet" ||
+        blockchain.blockchain_name === "Chiado Testnet"
+      ) {
+        border_color = "#133629";
+        chain_color = "rgba(19, 54, 41, 0.1)";
+      }
+
+      let estimatedEarnings1stEpoch_obj = {
+        label: blockchain.blockchain_name + " Earnings 1st Epoch",
+        data: final_earnings,
+        fill: false,
+        borderColor: border_color,
+        backgroundColor: border_color,
+        type: "line",
+        borderWidth: 2
+      };
+      formattedData.datasets.push(estimatedEarnings1stEpoch_obj);
+    }
+
+    for (const blockchain of data) {
+      let tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+      for (const tokenName of tokenNames) {
+        //let randomHexColor = generateRandomColor();
+        const estimatedEarnings = blockchain.data
+          .filter((item) => item.tokenName === tokenName)
+          .map((item) => item.estimatedEarnings);
+
+        if (estimatedEarnings.length !== formattedData.labels.length) {
+          for (
+            let i = 0;
+            i <
+            Number(formattedData.labels.length) -
+              Number(estimatedEarnings.length) + 1;
+            i++
+          ) {
+            estimatedEarnings.unshift(0);
           }
         }
 
-        estimatedEarnings1stEpochOnly_obj = {
-          label: tokenName + ' Earnings 1st Epoch Only',
-          data: estimatedEarnings1stEpochOnly,
-          fill: false,
-          borderColor: randomHexColor,
-          backgroundColor: randomHexColor,
-        };
-  
-        formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
-    }
-  } else {
-    return (<Loading />)
-  }
+        if (
+          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
+          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        ) {
+          border_color = "#fb5deb";
+          chain_color = "rgba(251, 93, 235, 0.1)";
+        }
 
-  if (isLoading) {
-    return (<Loading />)
+        if (
+          blockchain.blockchain_name === "Gnosis Mainnet" ||
+          blockchain.blockchain_name === "Chiado Testnet"
+        ) {
+          border_color = "#133629";
+          chain_color = "rgba(19, 54, 41, 0.1)";
+        }
+
+        estimatedEarnings_obj = {
+          label: tokenName + " Earnings All Epochs",
+          data: estimatedEarnings,
+          fill: false,
+          borderColor: border_color,
+          backgroundColor: chain_color,
+          borderWidth: 2,
+        };
+
+        formattedData.datasets.push(
+          estimatedEarnings_obj
+        );
+      }
+    }
   }
 
   const options = {
@@ -252,7 +299,7 @@ const EstimatedEarnings = (node_data) => {
               }
             />
           </div>
-          <div className="ee-chart-filter">
+          <div className="chart-filter">
             <button
               className="chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
