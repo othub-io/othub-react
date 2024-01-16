@@ -242,7 +242,7 @@ const NodeStake = (settings) => {
       {data ? (
         <div className="chart-widget">
           <div className="chart-name">
-            Number of nodes and combined nodes stake
+            Number of Nodes and Combined Stake
           </div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />

@@ -48,10 +48,11 @@ const NodeCommits = (settings) => {
         const params = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
+          nodes: settings.data[0].nodes,
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/activityFeed`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/activityFeed`,
           params
         );
 
@@ -69,7 +70,7 @@ const NodeCommits = (settings) => {
   }, [settings]);
 
   if (!data) {
-    return (<Loading />)
+    return (<div className="node-activity-feed"><Loading /></div>)
   }
 
   return (

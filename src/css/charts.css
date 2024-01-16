@@ -11,7 +11,7 @@
   font-size: calc(10px + 2vmin);
   z-index: 10;
   color: #6344df;
-  height: 85vh;
+  height: 100%;
   width:87%;
   margin-top: 10px;
   margin-left: 12%;
@@ -38,6 +38,7 @@
     font-weight: bold;
     color: #6344df;
     text-align: center;
+    font-size: 20px;
 }
 
 .chart-port{
@@ -134,6 +135,19 @@
         padding-bottom: 10px;
       }
       
+      .charts-body {
+        font-size: calc(10px + 2vmin);
+        z-index: 10;
+        color: #6344df;
+        height: 85vh;
+        width:85%;
+        margin-top: 10px;
+        margin-left: 14%;
+        overflow: auto;
+        padding-left: 3px;
+        padding-bottom: 10px;
+      }
+
       .chart-container {
         margin-top: .5%;
         padding-top: 1%;
@@ -214,12 +228,16 @@
         font-family: "Roboto", sans-serif;
       }
       
+      .header-seg1{
+        width: 50%;
+      }
+
       .charts-header {
         font-size: calc(10px + 2vmin);
         z-index: 10;
         color: #6344df;
         height: 85vh;
-        width:84%;
+        width:100%;
         margin-top: 7%;
         margin-left: 16%;
         overflow: auto;
@@ -227,10 +245,23 @@
         padding-bottom: 10px;
       }
       
+      .charts-body {
+        font-size: calc(10px + 2vmin);
+        z-index: 10;
+        color: #6344df;
+        height: 85vh;
+        width:85%;
+        margin-top: 10px;
+        margin-left: 15%;
+        overflow: auto;
+        padding-left: 3px;
+        padding-bottom: 10px;
+      }
+
       .chart-container {
         margin-top: .5%;
         padding-top: 1%;
-        margin-right: .5%;
+        margin-right: 1%;
         height: 330px;
         width:48%;
         padding-left: 1%;
@@ -238,6 +269,13 @@
         border-radius: 10px 10px 10px 10px;
         display: inline-block;
         float: left;
+      }
+
+      .chart-filter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -75px;
       }
       
       .chart-name{
@@ -319,6 +357,24 @@
         padding-left: 3px;
         padding-bottom: 10px;
       }
+
+      .header-seg1{
+        width: 80%;
+      }
+
+      .charts-body {
+        font-size: calc(10px + 2vmin);
+        z-index: 10;
+        color: #6344df;
+        height: 85vh;
+        width:86%;
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-left: 13%;
+        overflow: auto;
+        padding-left: 3px;
+        padding-bottom: 10px;
+      }
       
       .chart-container {
         margin-top: .5%;
@@ -390,6 +446,12 @@
           border-radius: 2px 2px 2px 2px;
           cursor: pointer;
           font-weight: bold;
+      }
+}
+
+@media (max-width: 400px) {
+    .header-seg1{
+        width: 70%;
       }
 }
 

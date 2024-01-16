@@ -50,29 +50,45 @@ const InvAsset = (txn) => {
   let winners;
   let network;
   let keywords;
-  let blockchain;
   asset_data = txn.data;
   winners = JSON.parse(asset_data.winners);
 
+  let node_options = mainnet_node_options;
+  let blockchain;
+  let explorer_url = "https://dkg.origintrail.io";
+  let env = "mainnet";
+
   if (connected_blockchain === "Origintrail Parachain Testnet") {
-    blockchain = "otp::testnet";
+    blockchain = "otp:20430";
+    node_options = testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet";
+  }
+
+  if (connected_blockchain === "Chiado Testnet") {
+    blockchain = "gnosis:10200";
+    node_options = testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet";
   }
 
   if (connected_blockchain === "Origintrail Parachain Mainnet") {
-    blockchain = "otp::mainnet";
+    blockchain = "otp:2043";
   }
 
-  sub_scan_link = "https://";
-  link_type = "origintrail";
-  explorer_url = "https://dkg.origintrail.io";
-  let node_options = mainnet_node_options;
-
-  if (connected_blockchain === "Origintrail Parachain Testnet" || connected_blockchain === "Chiado Testnet") {
-    link_type = "origintrail-testnet";
-    explorer_url = "https://dkg-testnet.origintrail.io";
-    node_options = testnet_node_options;
+  if (connected_blockchain === "Gnosis Mainnet") {
+    blockchain = "gnosis:100";
   }
-  sub_scan_link = sub_scan_link + link_type + ".subscan.io";
+
+  sub_scan_link = 'https://'
+  link_type = 'origintrail'
+  explorer_url = 'https://dkg.origintrail.io'
+
+  if(localStorage.getItem('network') === 'DKG Testnet'){
+    link_type =  'origintrail-testnet'
+    explorer_url = 'https://dkg-testnet.origintrail.io'
+  }
+  sub_scan_link = sub_scan_link + link_type + '.subscan.io'
 
   const DkgClient = new DKG(node_options);
 
@@ -135,6 +151,7 @@ const InvAsset = (txn) => {
     if(request === 'Update'){
       let dkg_get_result = await DkgClient.asset
       .get(txn.ual, {
+        environment: env,
         validate: true,
         maxNumberOfRetries: 30,
         frequency: 1,
@@ -361,7 +378,7 @@ const InvAsset = (txn) => {
         </div>
       </div>
       <div
-        className="inv-asset-history"
+        className="asset-history"
         style={{ display: isMobile ? "none" : "block" }}
       >
         {assetHistory && !isMobile ? (

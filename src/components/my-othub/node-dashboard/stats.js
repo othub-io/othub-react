@@ -72,7 +72,7 @@ const Stats = (settings) => {
 
   return stats ? (
     <div className="node-stats">
-       {stats.length > 1 && !settings.data[0].nodeSelected && <div key="total_stats" className={`total-stats-node-div`}>
+       {!settings.data[0].nodeSelected && !settings.data[0].blockchain && <div key="total_stats" className={`total-stats-node-div`}>
             <div className="chain-logo">
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=origintrail_logo-dark_purple.png`}

@@ -178,14 +178,6 @@ const Inventory = () => {
     );
   }
 
-  // if (data === "" && !isLoading) {
-  //   return (
-  //     <div className="keys">
-  //       <header className="keys-header">No assets found.</header>
-  //     </div>
-  //   );
-  // }
-
   if (isAssetOpen) {
     return (
       <div className="popup-overlay">
@@ -218,7 +210,7 @@ const Inventory = () => {
             />
           </div>
           <br></br>
-          <div className="inv-asset-limit">
+          <div className="asset-limit">
             Limit: {filterInput.limit}
             <br></br>
             <input
@@ -231,7 +223,7 @@ const Inventory = () => {
               style={{ cursor: "pointer", width: "75%" }}
             />
           </div>
-          <div className="inv-radios">
+          <div className="radios">
             Sort:<br></br>
             <input
               type="radio"

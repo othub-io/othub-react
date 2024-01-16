@@ -35,7 +35,6 @@ const NodeDashboard = () => {
   const account = localStorage.getItem("account");
   const [nodeList, setNodeList] = useState("");
   const [nodeFilter, setNodeFilter] = useState("");
-  const [nodeStats, setNodeStats] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [nodeSelected, setNodeSelected] = useState(false);
   let [data, setData] = useState("");
@@ -59,29 +58,13 @@ const NodeDashboard = () => {
           );
 
           let nodes = [];
-          let nodeIds = [];
-
-          nodes.push({
-            nodeId: 12,
-            tokenName: "test2",
-            blockchain_name: "Gnosis Mainnet",
-            blockchain_id: "100",
-          });
 
           for (const blockchain of response.data.nodes) {
             if (blockchain.nodes.length > 0) {
               for (let node of blockchain.nodes) {
-                nodeIds.push(node.nodeId);
                 node.blockchain_name = blockchain.blockchain_name;
                 node.blockchain_id = blockchain.blockchain_id;
                 nodes.push(node);
-
-                nodes.push({
-                  nodeId: 67,
-                  tokenName: "test2",
-                  blockchain_name: blockchain.blockchain_name,
-                  blockchain_id: blockchain.blockchain_id,
-                });
               }
             }
           }
@@ -110,7 +93,7 @@ const NodeDashboard = () => {
     }
 
     fetchData();
-  }, [account, blockchain, network,nodeSelected]);
+  }, [account, blockchain, network, nodeSelected]);
 
   const openNodeSettings = () => {
     setIsNodeSettingsOpen(true);
@@ -130,7 +113,7 @@ const NodeDashboard = () => {
       setNodeSelected(true);
     }
 
-    console.log(node_selection)
+    console.log(node_selection);
     const time_data = {
       timeframe: "All",
       nodes: node_selection,
@@ -153,7 +136,7 @@ const NodeDashboard = () => {
           >
             X
           </button>
-          <NodeSettings data={nodeList}/>
+          <NodeSettings data={nodeList} />
         </div>
       </div>
     );
@@ -309,8 +292,10 @@ const NodeDashboard = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <Loading />
+        <div className="main">
+          <div className="header">
+            <NetworkDrop network={setNetwork} blockchain={setBlockchain} />
+          </div>
         </div>
       )}
     </div>

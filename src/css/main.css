@@ -16,3 +16,14 @@
   color: #6344df;
   font-weight: bold;
 }
+
+@media (max-width: 480px) {
+  .header {
+    padding-top: 80px;
+    padding-left: 70px;
+    font-size: 28px;
+    font-family: "Roboto", sans-serif;
+    color: #6344df;
+    font-weight: bold;
+  }
+}

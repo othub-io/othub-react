@@ -17,6 +17,7 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 const Home = () => {
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("");
+  const isMobile = window.matchMedia("(max-width: 480px)").matches;
 
   return (
     <div className="main">
@@ -42,26 +43,31 @@ const Home = () => {
               },
             ]}
           />
-          <div className="home-chart">
-            <CumPay
-              data={[
-                {
-                  network: network,
-                  blockchain: blockchain,
-                },
-              ]}
-            />
+          <div className="charts-body">
+          <div className="chart-container">
+              <CumPubs
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                  },
+                ]}
+              />
             </div>
-            <div className="home-chart">
-            <CumPubs
-              data={[
-                {
-                  network: network,
-                  blockchain: blockchain,
-                },
-              ]}
-            />
+            <div className="chart-container">
+              <CumPay
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                  },
+                ]}
+              />
             </div>
+          </div>
+          <div className="spacer">
+            
+          </div>
         </div>
       ) : (
         <div>

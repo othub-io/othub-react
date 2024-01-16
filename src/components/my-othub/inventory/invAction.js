@@ -31,7 +31,7 @@ const mainnet_node_options = {
   maxNumberOfRetries: 100,
 };
 
-const InvAction = (txn) => {
+const InvAction = (txn_info) => {
   const {
     setIsLoading,
     setData,
@@ -46,33 +46,38 @@ const InvAction = (txn) => {
   const [keywordValue, setKeywordValue] = useState("");
   const [epochValue, setEpochValue] = useState("");
   const [receiverValue, setReceiverValue] = useState("");
-  txn = JSON.parse(txn.data);
+  const txn = JSON.parse(txn_info.data);
+
+  let node_options = mainnet_node_options;
+  let blockchain;
+  let explorer_url = "https://dkg.origintrail.io";
+  let env = "mainnet";
+
+  if (connected_blockchain === "Origintrail Parachain Testnet") {
+    blockchain = "otp:20430";
+    node_options = testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet";
+  }
+
+  if (connected_blockchain === "Chiado Testnet") {
+    blockchain = "gnosis:10200";
+    node_options = testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet";
+  }
+
+  if (connected_blockchain === "Origintrail Parachain Mainnet") {
+    blockchain = "otp:2043";
+  }
+
+  if (connected_blockchain === "Gnosis Mainnet") {
+    blockchain = "gnosis:100";
+  }
 
   const handleTxn = async (txn) => {
     try {
       setIsLoading(true);
-      let node_options;
-      if (
-        (txn.network === "otp:20430" &&
-        connected_blockchain === "Origintrail Parachain Testnet") ||
-        (txn.network === "gnosis:10200" &&
-        connected_blockchain === "Chiado Testnet")
-      ) {
-        node_options = testnet_node_options;
-      }
-
-      if (
-        (txn.network === "otp:2043" &&
-        connected_blockchain === "Origintrail Parachain Mainnet") ||
-        (txn.network === "gnosis:100" &&
-        connected_blockchain === "Gnosis Mainnet")
-      ) {
-        node_options = mainnet_node_options;
-      }
-
-      if (!node_options) {
-        return;
-      }
 
       txn.receiver = receiverValue;
       let new_data = inputValue ? inputValue : txn.txn_data;
@@ -80,6 +85,7 @@ const InvAction = (txn) => {
       let epochs = epochValue ? epochValue : txn.epochs;
 
       let dkgOptions = {
+        environment: env,
         epochsNum: epochs,
         maxNumberOfRetries: 30,
         frequency: 2,
@@ -219,13 +225,14 @@ const InvAction = (txn) => {
               Required
             />
           </div>
-          <button
+          <br></br>
+          {window.matchMedia("(max-width: 1200px)").matches && <button
             onClick={() => handleTxn(txn)}
             type="submit"
             className="inv-transfer-button"
           >
             <strong>Approve</strong>
-          </button>
+          </button>}
         </div>
       </div>
     );
@@ -273,12 +280,13 @@ const InvAction = (txn) => {
             />
             </div>
           </div>
-          <button
+          <br></br>
+          {window.matchMedia("(max-width: 1200px)").matches && <button
             onClick={() => handleTxn(txn)}
             className="inv-transfer-button"
           >
             <strong>Approve</strong>
-          </button>
+          </button>}
         </div>
       </div>
     );

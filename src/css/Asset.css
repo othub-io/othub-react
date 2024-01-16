@@ -339,9 +339,10 @@
     text-align:left;
     overflow: auto;
     float:right;
-    margin-top:-690px;
     border-radius: 10px 10px 10px 10px;
     border: #6344df 2px solid;
+    display: inline-block;
+    margin-top: 40px;
   }
 
   @media(max-width:1366px){

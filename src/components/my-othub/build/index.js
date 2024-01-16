@@ -31,6 +31,7 @@ const Build = () => {
   const [inputValue, setInputValue] = useState("");
   const [limit, setLimit] = useState("3");
   const [isLoading, setLoading] = useState(false);
+  const connected_blockchain = localStorage.getItem("connected_blockchain");
   const [isDeleteApp, setIsDeleteApp] = useState(false);
   const [isEditAppOpen, setOpenEditApp] = useState(false);
   const [filterInput, setFilterInput] = useState({
@@ -342,14 +343,19 @@ const Build = () => {
   }
 
   if (
-    chain_id !== "Origintrail Parachain Testnet" &&
-    chain_id !== "Origintrail Parachain Mainnet"
+    connected_blockchain !== "Origintrail Parachain Testnet" &&
+    connected_blockchain !== "Origintrail Parachain Mainnet" &&
+    connected_blockchain !== "Chiado Testnet" &&
+    connected_blockchain !== "Gnosis Mainnet"
   ) {
     return (
       <div className="keys">
         <header className="keys-header">
-          Connected with an unsupported chain. Please switch to Origintrail
-          Parachain Testnet or Mainnet.
+          {<div>Connected with an unsupported blockchain. <br></br><br></br>Current supported blockchains:<br></br><br></br>
+          Origintrail Parachain Testnet<br></br>
+          Origintrail Parachain Mainnet<br></br>
+          Chiado Testnet<br></br>
+          Gnosis Mainnet</div>}
         </header>
       </div>
     );

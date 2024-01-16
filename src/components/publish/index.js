@@ -24,6 +24,7 @@ const Publish = () => {
   const connected_blockchain = localStorage.getItem("connected_blockchain");
   const [displayContent, setDisplayContent] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const isMobile = window.matchMedia("(max-width: 1300px)").matches;
 
   useEffect(() => {
     if (selectedFile) {
@@ -57,7 +58,7 @@ const Publish = () => {
     );
   }
 
-  if (window.matchMedia("(max-width: 1300px)").matches) {
+  if (isMobile) {
     return (
       <div className="keys">
         <header className="keys-header">

@@ -234,7 +234,7 @@ const AssetSize = (settings) => {
       {data ? (
         <div className="chart-widget">
           <div className="chart-name">
-            Avg asset size and public/private ratio
+            Asset size & privacy ratio
           </div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />

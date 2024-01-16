@@ -105,7 +105,7 @@ const AssetPublish = (selectedFile) => {
               network: blockchain,
               epochs: inputValue,
             };
-            console.log(data)
+            
             const dkg_bid_result = await axios
               .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config)
               .then((response) => {
@@ -232,7 +232,7 @@ const AssetPublish = (selectedFile) => {
                 target="_blank"
                 className="publish-asset-link"
               >
-                Explore
+                Explore Asset
               </a>
               :<br></br>
               <span style={{ paddingLeft: "10px", fontSize: "14px" }}>
@@ -246,11 +246,11 @@ const AssetPublish = (selectedFile) => {
                 target="_blank"
                 className="publish-asset-link"
               >
-                Inventory
+                View Inventory
               </a>
               :<br></br>
               <span style={{ paddingLeft: "10px", fontSize: "14px" }}>
-                Open your inventory to view your asset's details!
+                Open your inventory to view your asset's details! It may take a minute to show up!
               </span>
             </div>
           </div>

@@ -44,8 +44,8 @@ const MetamaskButton = () => {
         localStorage.removeItem("token", "");
         localStorage.removeItem("connected_blockchain", "");
         localStorage.removeItem("account", "");
+        return;
       }
-      return;
     }
 
     const checkConnection = async () => {

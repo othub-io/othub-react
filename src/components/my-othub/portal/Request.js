@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../../../css/Request.css"; // Import the CSS file for styling (see Step 3)
 import { AccountContext } from "../../../AccountContext";
 import Loading from "../../effects/Loading";
@@ -11,9 +11,16 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
-const config = {
+const config1 = {
   headers: {
     Authorization: localStorage.getItem("token"),
+  },
+};
+
+const config2 = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
   },
 };
 
@@ -31,7 +38,7 @@ const mainnet_node_options = {
   maxNumberOfRetries: 100,
 };
 
-const Request = (txn) => {
+const Request = (txn_info) => {
   const {
     setIsLoading,
     setData,
@@ -43,43 +50,87 @@ const Request = (txn) => {
   } = useContext(AccountContext);
   const account = localStorage.getItem("account");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
-  const [inputValue, setInputValue] = useState("");
   const [isRejectTxnOpen, setIsRejectTxnOpen] = useState(false);
-  txn = JSON.parse(txn.data);
+  const [cost, setCost] = useState(0);
+  const [price, setPrice] = useState(0);
+  const txn = JSON.parse(txn_info.data);
+  const [inputValue, setInputValue] = useState(txn.epochs);
+
+  let node_options = mainnet_node_options;
+  let blockchain;
+  let explorer_url = "https://dkg.origintrail.io";
+  let env = "mainnet";
+
+  if (connected_blockchain === "Origintrail Parachain Testnet") {
+    blockchain = "otp:20430";
+    node_options = testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet";
+  }
+
+  if (connected_blockchain === "Chiado Testnet") {
+    blockchain = "gnosis:10200";
+    node_options = testnet_node_options;
+    explorer_url = "https://dkg-testnet.origintrail.io";
+    env = "testnet";
+  }
+
+  if (connected_blockchain === "Origintrail Parachain Mainnet") {
+    blockchain = "otp:2043";
+  }
+
+  if (connected_blockchain === "Gnosis Mainnet") {
+    blockchain = "gnosis:100";
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        let dkg_txn_data = JSON.parse(txn.txn_data);
+        if (!dkg_txn_data["@context"]) {
+          dkg_txn_data["@context"] = "https://schema.org";
+        }
+
+        const data = {
+          asset: JSON.stringify(dkg_txn_data),
+          network: blockchain,
+          epochs: inputValue,
+        };
+
+        const dkg_bid_result = await axios
+          .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config2)
+          .then((response) => {
+            // Handle the successful response here
+            return response;
+          })
+          .catch((error) => {
+            // Handle errors here
+            console.error(error);
+          });
+
+        setCost(Number(dkg_bid_result.data) / 1e18);
+
+        const rsp = await axios.get(
+          "https://api.coingecko.com/api/v3/coins/origintrail"
+        );
+
+        setPrice(rsp.data.market_data.current_price.usd);
+      } catch (error) {
+        console.error("Error preparing publish:", error);
+      }
+    }
+
+    setCost(0);
+    fetchData();
+  }, [inputValue]);
 
   const handleTxn = async (txn) => {
     try {
       setIsLoading(true);
-      let node_options;
-      if (
-        (txn.network === "otp:20430" &&
-        connected_blockchain === "Origintrail Parachain Testnet") ||
-        (txn.network === "gnosis:10200" &&
-        connected_blockchain === "Chiado Testnet")
-      ) {
-        node_options = testnet_node_options;
-      }
-
-      if (
-        (txn.network === "otp:2043" &&
-        connected_blockchain === "Origintrail Parachain Mainnet") ||
-        (txn.network === "gnosis:100" &&
-        connected_blockchain === "Gnosis Mainnet")
-      ) {
-        node_options = mainnet_node_options;
-      }
-
-      if (!node_options) {
-        return;
-      }
-
-      let epochs = txn.epochs;
-      if (Number(inputValue)) {
-        epochs = inputValue;
-      }
 
       let dkgOptions = {
-        epochsNum: epochs,
+        environment: env,
+        epochsNum: inputValue,
         maxNumberOfRetries: 30,
         frequency: 2,
         contentType: "all",
@@ -117,7 +168,7 @@ const Request = (txn) => {
         if (!dkg_txn_data["@context"]) {
           dkg_txn_data["@context"] = "https://schema.org";
         }
-        
+
         dkg_result = await DkgClient.asset
           .update(
             txn.ual,
@@ -134,11 +185,7 @@ const Request = (txn) => {
       if (txn.request === "Transfer") {
         loc = "assets";
         dkg_result = await DkgClient.asset
-          .transfer(
-            txn.ual, 
-            txn.receiver,
-            dkgOptions
-          )
+          .transfer(txn.ual, txn.receiver, dkgOptions)
           .then((result) => {
             return result;
           });
@@ -148,13 +195,13 @@ const Request = (txn) => {
         completeTxn: txn.txn_id,
         blockchain: connected_blockchain,
         ual: dkg_result.UAL,
-        epochs: epochs,
+        epochs: inputValue,
       };
 
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
         request_data,
-        config
+        config1
       );
 
       setData(response.data);
@@ -181,8 +228,8 @@ const Request = (txn) => {
     }
   };
 
-  const handleEpochChange = (e) => {
-    setInputValue(e.target.value);
+  const handleEpochChange = (epochs) => {
+    setInputValue(epochs);
   };
 
   const openPopupRejectTxn = (txn) => {
@@ -202,13 +249,14 @@ const Request = (txn) => {
         try {
           setIsLoading(true);
           const request_data = {
-            rejectTxn: inputValue.txn_id
-          }
+            rejectTxn: txn.txn_id,
+          };
           await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
             request_data,
-            config
+            config1
           );
+          setIsLoading(false);
           window.location.reload();
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -236,42 +284,55 @@ const Request = (txn) => {
   }
 
   if (account.toUpperCase() !== txn.approver.toUpperCase()) {
-    console.log(
-      `${account} attempted to sign a txn meant for ${txn.approver}`
-    );
+    console.log(`${account} attempted to sign a txn meant for ${txn.approver}`);
     return <div className="invalid">Invalid account.</div>;
   }
 
   if (
     (connected_blockchain === "Origintrail Parachain Testnet" &&
-      txn.network !== "otp:testnet") ||
+      txn.network !== "otp:20430") ||
     (connected_blockchain === "Origintrail Parachain Mainnet" &&
-      txn.network !== "otp:mainnet")
+      txn.network !== "otp:2043") ||
+    (connected_blockchain === "Chiado Testnet" &&
+      txn.network !== "gnosis:10200") ||
+    (connected_blockchain === "Gnosis Mainnet" && txn.network !== "gnosis:100")
   ) {
-    return <div className="invalid">Invalid network.</div>;
+    return (
+      <div className="popup-overlay">
+        <div className="reject-popup-content">
+          <button className="reject-close-button" onClick={() => setIsRequestOpen(false)}>
+            X
+          </button>
+          <div className="invalid">Connected with an invalid blockchain.</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isRejectTxnOpen) {
+    return (
+      <div className="popup-overlay">
+        <div className="reject-popup-content">
+          <button className="reject-close-button" onClick={closePopupRejectTxn}>
+            X
+          </button>
+          <form onSubmit={handleRejectTxn}>
+            <label>
+              Are you sure you want to permanently reject this asset creation?
+            </label>
+            <button type="submit">Yes</button>
+          </form>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="request-data">
-      {isRejectTxnOpen && (
-        <div className="popup-overlay">
-          <div className="reject-popup-content">
-            <button
-              className="reject-close-button"
-              onClick={closePopupRejectTxn}
-            >
-              X
-            </button>
-            <form onSubmit={handleRejectTxn}>
-              <label>
-                Are you sure you want to permanently reject this asset creation?
-              </label>
-              <button type="submit">Yes</button>
-            </form>
-          </div>
-        </div>
-      )}
       <div className="requested">
+      <button className="app-settings-close-button" onClick={() => setIsRequestOpen(false)}>
+        X
+      </button>
         <span className={`request-${txn.progress}-progress`}>
           {txn.progress}
         </span>{" "}
@@ -283,7 +344,7 @@ const Request = (txn) => {
       {(txn.request === "Create" || txn.request === "Update") && (
         <div className="data">
           <div className="request-ual">
-            <strong>UAL: {txn.ual}</strong>
+            <strong>UAL: {txn.ual ? (txn.ual ) : ("TBD")}</strong>
           </div>
           <div className="data-header">Data</div>
           <div className="data-value-pub">
@@ -319,24 +380,150 @@ const Request = (txn) => {
             <div className="request-keywords-value">{txn.keywords}</div>
           </div>
           <div className="request-epochs">
-            <form className="request-epochs-header">
-              <label>
-                Epochs:
-                <input
-                  type="text"
-                  value={inputValue ? inputValue : JSON.stringify(txn.epochs)}
+            <div className="epoch-buttons">
+              <div className="request-keywords-header">Epochs:</div>
+              <br></br>
+              {/* <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={inputValue}
                   onChange={handleEpochChange}
-                />
-              </label>
-            </form>
+                  style={{ cursor: "pointer", width: "75%" }}
+                /> */}
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("1")}
+                name="timeframe"
+                style={
+                  inputValue === "1"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                1
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("2")}
+                name="timeframe"
+                style={
+                  inputValue === "2"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                2
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("3")}
+                name="timeframe"
+                style={
+                  inputValue === "3"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                3
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("4")}
+                name="timeframe"
+                style={
+                  inputValue === "4"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                4
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("5")}
+                name="timeframe"
+                style={
+                  inputValue === "5"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                5
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("6")}
+                name="timeframe"
+                style={
+                  inputValue === "6"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                6
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("7")}
+                name="timeframe"
+                style={
+                  inputValue === "7"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                7
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("8")}
+                name="timeframe"
+                style={
+                  inputValue === "8"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                8
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("9")}
+                name="timeframe"
+                style={
+                  inputValue === "9"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                9
+              </button>
+              <button
+                className="epoch-button"
+                onClick={() => handleEpochChange("10")}
+                name="timeframe"
+                style={
+                  inputValue === "10"
+                    ? { color: "#FFFFFF", backgroundColor: "#6344df" }
+                    : {}
+                }
+              >
+                10
+              </button>
+            </div>
           </div>
         </div>
       )}
       <br></br>
-      <br></br>
-      <div className="estimated-cost-pub">Estimated Cost:</div>
+      <div className="estimated-cost-pub">
+        Estimated Cost:{" "}
+        {cost !== 0
+          ? `${cost} TRAC ($${(cost * price).toFixed(3)})`
+          : "Estimating cost..."}
+      </div>
       <div className="request-buttons">
-        {txn.progress === "PENDING" && txn.request === "Create" && (
+        {txn.progress === "PENDING" && txn.request === "Create" && cost !== 0 && (
           <button
             onClick={() => handleTxn(txn)}
             type="submit"
@@ -346,7 +533,7 @@ const Request = (txn) => {
           </button>
         )}
 
-        {txn.progress === "PENDING" && txn.request === "Update" && (
+        {txn.progress === "PENDING" && txn.request === "Update" && cost !== 0 && (
           <button
             onClick={() => handleTxn(txn)}
             type="submit"
@@ -356,7 +543,7 @@ const Request = (txn) => {
           </button>
         )}
 
-        {txn.progress === "PENDING" && txn.request === "Transfer" && (
+        {txn.progress === "PENDING" && txn.request === "Transfer" && cost !== 0 && (
           <button
             onClick={() => handleTxn(txn)}
             type="submit"
@@ -366,7 +553,7 @@ const Request = (txn) => {
           </button>
         )}
 
-        {txn.progress !== "COMPLETE" && txn.progress !== "REJECTED" && (
+        {txn.progress !== "COMPLETE" && txn.progress !== "REJECTED" && cost !== 0 &&  (
           <button
             onClick={() => openPopupRejectTxn(txn)}
             type="submit"

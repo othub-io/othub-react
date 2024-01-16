@@ -62,8 +62,8 @@ const Portal = () => {
           connected_blockchain === "Origintrail Parachain Mainnet")
         ) {
           const request_data = {
-            blockchain: connected_blockchain,
-            progress: "PENDING",
+            network: connected_blockchain,
+            progress: "ALL",
           };
           const response = await axios.post(
             `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
@@ -91,13 +91,13 @@ const Portal = () => {
     setInputValue("");
     setData("");
     fetchData();
-  }, [account]);
+  }, [account,connected_blockchain]);
 
   if (!account) {
     return (
       <div className="keys">
         <header className="keys-header">
-          Please connect your wallet to unlock your gateway.
+          Please connect your wallet to unlock your portal.
         </header>
       </div>
     );
@@ -105,13 +105,18 @@ const Portal = () => {
 
   if (
     connected_blockchain !== "Origintrail Parachain Testnet" &&
-    connected_blockchain !== "Origintrail Parachain Mainnet"
+    connected_blockchain !== "Origintrail Parachain Mainnet" &&
+    connected_blockchain !== "Chiado Testnet" &&
+    connected_blockchain !== "Gnosis Mainnet"
   ) {
     return (
       <div className="keys">
         <header className="keys-header">
-          Connected with an unsupported chain. Please switch to Origintrail
-          Parachain Testnet or Mainnet.
+          {<div>Connected with an unsupported blockchain. <br></br><br></br>Current supported blockchains:<br></br><br></br>
+          Origintrail Parachain Testnet<br></br>
+          Origintrail Parachain Mainnet<br></br>
+          Chiado Testnet<br></br>
+          Gnosis Mainnet</div>}
         </header>
       </div>
     );
@@ -190,7 +195,7 @@ const Portal = () => {
       const fetchFilteredData = async () => {
         try {
           const request_data = {
-            blockchain: connected_blockchain,
+            network: connected_blockchain,
             ual: filterInput.ual,
             app_name: filterInput.app_name,
             txn_id: filterInput.txn_id,
@@ -221,12 +226,6 @@ const Portal = () => {
       {isRequestOpen && (
         <div className="popup-overlay">
           <div className="request-popup-content">
-            <button
-              className="request-close-button"
-              onClick={closeRequestPopup}
-            >
-              X
-            </button>
             <Request data={JSON.stringify(inputValue)} />
           </div>
         </div>
@@ -505,7 +504,7 @@ const Portal = () => {
                 <div className="txn-summary">
                   {`${txn.app_name}(${txn.txn_id.substring(0, 15)})`}
                 </div>
-                <div className="txn-ual">{txn.ual}</div>
+                <div className="txn-ual">{txn.ual ? (txn.ual) : ("UAL TBD")}</div>
                 <div className={`txn-${txn.request}-receiver`}>
                   Receiver:<span>{txn.receiver}</span>
                 </div>

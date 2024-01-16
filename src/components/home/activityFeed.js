@@ -69,7 +69,7 @@ const NodeCommits = (settings) => {
   }, [settings]);
 
   if (!data) {
-    return (<Loading />)
+    return (<div className="activity-feed"><Loading /></div>)
   }
 
   return (

@@ -168,7 +168,6 @@ const Asset = (on_chain) => {
             ))}</div>) : (<div></div>)}
         </div>
     </div>
-    
   )
 }
 
