@@ -47,6 +47,7 @@ const NetworkDrop = ({ network, blockchain }) => {
       request_data
     );
 
+    blockchain("");
     setBlockchains(response.data.blockchains);
   };
 

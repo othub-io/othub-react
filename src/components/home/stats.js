@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../effects/Loading";
 let ext;
@@ -34,10 +34,6 @@ const Stats = (settings) => {
         );
 
         setStats(response.data);
-
-        const rsp = await axios.get(
-            "https://api.coingecko.com/api/v3/coins/origintrail"
-          );
   
         if(settings.data[0].network === 'DKG Mainnet'){
             const rsp = await axios.get(
@@ -103,13 +99,11 @@ const Stats = (settings) => {
         </div>}
       {stats.map((blockchain) => (
         <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-home-div`}>
-            <div className="chain-logo">
+            <div className={`d${blockchain.blockchain_id}-chain-logo`}>
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
                 alt={blockchain.chain_name}
-                width="150"
-                height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
-                ></img>
+                ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}
             </div>
             <div className="chain-assets">
                 Assets:<br/>

@@ -53,7 +53,7 @@ const InvAction = (txn_info) => {
   let explorer_url = "https://dkg.origintrail.io";
   let env = "mainnet";
 
-  if (connected_blockchain === "Origintrail Parachain Testnet") {
+  if (connected_blockchain === "NeuroWeb Testnet") {
     blockchain = "otp:20430";
     node_options = testnet_node_options;
     explorer_url = "https://dkg-testnet.origintrail.io";
@@ -67,7 +67,7 @@ const InvAction = (txn_info) => {
     env = "testnet";
   }
 
-  if (connected_blockchain === "Origintrail Parachain Mainnet") {
+  if (connected_blockchain === "NeuroWeb Mainnet") {
     blockchain = "otp:2043";
   }
 

@@ -103,9 +103,9 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 2px solid #fb5deb;
+  outline: 2px solid #000000;
   font-family: OCR A Std, monospace;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -118,11 +118,11 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 3px solid #fb5deb;
+  outline: 3px solid #000000;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -134,9 +134,9 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 2px solid #fb5deb;
+  outline: 2px solid #000000;
   font-family: OCR A Std, monospace;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -149,11 +149,11 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 3px solid #fb5deb;
+  outline: 3px solid #000000;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -184,7 +184,7 @@
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(19, 54, 41, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -198,7 +198,7 @@
   border-radius: 10px;
   outline: 2px solid #133629;
   font-family: OCR A Std, monospace;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(19, 54, 41, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -215,7 +215,7 @@
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(19, 54, 41, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -231,7 +231,7 @@
 }
 
 .card-token-id2043 {
-  color: #fb5deb;
+  color: #000000;
   font-size: 16px;
   margin-top: 0%;
   padding-bottom: 10%;
@@ -240,7 +240,7 @@
 }
 
 .card-token-id20430 {
-  color: #fb5deb;
+  color: #000000;
   font-size: 16px;
   margin-top: 0%;
   padding-bottom: 10%;
@@ -272,8 +272,8 @@
 }
 
 .card-image-id2043 {
-  color: #fb5deb;
-  outline: 1px solid #fb5deb;
+  color: #000000;
+  outline: 1px solid #000000;
   height: 4rem;
   width: 90%;
   margin-left: 5%;
@@ -281,8 +281,8 @@
 }
 
 .card-image-id20430 {
-  color: #fb5deb;
-  outline: 1px solid #fb5deb;
+  color: #000000;
+  outline: 1px solid #000000;
   height: 4rem;
   width: 90%;
   margin-left: 5%;
@@ -309,7 +309,7 @@
 
 .card-size-id2043 {
   padding-top: 5%;
-  color: #fb5deb;
+  color: #000000;
   font-size: 12px;
   text-align: left;
   margin-left: 5%;
@@ -317,7 +317,7 @@
 
 .card-size-id20430 {
   padding-top: 5%;
-  color: #fb5deb;
+  color: #000000;
   font-size: 12px;
   text-align: left;
   margin-left: 5%;
@@ -340,14 +340,14 @@
 }
 
 .card-cost-id20430 {
-  color: #fb5deb;
+  color: #000000;
   font-size: 12px;
   text-align: left;
   margin-left: 5%;
 }
 
 .card-cost-id2043 {
-  color: #fb5deb;
+  color: #000000;
   font-size: 12px;
   text-align: left;
   margin-left: 5%;
@@ -368,14 +368,14 @@
 }
 
 .card-expires-id2043 {
-  color: #fb5deb;
+  color: #000000;
   font-weight: bold;
   font-size: 12px;
   padding-top: 20%;
 }
 
 .card-expires-id20430 {
-  color: #fb5deb;
+  color: #000000;
   font-weight: bold;
   font-size: 12px;
   padding-top: 20%;
@@ -538,7 +538,7 @@
   }
 
   .card-token-id2043 {
-    color: #fb5deb;
+    color: #000000;
     font-size: 30px;
     margin-top: -10%;
     padding-bottom: 10%;
@@ -547,7 +547,7 @@
   }
   
   .card-token-id20430 {
-    color: #fb5deb;
+    color: #000000;
     font-size: 30px;
     margin-top: -10%;
     padding-bottom: 5%;
@@ -580,8 +580,8 @@
   }
 
   .card-image-id2043 {
-    color: #fb5deb;
-    outline: 3px solid #fb5deb;
+    color: #000000;
+    outline: 3px solid #000000;
     height: 13rem;
     width: 90%;
     margin-left: 5%;
@@ -589,8 +589,8 @@
   }
   
   .card-image-id20430 {
-    color: #fb5deb;
-    outline: 3px solid #fb5deb;
+    color: #000000;
+    outline: 3px solid #000000;
     height: 13rem;
     width: 85%;
     margin-left: 7.5%;
@@ -617,7 +617,7 @@
   
   .card-size-id2043 {
     padding-top: 5%;
-    color: #fb5deb;
+    color: #000000;
     font-size: 30px;
     text-align: left;
     margin-left: 5%;
@@ -625,7 +625,7 @@
   
   .card-size-id20430 {
     padding-top: 5%;
-    color: #fb5deb;
+    color: #000000;
     font-size: 30px;
     text-align: left;
     margin-left: 5%;
@@ -648,14 +648,14 @@
   }
   
   .card-cost-id20430 {
-    color: #fb5deb;
+    color: #000000;
     font-size: 30px;
     text-align: left;
     margin-left: 5%;
   }
   
   .card-cost-id2043 {
-    color: #fb5deb;
+    color: #000000;
     font-size: 30px;
     text-align: left;
     margin-left: 5%;
@@ -676,14 +676,14 @@
   }
   
   .card-expires-id2043 {
-    color: #fb5deb;
+    color: #000000;
     font-weight: bold;
     font-size: 30px;
     padding-top: 20%;
   }
   
   .card-expires-id20430 {
-    color: #fb5deb;
+    color: #000000;
     font-weight: bold;
     font-size: 30px;
     padding-top: 20%;
@@ -711,9 +711,9 @@
   margin-left: 0%;
   margin-bottom: 15%;
   border-radius: 10px;
-  outline: 5px solid #fb5deb;
+  outline: 5px solid #000000;
   font-family: OCR A Std, monospace;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -726,11 +726,11 @@
   margin-left: 0%;
   margin-bottom: 15%;
   border-radius: 10px;
-  outline: 5px solid #fb5deb;
+  outline: 5px solid #000000;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -742,9 +742,9 @@
   margin-left: 0%;
   margin-bottom: 15%;
   border-radius: 10px;
-  outline: 5px solid #fb5deb;
+  outline: 5px solid #000000;
   font-family: OCR A Std, monospace;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -757,11 +757,11 @@
   margin-left: 0%;
   margin-bottom: 15%;
   border-radius: 10px;
-  outline: 5px solid #fb5deb;
+  outline: 5px solid #000000;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -792,7 +792,7 @@
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -806,7 +806,7 @@
   border-radius: 10px;
   outline: 5px solid #133629;
   font-family: OCR A Std, monospace;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -823,7 +823,7 @@
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(251, 93, 235, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 

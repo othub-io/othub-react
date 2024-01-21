@@ -115,7 +115,7 @@ const Stats = (settings) => {
         </div>}
       {stats.map((blockchain) => (
         <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-node-div`}>
-            <div className="chain-logo">
+            <div className={`d${blockchain.blockchain_id}-chain-logo`}>
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
                 alt={blockchain.chain_name}

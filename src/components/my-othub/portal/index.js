@@ -57,9 +57,7 @@ const Portal = () => {
     async function fetchData() {
       try {
         if (
-          account &&
-          (connected_blockchain === "Origintrail Parachain Testnet" ||
-          connected_blockchain === "Origintrail Parachain Mainnet")
+          account 
         ) {
           const request_data = {
             network: connected_blockchain,
@@ -104,8 +102,8 @@ const Portal = () => {
   }
 
   if (
-    connected_blockchain !== "Origintrail Parachain Testnet" &&
-    connected_blockchain !== "Origintrail Parachain Mainnet" &&
+    connected_blockchain !== "NeuroWeb Testnet" &&
+    connected_blockchain !== "NeuroWeb Mainnet" &&
     connected_blockchain !== "Chiado Testnet" &&
     connected_blockchain !== "Gnosis Mainnet"
   ) {
@@ -113,8 +111,8 @@ const Portal = () => {
       <div className="keys">
         <header className="keys-header">
           {<div>Connected with an unsupported blockchain. <br></br><br></br>Current supported blockchains:<br></br><br></br>
-          Origintrail Parachain Testnet<br></br>
-          Origintrail Parachain Mainnet<br></br>
+          NeuroWeb Testnet<br></br>
+          NeuroWeb Mainnet<br></br>
           Chiado Testnet<br></br>
           Gnosis Mainnet</div>}
         </header>

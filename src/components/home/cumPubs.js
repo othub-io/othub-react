@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import moment from "moment";
 import axios from "axios";
 import {
@@ -29,7 +29,6 @@ ChartJS.register(
 
 const CumPubs = (settings) => {
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
 
   useEffect(() => {
@@ -90,7 +89,7 @@ const CumPubs = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let chain_color;
     for (const blockchain of data) {
@@ -101,12 +100,34 @@ const CumPubs = (settings) => {
         continue;
       }
 
-      let cumPubs = blockchain.cum_total.map((item) => item.cumulativePubs);
-      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet") {
-        chain_color = "#fb5deb";
+      let cumPubs = []
+
+      for (const obj of formattedData.labels) {
+        let containsDate = blockchain.cum_total.some((item) => moment(item.date).format(format) === obj);
+        if(containsDate){
+          for (const item of blockchain.cum_total) {
+            if (moment(item.date).format(format) === obj) {
+              cumPubs.push(item.cumulativePubs)
+            }
+          }
+        }else{
+          cumPubs.push(null)
+        }
+      }
+
+      if (blockchain.blockchain_name === "NeuroWeb Mainnet") {
+        chain_color = "#000000";
       }
 
       if (blockchain.blockchain_name === "Gnosis Mainnet") {
+        chain_color = "#133629";
+      }
+
+      if (blockchain.blockchain_name === "NeuroWeb Testnet") {
+        chain_color = "#000000";
+      }
+
+      if (blockchain.blockchain_name === "Chiado Testnet") {
         chain_color = "#133629";
       }
 

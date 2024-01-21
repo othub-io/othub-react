@@ -86,9 +86,9 @@ const MetamaskButton = () => {
           // Subscribe to chain change events
           provider.on("chainChanged", async (newChain) => {
             if (newChain === "0x4fce") {
-              readable_chain_id = `Origintrail Parachain Testnet`;
+              readable_chain_id = `NeuroWeb Testnet`;
             } else if (newChain === "0x7fb") {
-              readable_chain_id = "Origintrail Parachain Mainnet";
+              readable_chain_id = "NeuroWeb Mainnet";
             } else if (newChain === "0x64") {
               readable_chain_id = "Gnosis Mainnet";
             } else if (newChain === "0x27d8") {
@@ -142,9 +142,9 @@ const MetamaskButton = () => {
           //set token in localstorage
           localStorage.setItem("token", responseSign.data.token);
           if (activeChainId === "0x4fce") {
-            readable_chain_id = `Origintrail Parachain Testnet`;
+            readable_chain_id = `NeuroWeb Testnet`;
           } else if (activeChainId === "0x7fb") {
-            readable_chain_id = "Origintrail Parachain Mainnet";
+            readable_chain_id = "NeuroWeb Mainnet";
           } else if (activeChainId === "0x64") {
             readable_chain_id = "Gnosis Mainnet";
           } else if (activeChainId === "0x27d8") {

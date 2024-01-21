@@ -92,10 +92,10 @@ const NodeStake = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -115,24 +115,35 @@ const NodeStake = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let border_color;
     let chain_color;
-    let chain_color2;
-    let nodeStake;
-    let nodesWithMoreThan50kStake;
     for (const blockchain of data) {
-      nodeStake = blockchain.chart_data.map((item) => item.combinedNodesStake);
-      nodesWithMoreThan50kStake = blockchain.chart_data.map(
-        (item) => item.nodesWithMoreThan50kStake
-      );
+      let nodeStake = []
+      let nodesWithMoreThan50kStake = []
+
+      for (const obj of formattedData.labels) {
+        let containsDate = blockchain.chart_data.some((item) => moment(item.date).format(format) === obj);
+        if(containsDate){
+          for (const item of blockchain.chart_data) {
+            if (moment(item.date).format(format) === obj) {
+              nodeStake.push(item.combinedNodesStake)
+              nodesWithMoreThan50kStake.push(item.nodesWithMoreThan50kStake)
+            }
+          }
+        }else{
+          nodeStake.push(null)
+          nodesWithMoreThan50kStake.push(null)
+        }
+      }
+
       if (
-        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+        blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        border_color = "#fb5deb";
-            chain_color = "rgba(251, 93, 235, 0.1)"
+        border_color = "#000000";
+            chain_color = "rgba(0, 0, 0, 0.1)"
       }
 
       if (

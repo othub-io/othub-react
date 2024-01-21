@@ -88,10 +88,10 @@ const NodeStake = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -111,12 +111,10 @@ const NodeStake = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let border_color;
     let chain_color;
-    let nodeStake;
-    let nodesWithMoreThan50kStake;
     let dates = formattedDates;
 
     for (const blockchain of data) {
@@ -131,16 +129,12 @@ const NodeStake = (settings) => {
           total_nodeStake.push(nodeStake);
       }
 
-      // nodeStake = blockchain.data.map((item) => item.nodeStake);
-      // nodesWithMoreThan50kStake = blockchain.data.map(
-      //   (item) => item.nodesWithMoreThan50kStake
-      // );
       if (
-        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+        blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        border_color = "#fb5deb";
-            chain_color = "rgba(251, 93, 235, 0.1)"
+        border_color = "#000000";
+            chain_color = "rgba(0, 0, 0, 0.1)"
       }
 
       if (
@@ -163,19 +157,6 @@ const NodeStake = (settings) => {
       };
 
       formattedData.datasets.push(nodeStake_obj);
-
-      // let nodesWithMoreThan50kStake_obj = {
-      //   label: blockchain.blockchain_name + " Nodes",
-      //   data: nodesWithMoreThan50kStake,
-      //   fill: false,
-      //   borderColor: border_color,
-      //   backgroundColor: border_color,
-      //   yAxisID: "line-y-axis",
-      //   type: "line",
-      //   borderWidth: 2
-      // };
-
-      // formattedData.datasets.unshift(nodesWithMoreThan50kStake_obj);
     }
 
     for (const blockchain of data) {
@@ -183,10 +164,15 @@ const NodeStake = (settings) => {
       for (const tokenName of tokenNames) {
         let final_stake = [];
         for (const obj of dates) {
-          for (const item of blockchain.data) {
-            if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
-              final_stake.push(item.nodeStake)
+          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
+          if(containsDate){
+            for (const item of blockchain.data) {
+              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+                final_stake.push(item.nodeStake)
+              }
             }
+          }else{
+            final_stake.push(null)
           }
         }
 
@@ -203,11 +189,11 @@ const NodeStake = (settings) => {
         }
 
         if (
-          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+          blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+          blockchain.blockchain_name === "NeuroWeb Testnet"
         ) {
-          border_color = "#fb5deb";
-          chain_color = "rgba(251, 93, 235, 0.1)"
+          border_color = "#000000";
+          chain_color = "rgba(0, 0, 0, 0.1)"
         }
   
         if (

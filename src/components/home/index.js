@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../css/home.css";
 import "../../css/main.css";
 import Loading from "../effects/Loading";
@@ -17,7 +17,6 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 const Home = () => {
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("");
-  const isMobile = window.matchMedia("(max-width: 480px)").matches;
 
   return (
     <div className="main">

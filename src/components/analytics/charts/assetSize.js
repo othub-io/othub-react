@@ -87,10 +87,10 @@ const AssetSize = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -110,21 +110,35 @@ const AssetSize = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let border_color;
     let chain_color;
-    let avgPubSize;
-    let priv;
     for (const blockchain of data) {
-      avgPubSize = blockchain.chart_data.map((item) => item.avgPubSize);
-      priv = blockchain.chart_data.map((item) => item.privatePubsPercentage);
+      let avgPubSize = []
+      let priv = []
+
+      for (const obj of formattedData.labels) {
+        let containsDate = blockchain.chart_data.some((item) => moment(item.date).format(format) === obj);
+        if(containsDate){
+          for (const item of blockchain.chart_data) {
+            if (moment(item.date).format(format) === obj) {
+              avgPubSize.push(item.avgPubSize)
+              priv.push(item.privatePubsPercentage)
+            }
+          }
+        }else{
+          avgPubSize.push(null)
+          priv.push(null)
+        }
+      }
+
       if (
-        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+        blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        border_color = "#fb5deb";
-            chain_color = "rgba(251, 93, 235, 0.1)"
+        border_color = "#000000";
+            chain_color = "rgba(0, 0, 0, 0.1)"
       }
 
       if (

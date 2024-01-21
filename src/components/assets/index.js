@@ -29,16 +29,8 @@ const Assets = () => {
     limit: "100",
   });
 
-  const [network, setNetwork] = useState(
-    localStorage.getItem("network")
-      ? localStorage.getItem("network")
-      : "DKG Mainnet"
-  );
-  const [blockchain, setBlockchain] = useState(
-    localStorage.getItem("blockchain")
-      ? localStorage.getItem("blockchain")
-      : null
-  );
+  const [blockchain, setBlockchain] = useState("");
+  const [network, setNetwork] = useState("DKG Mainnet");
 
   const queryParameters = new URLSearchParams(window.location.search);
   const provided_ual = queryParameters.get("ual");

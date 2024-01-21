@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
-import moment from "moment";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -28,15 +26,13 @@ ChartJS.register(
 );
 
 const NodeCommits = (settings) => {
-  const [inputValue, setInputValue] = useState("");
-  const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
 
   let sub_scan_link = "https://";
   let link_type = "origintrail";
   let explorer_url = "https://dkg.origintrail.io";
 
-  if (settings.data[0].network === "Origintrail Parachain Testnet") {
+  if (settings.data[0].network === "NeuroWeb Testnet") {
     link_type = "origintrail-testnet";
     explorer_url = "https://dkg-testnet.origintrail.io";
   }
@@ -83,7 +79,7 @@ const NodeCommits = (settings) => {
                 {record.datetime ? (record.datetime.slice(0, -5)) : ("")}
               </div>
               <div className={`activity-feed-blockchain-${record.chain_id}`}>
-                {record.chain_id == "100" ? ("Gnosis") : record.chain_id == "10200" ? ("Chiado") : record.chain_id == "2043" ? ("OTP Mainnet") : record.chain_id == "20430" ? ("OTP Testnet") : ""}
+                {record.chain_id == "100" ? ("Gnosis") : record.chain_id == "10200" ? ("Chiado") : record.chain_id == "2043" ? ("NeuroWeb Mainnet") : record.chain_id == "20430" ? ("NeuroWeb Testnet") : ""}
               </div>
               <div className="activity-feed-head">
                   <div>

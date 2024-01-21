@@ -2,35 +2,21 @@ import React, { useState, useEffect } from 'react'
 import '../../css/Asset.css'
 import moment from 'moment';
 import axios from "axios";
-let ext;
-let explorer_url
 
-ext = "http";
+let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
-const config = {
-  headers: {
-    Authorization: localStorage.getItem('token'),
-  },
-};
-
-let asset_data
-let sub_scan_link
-let link_type
-
-const Asset = (on_chain) => {
+const Asset = (settings) => {
   const [assetHistory, setAssetHistory] = useState("");
   const isMobile = window.matchMedia('(max-width: 480px)').matches
-  let winners
-  asset_data = on_chain.data
+  let asset_data = settings.data
+  let winners = JSON.parse(asset_data.winners)
 
-  winners = JSON.parse(asset_data.winners)
-
-  sub_scan_link = 'https://'
-  link_type = 'origintrail'
-  explorer_url = 'https://dkg.origintrail.io'
+  let sub_scan_link = 'https://'
+  let link_type = 'origintrail'
+  let explorer_url = 'https://dkg.origintrail.io'
 
   if(localStorage.getItem('network') === 'DKG Testnet'){
     link_type =  'origintrail-testnet'

@@ -332,7 +332,7 @@ const Build = () => {
     );
   }
 
-  if (window.matchMedia("(max-width: 480px)").matches) {
+  if (window.matchMedia("(max-width: 1200px)").matches) {
     return (
       <div className="keys">
         <header className="keys-header">
@@ -343,8 +343,8 @@ const Build = () => {
   }
 
   if (
-    connected_blockchain !== "Origintrail Parachain Testnet" &&
-    connected_blockchain !== "Origintrail Parachain Mainnet" &&
+    connected_blockchain !== "NeuroWeb Testnet" &&
+    connected_blockchain !== "NeuroWeb Mainnet" &&
     connected_blockchain !== "Chiado Testnet" &&
     connected_blockchain !== "Gnosis Mainnet"
   ) {
@@ -352,8 +352,8 @@ const Build = () => {
       <div className="keys">
         <header className="keys-header">
           {<div>Connected with an unsupported blockchain. <br></br><br></br>Current supported blockchains:<br></br><br></br>
-          Origintrail Parachain Testnet<br></br>
-          Origintrail Parachain Mainnet<br></br>
+          NeuroWeb Testnet<br></br>
+          NeuroWeb Mainnet<br></br>
           Chiado Testnet<br></br>
           Gnosis Mainnet</div>}
         </header>

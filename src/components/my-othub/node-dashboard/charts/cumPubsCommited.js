@@ -96,10 +96,10 @@ const CumPubsCommited = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -120,12 +120,11 @@ const CumPubsCommited = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let border_color;
     let chain_color;
     let cumPubs_obj;
-    let final_pubs
     let dates;
     let tokenNames;
 
@@ -134,33 +133,26 @@ const CumPubsCommited = (settings) => {
       tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
 
       for (const tokenName of tokenNames) {
-        final_pubs = [];
+        let final_pubs = [];
         for (const obj of dates) {
-          for (const item of blockchain.data) {
-            if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
-              final_pubs.push(item.cumulativePubsCommited)
+          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
+          if(containsDate){
+            for (const item of blockchain.data) {
+              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+                final_pubs.push(item.cumulativePubsCommited)
+              }
             }
-          }
-        }
-  
-        if (final_pubs.length !== formattedData.labels.length) {
-          for (
-            let i = 0;
-            i <
-            Number(formattedData.labels.length) -
-              Number(final_pubs.length) + 1;
-            i++
-          ) {
-            final_pubs.unshift(0);
+          }else{
+            final_pubs.push(null)
           }
         }
 
         if (
-          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+          blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+          blockchain.blockchain_name === "NeuroWeb Testnet"
         ) {
-          chain_color = "#fb5deb";
-          border_color = "rgba(251, 93, 235, 0.1)"
+          chain_color = "#000000";
+          border_color = "rgba(0, 0, 0, 0.1)"
         }
   
         if (
@@ -172,7 +164,7 @@ const CumPubsCommited = (settings) => {
         }
 
         cumPubs_obj = {
-          label: tokenName + " Total Pubs",
+          label: tokenName,
           data: final_pubs,
           fill: false,
           borderColor: chain_color,
@@ -189,7 +181,6 @@ const CumPubsCommited = (settings) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
-        stacked: true,
         title: {
           display: true,
           text: "Assets", // Add your X-axis label here
@@ -212,7 +203,6 @@ const CumPubsCommited = (settings) => {
       },
       x: {
         beginAtZero: true, // Start the scale at 0
-        stacked: true,
         title: {
           // Start the scale at 0
           display: true,

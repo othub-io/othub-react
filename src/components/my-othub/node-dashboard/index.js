@@ -35,15 +35,12 @@ const NodeDashboard = () => {
   const account = localStorage.getItem("account");
   const [nodeList, setNodeList] = useState("");
   const [nodeFilter, setNodeFilter] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [nodeSelected, setNodeSelected] = useState(false);
   let [data, setData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setIsLoading(true);
-
         if (account && network) {
           setNodeFilter("");
           const request_data = {
@@ -58,6 +55,12 @@ const NodeDashboard = () => {
           );
 
           let nodes = [];
+          // nodes.push({
+          //   nodeId: 8,
+          //   tokenName: 'Test',
+          //   blockchain_name: 'Gnosis Mainnet',
+          //   blockchain_id: 100
+          // })
 
           for (const blockchain of response.data.nodes) {
             if (blockchain.nodes.length > 0) {
@@ -65,6 +68,13 @@ const NodeDashboard = () => {
                 node.blockchain_name = blockchain.blockchain_name;
                 node.blockchain_id = blockchain.blockchain_id;
                 nodes.push(node);
+
+                // nodes.push({
+                //   nodeId: 89,
+                //   tokenName: 'Test2',
+                //   blockchain_name: blockchain.blockchain_name,
+                //   blockchain_id: blockchain.blockchain_id
+                // })
               }
             }
           }
@@ -83,12 +93,9 @@ const NodeDashboard = () => {
             config
           );
           setData(response1.data.chart_data);
-
-          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        setIsLoading(false);
       }
     }
 

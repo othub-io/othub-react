@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import "../../css/navigation/NavBar.css";
 import { AccountContext } from "../../AccountContext";
 import MetamaskButton from "./MetamaskButton";
-import Loading from "../effects/Loading";
 import axios from "axios";
 
 let front_admin_key;
@@ -20,7 +19,7 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 }
 
 function NavBar() {
-  const { isLoading, balance, setBalance } = useContext(AccountContext);
+  const { balance, setBalance } = useContext(AccountContext);
 
   const account = localStorage.getItem("account");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
@@ -30,13 +29,13 @@ function NavBar() {
     async function fetchData() {
       try {
         if (account) {
-          if (connected_blockchain === "Origintrail Parachain Testnet") {
+          if (connected_blockchain === "NeuroWeb Testnet") {
             url =
-              "https://origintrail-testnet.api.subscan.io/api/scan/account/tokens";
+              "https://neuroweb-testnet.api.subscan.io/api/scan/account/tokens";
           }
 
-          if (connected_blockchain === "Origintrail Parachain Mainnet") {
-            url = "https://origintrail.api.subscan.io/api/scan/account/tokens";
+          if (connected_blockchain === "NeuroWeb Mainnet") {
+            url = "https://neuroweb.api.subscan.io/api/scan/account/tokens";
           }
 
           if (connected_blockchain === "Gnosis Mainnet") {
@@ -55,8 +54,8 @@ function NavBar() {
         }
 
         if (
-          connected_blockchain === "Origintrail Parachain Testnet" ||
-          connected_blockchain === "Origintrail Parachain Mainnet"
+          connected_blockchain === "NeuroWeb Testnet" ||
+          connected_blockchain === "NeuroWeb Mainnet"
         ) {
           const data = {
             address: account,
@@ -168,8 +167,8 @@ function NavBar() {
           </div>}
           {account &&
           balance &&
-          (connected_blockchain === "Origintrail Parachain Mainnet" ||
-            connected_blockchain === "Origintrail Parachain Testnet") ? (
+          (connected_blockchain === "NeuroWeb Mainnet" ||
+            connected_blockchain === "NeuroWeb Testnet") ? (
             <div className="balance">
               {balance.native ? (
                 <span>

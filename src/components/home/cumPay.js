@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Line} from "react-chartjs-2";
 import moment from "moment";
 import axios from "axios";
 import {
@@ -29,7 +29,6 @@ ChartJS.register(
 
 const CumPay = (settings) => {
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
 
   useEffect(() => {
@@ -90,7 +89,7 @@ const CumPay = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let chain_color;
     for (const blockchain of data) {
@@ -101,12 +100,34 @@ const CumPay = (settings) => {
         continue;
       }
 
-      let cumPay = blockchain.cum_total.map((item) => item.cumulativePayouts);
-      if (blockchain.blockchain_name === "Origintrail Parachain Mainnet") {
-        chain_color = "#fb5deb";
+      let cumPay = []
+
+      for (const obj of formattedData.labels) {
+        let containsDate = blockchain.cum_total.some((item) => moment(item.date).format(format) === obj);
+        if(containsDate){
+          for (const item of blockchain.cum_total) {
+            if (moment(item.date).format(format) === obj) {
+              cumPay.push(item.cumulativePayouts)
+            }
+          }
+        }else{
+          cumPay.push(null)
+        }
+      }
+
+      if (blockchain.blockchain_name === "NeuroWeb Mainnet") {
+        chain_color = "#000000";
       }
 
       if (blockchain.blockchain_name === "Gnosis Mainnet") {
+        chain_color = "#133629";
+      }
+
+      if (blockchain.blockchain_name === "NeuroWeb Testnet") {
+        chain_color = "#000000";
+      }
+
+      if (blockchain.blockchain_name === "Chiado Testnet") {
         chain_color = "#133629";
       }
 
@@ -121,7 +142,7 @@ const CumPay = (settings) => {
         borderColor: chain_color,
         backgroundColor: chain_color,
         type: "line",
-        borderWidth: 2
+        borderWidth: 2,
       };
       formattedData.datasets.push(cumulativePayout_obj);
     }
@@ -168,14 +189,9 @@ const CumPay = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">
-            Cumulative TRAC spent on publishing
-          </div>
+          <div className="chart-name">Cumulative TRAC spent on publishing</div>
           <div className="chart-port">
-            <Line
-              data={formattedData}
-              options={options}
-            />
+            <Line data={formattedData} options={options} />
           </div>
         </div>
       ) : (

@@ -39,8 +39,8 @@ const Inventory = () => {
       try {
         if (
           account &&
-          (connected_blockchain === "Origintrail Parachain Testnet" ||
-            connected_blockchain === "Origintrail Parachain Mainnet")
+          (connected_blockchain === "NeuroWeb Testnet" ||
+            connected_blockchain === "NeuroWeb Mainnet")
         ) {
           const request_data = {
             blockchain: connected_blockchain,

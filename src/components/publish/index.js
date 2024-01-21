@@ -69,8 +69,8 @@ const Publish = () => {
   }
 
   if (
-    connected_blockchain !== "Origintrail Parachain Testnet" &&
-    connected_blockchain !== "Origintrail Parachain Mainnet"&&
+    connected_blockchain !== "NeuroWeb Testnet" &&
+    connected_blockchain !== "NeuroWeb Mainnet"&&
     connected_blockchain !== "Chiado Testnet"&&
     connected_blockchain !== "Gnosis Mainnet"
   ) {
@@ -78,8 +78,8 @@ const Publish = () => {
       <div className="keys">
         <header className="keys-header">
           Connected with an unsupported blockchain. Supported blockchains are:<br/>
-          OriginTrail Parachain Testnet<br/>
-          OriginTrail Parachain Mainnet<br/>
+          NeuroWeb Testnet<br/>
+          NeuroWeb Mainnet<br/>
           Chiado Testnet<br/>
           Gnosis Mainnet<br/>
         </header>

@@ -83,10 +83,10 @@ const Epochs = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -106,19 +106,33 @@ const Epochs = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let border_color;
     let chain_color;
     let epochs_obj;
     for (const blockchain of data) {
-      let epochs = blockchain.chart_data.map((item) => item.avgEpochsNumber);
+      let epochs = []
+
+      for (const obj of formattedData.labels) {
+        let containsDate = blockchain.chart_data.some((item) => moment(item.date).format(format) === obj);
+        if(containsDate){
+          for (const item of blockchain.chart_data) {
+            if (moment(item.date).format(format) === obj) {
+              epochs.push(item.avgEpochsNumber)
+            }
+          }
+        }else{
+          epochs.push(null)
+        }
+      }
+
       if (
-        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+        blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        chain_color = "#fb5deb";
-        border_color = "rgba(251, 93, 235, 0.1)";
+        chain_color = "#000000";
+        border_color = "rgba(0, 0, 0, 0.1)";
       }
 
       if (

@@ -43,17 +43,6 @@ const CumPubsCommited = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const time_data = {
-        //   timeframe: inputValue,
-        //   network: node_data.data[0].network,
-        //   nodeId: node_data.data[0].nodeId,
-        //   public_address: node_data.data[0].public_address,
-        // };
-        // const response = await axios.post(
-        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
-        //   time_data
-        // );
-        // setData(response.data.chart_data);
         setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -96,10 +85,10 @@ const CumPubsCommited = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -120,47 +109,37 @@ const CumPubsCommited = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let border_color
     let chain_color;
     let final_payouts_obj;
-    let final_payouts
-    let dates;
     let tokenNames;
 
     for (const blockchain of data) {
-      dates = formattedDates
       tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
 
       for (const tokenName of tokenNames) {
-        final_payouts = [];
-        for (const obj of dates) {
-          for (const item of blockchain.data) {
-            if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
-              final_payouts.push(item.cumulativePayouts)
+        let final_payouts = [];
+        for (const obj of formattedData.labels) {
+          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
+          if(containsDate){
+            for (const item of blockchain.data) {
+              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+                final_payouts.push(item.cumulativePayouts)
+              }
             }
-          }
-        }
-
-        if (final_payouts.length !== formattedData.labels.length) {
-          for (
-            let i = 0;
-            i <
-            Number(formattedData.labels.length) -
-              Number(final_payouts.length) + 1;
-            i++
-          ) {
-            final_payouts.unshift(0);
+          }else{
+            final_payouts.push(null)
           }
         }
 
         if (
-          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+          blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+          blockchain.blockchain_name === "NeuroWeb Testnet"
         ) {
-          chain_color = "#fb5deb";
-          border_color = "rgba(251, 93, 235, 0.1)"
+          chain_color = "#000000";
+          border_color = "rgba(0, 0, 0, 0.1)"
         }
   
         if (
@@ -189,7 +168,6 @@ const CumPubsCommited = (settings) => {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
-        stacked: true,
         title: {
           display: true,
           text: "TRAC", // Add your X-axis label here
@@ -212,7 +190,6 @@ const CumPubsCommited = (settings) => {
       },
       x: {
         beginAtZero: true, // Start the scale at 0
-        stacked: true,
         title: {
           // Start the scale at 0
           display: true,

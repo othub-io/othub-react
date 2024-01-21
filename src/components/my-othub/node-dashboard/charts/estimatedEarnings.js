@@ -97,10 +97,10 @@ const EstimatedEarnings = (settings) => {
       format = "ddd HH:00";
     }
     if (inputValue === "30d") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
     if (inputValue === "6m") {
-      format = "DD MMM";
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
@@ -121,7 +121,7 @@ const EstimatedEarnings = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates;
+    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
 
     let final_earnings = [];
     let dates = formattedDates;
@@ -141,11 +141,11 @@ const EstimatedEarnings = (settings) => {
       }
 
       if (
-        blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-        blockchain.blockchain_name === "Origintrail Parachain Testnet"
+        blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+        blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        border_color = "#fb5deb";
-        chain_color = "rgba(251, 93, 235, 0.1)";
+        border_color = "#000000";
+        chain_color = "rgba(0, 0, 0, 0.1)";
       }
 
       if (
@@ -171,29 +171,27 @@ const EstimatedEarnings = (settings) => {
     for (const blockchain of data) {
       let tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
       for (const tokenName of tokenNames) {
+        let estimatedEarnings = [];
         //let randomHexColor = generateRandomColor();
-        const estimatedEarnings = blockchain.data
-          .filter((item) => item.tokenName === tokenName)
-          .map((item) => item.estimatedEarnings);
-
-        if (estimatedEarnings.length !== formattedData.labels.length) {
-          for (
-            let i = 0;
-            i <
-            Number(formattedData.labels.length) -
-              Number(estimatedEarnings.length) + 1;
-            i++
-          ) {
-            estimatedEarnings.unshift(0);
+        for (const obj of formattedData.labels) {
+          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
+          if(containsDate){
+            for (const item of blockchain.data) {
+              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+                estimatedEarnings.push(item.estimatedEarnings)
+              }
+            }
+          }else{
+            estimatedEarnings.push(null)
           }
         }
 
         if (
-          blockchain.blockchain_name === "Origintrail Parachain Mainnet" ||
-          blockchain.blockchain_name === "Origintrail Parachain Testnet"
+          blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+          blockchain.blockchain_name === "NeuroWeb Testnet"
         ) {
-          border_color = "#fb5deb";
-          chain_color = "rgba(251, 93, 235, 0.1)";
+          border_color = "#000000";
+          chain_color = "rgba(0, 0, 0, 0.1)";
         }
 
         if (

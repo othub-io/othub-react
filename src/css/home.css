@@ -71,7 +71,7 @@
 }
 
 .activity-feed-blockchain-2043{
-  color: #fb5deb;
+  color: #000000;
   font-weight: bold;
   font-size: 10px;
   width:18%;
@@ -87,7 +87,7 @@
 }
 
 .activity-feed-blockchain-20430{
-  color: #fb5deb;
+  color: #000000;
   font-weight: bold;
   font-size: 10px;
   width:18%;
@@ -334,19 +334,34 @@
   padding-bottom: 10px;
 }
 
+.d100-chain-logo img{
+  padding-left:10px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:20px;
+  width:200px;
+}
+
 .d2043-home-div{
-  outline: 2px solid #fb5deb;
+  outline: 2px solid #000000;
   height:94%;
   width: 245px;
   display: inline-block;
   border-radius: 5px 5px 5px 5px;
   margin-right:10px;
   position: relative;
-  background-color: rgba(251, 93, 235, 0.1);
-  color: #fb5deb;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #000000;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   margin-top: 5px;
   padding-bottom: 10px;
+}
+
+.d2043-chain-logo img{
+  padding-left:10px;
+  padding-top:10px;
+  height:30px;
+  width:30px;
 }
 
 .d10200-home-div{
@@ -364,19 +379,33 @@
   padding-bottom: 10px;
 }
 
+.d10200-chain-logo img{
+  padding-left:10px;
+  padding-top:10px;
+  height:30px;
+  width:30px;
+}
+
 .d20430-home-div{
-  outline: 2px solid #fb5deb;
+  outline: 2px solid #000000;
   height:94%;
   width: 245px;
   display: inline-block;
   border-radius: 5px 5px 5px 5px;
   margin-right:10px;
   position: relative;
-  background-color: rgba(251, 93, 235, 0.1);
-  color: #fb5deb;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #000000;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   margin-top: 5px;
   padding-bottom: 10px;
+}
+
+.d20430-chain-logo img{
+  padding-left:10px;
+  padding-top:10px;
+  height:30px;
+  width:30px;
 }
 
 .chain-logo{
@@ -750,7 +779,7 @@ button[type='submit']:hover {
   }
 
   .activity-feed-blockchain-2043{
-    color: #fb5deb;
+    color: #000000;
     font-weight: bold;
     font-size: 10px;
     width:15%;
@@ -766,7 +795,7 @@ button[type='submit']:hover {
   }
   
   .activity-feed-blockchain-20430{
-    color: #fb5deb;
+    color: #000000;
     font-weight: bold;
     font-size: 10px;
     width:15%;
@@ -980,7 +1009,7 @@ button[type='submit']:hover {
   }
 
   .activity-feed-blockchain-2043{
-    color: #fb5deb;
+    color: #000000;
     font-weight: bold;
     font-size: 10px;
     width:17%;
@@ -996,7 +1025,7 @@ button[type='submit']:hover {
   }
   
   .activity-feed-blockchain-20430{
-    color: #fb5deb;
+    color: #000000;
     font-weight: bold;
     font-size: 10px;
     width:17%;
@@ -1087,15 +1116,15 @@ button[type='submit']:hover {
   }
   
   .d2043-home-div{
-    outline: 2px solid #fb5deb;
+    outline: 2px solid #000000;
     height:100%;
     width: 95%;
     display: block;
     border-radius: 5px 5px 5px 5px;
     margin-right:10px;
     position: relative;
-    background-color: rgba(251, 93, 235, 0.1);
-    color: #fb5deb;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000000;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     padding-bottom: 10px;
@@ -1117,15 +1146,15 @@ button[type='submit']:hover {
   }
   
   .d20430-home-div{
-    outline: 2px solid #fb5deb;
+    outline: 2px solid #000000;
     height:100%;
     width: 95%;
     display: block;
     border-radius: 5px 5px 5px 5px;
     margin-right:10px;
     position: relative;
-    background-color: rgba(251, 93, 235, 0.1);
-    color: #fb5deb;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000000;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     padding-bottom: 10px;
