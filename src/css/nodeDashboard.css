@@ -81,15 +81,15 @@
 }
 
 .total-stats-node-div{
-  outline: 2px solid #54be90;
+  outline: 2px solid #6344df;
   height:97%;
   width: 240px;
   display: inline-block;
   border-radius: 5px 5px 5px 5px;
   margin-right:10px;
   position: relative;
-  background-color: rgba(84,190,144, 0.1);
-  color: #54be90;
+  background-color: rgba(99, 68, 223, .1);
+  color: #2f1e5c;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 

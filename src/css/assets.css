@@ -103,9 +103,9 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 2px solid #000000;
+  outline: 2px solid #fb5deb;
   font-family: OCR A Std, monospace;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(251, 93, 235, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -118,11 +118,11 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 3px solid #000000;
+  outline: 3px solid #fb5deb;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(251, 93, 235, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -134,9 +134,9 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 2px solid #000000;
+  outline: 2px solid #fb5deb;
   font-family: OCR A Std, monospace;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(251, 93, 235, 0.1);
   border: none;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -149,11 +149,11 @@
   margin-left: 2%;
   margin-bottom: 2%;
   border-radius: 10px;
-  outline: 3px solid #000000;
+  outline: 3px solid #fb5deb;
   font-family: OCR A Std, monospace;
   cursor: pointer;
   border: none;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(251, 93, 235, 0.1);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 

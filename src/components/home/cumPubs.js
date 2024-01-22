@@ -116,7 +116,7 @@ const CumPubs = (settings) => {
       }
 
       if (blockchain.blockchain_name === "NeuroWeb Mainnet") {
-        chain_color = "#000000";
+        chain_color = "#fb5deb";
       }
 
       if (blockchain.blockchain_name === "Gnosis Mainnet") {
@@ -124,7 +124,7 @@ const CumPubs = (settings) => {
       }
 
       if (blockchain.blockchain_name === "NeuroWeb Testnet") {
-        chain_color = "#000000";
+        chain_color = "#fb5deb";
       }
 
       if (blockchain.blockchain_name === "Chiado Testnet") {
@@ -132,7 +132,7 @@ const CumPubs = (settings) => {
       }
 
       if (blockchain.blockchain_name === "Total") {
-        chain_color = "#2f1e5c";
+        chain_color = "#6344df";
       }
 
       cumulativePubs_obj = {

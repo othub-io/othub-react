@@ -133,8 +133,8 @@ const NodeStake = (settings) => {
         blockchain.blockchain_name === "NeuroWeb Mainnet" ||
         blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        border_color = "#000000";
-            chain_color = "rgba(0, 0, 0, 0.1)"
+        border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
       }
 
       if (
@@ -176,24 +176,12 @@ const NodeStake = (settings) => {
           }
         }
 
-        if (final_stake.length !== formattedData.labels.length) {
-          for (
-            let i = 0;
-            i <
-            Number(formattedData.labels.length) -
-              Number(final_stake.length) + 1;
-            i++
-          ) {
-            final_stake.unshift(0);
-          }
-        }
-
         if (
           blockchain.blockchain_name === "NeuroWeb Mainnet" ||
           blockchain.blockchain_name === "NeuroWeb Testnet"
         ) {
-          border_color = "#000000";
-          chain_color = "rgba(0, 0, 0, 0.1)"
+          border_color = "#fb5deb";
+          chain_color = "rgba(251, 93, 235, 0.1)"
         }
   
         if (

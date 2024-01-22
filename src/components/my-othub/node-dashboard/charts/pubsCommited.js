@@ -130,19 +130,7 @@ const PubsCommited = (settings) => {
     for (const blockchain of data) {
       tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
       for (const tokenName of tokenNames) {
-        //let randomHexColor = generateRandomColor();
-        // const pubsCommited = blockchain.data
-        //   .filter((item) => item.tokenName === tokenName)
-        //   .map((item) => item.pubsCommited);
-
-        //   if(pubsCommited.length !== formattedData.labels.length){
-        //     for(let i = 0; i < (Number(formattedData.labels.length) - Number(pubsCommited.length)) + 1; i++){
-        //       pubsCommited.unshift(0);
-        //     }
-        //   }
-
-          let pubsCommited = []
-
+      let pubsCommited = []
       for (const obj of formattedData.labels) {
         let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && item.tokenName === tokenName);
         if(containsDate){
@@ -160,8 +148,8 @@ const PubsCommited = (settings) => {
             blockchain.blockchain_name === "NeuroWeb Mainnet" ||
             blockchain.blockchain_name === "NeuroWeb Testnet"
           ) {
-            border_color = "#000000";
-            chain_color = "rgba(0, 0, 0, 0.1)"
+            border_color = "#fb5deb";
+            chain_color = "rgba(251, 93, 235, 0.1)"
           }
     
           if (

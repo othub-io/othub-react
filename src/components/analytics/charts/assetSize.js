@@ -137,8 +137,8 @@ const AssetSize = (settings) => {
         blockchain.blockchain_name === "NeuroWeb Mainnet" ||
         blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
-        border_color = "#000000";
-            chain_color = "rgba(0, 0, 0, 0.1)"
+        border_color = "#fb5deb";
+        chain_color = "rgba(251, 93, 235, 0.1)"
       }
 
       if (

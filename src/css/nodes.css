@@ -10,14 +10,14 @@
     font-size: calc(10px + 2vmin);
     z-index: 10;
     color: #000000;
-    border: 2px solid #000000;
+    border: 2px solid #fb5deb;
     border-radius: 10px 10px 10px 10px;
     height: 80vh;
     width: 43%;
     margin-top: 20px;
     margin-right:20px;
     word-wrap: break-word;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(251, 93, 235, 0.1);
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     float: left;
   }
@@ -50,14 +50,14 @@
     font-size: calc(10px + 2vmin);
     z-index: 10;
     color: #000000;
-    border: 2px solid #000000;
+    border: 2px solid #fb5deb;
     border-radius: 10px 10px 10px 10px;
     height: 80vh;
     width: 43%;
     margin-top: 20px;
     margin-right:20px;
     word-wrap: break-word;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(251, 93, 235, 0.1);
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     float: left;
   }
