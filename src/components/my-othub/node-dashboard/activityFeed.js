@@ -85,7 +85,7 @@ const NodeCommits = (settings) => {
               {record.datetime ? (record.datetime.slice(0, -5)) : ("")}
             </div>
             <div className={`activity-feed-blockchain-${record.chain_id}`}>
-              {record.chain_id == "100" ? ("Gnosis") : record.chain_id == "10200" ? ("Chiado") : record.chain_id == "2043" ? ("OTP Mainnet") : record.chain_id == "20430" ? ("OTP Testnet") : ""}
+              {record.chain_id == "100" ? ("Gnosis") : record.chain_id == "10200" ? ("Chiado") : record.chain_id == "2043" ? ("NeuroWeb") : record.chain_id == "20430" ? ("NeuroWeb") : ""}
             </div>
             <div className="activity-feed-head">
                 <div>

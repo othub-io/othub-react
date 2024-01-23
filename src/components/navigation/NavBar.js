@@ -156,7 +156,7 @@ function NavBar() {
             ></img>
           </a>
           <a href="/" className="logo-text">
-            othub.io <span style={{ fontSize: "14px" }}>beta</span>
+            <span style={{ fontSize: "24px", marginLeft: "-150px" }}>othub.io </span>
           </a>
         </h1>
         <br></br>

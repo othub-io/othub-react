@@ -779,7 +779,7 @@ button[type='submit']:hover {
   }
 
   .activity-feed-blockchain-2043{
-    color: #000000;
+    color: #fb5deb;
     font-weight: bold;
     font-size: 10px;
     width:15%;
@@ -795,7 +795,7 @@ button[type='submit']:hover {
   }
   
   .activity-feed-blockchain-20430{
-    color: #000000;
+    color: #fb5deb;
     font-weight: bold;
     font-size: 10px;
     width:15%;
@@ -1009,7 +1009,7 @@ button[type='submit']:hover {
   }
 
   .activity-feed-blockchain-2043{
-    color: #000000;
+    color: #fb5deb;
     font-weight: bold;
     font-size: 10px;
     width:17%;
@@ -1025,7 +1025,7 @@ button[type='submit']:hover {
   }
   
   .activity-feed-blockchain-20430{
-    color: #000000;
+    color: #fb5deb;
     font-weight: bold;
     font-size: 10px;
     width:17%;
@@ -1086,14 +1086,14 @@ button[type='submit']:hover {
 
 
   .total-stats-home-div{
-    outline: 2px solid #2f1e5c;
+    outline: 2px solid #6344df;
     height:100%;
     width: 95%;
     display: block;
     border-radius: 5px 5px 5px 5px;
     margin-right:10px;
     position: relative;
-    background-color: rgba(47,30,92, 0.1);
+    background-color: rgba(99, 68, 223, .1);
     color: #2f1e5c;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-top: 10px;
@@ -1116,14 +1116,14 @@ button[type='submit']:hover {
   }
   
   .d2043-home-div{
-    outline: 2px solid #000000;
+    outline: 2px solid #fb5deb;
     height:100%;
     width: 95%;
     display: block;
     border-radius: 5px 5px 5px 5px;
     margin-right:10px;
     position: relative;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(251, 93, 235, 0.1);
     color: #000000;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-top: 10px;
@@ -1146,14 +1146,14 @@ button[type='submit']:hover {
   }
   
   .d20430-home-div{
-    outline: 2px solid #000000;
+    outline: 2px solid #fb5deb;
     height:100%;
     width: 95%;
     display: block;
     border-radius: 5px 5px 5px 5px;
     margin-right:10px;
     position: relative;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(251, 93, 235, 0.1);
     color: #000000;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     margin-top: 10px;

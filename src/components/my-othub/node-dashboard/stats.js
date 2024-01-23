@@ -121,7 +121,7 @@ const Stats = (settings) => {
                 alt={blockchain.chain_name}
                 width="150"
                 height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
-                ></img>
+                ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}
             </div>
             <div className="chain-assets">
                 Active Nodes:<br/>
