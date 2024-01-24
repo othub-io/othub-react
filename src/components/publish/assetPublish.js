@@ -107,7 +107,7 @@ const AssetPublish = (selectedFile) => {
             };
             
             const dkg_bid_result = await axios
-              .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config)
+              .post(`${process.env.REACT_APP_API_HOST}/dkg/getBidSuggestion`, data, config)
               .then((response) => {
                 // Handle the successful response here
                 return response;
