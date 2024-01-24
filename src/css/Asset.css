@@ -64,8 +64,9 @@
   .size-header{
     color:#6344df;
     font-size: 20px;
-    font-size:24px;
     margin-bottom:5px;
+    text-decoration: underline;
+    font-weight: 500;
   }
 
   .size-value{
@@ -80,14 +81,15 @@
     border-radius: 10px 10px 10px 10px;
     text-align:left;
     display: inline-block;
-    margin-left: 80px;
+    margin-left: 35%;
   }
 
   .epochs-header{
     color:#6344df;
     font-size: 20px;
-    font-size:24px;
     margin-bottom:5px;
+    text-decoration: underline;
+    font-weight: 500;
   }
 
   .epochs-value{
@@ -102,14 +104,15 @@
     border-radius: 10px 10px 10px 10px;
     text-align:left;
     display: inline-block;
-    margin-left: 80px;
+    margin-left: 5%;
   }
 
   .triples-header{
     color:#6344df;
     font-size: 20px;
-    font-size:24px;
     margin-bottom:5px;
+    text-decoration: underline;
+    font-weight: 500;
   }
 
   .triples-value{
@@ -123,16 +126,17 @@
     height:6%;
     border-radius: 10px 10px 10px 10px;
     text-align:left;
-    margin-top:10%;
-    margin-left:5%;
+    margin-top:5%;
+    margin-left:35%;
     display: inline-block;
   }
 
   .payment-header{
     color:#6344df;
     font-size: 20px;
-    font-size:24px;
     margin-bottom:5px;
+    text-decoration: underline;
+    font-weight: 500;
   }
 
   .payment-value{
@@ -147,14 +151,16 @@
     border-radius: 10px 10px 10px 10px;
     text-align:left;
     display: inline-block;
-    margin-left: 80px;
+    margin-left: 5%;
+    margin-top: 5%;
   }
 
   .bid-header{
     color:#6344df;
     font-size: 20px;
-    font-size:24px;
     margin-bottom:5px;
+    text-decoration: underline;
+    font-weight: 500;
   }
 
   .bid-value{
@@ -169,14 +175,15 @@
     border-radius: 10px 10px 10px 10px;
     text-align:left;
     display: inline-block;
-    margin-left: 80px;
+    margin-left: 35%;
   }
 
   .expires-header{
+    text-decoration: underline;
     color:#6344df;
     font-size: 20px;
-    font-size:24px;
     margin-bottom:5px;
+    font-weight: 500;
   }
 
   .expires-value{
@@ -339,12 +346,13 @@
     text-align:left;
     overflow: auto;
     float:right;
-    margin-top:-690px;
     border-radius: 10px 10px 10px 10px;
     border: #6344df 2px solid;
+    display: inline-block;
+    margin-top: 40px;
   }
 
-  @media(max-width:1366px){
+  /* @media(max-width:1366px){
     .token{
         width:99.5%;
         height:6%;
@@ -360,136 +368,7 @@
         font-size:28px;
       }
 
-      .size{
-        width:20%;
-        height:6%;
-        border-radius: 10px 10px 10px 10px;
-        text-align:left;
-        display: inline-block;
-        margin-left:5%;
-      }
-    
-      .size-header{
-        color:#6344df;
-        font-size: 20px;
-        font-size:20px;
-        margin-bottom:5px;
-      }
-    
-      .size-value{
-        color:#6344df;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    
-      .epochs{
-        width:20%;
-        height:6%;
-        border-radius: 10px 10px 10px 10px;
-        text-align:left;
-        display: inline-block;
-        margin-left: 65px;
-      }
-    
-      .epochs-header{
-        color:#6344df;
-        font-size: 20px;
-        margin-bottom:5px;
-      }
-    
-      .epochs-value{
-        color:#6344df;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    
-      .triples{
-        width:20%;
-        height:6%;
-        border-radius: 10px 10px 10px 10px;
-        text-align:left;
-        display: inline-block;
-        margin-left: 65px;
-      }
-    
-      .triples-header{
-        color:#6344df;
-        font-size: 20px;
-        font-size:20px;
-        margin-bottom:5px;
-      }
-    
-      .triples-value{
-        color:#6344df;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    
-      .payment{
-        width:20%;
-        height:6%;
-        border-radius: 10px 10px 10px 10px;
-        text-align:left;
-        margin-top:10%;
-        margin-left:5%;
-        display: inline-block;
-      }
-    
-      .payment-header{
-        color:#6344df;
-        font-size: 20px;
-        margin-bottom:5px;
-      }
-    
-      .payment-value{
-        color:#6344df;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    
-      .bid{
-        width:20%;
-        height:6%;
-        border-radius: 10px 10px 10px 10px;
-        text-align:left;
-        display: inline-block;
-        margin-left: 65px;
-      }
-    
-      .bid-header{
-        color:#6344df;
-        font-size: 20px;
-        font-size:20px;
-        margin-bottom:5px;
-      }
-    
-      .bid-value{
-        color:#6344df;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    
-      .expires{
-        width:20%;
-        height:6%;
-        border-radius: 10px 10px 10px 10px;
-        text-align:left;
-        display: inline-block;
-        margin-left: 65px;
-      }
-    
-      .expires-header{
-        color:#6344df;
-        font-size: 20px;
-        margin-bottom:5px;
-      }
-    
-      .expires-value{
-        color:#6344df;
-        font-size: 20px;
-        font-weight: bold;
-      }
-  }
+  } */
 
   @media(max-width:480px){
     .asset-data{
