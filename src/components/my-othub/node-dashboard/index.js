@@ -3,8 +3,6 @@ import axios from "axios";
 import "../../../css/home.css";
 import "../../../css/main.css";
 import "../../../css/nodeDashboard.css";
-import Loading from "../../effects/Loading";
-import CumPubs from "../../home/cumPubs";
 import ActivityFeed from "./activityFeed";
 import Stats from "./stats";
 import NetworkDrop from "../../navigation/networkDrop";
