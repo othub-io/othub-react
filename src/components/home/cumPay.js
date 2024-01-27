@@ -189,7 +189,7 @@ const CumPay = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Cumulative TRAC spent on publishing</div>
+          <div className="chart-name">Cumulative TRAC rewarded for publishing</div>
           <div className="chart-port">
             <Line data={formattedData} options={options} />
           </div>
