@@ -149,11 +149,10 @@ const Earnings = (settings) => {
         borderColor: border_color,
         backgroundColor: border_color,
         yAxisID: "line-y-axis",
-        type: "line",
         borderWidth: 2
       };
 
-      formattedData.datasets.unshift(estimatedEarnings2plusEpochs_obj);
+      formattedData.datasets.push(estimatedEarnings2plusEpochs_obj);
 
       let estimatedEarnings1stEpochOnly_obj = {
         label: blockchain.blockchain_name + " 1st Epoch",
@@ -161,22 +160,24 @@ const Earnings = (settings) => {
         fill: false,
         borderColor: border_color,
         backgroundColor: chain_color,
+        yAxisID: "line-y-axis",
         borderWidth: 2
       };
 
-      formattedData.datasets.push(estimatedEarnings1stEpochOnly_obj);
+      formattedData.datasets.unshift(estimatedEarnings1stEpochOnly_obj);
     }
   }
 
   const options = {
     scales: {
       "line-y-axis": {
-        position: "right",
+        position: "left",
         beginAtZero: true,
+        stacked: true,
         title: {
           // Start the scale at 0
           display: true,
-          text: "Stake", // Add your X-axis label here
+          text: "Earnings", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size

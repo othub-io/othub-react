@@ -75,7 +75,7 @@ const NetworkDrop = ({ network, blockchain }) => {
             value={localStorage.getItem("blockchain")}
           >
             <option key={"none"} value={""}>
-              Blockchain Selection
+              All Blockchains
             </option>
             {blockchains.map((blockchain) => (
               <option key={blockchain.chain_id} value={blockchain.chain_name}>
