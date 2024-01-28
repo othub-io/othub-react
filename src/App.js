@@ -11,6 +11,7 @@ import NodeDashboard from "./components/my-othub/node-dashboard/index.js";
 import Build from "./components/my-othub/build/index.js";
 import Portal from "./components/my-othub/portal/index.js";
 import Inventory from "./components/my-othub/inventory/index.js";
+import Staking from "./components/staking/index.js";
 import Nodes from "./components/nodes/index.js";
 import Footer from "./components/navigation/Footer";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/my-othub/portal" element={<Portal />} />
           <Route path="/my-othub/inventory" element={<Inventory />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/staking" element={<Staking />} />
           <Route path="/nodes" element={<Nodes />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

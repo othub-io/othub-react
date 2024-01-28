@@ -53,14 +53,7 @@ function SideBar() {
           path: "/my-othub/inventory",
           title: "Inventory",
           icon: "https://img.icons8.com/ios/50/000000/backpack.png",
-        },
-        {
-          id: 45,
-          title: "Staking",
-          path: "/my-othub/staking",
-          icon: "https://img.icons8.com/ios/50/000000/steak.png",
-          isOpen: true,
-        },
+        }
       ],
     },
     {
@@ -72,6 +65,13 @@ function SideBar() {
     },
     {
       id: 6,
+      title: "Staking",
+      path: "/staking",
+      icon: "https://img.icons8.com/ios/50/000000/steak.png",
+      isOpen: true,
+    },
+    {
+      id: 7,
       path: "https://www.postman.com/crimson-crescent-721757/workspace/othub-api",
       title: "API Docs",
       icon: "https://img.icons8.com/ios/50/000000/api.png",
@@ -103,7 +103,7 @@ function SideBar() {
             </a>
             <div className="title">
               <a href={item.path} className="title">
-                {item.id === 6 ? (
+                {item.id === 7 ? (
                   <a href={item.path} className="title" target="_blank">
                     {item.title}
                   </a>

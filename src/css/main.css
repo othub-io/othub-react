@@ -17,6 +17,31 @@
   font-weight: bold;
 }
 
+.staking-body{
+  border: 1px #6344df solid;
+  width: 84%;
+  height: 780px;
+  margin-left:13%;
+  margin-top: 2.5%;
+}
+
+.staking-div1{
+  border: 1px #6344df solid;
+  width: 58%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+.staking-div2{
+  border: 1px #6344df solid;
+  width: 39%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  margin-left: 2.5%
+}
+
 @media (max-width: 480px) {
   .header {
     padding-top: 80px;

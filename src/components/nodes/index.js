@@ -3,6 +3,7 @@ import "../../css/nodes.css";
 import Loading from "../effects/Loading";
 import axios from "axios";
 import NetworkDrop from "../navigation/networkDrop";
+import SelectedNode from "./SelectedNode";
 let ext;
 
 ext = "http";
@@ -15,21 +16,22 @@ const Nodes = () => {
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("DKG Mainnet");
+  const [selectedNode, setSelectedNode] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-          const settings = {
-            network: network,
-            blockchain: blockchain,
-            order_by: "nodeId"
-          };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`,
-            settings
-          );
-  
-          setData(response.data.nodes);
+        const settings = {
+          network: network,
+          blockchain: blockchain,
+          order_by: "nodeId",
+        };
+        const response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`,
+          settings
+        );
+
+        setData(response.data.nodes);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -39,6 +41,26 @@ const Nodes = () => {
     fetchData();
   }, [network, blockchain]);
 
+  const closeNode = () => {
+    setSelectedNode(null);
+  };
+
+  if (selectedNode) {
+    return (
+      <div className="popup-overlay">
+        <div className="node-page-popup-content">
+          <button
+            className="app-settings-close-button"
+            onClick={closeNode}
+          >
+            X
+          </button>
+          <SelectedNode data={[{nodeId: selectedNode.nodeId, blockchain_name: selectedNode.blockchain_name, blockchain_id: selectedNode.blockchain_id, node_name: selectedNode.node_name}]}  />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="main">
       <div className="header">
@@ -46,37 +68,46 @@ const Nodes = () => {
       </div>
       {data ? (
         <div className="node-list-container">
-          {data.map((blockchain) => (
-            <div className={`node-list-id${blockchain.blockchain_id}`}>
-              <div className={`node-list-header-${blockchain.blockchain_id}`}>
-              <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
-                alt={blockchain.chain_name}
-                width="150"
-                height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
-                ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}<br></br>
-                <div className="node-id-header">ID</div>
-                <div className="network-header">Network Id</div>
-                <div className="token-name-header">Name</div>
-                <div className="token-sym-header">Sym</div>
-                <div className="stake-header">Stake</div>
-              </div>
-              <div className="node-list">
-                {blockchain.nodes.map((node) => (
-                  <div key={node.nodeId}>
-                    <div className={`node-id-record`}>{node.nodeId}</div>
-                    <div className={`network-record`}>{node.networkId.substring(0,14)+'...'}</div>
-                    <div className={`token-name-record`}>{node.tokenName.substring(0,7)}</div>
-                    <div className={`token-sym-record`}>{node.tokenSymbol.substring(0,5)}</div>
-                    <div className={`stake-record`}>
-                      {Number(node.nodeStake).toFixed(0)}
-                    </div>
-                    <br />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+          <button className="node-id-header">ID</button>
+          <button className="network-header">Network Id</button>
+          <button className="token-name-header">Name</button>
+          <button className="token-sym-header">Symbol</button>
+          <button className="stake-header">Stake</button>
+          <button className="age-header">Age</button>
+          <button className="ask-header">Ask</button>
+          <button className="fee-header">Fee</button>
+          <div className="node-list">
+            {data.map((node) => (
+              <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain_name: node.chainName, blockchain_id: node.chainId, node_name: node.tokenName})}>
+                <img
+                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${node.chainId}-logo.png`}
+                alt={node.chainName}
+                ></img>
+                <div className={`node-id-record`}>{node.nodeId}</div>
+                <div className={`network-record`}>
+                  {node.networkId.substring(0, 30) + "..."}
+                </div>
+                <div className={`token-name-record`}>
+                  {node.tokenName.substring(0, 25)}
+                </div>
+                <div className={`token-sym-record`}>
+                  {node.tokenSymbol.substring(0, 25)}
+                </div>
+                <div className={`stake-record`}>
+                  {Number(node.nodeStake).toFixed(0)}
+                </div>
+                <div className={`age-record`}>
+                  {`${Number(node.nodeAgeDays)} days`}
+                </div>
+                <div className={`ask-record`}>
+                  {Number(node.nodeAsk).toFixed(5)}
+                </div>
+                <div className={`fee-record`}>
+                  {/* {Number(node.nodeFee)} */}
+                </div>
+              </button>
+            ))}
+          </div>
           {isMobile && <div className="spacer"></div>}
         </div>
       ) : (
