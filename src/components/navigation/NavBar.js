@@ -147,7 +147,6 @@ function NavBar() {
   return (
     <nav>
       <div className="navbar">
-        <h1>
           <a href="/">
             <img
               src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`}
@@ -156,9 +155,8 @@ function NavBar() {
             ></img>
           </a>
           <a href="/" className="logo-text">
-            <span style={{ fontSize: "24px", marginLeft: "-150px" }}>othub.io </span>
+            <span style={{ fontSize: "24px" }}>othub.io </span>
           </a>
-        </h1>
         <br></br>
         <div className="connection-info">
           {account && <div className="addr-chain">
