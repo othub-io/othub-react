@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../../effects/Loading";
+import Loading from "../../effects/Loading";
 
 let ext = "http";
 if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
@@ -70,10 +70,10 @@ const EstimatedEarnings = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        nodes: settings.data[0].nodes,
+        node: settings.data[0],
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeData`,
         time_data
       );
       setData(response.data.chart_data);
@@ -106,116 +106,91 @@ const EstimatedEarnings = (settings) => {
     const uniqueDates = new Set();
     const formattedDates = [];
 
-    for (const blockchain of data) {
-      blockchain.data
-        .filter((item) => {
-          const formattedDate = moment(item.date).format(format);
-          // Check if the formatted date is unique
-          if (!uniqueDates.has(formattedDate)) {
-            uniqueDates.add(formattedDate);
-            formattedDates.push(formattedDate);
-            return true;
-          }
-          return false;
-        })
-        .map((item) => moment(item.date).format(format));
-    }
+    data.data
+      .filter((item) => {
+        const formattedDate = moment(item.date).format(format);
+        // Check if the formatted date is unique
+        if (!uniqueDates.has(formattedDate)) {
+          uniqueDates.add(formattedDate);
+          formattedDates.push(formattedDate);
+          return true;
+        }
+        return false;
+      })
+      .map((item) => moment(item.date).format(format));
 
-    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
+    formattedData.labels = formattedDates.sort(
+      (a, b) => moment(a, format).toDate() - moment(b, format).toDate()
+    );
 
     let final_earnings = [];
-    let dates = formattedDates;
 
     let border_color;
     let chain_color;
-    for (const blockchain of data) {
-      final_earnings = [];
-      for (const date of dates) {
-        let estimatedEarnings1stEpochOnly = 0;
-          for (const item of blockchain.data) {
-            if (moment(item.date).format(format) === date) {
-              estimatedEarnings1stEpochOnly = item.estimatedEarnings1stEpochOnly + estimatedEarnings1stEpochOnly;
-            }
-          }
-        final_earnings.push(estimatedEarnings1stEpochOnly);
-      }
-
-      if (
-        blockchain.blockchain_name === "NeuroWeb Mainnet" ||
-        blockchain.blockchain_name === "NeuroWeb Testnet"
-      ) {
-        border_color = "#fb5deb";
-        chain_color = "rgba(251, 93, 235, 0.1)"
-      }
-
-      if (
-        blockchain.blockchain_name === "Gnosis Mainnet" ||
-        blockchain.blockchain_name === "Chiado Testnet"
-      ) {
-        border_color = "#133629";
-        chain_color = "rgba(19, 54, 41, 0.1)";
-      }
-
-      let estimatedEarnings1stEpoch_obj = {
-        label: blockchain.blockchain_name + " Earnings 1st Epoch",
-        data: final_earnings,
-        fill: false,
-        borderColor: border_color,
-        backgroundColor: chain_color,
-        borderWidth: 2
-      };
-      formattedData.datasets.push(estimatedEarnings1stEpoch_obj);
+    final_earnings = [];
+    for (const item of data.data) {
+      final_earnings.push(item.estimatedEarnings1stEpochOnly);
     }
 
-    for (const blockchain of data) {
-      let tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
-      for (const tokenName of tokenNames) {
-        let estimatedEarnings = [];
-        //let randomHexColor = generateRandomColor();
-        for (const obj of formattedData.labels) {
-          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
-          if(containsDate){
-            for (const item of blockchain.data) {
-              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
-                estimatedEarnings.push(item.estimatedEarnings)
-              }
-            }
-          }else{
-            estimatedEarnings.push(null)
-          }
-        }
-
-        if (
-          blockchain.blockchain_name === "NeuroWeb Mainnet" ||
-          blockchain.blockchain_name === "NeuroWeb Testnet"
-        ) {
-          border_color = "#fb5deb";
-          chain_color = "rgba(251, 93, 235, 0.1)"
-        }
-
-        if (
-          blockchain.blockchain_name === "Gnosis Mainnet" ||
-          blockchain.blockchain_name === "Chiado Testnet"
-        ) {
-          border_color = "#133629";
-          chain_color = "rgba(19, 54, 41, 0.1)";
-        }
-
-        estimatedEarnings_obj = {
-          label: tokenName + " Earnings All Epochs",
-          data: estimatedEarnings,
-          fill: false,
-          borderColor: border_color,
-          backgroundColor: border_color,
-          borderWidth: 2,
-          type: "line",
-        };
-
-        formattedData.datasets.push(
-          estimatedEarnings_obj
-        );
-      }
+    if (
+      settings.data[0].blockchain_name === "NeuroWeb Mainnet" ||
+      settings.data[0].blockchain_name === "NeuroWeb Testnet"
+    ) {
+      border_color = "#fb5deb";
+      chain_color = "rgba(251, 93, 235, 0.1)";
     }
+
+    if (
+      settings.data[0].blockchain_name === "Gnosis Mainnet" ||
+      settings.data[0].blockchain_name === "Chiado Testnet"
+    ) {
+      border_color = "#133629";
+      chain_color = "rgba(19, 54, 41, 0.1)";
+    }
+
+    let estimatedEarnings1stEpoch_obj = {
+      label: "Earnings 1st Epoch",
+      data: final_earnings,
+      fill: false,
+      borderColor: border_color,
+      backgroundColor: chain_color,
+      borderWidth: 2,
+    };
+    formattedData.datasets.push(estimatedEarnings1stEpoch_obj);
+
+    let estimatedEarnings = [];
+    //let randomHexColor = generateRandomColor();
+    for (const item of data.data) {
+      estimatedEarnings.push(item.estimatedEarnings);
+    }
+
+    if (
+      settings.data[0].blockchain_name === "NeuroWeb Mainnet" ||
+      settings.data[0].blockchain_name === "NeuroWeb Testnet"
+    ) {
+      border_color = "#fb5deb";
+      chain_color = "rgba(251, 93, 235, 0.1)";
+    }
+
+    if (
+      settings.data[0].blockchain_name === "Gnosis Mainnet" ||
+      settings.data[0].blockchain_name === "Chiado Testnet"
+    ) {
+      border_color = "#133629";
+      chain_color = "rgba(19, 54, 41, 0.1)";
+    }
+
+    estimatedEarnings_obj = {
+      label: "Earnings All Epochs",
+      data: estimatedEarnings,
+      fill: false,
+      borderColor: border_color,
+      backgroundColor: border_color,
+      borderWidth: 2,
+      type: "line",
+    };
+
+    formattedData.datasets.push(estimatedEarnings_obj);
   }
 
   const options = {
@@ -259,47 +234,17 @@ const EstimatedEarnings = (settings) => {
   return (
     <div>
       {data ? (
-        <div className="chart-widget">
-          <div className="chart-name">Estimated Earnings</div>
-          <div className="chart-port">
+        <div className="node-pop-chart-widget">
+          <div className="node-pop-chart-name">Estimated Earnings</div>
+          <div className="node-pop-chart-port">
             <Bar
               data={formattedData}
               options={options}
-              height={
-                window.matchMedia("(max-width: 380px)").matches
-                  ? "120"
-                  : window.matchMedia("(max-width: 400px)").matches
-                  ? "170"
-                  : window.matchMedia("(max-width: 420px)").matches
-                  ? "150"
-                  : window.matchMedia("(max-width: 480px)").matches
-                  ? "110"
-                  : window.matchMedia("(max-width: 1366px)").matches
-                  ? "140"
-                  : window.matchMedia("(max-width: 1536px)").matches
-                  ? "110"
-                  : "140"
-              }
-              width={
-                window.matchMedia("(max-width: 380px)").matches
-                  ? "180"
-                  : window.matchMedia("(max-width: 400px)").matches
-                  ? "260"
-                  : window.matchMedia("(max-width: 420px)").matches
-                  ? "240"
-                  : window.matchMedia("(max-width: 480px)").matches
-                  ? "200"
-                  : window.matchMedia("(max-width: 1366px)").matches
-                  ? "200"
-                  : window.matchMedia("(max-width: 1536px)").matches
-                  ? "200"
-                  : "280"
-              }
             />
           </div>
-          <div className="chart-filter">
+          <div className="node-pop-chart-filter">
             <button
-              className="chart-filter-button"
+              className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
               name="timeframe"
               style={
@@ -311,7 +256,7 @@ const EstimatedEarnings = (settings) => {
               24h
             </button>
             <button
-              className="chart-filter-button"
+              className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("7d")}
               name="timeframe"
               style={
@@ -323,7 +268,7 @@ const EstimatedEarnings = (settings) => {
               7d
             </button>
             <button
-              className="chart-filter-button"
+              className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("30d")}
               name="timeframe"
               style={
@@ -335,7 +280,7 @@ const EstimatedEarnings = (settings) => {
               30d
             </button>
             <button
-              className="chart-filter-button"
+              className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("6m")}
               name="timeframe"
               style={
@@ -347,7 +292,7 @@ const EstimatedEarnings = (settings) => {
               6m
             </button>
             <button
-              className="chart-filter-button"
+              className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("1y")}
               name="timeframe"
               style={
@@ -359,7 +304,7 @@ const EstimatedEarnings = (settings) => {
               1y
             </button>
             <button
-              className="chart-filter-button"
+              className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("")}
               name="timeframe"
               style={
@@ -373,7 +318,7 @@ const EstimatedEarnings = (settings) => {
           </div>
         </div>
       ) : (
-        <div className="chart-widget">
+        <div className="node-pop-chart-widget">
           <Loading />
         </div>
       )}

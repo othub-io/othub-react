@@ -185,9 +185,12 @@ const AssetPublish = (selectedFile) => {
       setIsLoading(false);
     } catch (error) {
       console.log(error)
+      if(error = "{}"){
+        error = "Error: Transaction was not mined within 50 blocks, please make sure your transaction was properly sent. Be aware that it might still be mined! Please try again with higher gas in a few minutes."
+      }
       let pub_result = {
         status: false,
-        result: JSON.stringify(error),
+        result: error,
         msg: `Asset Publish Failed!`,
       };
       setResult(pub_result);
@@ -204,7 +207,7 @@ const AssetPublish = (selectedFile) => {
    };
 
   if (isLoading) {
-    return <Loading data={"Please sign awaiting transaction(s)..."} />;
+    return <Loading data={"Sign awaiting transaction(s). Please be patient..."} />;
   }
 
   if (result) {
