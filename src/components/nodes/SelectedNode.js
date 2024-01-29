@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Loading from "../effects/Loading";
 import Stats from "./stats";
-import CumRewards from "./charts/cumRewards";
-import PubsCommited from "../my-othub/node-dashboard/charts/pubsCommited";
-import Rewards from "../my-othub/node-dashboard/charts/rewards";
-import CumPubsCommited from "./charts/cumPubsCommited";
+import Rewards from "./charts/rewards";
+import PubsCommited from "./charts/pubsCommited";
 import EstimatedEarnings from "./charts/estimatedEarnings";
-import NodeStake from "../my-othub/node-dashboard/charts/nodeStake";
 import axios from "axios";
 let ext;
 
@@ -46,7 +42,7 @@ const NodeSettings = (settings) => {
 
         const request_data1 = {
           blockchain: settings.data[0].blockchain_name,
-          node: settings.data[0].nodeId,
+          nodeId: settings.data[0].nodeId,
         };
 
         const response1 = await axios.post(
@@ -64,8 +60,6 @@ const NodeSettings = (settings) => {
     fetchData();
   }, []);
 
-  console.log(data);
-
   return (
     <div className="node-pop">
       <div className="node-pop-div">
@@ -74,19 +68,19 @@ const NodeSettings = (settings) => {
             {
               blockchain_id: settings.data[0].blockchain_id,
               blockchain_name: settings.data[0].blockchain_name,
-              node: settings.data[0].nodeId,
+              nodeId: settings.data[0].nodeId,
               node_name: settings.data[0].node_name,
             },
           ]}
         />
       </div>
       <div className="node-pop-div">
-        <CumRewards
+        <Rewards
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
               blockchain_name: settings.data[0].blockchain_name,
-              node: settings.data[0].nodeId,
+              nodeId: settings.data[0].nodeId,
               node_name: settings.data[0].node_name,
               node_data: data,
             },
@@ -94,12 +88,12 @@ const NodeSettings = (settings) => {
         />
       </div>
       <div className="node-pop-div">
-        <CumPubsCommited
+        <PubsCommited
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
               blockchain_name: settings.data[0].blockchain_name,
-              node: settings.data[0].nodeId,
+              nodeId: settings.data[0].nodeId,
               node_name: settings.data[0].node_name,
               node_data: data,
             },
@@ -112,7 +106,7 @@ const NodeSettings = (settings) => {
             {
               blockchain_id: settings.data[0].blockchain_id,
               blockchain_name: settings.data[0].blockchain_name,
-              node: settings.data[0].nodeId,
+              nodeId: settings.data[0].nodeId,
               node_name: settings.data[0].node_name,
               node_data: data,
             },

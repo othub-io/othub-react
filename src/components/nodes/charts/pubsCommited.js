@@ -35,7 +35,7 @@ function generateRandomColor() {
   return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const CumPubsCommited = (settings) => {
+const PubsCommited = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -43,6 +43,17 @@ const CumPubsCommited = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
+        // const time_data = {
+        //   timeframe: inputValue,
+        //   network: node_data.data[0].network,
+        //   nodeId: node_data.data[0].nodeId,
+        //   public_address: node_data.data[0].public_address,
+        // };
+        // const response = await axios.post(
+        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        //   time_data
+        // );
+        // setData(response.data.chart_data);
         setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -59,7 +70,7 @@ const CumPubsCommited = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        node: settings.data[0].node,
+        node: settings.data[0],
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeData`,
@@ -111,12 +122,13 @@ const CumPubsCommited = (settings) => {
       (a, b) => moment(a, format).toDate() - moment(b, format).toDate()
     );
 
-    let border_color;
     let chain_color;
-    let final_payouts_obj;
-    let final_payouts = []
+    let border_color;
+    let pubsCommited_obj;
+
+    let pubsCommited = [];
     for (const item of data.data) {
-      final_payouts.push(item.cumulativePayouts);
+      pubsCommited.push(item.pubsCommited);
     }
 
     if (
@@ -128,33 +140,33 @@ const CumPubsCommited = (settings) => {
     }
 
     if (
-      settings.data[0].blockchain_name=== "Gnosis Mainnet" ||
+      settings.data[0].blockchain_name === "Gnosis Mainnet" ||
       settings.data[0].blockchain_name === "Chiado Testnet"
     ) {
       chain_color = "#133629";
       border_color = "rgba(19, 54, 41, 0.1)";
     }
 
-    final_payouts_obj = {
+    pubsCommited_obj = {
       label: settings.data[0].node_name,
-      data: final_payouts,
+      data: pubsCommited,
       fill: false,
-      borderColor: chain_color,
+      borderColor: border_color,
       backgroundColor: chain_color,
-      borderWidth: 2,
+      borderWidth: 2, // Bar outline width
     };
 
-    formattedData.datasets.push(final_payouts_obj);
-    
+    formattedData.datasets.push(pubsCommited_obj);
   }
 
   const options = {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
         title: {
           display: true,
-          text: "TRAC", // Add your X-axis label here
+          text: "Assets", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -174,6 +186,7 @@ const CumPubsCommited = (settings) => {
       },
       x: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
         title: {
           // Start the scale at 0
           display: true,
@@ -191,12 +204,9 @@ const CumPubsCommited = (settings) => {
     <div>
       {data ? (
         <div className="node-pop-chart-widget">
-          <div className="node-pop-chart-name">Cumulative Node Rewards</div>
+          <div className="node-pop-chart-name">Pubs Commited</div>
           <div className="node-pop-chart-port">
-            <Line
-              data={formattedData}
-              options={options}
-            />
+            <Bar data={formattedData} options={options} />
           </div>
           <div className="node-pop-chart-filter">
             <button
@@ -282,4 +292,4 @@ const CumPubsCommited = (settings) => {
   );
 };
 
-export default CumPubsCommited;
+export default PubsCommited;

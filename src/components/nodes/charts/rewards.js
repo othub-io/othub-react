@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import moment from "moment";
 import axios from "axios";
 import {
@@ -35,7 +35,7 @@ function generateRandomColor() {
   return "#" + "0".repeat(6 - randomColor.length) + randomColor;
 }
 
-const CumPubsCommited = (settings) => {
+const NodeRewards = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
@@ -70,7 +70,7 @@ const CumPubsCommited = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        node: settings.data[0].node,
+        node: settings.data[0],
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeData`,
@@ -104,7 +104,7 @@ const CumPubsCommited = (settings) => {
 
     const uniqueDates = new Set();
     const formattedDates = [];
-
+    
     data.data
       .filter((item) => {
         const formattedDate = moment(item.date).format(format);
@@ -124,12 +124,9 @@ const CumPubsCommited = (settings) => {
 
     let border_color;
     let chain_color;
-    let cumPubs_obj;
+    let payouts_obj;
 
-    let final_pubs = [];
-    for (const item of data.data) {
-      final_pubs.push(item.cumulativePubsCommited);
-    }
+    const payouts = data.data.map((item) => item.payouts);
 
     if (
       settings.data[0].blockchain_name === "NeuroWeb Mainnet" ||
@@ -147,25 +144,26 @@ const CumPubsCommited = (settings) => {
       border_color = "rgba(19, 54, 41, 0.1)";
     }
 
-    cumPubs_obj = {
+    payouts_obj = {
       label: settings.data[0].node_name,
-      data: final_pubs,
+      data: payouts,
       fill: false,
-      borderColor: chain_color,
+      borderColor: border_color,
       backgroundColor: chain_color,
-      type: "line",
       borderWidth: 2,
     };
-    formattedData.datasets.push(cumPubs_obj);
+
+    formattedData.datasets.push(payouts_obj);
   }
 
   const options = {
     scales: {
       y: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
         title: {
           display: true,
-          text: "Assets", // Add your X-axis label here
+          text: "TRAC", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -185,6 +183,7 @@ const CumPubsCommited = (settings) => {
       },
       x: {
         beginAtZero: true, // Start the scale at 0
+        stacked: true,
         title: {
           // Start the scale at 0
           display: true,
@@ -202,42 +201,9 @@ const CumPubsCommited = (settings) => {
     <div>
       {data ? (
         <div className="node-pop-chart-widget">
-          <div className="node-pop-chart-name">Cumulative Pubs Commited</div>
+          <div className="node-pop-chart-name">Node Rewards</div>
           <div className="node-pop-chart-port">
-            <Line
-              data={formattedData}
-              options={options}
-              height={
-                window.matchMedia("(max-width: 380px)").matches
-                  ? "120"
-                  : window.matchMedia("(max-width: 400px)").matches
-                  ? "170"
-                  : window.matchMedia("(max-width: 420px)").matches
-                  ? "150"
-                  : window.matchMedia("(max-width: 480px)").matches
-                  ? "110"
-                  : window.matchMedia("(max-width: 1366px)").matches
-                  ? "140"
-                  : window.matchMedia("(max-width: 1536px)").matches
-                  ? "110"
-                  : "140"
-              }
-              width={
-                window.matchMedia("(max-width: 380px)").matches
-                  ? "180"
-                  : window.matchMedia("(max-width: 400px)").matches
-                  ? "260"
-                  : window.matchMedia("(max-width: 420px)").matches
-                  ? "240"
-                  : window.matchMedia("(max-width: 480px)").matches
-                  ? "200"
-                  : window.matchMedia("(max-width: 1366px)").matches
-                  ? "200"
-                  : window.matchMedia("(max-width: 1536px)").matches
-                  ? "200"
-                  : "280"
-              }
-            />
+            <Bar data={formattedData} options={options} />
           </div>
           <div className="node-pop-chart-filter">
             <button
@@ -323,4 +289,4 @@ const CumPubsCommited = (settings) => {
   );
 };
 
-export default CumPubsCommited;
+export default NodeRewards;

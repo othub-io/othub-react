@@ -70,7 +70,7 @@ const EstimatedEarnings = (settings) => {
       setInputValue(timeframe);
       const time_data = {
         timeframe: timeframe,
-        node: settings.data[0].node,
+        node: settings.data[0],
       };
       const response = await axios.post(
         `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeData`,
@@ -124,7 +124,6 @@ const EstimatedEarnings = (settings) => {
     );
 
     let final_earnings = [];
-    let dates = formattedDates;
 
     let border_color;
     let chain_color;
@@ -241,36 +240,6 @@ const EstimatedEarnings = (settings) => {
             <Bar
               data={formattedData}
               options={options}
-              height={
-                window.matchMedia("(max-width: 380px)").matches
-                  ? "120"
-                  : window.matchMedia("(max-width: 400px)").matches
-                  ? "170"
-                  : window.matchMedia("(max-width: 420px)").matches
-                  ? "150"
-                  : window.matchMedia("(max-width: 480px)").matches
-                  ? "110"
-                  : window.matchMedia("(max-width: 1366px)").matches
-                  ? "140"
-                  : window.matchMedia("(max-width: 1536px)").matches
-                  ? "110"
-                  : "140"
-              }
-              width={
-                window.matchMedia("(max-width: 380px)").matches
-                  ? "180"
-                  : window.matchMedia("(max-width: 400px)").matches
-                  ? "260"
-                  : window.matchMedia("(max-width: 420px)").matches
-                  ? "240"
-                  : window.matchMedia("(max-width: 480px)").matches
-                  ? "200"
-                  : window.matchMedia("(max-width: 1366px)").matches
-                  ? "200"
-                  : window.matchMedia("(max-width: 1536px)").matches
-                  ? "200"
-                  : "280"
-              }
             />
           </div>
           <div className="node-pop-chart-filter">

@@ -26,7 +26,7 @@ const Stats = (settings) => {
         setStats("");
         const request_data = {
           blockchain: settings.data[0].blockchain_name,
-          node: settings.data[0].node,
+          nodeId: settings.data[0].nodeId,
         };
 
         const response = await axios.post(
@@ -36,7 +36,6 @@ const Stats = (settings) => {
 
         setStats(response.data);
 
-        console.log(stats);
         const rsp = await axios.get(
           "https://api.coingecko.com/api/v3/coins/origintrail"
         );
@@ -65,28 +64,28 @@ const Stats = (settings) => {
         alt={settings.data[0].blockchain_name}
       ></img>{`  ${settings.data[0].node_name}`}<br></br>
       <div className="node-stat">
-        <h1 className="node-pop-header">Total Pubs Committed</h1>
+        <h1 className="node-pop-header">Total Pubs</h1>
         <span>{stats.pubs_commited}</span>
       </div>
       <div className="node-stat">
-        <h1 className="node-pop-header">24h Pubs Committed</h1>
+        <h1 className="node-pop-header">24h Pubs</h1>
         <span>{stats.pubs_commited_24h}</span>
       </div>
       <div className="node-stat">
         <h1 className="node-pop-header">Total Rewards</h1>
-        <span>{stats.payouts.toFixed(3)}</span>
+        <span>{stats.payouts.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
         <h1 className="node-pop-header">24h Rewards</h1>
-        <span>{stats.payouts_24h.toFixed(3)}</span>
+        <span>{stats.payouts_24h.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
         <h1 className="node-pop-header">Total Earnings</h1>
-        <span>{stats.earnings.toFixed(3)}</span>
+        <span>{stats.earnings.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
         <h1 className="node-pop-header">24h Earnings</h1>
-        <span>{stats.earnings_24h.toFixed(3)}</span>
+        <span>{stats.earnings_24h.toFixed(3)} TRAC</span>
       </div>
     </div>
   ) : (

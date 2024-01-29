@@ -13,6 +13,8 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 
 const Nodes = () => {
   const [data, setData] = useState("");
+  const [sortedData, setSortedData] = useState("");
+  const [sortOrder, setSortOrder] = useState('asc');
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("DKG Mainnet");
@@ -32,6 +34,7 @@ const Nodes = () => {
         );
 
         setData(response.data.nodes);
+        setSortedData(response.data.nodes)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -44,6 +47,29 @@ const Nodes = () => {
   const closeNode = () => {
     setSelectedNode(null);
   };
+
+  const setSort = (sortBy) => {
+    const newData = [...data];
+
+    newData.sort((a, b) => {
+      let result = 0;
+
+      // Implement your sorting logic based on the 'sortBy' parameter
+      if (a[sortBy] < b[sortBy]) {
+        result = -1;
+      } else if (a[sortBy] > b[sortBy]) {
+        result = 1;
+      }
+
+      // Toggle the result based on the sort order
+      return sortOrder === 'asc' ? result : -result;
+    });
+
+    // Update the state variables with the sorted data and toggle the sort order
+    setSortedData([...newData]);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
 
   if (selectedNode) {
     return (
@@ -66,32 +92,28 @@ const Nodes = () => {
       <div className="header">
         <NetworkDrop network={setNetwork} blockchain={setBlockchain} />
       </div>
-      {data ? (
+      {sortedData ? (
         <div className="node-list-container">
-          <button className="node-id-header">ID</button>
-          <button className="network-header">Network Id</button>
-          <button className="token-name-header">Name</button>
-          <button className="token-sym-header">Symbol</button>
-          <button className="stake-header">Stake</button>
-          <button className="age-header">Age</button>
-          <button className="ask-header">Ask</button>
-          <button className="fee-header">Fee</button>
+          <button className="node-id-header" onClick={() => setSort("nodeId")}>ID<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="token-name-header" onClick={() => setSort("tokenName")}>Name<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="token-sym-header" onClick={() => setSort("tokenSymbol")}>Symbol<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="stake-header" onClick={() => setSort("nodeStake")}>Stake<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="age-header" onClick={() => setSort("nodeAgeDays")}>Age<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="ask-header" onClick={() => setSort("nodeAsk")}>Ask<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          {/* <button className="fee-header" onClick={() => setSort("nodeFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button> */}
           <div className="node-list">
-            {data.map((node) => (
+            {sortedData.map((node) => (
               <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain_name: node.chainName, blockchain_id: node.chainId, node_name: node.tokenName})}>
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${node.chainId}-logo.png`}
                 alt={node.chainName}
                 ></img>
                 <div className={`node-id-record`}>{node.nodeId}</div>
-                <div className={`network-record`}>
-                  {node.networkId.substring(0, 30) + "..."}
-                </div>
                 <div className={`token-name-record`}>
-                  {node.tokenName.substring(0, 25)}
+                  {node.tokenName.substring(0, 30)}
                 </div>
                 <div className={`token-sym-record`}>
-                  {node.tokenSymbol.substring(0, 25)}
+                  {node.tokenSymbol.substring(0, 10)}
                 </div>
                 <div className={`stake-record`}>
                   {Number(node.nodeStake).toFixed(0)}
@@ -102,9 +124,9 @@ const Nodes = () => {
                 <div className={`ask-record`}>
                   {Number(node.nodeAsk).toFixed(5)}
                 </div>
-                <div className={`fee-record`}>
-                  {/* {Number(node.nodeFee)} */}
-                </div>
+                {/* <div className={`fee-record`}>
+                   {Number(node.nodeFee)} 
+                </div> */}
               </button>
             ))}
           </div>
