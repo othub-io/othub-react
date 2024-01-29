@@ -64,27 +64,27 @@ const Stats = (settings) => {
         alt={settings.data[0].blockchain_name}
       ></img>{`  ${settings.data[0].node_name}`}<br></br>
       <div className="node-stat">
-        <h1 className="node-pop-header">Total Pubs</h1>
+        <div className="node-pop-header">Total Pubs</div>
         <span>{stats.pubs_commited}</span>
       </div>
       <div className="node-stat">
-        <h1 className="node-pop-header">24h Pubs</h1>
+        <div className="node-pop-header">24h Pubs</div>
         <span>{stats.pubs_commited_24h}</span>
       </div>
       <div className="node-stat">
-        <h1 className="node-pop-header">Total Rewards</h1>
+        <div className="node-pop-header">Total Rewards</div>
         <span>{stats.payouts.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
-        <h1 className="node-pop-header">24h Rewards</h1>
+        <div className="node-pop-header">24h Rewards</div>
         <span>{stats.payouts_24h.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
-        <h1 className="node-pop-header">Total Earnings</h1>
+        <div className="node-pop-header">Total Earnings</div>
         <span>{stats.earnings.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
-        <h1 className="node-pop-header">24h Earnings</h1>
+        <div className="node-pop-header">24h Earnings</div>
         <span>{stats.earnings_24h.toFixed(3)} TRAC</span>
       </div>
     </div>

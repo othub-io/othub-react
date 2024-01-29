@@ -148,8 +148,8 @@ const NodeRewards = (settings) => {
       label: settings.data[0].node_name,
       data: payouts,
       fill: false,
-      borderColor: border_color,
-      backgroundColor: chain_color,
+      borderColor: chain_color,
+      backgroundColor: border_color,
       borderWidth: 2,
     };
 

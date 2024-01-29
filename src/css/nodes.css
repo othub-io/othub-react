@@ -119,6 +119,7 @@
   outline: 2px solid #6344df;
   border-radius: 10px 10px 10px 10px;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  float: left;
 }
 
 .node-pop-stats {
@@ -141,7 +142,6 @@
   font-weight: bold;
   margin-bottom: -5px;
   text-decoration: underline;
-  margin-left: -100px;
 }
 
 .node-pop-chart-name {

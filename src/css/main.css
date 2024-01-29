@@ -99,6 +99,10 @@ h2 {
   padding-right: 30px;
 }
 
+.expenses{
+  padding-left:20px;
+}
+
 @media (max-width: 1536px) {
   .staking-body {
     width: 84%;

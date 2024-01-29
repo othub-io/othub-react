@@ -170,10 +170,10 @@ function NavBar() {
             <div className="balance">
               {balance.native ? (
                 <span>
-                  {(balance.native[0].balance / 1000000000000).toFixed(4)} Neuro
+                  {(balance.native[0].balance / 1000000000000).toFixed(4)} NEURO
                 </span>
               ) : (
-                <span>0 Neuro</span>
+                <span>0 NEURO</span>
               )}
               <br></br>
               {balance.ERC20 ? (

@@ -46,6 +46,20 @@ const Staking = () => {
           <li><b>OTHub Operational:</b><br></br> <a href="https://neuroweb.subscan.io/account/gJqhDSLh9uDqNP36YP6mXNqTquxL9tC9PmpzSmPYnj6DtmtyJ" target="_blank" rel="noreferrer">gJqhDSLh9uDqNP36YP6mXNqTquxL9tC9PmpzSmPYnj6DtmtyJ</a></li>
         </ul>
       </div>
+      <div className="expenses">
+        <h2>Expenses</h2>
+        <h3>Operating</h3>
+        <ul>
+          <li>$35 per month for VPS + domain + SSL</li>
+          <li>$5 per month for @OTHub_io on X</li>
+        </ul>
+
+        <h3>Community Extras</h3>
+        <ul>
+          <li>TRAC to fund OTHub free mainnet API</li>
+          <li>TRAC rewards for OTHub improvement PRs</li>
+        </ul>
+      </div>
     </div>
   </div>
     </div>
