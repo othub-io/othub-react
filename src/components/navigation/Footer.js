@@ -8,7 +8,7 @@ const footer = () => {
         <p>
           Built by the Origintrail Community. Open Sourced on{" "}
           <a href="https://github.com/othub-io">Github</a>.{" "}
-          <a href="https://github.com/othub-io/othub-io/blob/main/Disclaimer.md">
+          <a href="https://github.com/othub-io/.github/blob/main/profile/DISCLAIMER.md">
             Disclaimer
           </a>
           .
