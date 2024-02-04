@@ -77,6 +77,13 @@ function SideBar() {
       icon: "https://img.icons8.com/ios/50/000000/api.png",
       isOpen: true,
     },
+    {
+      id: 8,
+      path: "https://deepdive.othub.io",
+      title: "Deepdive",
+      icon: "https://img.icons8.com/ios/50/000000/submarine.png",
+      isOpen: true,
+    },
     // Rest of the menu items
   ]);
 
