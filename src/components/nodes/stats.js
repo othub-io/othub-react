@@ -59,7 +59,7 @@ const Stats = (settings) => {
   return stats ? (
     <div className={`node-pop-stats`}>
       <img
-        src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${settings.data[0].blockchain_id}-logo.png`}
+        src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=node${settings.data[0].blockchain_id}-logo.png`}
         width="30px"
         alt={settings.data[0].blockchain_name}
       ></img>{`  ${settings.data[0].node_name}`}<br></br>
