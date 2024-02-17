@@ -28,19 +28,13 @@ ChartJS.register(
 );
 
 const NodeCommits = (settings) => {
-  const [inputValue, setInputValue] = useState("");
-  const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState("");
 
-  let sub_scan_link = "https://";
-  let link_type = "origintrail";
   let explorer_url = "https://dkg.origintrail.io";
 
-  if (settings.data[0].network === "NeuroWeb Testnet") {
-    link_type = "origintrail-testnet";
+  if (settings.data[0].network === "DKG Testnet") {
     explorer_url = "https://dkg-testnet.origintrail.io";
   }
-  sub_scan_link = sub_scan_link + link_type + ".subscan.io";
 
   useEffect(() => {
     async function fetchData() {
@@ -73,7 +67,6 @@ const NodeCommits = (settings) => {
     return (<div className="node-activity-feed"><Loading /></div>)
   }
 
-  console.log(data)
   return (
     data && (
       <div className="node-activity-feed">
@@ -100,7 +93,7 @@ const NodeCommits = (settings) => {
                   </a>{" "}
                   <a
                   target ="_blank"
-                    href={sub_scan_link + "/tx/" + record.transactionHash}
+                    href={record.chain_id == "100" ? (`https://gnosisscan.io/tx/${record.transactionHash}`) : record.chain_id == "10200" ? (`https://gnosis-chiado.blockscout.com/tx/${record.transactionHash}`) : record.chain_id == "2043" ? (`https://origintrail.subscan.io/tx/${record.transactionHash}`) : record.chain_id == "20430" ? (`https:/origintrail-testnet.subscan.io/tx/${record.transactionHash}`) : ""}
                     style={{ color: "#cccccc", textDecoration: "none" }}
                   >
                     {window.matchMedia("(max-width: 440px)").matches ? ("") : (" | Tx: " + record.transactionHash.substring(0, 15)+"...")}
