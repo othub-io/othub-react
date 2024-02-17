@@ -11,14 +11,6 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 const Stats = (settings) => {
   const [stats, setStats] = useState("");
   const [price, setPrice] = useState("");
-  let pubs_commited = 0;
-  let pubs_commited_24h = 0;
-  let earnings = 0;
-  let earnings_24h = 0;
-  let payouts = 0;
-  let payouts_24h = 0;
-  let totalStake = 0;
-  let nodes = 0;
 
   useEffect(() => {
     async function fetchData() {

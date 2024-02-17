@@ -24,24 +24,10 @@
   margin-top: 2.5%;
   color: #6344df;
   display: absolute;
+  margin-bottom: 2.5%;
 }
 
-.staking-about {
-  width: 60%; /* Adjust the width as needed */
-  padding-left: 10px; /* Add padding for spacing */
-  font-family: "Roboto", sans-serif;
-  padding-right: 20px;
-  display: inline-block;
-  position: relative;
-  float: left;
-  margin-right: 10px;
-}
-
-.staking-about p{
-  font-size: 18px;
-}
-
-.staking-about button{
+.staking-body a{
   padding: 8px 16px;
   background-color: #6344df;
   color: #ffffff;
@@ -50,12 +36,29 @@
   cursor: pointer;
   font-weight: bold;
   height:35px;
-  margin-left:42.5%;
+  margin-left:45%;
   text-align: center;
   position: relative;
   height: 40px;
   width: 150px;
   font-size: 20px;
+  text-decoration: none;
+}
+
+.staking-about {
+  width: 95%; /* Adjust the width as needed */
+  padding-left: 10px; /* Add padding for spacing */
+  font-family: "Roboto", sans-serif;
+  padding-right: 20px;
+  display: inline-block;
+  position: relative;
+  float: left;
+  margin-right: 10px;
+  margin-top:-30px;
+}
+
+.staking-about p{
+  font-size: 18px;
 }
 
 .staking-about button{
@@ -70,37 +73,83 @@ h1 {
 h2 {
   font-family: "Roboto", sans-serif;
   text-align: center;
-  padding-top: 40px;
+}
+
+h3 {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
 }
 
 .staking-node-list {
-  width: 35%;
-  position: relative;
+  width: 100%;
+}
+
+.node-stats-staking{
+  height:550px;
+  z-index: 500;
+  color: #6344df;
+  width: 100%;
   display: inline-block;
-  float: left;
-}
-
-.othub-wallets {
-  outline: 2px #6344df solid;
-  border-radius: 10px 10px 10px 10px;
-  height: 100%;
-  padding-left: 30px;
-  position: relative;
-  padding-right: 30px;
-  word-wrap: break-word;
-  padding-bottom: 20px;
-}
-
-.othub-nodes {
-  border-radius: 10px 10px 10px 10px;
-  height: 365px;
-  padding-left: 30px;
+  z-index: 500;
   margin-top:10px;
-  padding-right: 30px;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; 
 }
 
-.expenses{
-  padding-left:20px;
+.d100-node-div-staking{
+  outline: 2px solid #133629;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  background-color: rgba(19, 54, 41, 0.1);
+  color: #133629;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
+}
+
+.d2043-node-div-staking{
+  outline: 2px solid #fb5deb;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  position: relative;
+  background-color: rgba(251, 93, 235, 0.1);
+  color: #000000;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
+}
+
+.d10200-node-div-staking{
+  outline: 2px solid #133629;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  position: relative;
+  background-color: rgba(19, 54, 41, 0.1);
+  color: #133629;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
+}
+
+.d20430-node-div-staking{
+  outline: 2px solid #fb5deb;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  position: relative;
+  background-color: rgba(251, 93, 235, 0.1);
+  color: #000000;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
 }
 
 @media (max-width: 1536px) {
@@ -111,6 +160,7 @@ h2 {
     margin-top: 2.5%;
     color: #6344df;
     display: absolute;
+    padding-bottom: 8%;
   }
 }
 
@@ -142,10 +192,28 @@ h2 {
   .staking-body {
     width: 81%;
     height: 100%;
-    margin-left: 14%;
-    margin-top: 2.5%;
+    margin-left: 15%;
     color: #6344df;
     display: absolute;
+    margin-bottom: 450%;
+  }
+
+  .staking-body a{
+    padding: 8px 16px;
+    background-color: #6344df;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    height:35px;
+    margin-left:35%;
+    text-align: center;
+    position: relative;
+    height: 40px;
+    width: 150px;
+    font-size: 20px;
+    text-decoration: none;
   }
 
   .staking-about {
@@ -159,21 +227,75 @@ h2 {
     margin-right: 10px;
   }
 
-  .staking-about button{
-    padding: 8px 16px;
-    background-color: #6344df;
-    color: #ffffff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-weight: bold;
-    height:35px;
-    margin-left:30%;
-    text-align: center;
+  .node-stats-staking{
+    height:550px;
+    z-index: 500;
+    color: #6344df;
+    width: 100%;
+    display: inline-block;
+    z-index: 500;
+    margin-top:10px;
+    justify-content: center; /* Center items horizontally */
+  align-items: center; 
+  }
+
+  .d100-node-div-staking{
+    outline: 2px solid #133629;
+    height:97%;
+    width: 300px;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
+    background-color: rgba(19, 54, 41, 0.1);
+    color: #133629;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+  }
+  
+  .d2043-node-div-staking{
+    outline: 2px solid #fb5deb;
+    height:97%;
+    width: 300px;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
     position: relative;
-    height: 40px;
-    width: 150px;
-    font-size: 20px;
+    background-color: rgba(251, 93, 235, 0.1);
+    color: #000000;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+  }
+  
+  .d10200-node-div-staking{
+    outline: 2px solid #133629;
+    height:97%;
+    width: 300px;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
+    position: relative;
+    background-color: rgba(19, 54, 41, 0.1);
+    color: #133629;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+  }
+  
+  .d20430-node-div-staking{
+    outline: 2px solid #fb5deb;
+    height:97%;
+    width: 300px;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
+    position: relative;
+    background-color: rgba(251, 93, 235, 0.1);
+    color: #000000;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
   }
 
   .staking-node-list {
