@@ -154,10 +154,10 @@
 }
 
 .circle {
-  width: 200px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   background-color: red;
-  border-radius: 5%;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

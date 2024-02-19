@@ -173,7 +173,7 @@ function NavBar() {
         {syncStatus === false && (
           <div className="sync-icon">
             <div className="circle">
-              <span className="exclamation">!!!!!!!!!!!!!!!!</span>
+              <span className="exclamation">!</span>
             </div>
             {console.log(syncData)}
             <div className="tooltip">
