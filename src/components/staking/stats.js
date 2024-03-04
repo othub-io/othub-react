@@ -103,7 +103,7 @@ const Stats = (settings) => {
             </div>
             <div className="chain-stake">
                 TRAC Rewards:<br/>
-                <span>{`${formatNumberWithSpaces(blockchain.payouts.toFixed(0))} ($${(formatNumberWithSpaces(blockchain.payouts.toFixed(0) * price).toFixed(0))})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.payouts.toFixed(0))} ($${formatNumberWithSpaces((blockchain.payouts.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                  TRAC Rewards Last 24h:<br/>
