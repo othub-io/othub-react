@@ -439,6 +439,7 @@
 .chain-stake span{
   font-size: 16px;
   font-weight: bold;
+  word-wrap: break-word;
 }
 
 .popup-overlay {

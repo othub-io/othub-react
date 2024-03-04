@@ -24,105 +24,202 @@
   margin-top: 2.5%;
   color: #6344df;
   display: absolute;
+  margin-bottom: 75px;
 }
 
-.staking-about {
-  width: 60%; /* Adjust the width as needed */
-  padding-left: 10px; /* Add padding for spacing */
+.about-title{
   font-family: "Roboto", sans-serif;
-  padding-right: 20px;
-  display: inline-block;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.about-text{
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.nodes-title{
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
+
+.node-stats-staking{
+  height:610px;
+  z-index: 500;
+  color: #6344df;
+  margin-top:10px;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; 
+  overflow-x: auto;
   position: relative;
-  float: left;
-  margin-right: 10px;
 }
 
-.staking-about p{
-  font-size: 18px;
+.d100-node-div-staking{
+  outline: 2px solid #133629;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  background-color: rgba(19, 54, 41, 0.1);
+  color: #133629;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
 }
 
-.staking-about button{
-  padding: 8px 16px;
+.d2043-node-div-staking{
+  outline: 2px solid #fb5deb;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  background-color: rgba(251, 93, 235, 0.1);
+  color: #000000;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
+}
+
+.d10200-node-div-staking{
+  outline: 2px solid #133629;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  background-color: rgba(19, 54, 41, 0.1);
+  color: #133629;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
+}
+
+.d20430-node-div-staking{
+  outline: 2px solid #fb5deb;
+  height:97%;
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px 5px 5px 5px;
+  margin-right:10px;
+  background-color: rgba(251, 93, 235, 0.1);
+  color: #000000;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  padding-right:15px;
+}
+
+.delegate-button{
+  width: 100%;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; 
+}
+
+.staking-body a{
+  padding-top:10px;
+  padding-bottom:10px;
   background-color: #6344df;
   color: #ffffff;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   font-weight: bold;
-  height:35px;
-  margin-left:42.5%;
   text-align: center;
   position: relative;
-  height: 40px;
   width: 150px;
   font-size: 20px;
+  text-decoration: none;
+  margin-top: 20px;
 }
 
-.staking-about button{
-  background-color: #4925da;
+.social-icons{
+  width:100%;
+  bottom: 0;
+  left: 0;
+  height:40px;
+  display: flex;
+  justify-content: space-around; /* Adjust this property as needed */
+  align-items: center;
+  position: absolute;
 }
 
-h1 {
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-}
-
-h2 {
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-  padding-top: 40px;
-}
-
-.staking-node-list {
-  width: 35%;
+.sync-icon{
   position: relative;
   display: inline-block;
-  float: left;
 }
 
-.othub-wallets {
-  outline: 2px #6344df solid;
-  border-radius: 10px 10px 10px 10px;
-  height: 100%;
-  padding-left: 30px;
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  margin-left: 40px;
+}
+
+.circle:hover {
+  cursor: pointer;
+}
+
+.exclamation {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 430px;
+  background-color: #555;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
   position: relative;
-  padding-right: 30px;
-  word-wrap: break-word;
-  padding-bottom: 20px;
+  margin-top: -10px;
+  margin-left: 240px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 600;
+  display: block;
+  overflow: auto;
+  font-weight: bold;
+  padding-left:10px;
 }
 
-.othub-nodes {
-  border-radius: 10px 10px 10px 10px;
-  height: 365px;
-  padding-left: 30px;
-  margin-top:10px;
-  padding-right: 30px;
-}
-
-.expenses{
-  padding-left:20px;
+.sync-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 @media (max-width: 1536px) {
   .staking-body {
-    width: 84%;
-    height: 100%;
-    margin-left: 14%;
-    margin-top: 2.5%;
-    color: #6344df;
-    display: absolute;
-  }
-}
-
-@media (max-width: 1366px) {
-  .staking-body {
-    width: 84%;
+    width: 82%;
     height: 100%;
     margin-left: 15%;
     margin-top: 2.5%;
     color: #6344df;
     display: absolute;
-    margin-bottom: 100px;
+    margin-bottom: 200px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .staking-body {
+    width: 82%;
+    height: 100%;
+    margin-left: 16%;
+    margin-top: 2.5%;
+    color: #6344df;
+    display: absolute;
+    margin-bottom: 200px;
   }
 }
 
@@ -134,46 +231,113 @@ h2 {
     margin-top: 2.5%;
     color: #6344df;
     display: absolute;
-    margin-bottom: 200px;
+    margin-bottom: 250px;
   }
 }
 
 @media (max-width: 480px) {
+  .tooltip {
+    visibility: hidden;
+    width: 400px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    position: relative;
+    margin-top: -10px;
+    margin-left: 100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 600;
+    display: block;
+    overflow: auto;
+    font-weight: bold;
+    padding-left:10px;
+  }
+
   .staking-body {
-    width: 81%;
+    width: 83%;
     height: 100%;
     margin-left: 14%;
-    margin-top: 2.5%;
     color: #6344df;
     display: absolute;
+    margin-bottom: 500px;
   }
 
-  .staking-about {
-    width: 100%; /* Adjust the width as needed */
-    padding-left: 10px; /* Add padding for spacing */
-    font-family: "Roboto", sans-serif;
-    padding-right: 20px;
+  .node-stats-staking{
+    height:580px;
+    z-index: 500;
+    color: #6344df;
+    width: 97%;
     display: inline-block;
-    position: relative;
-    float: left;
-    margin-right: 10px;
+    z-index: 500;
+    margin-top:10px;
+    padding-top:10px;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; 
   }
 
-  .staking-about button{
-    padding: 8px 16px;
-    background-color: #6344df;
-    color: #ffffff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-weight: bold;
-    height:35px;
-    margin-left:30%;
-    text-align: center;
+  .d100-node-div-staking{
+    outline: 2px solid #133629;
+    height:99%;
+    width: 90%;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
+    background-color: rgba(19, 54, 41, 0.1);
+    color: #133629;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+    float:right;
+  }
+  
+  .d2043-node-div-staking{
+    outline: 2px solid #fb5deb;
+    height:99%;
+    width: 90%;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
     position: relative;
-    height: 40px;
-    width: 150px;
-    font-size: 20px;
+    background-color: rgba(251, 93, 235, 0.1);
+    color: #000000;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+    float:right;
+  }
+  
+  .d10200-node-div-staking{
+    outline: 2px solid #133629;
+    height:99%;
+    width: 90%;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
+    position: relative;
+    background-color: rgba(19, 54, 41, 0.1);
+    color: #133629;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+    float:right;
+  }
+  
+  .d20430-node-div-staking{
+    outline: 2px solid #fb5deb;
+    height:99%;
+    width: 90%;
+    display: inline-block;
+    border-radius: 5px 5px 5px 5px;
+    margin-right:10px;
+    position: relative;
+    background-color: rgba(251, 93, 235, 0.1);
+    color: #000000;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding-right:15px;
+    margin-bottom:20px;
+    float:right;
   }
 
   .staking-node-list {
@@ -183,5 +347,57 @@ h2 {
     float: left;
     padding-top:10px;
     margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 440px) {
+  .staking-body {
+    width: 83%;
+    height: 100%;
+    margin-left: 14%;
+    color: #6344df;
+    display: absolute;
+    margin-bottom: 550px;
+  }
+}
+
+@media (max-width: 400px) {
+  .tooltip {
+    visibility: hidden;
+    width: 360px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    position: relative;
+    margin-top: -10px;
+    margin-left: 100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 600;
+    display: block;
+    overflow: auto;
+    font-weight: bold;
+    padding-left:10px;
+  }
+
+  .staking-body {
+    width: 82%;
+    height: 100%;
+    margin-left: 15%;
+    color: #6344df;
+    display: absolute;
+    margin-bottom: 600px;
+  }
+}
+
+@media (max-width: 360px) {
+  .staking-body {
+    width: 82%;
+    height: 100%;
+    margin-left: 15%;
+    color: #6344df;
+    display: absolute;
+    margin-bottom: 650px;
   }
 }

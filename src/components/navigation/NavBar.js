@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../css/navigation/NavBar.css";
 import { AccountContext } from "../../AccountContext";
 import MetamaskButton from "./MetamaskButton";
@@ -20,7 +20,8 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
 
 function NavBar() {
   const { balance, setBalance } = useContext(AccountContext);
-
+  const [syncData, setSyncData] = useState(null);
+  const [syncStatus, setSyncStatus] = useState(true);
   const account = localStorage.getItem("account");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
@@ -77,7 +78,7 @@ function NavBar() {
               console.error(error);
             });
 
-            setBalance(account_balance.data);
+          setBalance(account_balance.data);
         }
 
         if (
@@ -95,7 +96,7 @@ function NavBar() {
               console.error(error);
             });
 
-            let token_balance = await axios
+          let token_balance = await axios
             .get(aurl)
             .then(function (response) {
               // Handle the successful response here
@@ -106,20 +107,31 @@ function NavBar() {
               console.error(error);
             });
 
-            let trac_balance;
-            for(const token of token_balance){
-              if(token.token.symbol === "TRAC"){
-                trac_balance = token.value
-              }
+          let trac_balance;
+          for (const token of token_balance) {
+            if (token.token.symbol === "TRAC") {
+              trac_balance = token.value;
             }
+          }
 
-            let account_balance ={
-              xdai: xdai_balance.coin_balance,
-              trac: trac_balance
-            }
-            setBalance(account_balance);
+          let account_balance = {
+            xdai: xdai_balance.coin_balance,
+            trac: trac_balance,
+          };
+          setBalance(account_balance);
         }
 
+        let response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/sync_status`
+        );
+
+        setSyncData(response.data.sync);
+
+        for (const record of response.data.sync) {
+          if (record.status === false) {
+            setSyncStatus(false);
+          }
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -147,22 +159,42 @@ function NavBar() {
   return (
     <nav>
       <div className="navbar">
-          <a href="/">
-            <img
-              src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`}
-              alt="othub-logo"
-              className="othub-logo"
-            ></img>
-          </a>
-          <a href="/" className="logo-text">
-            <span style={{ fontSize: "24px" }}>othub.io </span>
-          </a>
+        <a href="/">
+          <img
+            src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`}
+            alt="othub-logo"
+            className="othub-logo"
+          ></img>
+        </a>
+        <a href="/" className="logo-text">
+          <span style={{ fontSize: "24px" }}>othub.io </span>
+        </a>
+        <br></br>
+        {syncStatus === false && (
+          <div className="sync-icon">
+            <div className="circle">
+              <span className="exclamation">!</span>
+            </div>
+            {console.log(syncData)}
+            <div className="tooltip">
+              {syncData.map((record) => (
+                <div>
+                  {record.status === false && (
+                    <span>{`${record.blockchain} last sync'd: ${record.last_sync}`}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         <br></br>
         <div className="connection-info">
-          {account && <div className="addr-chain">
-            <span style={connectionStyle}>{addr}</span>
-            <span style={connectionStyle}>{chain}</span>
-          </div>}
+          {account && (
+            <div className="addr-chain">
+              <span style={connectionStyle}>{addr}</span>
+              <span style={connectionStyle}>{chain}</span>
+            </div>
+          )}
           {account &&
           balance &&
           (connected_blockchain === "NeuroWeb Mainnet" ||
@@ -194,9 +226,19 @@ function NavBar() {
           (connected_blockchain === "Gnosis Mainnet" ||
             connected_blockchain === "Chiado Testnet") ? (
             <div className="balance">
-              <span>{balance.xdai ? (balance.xdai / 1000000000000000000).toFixed(4) : (0)} xDai</span>
-                <br />
-                <span>{balance.trac ? (balance.trac / 1000000000000000000).toFixed(4) : (0)} TRAC</span>
+              <span>
+                {balance.xdai
+                  ? (balance.xdai / 1000000000000000000).toFixed(4)
+                  : 0}{" "}
+                xDai
+              </span>
+              <br />
+              <span>
+                {balance.trac
+                  ? (balance.trac / 1000000000000000000).toFixed(4)
+                  : 0}{" "}
+                TRAC
+              </span>
             </div>
           ) : (
             ""

@@ -8,6 +8,10 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+function formatNumberWithSpaces(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const Stats = (settings) => {
   const [stats, setStats] = useState("");
   const [price, setPrice] = useState("");
@@ -74,11 +78,11 @@ const Stats = (settings) => {
             </div>
             <div className="chain-assets">
                 Assets:<br/>
-                <span>{total_pub_count}</span>
+                <span>{formatNumberWithSpaces(total_pub_count)}</span>
             </div>
             <div className="chain-stake">
                 Assets Last 24h:<br/>
-                <span>{pubs_stats_last24h}</span>
+                <span>{formatNumberWithSpaces(pubs_stats_last24h)}</span>
             </div>
             <div className="chain-stake">
                 Active Nodes:<br/>
@@ -86,15 +90,15 @@ const Stats = (settings) => {
             </div>
             <div className="chain-stake">
                 TRAC Spent Last 24h:<br/>
-                <span>{`${total_trac_spent24h.toFixed(2)} ($${(total_trac_spent24h.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(total_trac_spent24h.toFixed(0))} ($${formatNumberWithSpaces((total_trac_spent24h.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Trac Spent:<br/>
-                <span>{`${total_trac_spent.toFixed(2)} ($${(total_trac_spent.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(total_trac_spent.toFixed(0))} ($${formatNumberWithSpaces((total_trac_spent.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Network Stake:<br/>
-                <span>{`${total_stake.toFixed(2)} ($${(total_stake.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(total_stake.toFixed(0))} ($${formatNumberWithSpaces((total_stake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
         </div>}
       {stats.map((blockchain) => (
@@ -107,11 +111,11 @@ const Stats = (settings) => {
             </div>
             <div className="chain-assets">
                 Assets:<br/>
-                <span>{blockchain.pub_count}</span>
+                <span>{formatNumberWithSpaces(blockchain.pub_count)}</span>
             </div>
             <div className="chain-stake">
                 Assets Last 24h:<br/>
-                <span>{blockchain.pubs_stats_last24h[0].totalPubs}</span>
+                <span>{formatNumberWithSpaces(blockchain.pubs_stats_last24h[0].totalPubs)}</span>
             </div>
             <div className="chain-stake">
                 Active Nodes:<br/>
@@ -119,15 +123,15 @@ const Stats = (settings) => {
             </div>
             <div className="chain-stake">
                 TRAC Spent Last 24h:<br/>
-                <span>{`${blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(2)} ($${(blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(0))} ($${formatNumberWithSpaces((blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Trac Spent:<br/>
-                <span>{`${blockchain.totalTracSpent.toFixed(2)} ($${(blockchain.totalTracSpent.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.totalTracSpent.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalTracSpent.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Blockchain Stake:<br/>
-                <span>{`${blockchain.totalStake.toFixed(2)} ($${(blockchain.totalStake.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.totalStake.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalStake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
         </div>
       ))}

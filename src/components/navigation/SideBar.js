@@ -53,7 +53,7 @@ function SideBar() {
           path: "/my-othub/inventory",
           title: "Inventory",
           icon: "https://img.icons8.com/ios/50/000000/backpack.png",
-        }
+        },
       ],
     },
     {
@@ -147,6 +147,17 @@ function SideBar() {
           </li>
         ))}
       </ul>
+      <div className="social-icons">
+        <a href={`https://twitter.com/OTHub_io`} className="icon" src={`https://img.icons8.com/ios/50/000000/twitter.png`} alt={`X`}>
+          <img className="icon" src={`https://img.icons8.com/ios/50/000000/twitter.png`} alt={`X`} />
+        </a>
+        <a href={`https://t.me/othubio`} className="icon" src={`https://img.icons8.com/ios/50/000000/telegram.png`} alt={`Telegram`}>
+          <img className="icon" src={`https://img.icons8.com/ios/50/000000/telegram.png`} alt={`Telegram`} />
+        </a>
+        <a href={`https://discord.gg/jJMRwFHZEX`} className="icon" src={`https://img.icons8.com/ios/50/000000/discord.png`} alt={`Discord`}>
+          <img className="icon" src={`https://img.icons8.com/ios/50/000000/discord.png`} alt={`Discord`} />
+        </a>
+      </div>
     </div>
   );
 }
