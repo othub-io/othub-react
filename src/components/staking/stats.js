@@ -9,6 +9,10 @@ if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
   ext = "https";
 }
 
+function formatNumberWithSpaces(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const Stats = (settings) => {
   const [stats, setStats] = useState("");
   const [price, setPrice] = useState("");
@@ -91,23 +95,23 @@ const Stats = (settings) => {
             </div>
             <div className="chain-stake">
                 TRAC Earnings:<br/>
-                <span>{`${blockchain.earnings.toFixed(2)} ($${(blockchain.earnings.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.earnings.toFixed(0))} ($${formatNumberWithSpaces((blockchain.earnings.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 TRAC Earnings Last 24h:<br/>
-                <span>{`${blockchain.earnings_24h.toFixed(2)} ($${(blockchain.earnings_24h.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.earnings_24h.toFixed(0))} ($${formatNumberWithSpaces((blockchain.earnings_24h.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 TRAC Rewards:<br/>
-                <span>{`${blockchain.payouts.toFixed(2)} ($${(blockchain.payouts.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.payouts.toFixed(0))} ($${(formatNumberWithSpaces(blockchain.payouts.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                  TRAC Rewards Last 24h:<br/>
-                <span>{`${blockchain.payouts_24h.toFixed(2)} ($${(blockchain.payouts_24h.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.payouts_24h.toFixed(0))} ($${formatNumberWithSpaces((blockchain.payouts_24h.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Blockchain Stake:<br/>
-                <span>{`${blockchain.totalStake.toFixed(2)} ($${(blockchain.totalStake.toFixed(2) * price).toFixed(2)})`}</span>
+                <span>{`${formatNumberWithSpaces(blockchain.totalStake.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalStake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Operator Fee:<br/>
