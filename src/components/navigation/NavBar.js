@@ -175,7 +175,6 @@ function NavBar() {
             <div className="circle">
               <span className="exclamation">!</span>
             </div>
-            {console.log(syncData)}
             <div className="tooltip">
               {syncData.map((record) => (
                 <div>

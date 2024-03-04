@@ -61,6 +61,7 @@ const CumPay = (settings) => {
   };
 
   if (data) {
+    console.log(data)
     let format = "MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
