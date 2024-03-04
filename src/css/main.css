@@ -118,6 +118,7 @@
   display: flex; /* Use flexbox for centering */
   justify-content: center; /* Center items horizontally */
   align-items: center; 
+  margin-bottom: 50px;
 }
 
 .staking-body a{

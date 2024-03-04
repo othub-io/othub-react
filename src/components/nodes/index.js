@@ -105,7 +105,7 @@ const Nodes = () => {
             {sortedData.map((node) => (
               <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain_name: node.chainName, blockchain_id: node.chainId, node_name: node.tokenName})}>
                 <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${node.chainId}-logo.png`}
+                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=node${node.chainId}-logo.png`}
                 alt={node.chainName}
                 ></img>
                 <div className={`node-id-record`}>{node.nodeId}</div>
