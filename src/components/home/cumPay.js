@@ -66,7 +66,7 @@ const CumPay = (settings) => {
       format = "HH:00";
     }
     if (inputValue === "7d") {
-      format = "DD HH:00";
+      format = "ddd HH:00";
     }
     if (inputValue === "30d") {
       format = "DD MMM";
