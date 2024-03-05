@@ -80,7 +80,7 @@ const AssetsMinted = (settings) => {
       format = "HH:00";
     }
     if (inputValue === "7d") {
-      format = "ddd HH:00";
+      format = "DD HH:00";
     }
     if (inputValue === "30d") {
       format = "DD MMM YY";
@@ -191,7 +191,7 @@ const AssetsMinted = (settings) => {
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
-          },
+          }
         },
       },
     },
