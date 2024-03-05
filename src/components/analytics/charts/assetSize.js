@@ -84,7 +84,7 @@ const AssetSize = (settings) => {
       format = "HH:00";
     }
     if (inputValue === "7d") {
-      format = "ddd HH:00";
+      format = "DD HH:00";
     }
     if (inputValue === "30d") {
       format = "DD MMM YY";
