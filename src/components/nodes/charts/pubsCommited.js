@@ -118,7 +118,7 @@ const PubsCommited = (settings) => {
       })
       .map((item) => moment(item.date).format(format));
 
-      formattedData.labels = inputValue === "24h" || inputValue === "7d" || inputValue === "30d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
+      formattedData.labels = inputValue === "24h" || inputValue === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
     let chain_color;
     let border_color;
