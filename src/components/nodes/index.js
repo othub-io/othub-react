@@ -100,10 +100,11 @@ const Nodes = () => {
           <button className="stake-header" onClick={() => setSort("nodeStake")}>Stake<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="age-header" onClick={() => setSort("nodeAgeDays")}>Age<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="ask-header" onClick={() => setSort("nodeAsk")}>Ask<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
-          {/* <button className="fee-header" onClick={() => setSort("nodeFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button> */}
+          <button className="fee-header" onClick={() => setSort("operatorFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <div className="node-list">
             {sortedData.map((node) => (
               <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain_name: node.chainName, blockchain_id: node.chainId, node_name: node.tokenName})}>
+                {console.log(node)}
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=node${node.chainId}-logo.png`}
                 alt={node.chainName}
@@ -124,9 +125,9 @@ const Nodes = () => {
                 <div className={`ask-record`}>
                   {Number(node.nodeAsk).toFixed(5)}
                 </div>
-                {/* <div className={`fee-record`}>
-                   {Number(node.nodeFee)} 
-                </div> */}
+                <div className={`fee-record`}>
+                   {`%`+Number(node.operatorFee)} 
+                </div>
               </button>
             ))}
           </div>
