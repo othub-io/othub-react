@@ -92,7 +92,7 @@ function SideBar() {
         },
         {
           id: 10,
-          path: "https://app.swaggerhub.com/apis/OTHUB/othub-api/1.0.0",
+          path: "https://app.swaggerhub.com/apis-docs/OTHUB/othub-api/1.0.0",
           title: "SwaggerHub",
           icon: "https://img.icons8.com/ios/50/000000/swag.png",
           isOpen: true,
@@ -154,7 +154,15 @@ function SideBar() {
                       />)}
                     </a>
                     <a href={subitem.path} className="sub-title">
-                      {subitem.title}
+                    {subitem.id === 9 || subitem.id === 10 ? (
+                        <a href={subitem.path} className="sub-title" target="_blank">
+                          {subitem.title}
+                        </a>
+                      ) : (
+                        <a href={subitem.path} className="sub-title">
+                          {subitem.title}
+                        </a>
+                      )}
                     </a>
                   </li>
                 ))}
