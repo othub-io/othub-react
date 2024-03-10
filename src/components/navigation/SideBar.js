@@ -72,18 +72,33 @@ function SideBar() {
     },
     {
       id: 7,
-      path: "https://www.postman.com/crimson-crescent-721757/workspace/othub-api",
-      title: "API Docs",
-      icon: "https://img.icons8.com/ios/50/000000/api.png",
-      isOpen: true,
-    },
-    {
-      id: 8,
       path: "https://deepdive.othub.io",
       title: "Deepdive",
       icon: "https://img.icons8.com/ios/50/000000/submarine.png",
       isOpen: true,
     },
+    {
+      id: 8,
+      title: "API Docs",
+      icon: "https://img.icons8.com/ios/50/000000/api.png",
+      isOpen: true,
+      submenu: [
+        {
+          id: 9,
+          path: "https://www.postman.com/crimson-crescent-721757/workspace/othub-api",
+          title: "Postman",
+          icon: "https://img.icons8.com/ios/50/000000/astronaut.png",
+          isOpen: true,
+        },
+        {
+          id: 10,
+          path: "https://app.swaggerhub.com/apis/OTHUB/othub-api/1.0.0",
+          title: "SwaggerHub",
+          icon: "https://img.icons8.com/ios/50/000000/swag.png",
+          isOpen: true,
+        }
+      ],
+    }
     // Rest of the menu items
   ]);
 
@@ -130,12 +145,13 @@ function SideBar() {
                       className="icon"
                       src={subitem.icon}
                       alt={subitem.title}
+                      style={subitem.id === 10 ? ({textDecoration: "none", marginLeft: "-10px",marginRight: "20px"}): ({})}
                     >
-                      <img
+                      {subitem.id === 10 ? (<span style ={{textDecoration: 'none', fontWeight: 'bold', fontSize: '18px',marginLeft: "-10px",marginRight: "20px", color: "#000000"}}>{`{...}`}</span>) : (<img
                         className="icon"
                         src={subitem.icon}
                         alt={subitem.title}
-                      />
+                      />)}
                     </a>
                     <a href={subitem.path} className="sub-title">
                       {subitem.title}
