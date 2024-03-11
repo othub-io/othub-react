@@ -126,7 +126,7 @@ const Nodes = () => {
                   {Number(node.nodeAsk).toFixed(5)}
                 </div>
                 <div className={`fee-record`}>
-                   {`%`+Number(node.operatorFee)} 
+                   {Number(node.operatorFee)+`%`} 
                 </div>
               </button>
             ))}
