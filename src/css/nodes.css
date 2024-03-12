@@ -263,7 +263,7 @@
 }
 
 .token-name-header {
-  width: 28.5%;
+  width: 23.5%;
   display: inline-block;
   font-size: 18px;
   font-weight: bold;
@@ -298,6 +298,18 @@
   cursor: pointer;
 }
 
+.value-header {
+  width: 11.5%;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #6344df;
+  text-align: left;
+  background-color: transparent; /* Make the background transparent */
+  border: none;
+  cursor: pointer;
+}
+
 .age-header {
   width: 10%;
   display: inline-block;
@@ -311,7 +323,7 @@
 }
 
 .ask-header {
-  width: 9%;
+  width: 9.5%;
   display: inline-block;
   font-size: 18px;
   font-weight: bold;
@@ -323,7 +335,7 @@
 }
 
 .fee-header {
-  width: 10%;
+  width: 7%;
   display: inline-block;
   font-size: 18px;
   font-weight: bold;
@@ -346,7 +358,7 @@
 }
 
 .token-name-record {
-  width: 30%;
+  width: 24.75%;
   display: inline-block;
   font-size: 18px;
   position: relative;
@@ -366,6 +378,16 @@
 }
 
 .stake-record {
+  width: 12.25%;
+  display: inline-block;
+  font-size: 18px;
+  position: relative;
+  text-align: left;
+  float: left;
+  padding-top: 5px;
+}
+
+.value-record {
   width: 12%;
   display: inline-block;
   font-size: 18px;
@@ -375,8 +397,9 @@
   padding-top: 5px;
 }
 
+
 .age-record {
-  width: 10.5%;
+  width: 9%;
   display: inline-block;
   font-size: 18px;
   position: relative;
@@ -386,7 +409,7 @@
 }
 
 .ask-record {
-  width: 10.5%;
+  width: 10%;
   display: inline-block;
   font-size: 18px;
   position: relative;
@@ -396,7 +419,7 @@
 }
 
 .fee-record {
-  width: 5%;
+  width: 7.25%;
   display: inline-block;
   font-size: 18px;
   position: relative;
@@ -467,7 +490,17 @@
   }
 
   .token-name-record {
-    width: 29.5%;
+    width: 24.25%;
+    display: inline-block;
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    float: left;
+    padding-top: 5px;
+  }
+
+  .stake-record {
+    width: 12%;
     display: inline-block;
     font-size: 18px;
     position: relative;
@@ -483,8 +516,19 @@
     height: 830px;
   }
 
+  .node-id-record {
+    width: 5.25%;
+    display: inline-block;
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    float: left;
+    padding-left: 0.5%;
+    padding-top: 5px;
+  }
+
   .ask-header {
-    width: 11%;
+    width: 9.25%;
     display: inline-block;
     font-size: 18px;
     font-weight: bold;
@@ -496,7 +540,39 @@
   }
 
   .ask-record {
-    width: 12.5%;
+    width: 9.5%;
+    display: inline-block;
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    float: left;
+    padding-top: 5px;
+  }
+  
+  .value-header {
+    width: 13%;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #6344df;
+    text-align: left;
+    background-color: transparent; /* Make the background transparent */
+    border: none;
+    cursor: pointer;
+  }
+
+  .value-record {
+    width: 13.5%;
+    display: inline-block;
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    float: left;
+    padding-top: 5px;
+  }
+
+  .age-record {
+    width: 8%;
     display: inline-block;
     font-size: 18px;
     position: relative;
@@ -610,6 +686,14 @@
     display: none;
   }
 
+  .fee-header {
+    display: none;
+  }
+
+  .fee-record {
+    display: none;
+  }
+
   .node-page-popup-content {
     width: 97%;
     height: 640px;
@@ -703,6 +787,40 @@
 
 }
 
-@media (max-width: 380px) {
+@media (max-width: 420px) {
+  .value-header{
+    display: none;
+  }
+
+  .value-record{
+    display: none;
+  }
   
+  .node-id-header {
+    padding-left: 10%;
+    width: 22%;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    position: flex;
+    bottom: 0;
+    color: #6344df;
+    background-color: transparent; /* Make the background transparent */
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding-top: 20px;
+  }
+
+  .node-id-record {
+    width: 14.5%;
+    display: inline-block;
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    float: left;
+    padding-left: 0.5%;
+    padding-top: 5px;
+  }
+
 }
