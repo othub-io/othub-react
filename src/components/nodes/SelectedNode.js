@@ -3,6 +3,7 @@ import Stats from "./stats";
 import Rewards from "./charts/rewards";
 import PubsCommited from "./charts/pubsCommited";
 import EstimatedEarnings from "./charts/estimatedEarnings";
+import ShareValue from "./charts/shareValue";
 import axios from "axios";
 let ext;
 
@@ -102,6 +103,19 @@ const NodeSettings = (settings) => {
       </div>
       <div className="node-pop-div">
         <EstimatedEarnings
+          data={[
+            {
+              blockchain_id: settings.data[0].blockchain_id,
+              blockchain_name: settings.data[0].blockchain_name,
+              nodeId: settings.data[0].nodeId,
+              node_name: settings.data[0].node_name,
+              node_data: data,
+            },
+          ]}
+        />
+      </div>
+      <div className="node-pop-div-large">
+        <ShareValue
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,

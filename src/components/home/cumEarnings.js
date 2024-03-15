@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
+import { Line} from "react-chartjs-2";
 import moment from "moment";
 import axios from "axios";
 import {
@@ -27,7 +27,7 @@ ChartJS.register(
   Legend
 );
 
-const CumPubs = (settings) => {
+const CumEarnings = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState("");
 
@@ -54,7 +54,7 @@ const CumPubs = (settings) => {
     fetchData();
   }, [settings]);
 
-  let cumulativePubs_obj = [];
+  let cumulativeEarnings_obj = [];
 
   const formattedData = {
     datasets: [],
@@ -100,18 +100,18 @@ const CumPubs = (settings) => {
         continue;
       }
 
-      let cumPubs = []
+      let cumEarnings = []
 
       for (const obj of formattedData.labels) {
         let containsDate = blockchain.cum_total.some((item) => moment(item.date).format(format) === obj);
         if(containsDate){
           for (const item of blockchain.cum_total) {
             if (moment(item.date).format(format) === obj) {
-              cumPubs.push(item.cumulativePubs)
+                cumEarnings.push(item.cumulativeTotalTracSpent)
             }
           }
         }else{
-          cumPubs.push(null)
+            cumEarnings.push(null)
         }
       }
 
@@ -135,15 +135,16 @@ const CumPubs = (settings) => {
         chain_color = "#6344df";
       }
 
-      cumulativePubs_obj = {
+      cumulativeEarnings_obj = {
         label: blockchain.blockchain_name,
-        data: cumPubs,
+        data: cumEarnings,
         fill: false,
         borderColor: chain_color,
         backgroundColor: chain_color,
-        borderWidth: 2
+        type: "line",
+        borderWidth: 2,
       };
-      formattedData.datasets.push(cumulativePubs_obj);
+      formattedData.datasets.push(cumulativeEarnings_obj);
     }
   }
 
@@ -153,7 +154,7 @@ const CumPubs = (settings) => {
         beginAtZero: false, // Start the scale at 0
         title: {
           display: true,
-          text: "Assets", // Add your X-axis label here
+          text: "TRAC", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -188,14 +189,9 @@ const CumPubs = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="home-chart-name">
-            Cumulative number of published assets
-          </div>
+          <div className="home-chart-name">Cumulative TRAC spent on publishing</div>
           <div className="home-chart-port">
-            <Line
-              data={formattedData}
-              options={options}
-            />
+            <Line data={formattedData} options={options} />
           </div>
         </div>
       ) : (
@@ -207,4 +203,4 @@ const CumPubs = (settings) => {
   );
 };
 
-export default CumPubs;
+export default CumEarnings;

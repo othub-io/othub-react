@@ -4,6 +4,7 @@ import "../../css/main.css";
 import Loading from "../effects/Loading";
 import CumPubs from "./cumPubs";
 import CumPay from "./cumPay";
+import CumEarnings from "./cumEarnings";
 import ActivityFeed from "./activityFeed";
 import Stats from "./stats";
 import NetworkDrop from "../navigation/networkDrop";
@@ -24,7 +25,7 @@ const Home = () => {
         <NetworkDrop network={setNetwork} blockchain={setBlockchain} />
       </div>
       {network ? (
-        <div>
+        <div className="body">
           <ActivityFeed
             data={[
               {
@@ -42,9 +43,9 @@ const Home = () => {
               },
             ]}
           />
-          <div className="charts-body">
-          <div className="chart-container">
-              <CumPubs
+          <div className="home-charts-body">
+            <div className="home-chart-container">
+              <CumEarnings
                 data={[
                   {
                     network: network,
@@ -53,7 +54,7 @@ const Home = () => {
                 ]}
               />
             </div>
-            <div className="chart-container">
+            <div className="home-chart-container">
               <CumPay
                 data={[
                   {
@@ -63,9 +64,16 @@ const Home = () => {
                 ]}
               />
             </div>
-          </div>
-          <div className="spacer">
-            
+            <div className="home-chart-container">
+              <CumPubs
+                data={[
+                  {
+                    network: network,
+                    blockchain: blockchain,
+                  },
+                ]}
+              />
+            </div>
           </div>
         </div>
       ) : (

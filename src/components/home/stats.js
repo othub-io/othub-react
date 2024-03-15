@@ -21,6 +21,7 @@ const Stats = (settings) => {
   let nodes = 0
   let pubs_stats_last24h = 0
   let total_trac_spent24h = 0
+  let tvl = 0
 
   useEffect(() => {
     async function fetchData() {
@@ -63,6 +64,7 @@ const Stats = (settings) => {
         nodes = nodes + blockchain.nodes
         pubs_stats_last24h = pubs_stats_last24h + Number(blockchain.pubs_stats_last24h[0].totalPubs)
         total_trac_spent24h = total_trac_spent24h + Number(blockchain.pubs_stats_last24h[0].totalTracSpent)
+        tvl = tvl + (Number(blockchain.totalTracSpent) + Number(blockchain.totalStake))
     }
   }
 
@@ -77,28 +79,28 @@ const Stats = (settings) => {
                 ></img><span>{settings.data[0].network.substring(4)}</span>
             </div>
             <div className="chain-assets">
-                Assets:<br/>
-                <span>{formatNumberWithSpaces(total_pub_count)}</span>
-            </div>
-            <div className="chain-stake">
-                Assets Last 24h:<br/>
-                <span>{formatNumberWithSpaces(pubs_stats_last24h)}</span>
-            </div>
-            <div className="chain-stake">
                 Active Nodes:<br/>
                 <span>{nodes}</span>
             </div>
             <div className="chain-stake">
-                TRAC Spent Last 24h:<br/>
+                Total Value Locked:<br/>
+                <span>{`${formatNumberWithSpaces(tvl.toFixed(0))} ($${formatNumberWithSpaces((tvl.toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+            <div className="chain-stake">
+                Assets Published (24h):<br/>
+                <span>{formatNumberWithSpaces(pubs_stats_last24h)}</span>
+            </div>
+            <div className="chain-stake">
+                Assets Published:<br/>
+                <span>{formatNumberWithSpaces(total_pub_count)}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Spent (24h):<br/>
                 <span>{`${formatNumberWithSpaces(total_trac_spent24h.toFixed(0))} ($${formatNumberWithSpaces((total_trac_spent24h.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Trac Spent:<br/>
                 <span>{`${formatNumberWithSpaces(total_trac_spent.toFixed(0))} ($${formatNumberWithSpaces((total_trac_spent.toFixed(0) * price).toFixed(0))})`}</span>
-            </div>
-            <div className="chain-stake">
-                Network Stake:<br/>
-                <span>{`${formatNumberWithSpaces(total_stake.toFixed(0))} ($${formatNumberWithSpaces((total_stake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
         </div>}
       {stats.map((blockchain) => (
@@ -110,28 +112,28 @@ const Stats = (settings) => {
                 ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}
             </div>
             <div className="chain-assets">
-                Assets:<br/>
-                <span>{formatNumberWithSpaces(blockchain.pub_count)}</span>
-            </div>
-            <div className="chain-stake">
-                Assets Last 24h:<br/>
-                <span>{formatNumberWithSpaces(blockchain.pubs_stats_last24h[0].totalPubs)}</span>
-            </div>
-            <div className="chain-stake">
                 Active Nodes:<br/>
                 <span>{blockchain.nodes}</span>
             </div>
             <div className="chain-stake">
-                TRAC Spent Last 24h:<br/>
+                Total Value Locked:<br/>
+                <span>{`${formatNumberWithSpaces((blockchain.totalTracSpent + blockchain.totalStake).toFixed(0))} ($${formatNumberWithSpaces(((blockchain.totalTracSpent + blockchain.totalStake).toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+            <div className="chain-stake">
+                Assets Published (24h):<br/>
+                <span>{formatNumberWithSpaces(blockchain.pubs_stats_last24h[0].totalPubs)}</span>
+            </div>
+            <div className="chain-stake">
+                Assets Published:<br/>
+                <span>{formatNumberWithSpaces(blockchain.pub_count)}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Spent (24h):<br/>
                 <span>{`${formatNumberWithSpaces(blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(0))} ($${formatNumberWithSpaces((blockchain.pubs_stats_last24h[0].totalTracSpent.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
                 Trac Spent:<br/>
                 <span>{`${formatNumberWithSpaces(blockchain.totalTracSpent.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalTracSpent.toFixed(0) * price).toFixed(0))})`}</span>
-            </div>
-            <div className="chain-stake">
-                Blockchain Stake:<br/>
-                <span>{`${formatNumberWithSpaces(blockchain.totalStake.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalStake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
         </div>
       ))}
