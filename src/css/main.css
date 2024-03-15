@@ -17,6 +17,13 @@
   font-weight: bold;
 }
 
+.body{
+  height: 800px;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+}
+
 .staking-body {
   width: 84%;
   height: 100%;
@@ -50,7 +57,7 @@
 }
 
 .node-stats-staking{
-  height:610px;
+  height:700px;
   z-index: 500;
   color: #6344df;
   margin-top:10px;

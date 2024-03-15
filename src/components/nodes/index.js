@@ -19,6 +19,7 @@ const Nodes = () => {
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("DKG Mainnet");
   const [selectedNode, setSelectedNode] = useState(null);
+  const [price, setPrice] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -26,15 +27,21 @@ const Nodes = () => {
         const settings = {
           network: network,
           blockchain: blockchain,
-          order_by: "nodeId",
+          order_by: "chainName",
         };
+
         const response = await axios.post(
           `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`,
           settings
         );
 
+        const rsp = await axios.get(
+          "https://api.coingecko.com/api/v3/coins/origintrail"
+        );
+
         setData(response.data.nodes);
         setSortedData(response.data.nodes)
+        setPrice(rsp.data.market_data.current_price.usd);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -98,13 +105,13 @@ const Nodes = () => {
           <button className="token-name-header" onClick={() => setSort("tokenName")}>Name<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="token-sym-header" onClick={() => setSort("tokenSymbol")}>Symbol<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="stake-header" onClick={() => setSort("nodeStake")}>Stake<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
-          <button className="age-header" onClick={() => setSort("nodeAgeDays")}>Age<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="value-header" onClick={() => setSort("shareValue")}>Share Value<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="fee-header" onClick={() => setSort("nodeOperatorFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="ask-header" onClick={() => setSort("nodeAsk")}>Ask<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
-          <button className="fee-header" onClick={() => setSort("operatorFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          <button className="age-header" onClick={() => setSort("nodeAgeDays")}>Age<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <div className="node-list">
             {sortedData.map((node) => (
               <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain_name: node.chainName, blockchain_id: node.chainId, node_name: node.tokenName})}>
-                {console.log(node)}
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=node${node.chainId}-logo.png`}
                 alt={node.chainName}
@@ -119,14 +126,17 @@ const Nodes = () => {
                 <div className={`stake-record`}>
                   {Number(node.nodeStake).toFixed(0)}
                 </div>
-                <div className={`age-record`}>
-                  {`${Number(node.nodeAgeDays)} days`}
+                <div className={`value-record`}>
+                  {`$`+(node.shareValue * price).toFixed(3)}
+                </div>
+                <div className={`fee-record`}>
+                   {Number(node.nodeOperatorFee)+`%`} 
                 </div>
                 <div className={`ask-record`}>
                   {Number(node.nodeAsk).toFixed(5)}
                 </div>
-                <div className={`fee-record`}>
-                   {Number(node.operatorFee)+`%`} 
+                <div className={`age-record`}>
+                  {`${Number(node.nodeAgeDays)} days`}
                 </div>
               </button>
             ))}

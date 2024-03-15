@@ -174,7 +174,7 @@ const CumPay = (settings) => {
       },
       x: {
         title: {
-          display: true,
+          display: false,
           text: "Date (UTC)", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
@@ -189,8 +189,8 @@ const CumPay = (settings) => {
     <div>
       {data ? (
         <div className="chart-widget">
-          <div className="chart-name">Cumulative TRAC rewarded for publishing</div>
-          <div className="chart-port">
+          <div className="home-chart-name">Cumulative TRAC rewarded for publishing</div>
+          <div className="home-chart-port">
             <Line data={formattedData} options={options} />
           </div>
         </div>
