@@ -113,10 +113,10 @@ const Stats = (settings) => {
                 Blockchain Stake:<br/>
                 <span>{`${formatNumberWithSpaces(blockchain.totalStake.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalStake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
-            <div className="chain-stake">
+            {/* <div className="chain-stake">
                 Operator Fee:<br/>
                 <span>{`${blockchain.op_fee}%`}</span>
-            </div>
+            </div> */}
             <div className="chain-stake">
                 Management Wallet:<br/>
                 <span>{blockchain.m_wallet}</span>
