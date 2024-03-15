@@ -34,6 +34,7 @@ const Stats = (settings) => {
           nodes: [
             {nodeId: '26', blockchain_name: 'Gnosis Mainnet', blockchain_id: 100, m_wallet: '0xec654cbFd1CA5fF00466dEFb5DcD7fF519aEEE33', o_wallet: '0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d'},
             {nodeId: '27', blockchain_name: 'Gnosis Mainnet', blockchain_id: 100, m_wallet: '0x2C086533485a42B974cB3EBdE485031082c50909', o_wallet: '0xfB0Ca6054f9B536C435da4bF660E38eD51BbCfaa'},
+            {nodeId: '37', blockchain_name: 'Gnosis Mainnet', blockchain_id: 100, m_wallet: '0x2C086533485a42B974cB3EBdE485031082c50909', o_wallet: '0xC27A7248a886639f491a6de8CfEa2a1C5E3F8ABb'},
          ],
         };
 
