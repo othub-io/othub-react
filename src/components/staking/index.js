@@ -44,7 +44,7 @@ const Staking = () => {
             },
           ]}
         />
-        <div className="delegate-button">
+        <div className="delegate-button" style={{marginBottom: "40px"}}>
           <a
             href="https://dkg.origintrail.io/staking"
             target="_blank"

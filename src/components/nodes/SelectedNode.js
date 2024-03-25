@@ -63,6 +63,19 @@ const NodeSettings = (settings) => {
 
   return (
     <div className="node-pop">
+      <div className="node-pop-div-large" style={{marginBottom: '-5px'}}>
+        <ShareValue
+          data={[
+            {
+              blockchain_id: settings.data[0].blockchain_id,
+              blockchain_name: settings.data[0].blockchain_name,
+              nodeId: settings.data[0].nodeId,
+              node_name: settings.data[0].node_name,
+              node_data: data,
+            },
+          ]}
+        />
+      </div>
       <div className="node-pop-div">
         <Stats
           data={[
@@ -101,21 +114,8 @@ const NodeSettings = (settings) => {
           ]}
         />
       </div>
-      <div className="node-pop-div">
+      <div className="node-pop-div"  style={{marginBottom: '10px'}}>
         <EstimatedEarnings
-          data={[
-            {
-              blockchain_id: settings.data[0].blockchain_id,
-              blockchain_name: settings.data[0].blockchain_name,
-              nodeId: settings.data[0].nodeId,
-              node_name: settings.data[0].node_name,
-              node_data: data,
-            },
-          ]}
-        />
-      </div>
-      <div className="node-pop-div-large">
-        <ShareValue
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
