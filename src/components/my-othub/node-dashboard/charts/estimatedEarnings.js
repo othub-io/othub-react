@@ -121,7 +121,7 @@ const EstimatedEarnings = (settings) => {
         .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
+    formattedData.labels = inputValue === "24h" || inputValue === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
     let final_earnings = [];
     let dates = formattedDates;

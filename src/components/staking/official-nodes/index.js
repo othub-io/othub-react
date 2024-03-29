@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../../css/home.css";
-import "../../css/main.css";
+import "../../../css/home.css";
+import "../../../css/main.css";
 import Stats from "./stats";
 
 const Staking = () => {
@@ -44,7 +44,7 @@ const Staking = () => {
             },
           ]}
         />
-        <div className="delegate-button">
+        <div className="delegate-button" style={{marginBottom: "40px"}}>
           <a
             href="https://dkg.origintrail.io/staking"
             target="_blank"

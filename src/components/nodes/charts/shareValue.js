@@ -43,18 +43,14 @@ const TokenValue = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const time_data = {
-        //   timeframe: inputValue,
-        //   network: node_data.data[0].network,
-        //   nodeId: node_data.data[0].nodeId,
-        //   public_address: node_data.data[0].public_address,
-        // };
-        // const response = await axios.post(
-        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
-        //   time_data
-        // );
-        // setData(response.data.chart_data);
-        setData(settings.data[0].node_data);
+        const time_data = {
+          node: settings.data[0],
+        };
+        const response = await axios.post(
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeValue`,
+          time_data
+        );
+        setData(response.data.chart_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -73,7 +69,7 @@ const TokenValue = (settings) => {
         node: settings.data[0],
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeData`,
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeValue`,
         time_data
       );
       setData(response.data.chart_data);
@@ -87,9 +83,8 @@ const TokenValue = (settings) => {
     datasets: [],
   };
 
-  let estimatedEarnings_obj = [];
   if (data) {
-    let format = "MMM YY";
+    let format = "DD MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
     }
@@ -121,13 +116,14 @@ const TokenValue = (settings) => {
 
       formattedData.labels = inputValue === "24h" || inputValue === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
-    let final_earnings = [];
+    let currentValues = [];
+    let futureValues = [];
 
     let border_color;
     let chain_color;
-    final_earnings = [];
     for (const item of data.data) {
-      final_earnings.push(item.estimatedEarnings1stEpochOnly);
+      currentValues.push(item.shareValueCurrent);
+      futureValues.push(item.shareValueFuture);
     }
 
     if (
@@ -146,55 +142,31 @@ const TokenValue = (settings) => {
       chain_color = "rgba(19, 54, 41, 0.1)";
     }
 
-    let estimatedEarnings1stEpoch_obj = {
-      label: "Earnings 1st Epoch",
-      data: final_earnings,
-      fill: false,
-      borderColor: border_color,
-      backgroundColor: chain_color,
-      borderWidth: 2,
-    };
-    formattedData.datasets.push(estimatedEarnings1stEpoch_obj);
-
-    let estimatedEarnings = [];
-    //let randomHexColor = generateRandomColor();
-    for (const item of data.data) {
-      estimatedEarnings.push(item.estimatedEarnings);
-    }
-
-    if (
-      settings.data[0].blockchain_name === "NeuroWeb Mainnet" ||
-      settings.data[0].blockchain_name === "NeuroWeb Testnet"
-    ) {
-      border_color = "#fb5deb";
-      chain_color = "rgba(251, 93, 235, 0.1)";
-    }
-
-    if (
-      settings.data[0].blockchain_name === "Gnosis Mainnet" ||
-      settings.data[0].blockchain_name === "Chiado Testnet"
-    ) {
-      border_color = "#133629";
-      chain_color = "rgba(19, 54, 41, 0.1)";
-    }
-
-    estimatedEarnings_obj = {
-      label: "Earnings All Epochs",
-      data: estimatedEarnings,
+    let currentValues_obj = {
+      label: `Current`,
+      data: currentValues,
       fill: false,
       borderColor: border_color,
       backgroundColor: border_color,
       borderWidth: 2,
-      type: "line",
     };
+    formattedData.datasets.push(currentValues_obj);
 
-    formattedData.datasets.push(estimatedEarnings_obj);
+    let futureValues_obj = {
+      label: `Potential if all earned TRAC is rewarded`,
+      data: futureValues,
+      fill: false,
+      borderColor: chain_color,
+      backgroundColor: chain_color,
+      borderWidth: 2,
+    };
+    formattedData.datasets.push(futureValues_obj);
   }
 
   const options = {
     scales: {
       x: {
-        stacked: true,
+        stacked: false,
         title: {
           display: true,
           text: "Datetime (UTC)", // Add your X-axis label here
@@ -205,10 +177,10 @@ const TokenValue = (settings) => {
         },
       },
       y: {
-        stacked: true,
+        stacked: false,
         title: {
           display: true,
-          text: "USD", // Add your X-axis label here
+          text: "TRAC", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -221,7 +193,7 @@ const TokenValue = (settings) => {
             } else if (value >= 1000) {
               return (value / 1000).toFixed(1) + "K";
             } else {
-              return value;
+              return value.toFixed(5);
             }
           },
         },
@@ -233,15 +205,15 @@ const TokenValue = (settings) => {
     <div>
       {data ? (
         <div className="node-pop-chart-widget">
-          <div className="node-pop-chart-name">Trending Share Value Coming #soon</div>
-          {/* <div className="node-pop-chart-port">
-            <Bar
+          <div className="node-pop-chart-name" style={{fontSize:'24px', paddingTop: '10px', paddingBottom: '10px'}}>{`${data.data[0].tokenName} Share Value`}</div>
+          <div className="node-pop-chart-port" style={{paddingLeft: '10px'}}>
+            <Line
               data={formattedData}
               options={options}
             />
           </div>
-          <div className="node-pop-chart-filter">
-            <button
+          <div className="node-pop-chart-filter" style={{paddingTop: '20px'}}>
+            {/* <button
               className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
               name="timeframe"
@@ -300,7 +272,7 @@ const TokenValue = (settings) => {
               }
             >
               1y
-            </button>
+            </button> */}
             <button
               className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("")}
@@ -313,7 +285,7 @@ const TokenValue = (settings) => {
             >
               All
             </button>
-          </div> */}
+          </div>
         </div>
       ) : (
         <div className="node-pop-chart-widget">

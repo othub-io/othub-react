@@ -21,13 +21,18 @@ const Nodes = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [price, setPrice] = useState("");
 
+  const queryParameters = new URLSearchParams(window.location.search);
+  const node_name = queryParameters.get("node");
+
   useEffect(() => {
     async function fetchData() {
       try {
+        setSortedData("")
         const settings = {
           network: network,
           blockchain: blockchain,
           order_by: "chainName",
+          node_name: node_name
         };
 
         const response = await axios.post(
@@ -35,13 +40,13 @@ const Nodes = () => {
           settings
         );
 
-        const rsp = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/origintrail"
-        );
+        // const rsp = await axios.get(
+        //   "https://api.coingecko.com/api/v3/coins/origintrail"
+        // );
 
         setData(response.data.nodes);
         setSortedData(response.data.nodes)
-        setPrice(rsp.data.market_data.current_price.usd);
+        //setPrice(rsp.data.market_data.current_price.usd);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -127,7 +132,7 @@ const Nodes = () => {
                   {Number(node.nodeStake).toFixed(0)}
                 </div>
                 <div className={`value-record`}>
-                  {`$`+(node.shareValue * price).toFixed(3)}
+                  {(node.shareValueCurrent ? (node.shareValueCurrent) : (0)).toFixed(5)}
                 </div>
                 <div className={`fee-record`}>
                    {Number(node.nodeOperatorFee)+`%`} 

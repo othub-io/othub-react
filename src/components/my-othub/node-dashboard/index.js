@@ -151,7 +151,7 @@ const NodeDashboard = () => {
     return (
       <div className="keys">
         <header className="keys-header">
-          Please connect your admin wallet to view your nodes.
+          Please connect your management wallet to view your nodes.
         </header>
       </div>
     );
