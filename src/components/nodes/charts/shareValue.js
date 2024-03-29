@@ -213,7 +213,7 @@ const TokenValue = (settings) => {
             />
           </div>
           <div className="node-pop-chart-filter" style={{paddingTop: '20px'}}>
-            <button
+            {/* <button
               className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("24h")}
               name="timeframe"
@@ -272,7 +272,7 @@ const TokenValue = (settings) => {
               }
             >
               1y
-            </button>
+            </button> */}
             <button
               className="node-pop-chart-filter-button"
               onClick={() => changeTimeFrame("")}

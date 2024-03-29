@@ -66,9 +66,24 @@ function SideBar() {
     {
       id: 6,
       title: "Staking",
-      path: "/staking",
       icon: "https://img.icons8.com/ios/50/000000/steak.png",
       isOpen: true,
+      submenu: [
+        {
+          id: 61,
+          path: "/staking/dashboard",
+          title: "Dashboard",
+          icon: "https://img.icons8.com/ios/50/000000/dashboard.png",
+          isOpen: true,
+        },
+        {
+          id: 62,
+          path: "/staking/official-nodes",
+          title: "Official Nodes",
+          icon: "https://img.icons8.com/ios/50/000000/trophy.png",
+          isOpen: true,
+        }
+      ],
     },
     {
       id: 7,
@@ -126,7 +141,7 @@ function SideBar() {
             <div className="title">
               <a href={item.path} className="title">
                 {item.id === 7 ? (
-                  <a href={item.path} className="title" target="_blank">
+                  <a href={item.path} className="title" target="_blank" rel="noreferrer">
                     {item.title}
                   </a>
                 ) : (
@@ -155,7 +170,7 @@ function SideBar() {
                     </a>
                     <a href={subitem.path} className="sub-title">
                     {subitem.id === 9 || subitem.id === 10 ? (
-                        <a href={subitem.path} className="sub-title" target="_blank">
+                        <a href={subitem.path} className="sub-title" target="_blank" rel="noreferrer">
                           {subitem.title}
                         </a>
                       ) : (

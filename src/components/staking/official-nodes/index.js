@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../../css/home.css";
-import "../../css/main.css";
+import "../../../css/home.css";
+import "../../../css/main.css";
 import Stats from "./stats";
 
 const Staking = () => {

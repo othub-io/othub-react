@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Loading from "../effects/Loading";
-import "../../css/nodeDashboard.css";
+import Loading from "../../effects/Loading";
+import "../../../css/nodeDashboard.css";
 let ext;
 
 ext = "http";
