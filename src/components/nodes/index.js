@@ -132,7 +132,7 @@ const Nodes = () => {
                   {Number(node.nodeStake).toFixed(0)}
                 </div>
                 <div className={`value-record`}>
-                  {(node.shareValueCurrent ? (node.shareValueCurrent) : (0)).toFixed(5)}
+                  {(node.shareValueCurrent ? (node.shareValueCurrent) : (0)).toFixed(4)}
                 </div>
                 <div className={`fee-record`}>
                    {Number(node.nodeOperatorFee)+`%`} 

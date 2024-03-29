@@ -597,6 +597,10 @@
 }
 
 @media (max-width: 480px) {
+  .node-pop-div-large{
+    display: none;
+  }
+
   .node-list-container {
     margin-left: 14%;
     height: 830px;
