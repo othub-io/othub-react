@@ -11,12 +11,12 @@ let chain;
 let url;
 let aurl;
 let burl;
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 function NavBar() {
   const { balance, setBalance } = useContext(AccountContext);
@@ -122,7 +122,9 @@ function NavBar() {
         }
 
         let response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/sync_status`
+          `${process.env.REACT_APP_API_HOST}/sync/status`,
+          {},
+          config
         );
 
         setSyncData(response.data.sync);
@@ -161,7 +163,7 @@ function NavBar() {
       <div className="navbar">
         <a href="/">
           <img
-            src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`}
+            src={`${process.env.REACT_APP_API_HOST}/images?src=OTHub-Logo.png`}
             alt="othub-logo"
             className="othub-logo"
           ></img>

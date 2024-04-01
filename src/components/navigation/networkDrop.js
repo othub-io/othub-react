@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 const NetworkDrop = ({ network, blockchain }) => {
   const [blockchains, setBlockchains] = useState(null);
@@ -15,13 +15,14 @@ const NetworkDrop = ({ network, blockchain }) => {
       try {
         localStorage.removeItem("blockchain", "");
 
-        const request_data = {
+        const data = {
           network: "DKG Mainnet",
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/blockchains`,
-          request_data
+          `${process.env.REACT_APP_API_HOST}/othub/blockchains`,
+          data,
+          config
         );
 
         setBlockchains(response.data.blockchains);
@@ -38,13 +39,14 @@ const NetworkDrop = ({ network, blockchain }) => {
   const handleNetworkChange = async (input) => {
     network(input);
     localStorage.setItem("network", input);
-    const request_data = {
-      network: input,
+    const data = {
+      network: "DKG Mainnet",
     };
 
     const response = await axios.post(
-      `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/blockchains`,
-      request_data
+      `${process.env.REACT_APP_API_HOST}/othub/blockchains`,
+      data,
+      config
     );
 
     blockchain("");

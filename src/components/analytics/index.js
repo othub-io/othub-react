@@ -10,16 +10,16 @@ import AssetCost from "./charts/assetCost";
 import Payouts from "./charts/payouts";
 import NetworkDrop from "../navigation/networkDrop";
 import axios from "axios";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 //REACT_APP_SUPPORTED_NETWORKS
 const Charts = () => {
-  const isMobile = window.matchMedia("(max-width: 480px)").matches;
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("DKG Mainnet");
   const [assetData, setAssetData] = useState("");
@@ -28,24 +28,28 @@ const Charts = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
+        let data = {
           timeframe: "",
+          frequency: "monthly",
           network: network,
-          blockchain: blockchain
+          blockchain: blockchain,
+          grouped: "yes"
         };
 
         let asset_response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
-          time_data
+          `${process.env.REACT_APP_API_HOST}/pubs/stats`,
+          data, 
+          config
         );
 
         let earn_response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/earnings`,
-          time_data
+          `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+          data, 
+          config
         );
 
-        setAssetData(asset_response.data.chart_data);
-        setEarningData(earn_response.data.chart_data);
+        setAssetData(asset_response.data.result);
+        setEarningData(earn_response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -88,7 +92,7 @@ const Charts = () => {
             <Epochs data={[{network: network, blockchain: blockchain, assetData: assetData}]} />
           </div>
           <div className="chart-container">
-            <NodeStake data={[{network: network, blockchain: blockchain}]} />
+            <NodeStake data={[{network: network, blockchain: blockchain, earningData: earningData}]} />
           </div>
           <div className="spacer">
             

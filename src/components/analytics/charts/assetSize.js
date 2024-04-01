@@ -13,10 +13,11 @@ import {
 } from "chart.js";
 import Loading from "../../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -29,19 +30,20 @@ ChartJS.register(
 
 const AssetSize = (settings) => {
   const [inputValue, setInputValue] = useState("");
+  const [button, setButtonSelect] = useState("");
   const [isLoading, setisLoading] = useState(false);
-  const [data, setData] = useState("");
+  const [assetData, setAssetData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setData(settings.data[0].assetData);
+        setAssetData(settings.data[0].assetData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setData("");
+    setAssetData("");
     setInputValue("");
     fetchData();
   }, [settings]);
@@ -50,55 +52,67 @@ const AssetSize = (settings) => {
     return <Loading />;
   }
 
-  const changeTimeFrame = async (timeframe) => {
+  const changeFrequency = async (frequency, button_select) => {
     try {
       setisLoading(true);
-      setInputValue(timeframe);
-      const time_data = {
-        timeframe: timeframe,
+      setInputValue(frequency);
+      setButtonSelect(button_select);
+      let data = {
+        frequency: frequency,
+        timeframe:
+          button_select === "24h"
+            ? 24
+            : button_select === "7d"
+            ? 168
+            : button_select === "30d"
+            ? 30
+            : button_select === "6m"
+            ? 180
+            : button_select === "1y"
+            ? 12
+            : null,
         network: settings.data[0].network,
         blockchain: settings.data[0].blockchain,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/assetsMinted`,
-        time_data
+        `${process.env.REACT_APP_API_HOST}/pubs/stats`,
+        data,
+        config
       );
-      setData(response.data.chart_data);
+      setAssetData(response.data.result);
       setisLoading(false);
     } catch (e) {
       console.log(e);
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   const formattedData = {
     datasets: [],
   };
 
-  if (data) {
+  if (assetData) {
     let format = "MMM YY";
-    if (inputValue === "24h") {
+    if (button === "24h") {
       format = "HH:00";
     }
-    if (inputValue === "7d") {
+    if (button === "7d") {
       format = "ddd HH:00";
     }
-    if (inputValue === "30d") {
+    if (button === "30d") {
       format = "DD MMM YY";
     }
-    if (inputValue === "6m") {
+    if (button === "6m") {
       format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
     const formattedDates = [];
-    for (const blockchain of data) {
-      blockchain.chart_data
+    for (const blockchain of assetData) {
+      blockchain.data
         .filter((item) => {
-          const formattedDate = moment(item.date).format(format);
+          const formattedDate = moment(
+            button === "24h" || button === "7d" ? item.datetime : item.date
+          ).format(format);
           // Check if the formatted date is unique
           if (!uniqueDates.has(formattedDate)) {
             uniqueDates.add(formattedDate);
@@ -107,29 +121,43 @@ const AssetSize = (settings) => {
           }
           return false;
         })
-        .map((item) => moment(item.date).format(format));
+        .map((item) =>
+          moment(
+            button === "24h" || button === "7d" ? item.datetime : item.date
+          ).format(format)
+        );
     }
 
-    formattedData.labels = inputValue === "24h" || inputValue === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
+    formattedData.labels =
+      button === "24h" || button === "7d"
+        ? formattedDates
+        : formattedDates.sort(
+            (a, b) => moment(a, format).toDate() - moment(b, format).toDate()
+          );
 
     let border_color;
     let chain_color;
-    for (const blockchain of data) {
-      let avgPubSize = []
-      let priv = []
+    for (const blockchain of assetData) {
+      let avgPubSize = [];
+      let priv = [];
 
       for (const obj of formattedData.labels) {
-        let containsDate = blockchain.chart_data.some((item) => moment(item.date).format(format) === obj);
-        if(containsDate){
-          for (const item of blockchain.chart_data) {
-            if (moment(item.date).format(format) === obj) {
-              avgPubSize.push(item.avgPubSize)
-              priv.push(item.privatePubsPercentage)
+        let containsDate = blockchain.data.some(
+          (item) =>
+            moment(
+              button === "24h" || button === "7d" ? item.datetime : item.date
+            ).format(format) === obj
+        );
+        if (containsDate) {
+          for (const item of blockchain.data) {
+            if (moment(button === "24h" || button === "7d" ? item.datetime : item.date).format(format) === obj) {
+              avgPubSize.push(item.avgPubSize);
+              priv.push(item.privatePubsPercentage);
             }
           }
-        }else{
-          avgPubSize.push(null)
-          priv.push(null)
+        } else {
+          avgPubSize.push(null);
+          priv.push(null);
         }
       }
 
@@ -138,7 +166,7 @@ const AssetSize = (settings) => {
         blockchain.blockchain_name === "NeuroWeb Testnet"
       ) {
         border_color = "#fb5deb";
-        chain_color = "rgba(251, 93, 235, 0.1)"
+        chain_color = "rgba(251, 93, 235, 0.1)";
       }
 
       if (
@@ -146,7 +174,7 @@ const AssetSize = (settings) => {
         blockchain.blockchain_name === "Chiado Testnet"
       ) {
         border_color = "#133629";
-            chain_color = "rgba(19, 54, 41, 0.1)"
+        chain_color = "rgba(19, 54, 41, 0.1)";
       }
 
       let priv_obj = {
@@ -157,7 +185,7 @@ const AssetSize = (settings) => {
         backgroundColor: border_color,
         yAxisID: "line-y-axis",
         type: "line",
-        borderWidth: 2
+        borderWidth: 2,
       };
 
       formattedData.datasets.unshift(priv_obj);
@@ -169,7 +197,7 @@ const AssetSize = (settings) => {
         borderColor: border_color,
         backgroundColor: chain_color,
         yAxisID: "bar-y-axis",
-        borderWidth: 2
+        borderWidth: 2,
       };
 
       formattedData.datasets.push(avgPubSize_obj);
@@ -242,24 +270,21 @@ const AssetSize = (settings) => {
     },
   };
 
-  console.log(formattedData);
   return (
     <div>
-      {data ? (
+      {assetData ? (
         <div className="chart-widget">
-          <div className="chart-name">
-            Asset size & privacy ratio
-          </div>
+          <div className="chart-name">Asset size & privacy ratio</div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
           </div>
           <div className="chart-filter">
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("24h")}
-              name="timeframe"
+              onClick={() => changeFrequency("hourly", "24h")}
+              name="frequency"
               style={
-                inputValue === "24h"
+                button === "24h"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -268,10 +293,10 @@ const AssetSize = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("7d")}
-              name="timeframe"
+              onClick={() => changeFrequency("hourly", "7d")}
+              name="frequency"
               style={
-                inputValue === "7d"
+                button === "7d"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -280,10 +305,10 @@ const AssetSize = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("30d")}
-              name="timeframe"
+              onClick={() => changeFrequency("daily", "30d")}
+              name="frequency"
               style={
-                inputValue === "30d"
+                button === "30d"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -292,10 +317,10 @@ const AssetSize = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("6m")}
-              name="timeframe"
+              onClick={() => changeFrequency("daily", "6m")}
+              name="frequency"
               style={
-                inputValue === "6m"
+                button === "6m"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -304,10 +329,10 @@ const AssetSize = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("1y")}
-              name="timeframe"
+              onClick={() => changeFrequency("monthly", "1y")}
+              name="frequency"
               style={
-                inputValue === "1y"
+                button === "1y"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -316,10 +341,10 @@ const AssetSize = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("")}
-              name="timeframe"
+              onClick={() => changeFrequency("monthly", "")}
+              name="frequency"
               style={
-                inputValue === ""
+                button === ""
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }

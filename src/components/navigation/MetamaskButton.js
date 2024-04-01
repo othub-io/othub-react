@@ -5,12 +5,13 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import Web3 from "web3";
 let readable_chain_id;
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 const handleSignMessage = async (publicAddress, nonce) => {
   try {
@@ -34,8 +35,9 @@ const handleSignMessage = async (publicAddress, nonce) => {
 const changeAccounts = async (account) => {
   try {
     const user_record = await axios.post(
-      `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/auth/register`,
-      { public_address: account }
+      `${process.env.REACT_APP_API_HOST}/auth/register`,
+      { public_address: account },
+      config
     );
 
     // Sign message
@@ -45,8 +47,9 @@ const changeAccounts = async (account) => {
     );
     // Send signature to backend
     const responseSign = await axios.post(
-      `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/auth/sign`,
-      { public_address: account, signature: signedMessage }
+      `${process.env.REACT_APP_API_HOST}/auth/sign`,
+      { public_address: account, signature: signedMessage },
+      config
     );
 
     //set token in localstorage

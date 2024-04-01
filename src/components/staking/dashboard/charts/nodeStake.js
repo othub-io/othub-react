@@ -11,13 +11,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Loading from "../../effects/Loading";
+import Loading from "../../../effects/Loading";
 
-const config = {
-  headers: {
-    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
-  },
-};
+let ext = "http";
+if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
+  ext = "https";
+}
 
 ChartJS.register(
   CategoryScale,
@@ -30,42 +29,46 @@ ChartJS.register(
 
 const NodeStake = (settings) => {
   const [inputValue, setInputValue] = useState("");
-  const [button, setButtonSelect] = useState("");
   const [isLoading, setisLoading] = useState(false);
-  const [earningData, setEarningData] = useState("");
+  const [data, setData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setEarningData(settings.data[0].earningData);
+        // const time_data = {
+        //   timeframe: inputValue,
+        //   network: node_data.data[0].network,
+        //   nodeId: node_data.data[0].nodeId,
+        //   public_address: node_data.data[0].public_address,
+        // };
+        // const response = await axios.post(
+        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
+        //   time_data
+        // );
+        // setData(response.data.chart_data);
+        setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setEarningData("");
     setInputValue("");
     fetchData();
   }, [settings]);
 
-  const changeFrequency = async (frequency,button_select) => {
+  const changeTimeFrame = async (timeframe) => {
     try {
       setisLoading(true);
-      setInputValue(frequency);
-      setButtonSelect(button_select)
-      let data = {
-        frequency: frequency,
-        timeframe: button_select === "24h" ? (24) : button_select === "7d" ? (168) : button_select === "30d" ? (30) : button_select === "6m" ? (160) : button_select === "1y" ? (12) : null,
-        network: settings.data[0].network,
-        blockchain: settings.data[0].blockchain,
-        grouped: "yes"
+      setInputValue(timeframe);
+      const time_data = {
+        timeframe: timeframe,
+        nodes: settings.data[0].nodes,
       };
       const response = await axios.post(
-        `${process.env.REACT_APP_API_HOST}/nodes/stats`,
-        data,
-        config
+        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
+        time_data
       );
-      setEarningData(response.data.result);
+      setData(response.data.chart_data);
       setisLoading(false);
     } catch (e) {
       console.log(e);
@@ -76,27 +79,27 @@ const NodeStake = (settings) => {
     datasets: [],
   };
 
-  if (earningData) {
+  if (data) {
     let format = "MMM YY";
-    if (button === "24h") {
+    if (inputValue === "24h") {
       format = "HH:00";
     }
-    if (button === "7d") {
+    if (inputValue === "7d") {
       format = "ddd HH:00";
     }
-    if (button === "30d") {
+    if (inputValue === "30d") {
       format = "DD MMM YY";
     }
-    if (button === "6m") {
+    if (inputValue === "6m") {
       format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
     const formattedDates = [];
-    for (const blockchain of earningData) {
+    for (const blockchain of data) {
       blockchain.data
         .filter((item) => {
-          const formattedDate = moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format);
+          const formattedDate = moment(item.date).format(format);
           // Check if the formatted date is unique
           if (!uniqueDates.has(formattedDate)) {
             uniqueDates.add(formattedDate);
@@ -105,30 +108,25 @@ const NodeStake = (settings) => {
           }
           return false;
         })
-        .map((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format));
+        .map((item) => moment(item.date).format(format));
     }
 
-    formattedData.labels = button === "24h" || button === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
+    formattedData.labels = inputValue === "24h" || inputValue === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
     let border_color;
     let chain_color;
-    for (const blockchain of earningData) {
-      let nodeStake = []
-      let nodesWithMoreThan50kStake = []
+    let dates = formattedDates;
 
-      for (const obj of formattedData.labels) {
-        let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj);
-        if(containsDate){
+    for (const blockchain of data) {
+      let total_nodeStake = [];
+      for (const date of dates) {
+        let nodeStake = 0;
           for (const item of blockchain.data) {
-            if (moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj) {
-              nodeStake.push(item.combinedNodesStake)
-              nodesWithMoreThan50kStake.push(item.nodesWithMoreThan50kStake)
+            if (moment(item.date).format(format) === date) {
+              nodeStake = item.nodeStake + nodeStake;
             }
           }
-        }else{
-          nodeStake.push(null)
-          nodesWithMoreThan50kStake.push(null)
-        }
+          total_nodeStake.push(nodeStake);
       }
 
       if (
@@ -149,19 +147,7 @@ const NodeStake = (settings) => {
 
       let nodeStake_obj = {
         label: blockchain.blockchain_name + " Stake",
-        data: nodeStake,
-        fill: false,
-        borderColor: border_color,
-        backgroundColor: chain_color,
-        yAxisID: "bar-y-axis",
-        borderWidth: 2
-      };
-
-      formattedData.datasets.push(nodeStake_obj);
-
-      let nodesWithMoreThan50kStake_obj = {
-        label: blockchain.blockchain_name + " Nodes",
-        data: nodesWithMoreThan50kStake,
+        data: total_nodeStake,
         fill: false,
         borderColor: border_color,
         backgroundColor: border_color,
@@ -170,7 +156,54 @@ const NodeStake = (settings) => {
         borderWidth: 2
       };
 
-      formattedData.datasets.unshift(nodesWithMoreThan50kStake_obj);
+      formattedData.datasets.push(nodeStake_obj);
+    }
+
+    for (const blockchain of data) {
+      let tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
+      for (const tokenName of tokenNames) {
+        let final_stake = [];
+        for (const obj of dates) {
+          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
+          if(containsDate){
+            for (const item of blockchain.data) {
+              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+                final_stake.push(item.nodeStake)
+              }
+            }
+          }else{
+            final_stake.push(null)
+          }
+        }
+
+        if (
+          blockchain.blockchain_name === "NeuroWeb Mainnet" ||
+          blockchain.blockchain_name === "NeuroWeb Testnet"
+        ) {
+          border_color = "#fb5deb";
+          chain_color = "rgba(251, 93, 235, 0.1)"
+        }
+  
+        if (
+          blockchain.blockchain_name === "Gnosis Mainnet" ||
+          blockchain.blockchain_name === "Chiado Testnet"
+        ) {
+          border_color = "#133629";
+          chain_color = "rgba(19, 54, 41, 0.1)"
+        }
+  
+        let final_stake_obj = {
+          label: tokenName,
+          data: final_stake,
+          fill: false,
+          borderColor: border_color,
+          backgroundColor: chain_color,
+          borderWidth: 2,
+          yAxisID: "bar-y-axis",
+        };
+
+        formattedData.datasets.push(final_stake_obj);
+      }
     }
   }
 
@@ -182,7 +215,7 @@ const NodeStake = (settings) => {
         title: {
           // Start the scale at 0
           display: true,
-          text: "Nodes", // Add your X-axis label here
+          text: "Total Stake", // Add your X-axis label here
           color: "#6344df", // Label color
           font: {
             size: 12, // Label font size
@@ -243,10 +276,10 @@ const NodeStake = (settings) => {
 
   return (
     <div>
-      {earningData ? (
+      {data ? (
         <div className="chart-widget">
           <div className="chart-name">
-            Number of Nodes and Combined Stake
+            Node Stakes
           </div>
           <div className="chart-port">
             <Bar data={formattedData} options={options} />
@@ -254,10 +287,10 @@ const NodeStake = (settings) => {
           <div className="chart-filter">
             <button
               className="chart-filter-button"
-              onClick={() => changeFrequency("daily","30d")}
-              name="frequency"
+              onClick={() => changeTimeFrame("30d")}
+              name="timeframe"
               style={
-                button === "30d"
+                inputValue === "30d"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -266,10 +299,10 @@ const NodeStake = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeFrequency("daily","6m")}
-              name="frequency"
+              onClick={() => changeTimeFrame("6m")}
+              name="timeframe"
               style={
-                button === "6m"
+                inputValue === "6m"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -278,10 +311,10 @@ const NodeStake = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeFrequency("monthly","1y")}
-              name="frequency"
+              onClick={() => changeTimeFrame("1y")}
+              name="timeframe"
               style={
-                button === "1y"
+                inputValue === "1y"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -290,10 +323,10 @@ const NodeStake = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeFrequency("monthly","")}
-              name="frequency"
+              onClick={() => changeTimeFrame("")}
+              name="timeframe"
               style={
-                button === ""
+                inputValue === ""
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }

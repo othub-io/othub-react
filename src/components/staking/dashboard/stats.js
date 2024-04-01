@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../effects/Loading";
-import "../../../css/nodeDashboard.css";
 let ext;
 
 ext = "http";
@@ -29,26 +28,31 @@ const Stats = (settings) => {
     async function fetchData() {
       try {
         setStats("")
-
         const request_data = {
-          nodes: [
-            {nodeId: '26', blockchain_name: 'Gnosis Mainnet', blockchain_id: 100, m_wallet: '0xec654cbFd1CA5fF00466dEFb5DcD7fF519aEEE33', o_wallet: '0x0EFA0c78aA0E5CB851E909614c22C98E68dd882d'},
-            {nodeId: '27', blockchain_name: 'Gnosis Mainnet', blockchain_id: 100, m_wallet: '0x2C086533485a42B974cB3EBdE485031082c50909', o_wallet: '0xfB0Ca6054f9B536C435da4bF660E38eD51BbCfaa'},
-            {nodeId: '37', blockchain_name: 'Gnosis Mainnet', blockchain_id: 100, m_wallet: '0x2C086533485a42B974cB3EBdE485031082c50909', o_wallet: '0xC27A7248a886639f491a6de8CfEa2a1C5E3F8ABb'},
-         ],
+          network: settings.data[0].network,
+          blockchain: settings.data[0].blockchain,
+          nodes: settings.data[0].nodes
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/staking`,
+          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
           request_data
         );
 
         setStats(response.data);
 
         const rsp = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/origintrail"
-        );
-        setPrice(rsp.data.market_data.current_price.usd);
+            "https://api.coingecko.com/api/v3/coins/origintrail"
+          );
+  
+        if(settings.data[0].network === 'DKG Mainnet'){
+            const rsp = await axios.get(
+                "https://api.coingecko.com/api/v3/coins/origintrail"
+              );
+              setPrice(rsp.data.market_data.current_price.usd);
+        }else{
+            setPrice(0.000000001)
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -71,9 +75,50 @@ const Stats = (settings) => {
   }
 
   return stats ? (
-    <div className="node-stats-staking">
+    <div className="node-stats">
+       {!settings.data[0].nodeSelected && !settings.data[0].blockchain && <div key="total_stats" className={`total-stats-node-div`}>
+            <div className="chain-logo">
+                <img
+                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=origintrail_logo-dark_purple.png`}
+                alt="Origintrail Network"
+                width="100"
+                ></img><span>{settings.data[0].network.substring(4)}</span>
+            </div>
+            <div className="chain-assets">
+                Active Nodes:<br/>
+                <span>{nodes}</span>
+            </div>
+            <div className="chain-stake">
+                Total Pubs:<br/>
+                <span>{pubs_commited}</span>
+            </div>
+            <div className="chain-stake">
+                Pubs Last 24h:<br/>
+                <span>{pubs_commited_24h}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Earnings:<br/>
+                <span>{`${formatNumberWithSpaces(earnings.toFixed(0))} ($${formatNumberWithSpaces((earnings.toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Earnings Last 24h:<br/>
+                <span>{`${formatNumberWithSpaces(earnings_24h.toFixed(0))} ($${formatNumberWithSpaces((earnings_24h.toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Rewards:<br/>
+                <span>{`${formatNumberWithSpaces(payouts.toFixed(0))} ($${formatNumberWithSpaces((payouts.toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+            <div className="chain-stake">
+                TRAC Rewards Last 24h:<br/>
+                <span>{`${formatNumberWithSpaces(payouts_24h.toFixed(0))} ($${formatNumberWithSpaces((payouts_24h.toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+            <div className="chain-stake">
+                Network Stake:<br/>
+                <span>{`${formatNumberWithSpaces(totalStake.toFixed(0))} ($${formatNumberWithSpaces((totalStake.toFixed(0) * price).toFixed(0))})`}</span>
+            </div>
+        </div>}
       {stats.map((blockchain) => (
-        <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-node-div-staking`}>
+        <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-node-div`}>
             <div className={`d${blockchain.blockchain_id}-chain-logo`}>
                 <img
                 src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
@@ -83,8 +128,8 @@ const Stats = (settings) => {
                 ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}
             </div>
             <div className="chain-assets">
-                Name:<br/>
-                <span>{blockchain.tokenName}</span>
+                Active Nodes:<br/>
+                <span>{blockchain.nodes}</span>
             </div>
             <div className="chain-stake">
                 Pubs:<br/>
@@ -111,20 +156,8 @@ const Stats = (settings) => {
                 <span>{`${formatNumberWithSpaces(blockchain.payouts_24h.toFixed(0))} ($${formatNumberWithSpaces((blockchain.payouts_24h.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
             <div className="chain-stake">
-                Stake:<br/>
+                Blockchain Stake:<br/>
                 <span>{`${formatNumberWithSpaces(blockchain.totalStake.toFixed(0))} ($${formatNumberWithSpaces((blockchain.totalStake.toFixed(0) * price).toFixed(0))})`}</span>
-            </div>
-            <div className="chain-stake">
-                Operator Fee:<br/>
-                <span>{`${blockchain.op_fee}%`}</span>
-            </div>
-            <div className="chain-stake">
-                Management Wallet:<br/>
-                <span>{blockchain.m_wallet}</span>
-            </div>
-            <div className="chain-stake">
-                Operational Wallet:<br/>
-                <span>{blockchain.o_wallet}</span>
             </div>
         </div>
       ))}
