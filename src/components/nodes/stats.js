@@ -1,32 +1,52 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../effects/Loading";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 const Stats = (settings) => {
   const [stats, setStats] = useState("");
+  const [statsLast24h, setStatsLast24h] = useState("");
   const [price, setPrice] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
         setStats("");
-        const request_data = {
-          blockchain: settings.data[0].blockchain_name,
-          nodeId: settings.data[0].nodeId,
+        setStatsLast24h("");
+        // let data = {
+        //   timeframe: "",
+        //   frequency: "daily",
+        //   blockchain: settings.data[0].blockchain,
+        //   nodeId: JSON.stringify(settings.data[0].nodeId),
+        //   grouped: "no"
+        // };
+
+        // let response = await axios.post(
+        //   `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        //   data, 
+        //   config
+        // );
+        setStats(settings.data[0].node_data);
+        
+        let data = {
+          timeframe: "",
+          frequency: "last24h",
+          blockchain: settings.data[0].blockchain,
+          nodeId: JSON.stringify(settings.data[0].nodeId),
+          grouped: "no"
         };
 
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeStats`,
-          request_data
+        let response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+          data, 
+          config
         );
-
-        setStats(response.data);
+        setStatsLast24h(response.data.result);
 
         const rsp = await axios.get(
           "https://api.coingecko.com/api/v3/coins/origintrail"
@@ -48,36 +68,36 @@ const Stats = (settings) => {
     fetchData();
   }, []);
 
-  return stats ? (
+  return stats && statsLast24h ? (
     <div className={`node-pop-stats`}>
       <img
-        src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=node${settings.data[0].blockchain_id}-logo.png`}
+        src={`${process.env.REACT_APP_API_HOST}/images?src=node${settings.data[0].blockchain_id}-logo.png`}
         width="30px"
-        alt={settings.data[0].blockchain_name}
-      ></img>{`  ${settings.data[0].node_name}`}<br></br>
+        alt={settings.data[0].blockchain}
+      ></img>{`  ${settings.data[0].nodeName}`}<br></br>
       <div className="node-stat">
         <div className="node-pop-header">Total Pubs</div>
-        <span>{stats.pubs_commited}</span>
+        <span>{stats[0].data[Number(stats[0].data.length) - 1].cumulativePubsCommited}</span>
       </div>
       <div className="node-stat">
         <div className="node-pop-header">24h Pubs</div>
-        <span>{stats.pubs_commited_24h}</span>
+        <span>{statsLast24h[0].data[0].pubsCommited}</span>
       </div>
       <div className="node-stat">
         <div className="node-pop-header">Total Rewards</div>
-        <span>{stats.payouts.toFixed(3)} TRAC</span>
+        <span>{stats[0].data[Number(stats[0].data.length) - 1].cumulativePayouts.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
         <div className="node-pop-header">24h Rewards</div>
-        <span>{stats.payouts_24h.toFixed(3)} TRAC</span>
+        <span>{statsLast24h[0].data[0].cumulativePayouts.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
         <div className="node-pop-header">Total Earnings</div>
-        <span>{stats.earnings.toFixed(3)} TRAC</span>
+        <span>{stats[0].data[Number(stats[0].data.length) - 1].cumulativeEstimatedEarnings.toFixed(3)} TRAC</span>
       </div>
       <div className="node-stat">
         <div className="node-pop-header">24h Earnings</div>
-        <span>{stats.earnings_24h.toFixed(3)} TRAC</span>
+        <span>{statsLast24h[0].data[0].estimatedEarnings.toFixed(3)} TRAC</span>
       </div>
     </div>
   ) : (

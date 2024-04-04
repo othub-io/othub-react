@@ -13,10 +13,11 @@ import {
 } from "chart.js";
 import Loading from "../../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -38,19 +39,12 @@ function generateRandomColor() {
 const TokenValue = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
-  const [data, setData] = useState("");
+  const [valueData, setValueData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
-          node: settings.data[0],
-        };
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeValue`,
-          time_data
-        );
-        setData(response.data.chart_data);
+        setValueData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -64,15 +58,20 @@ const TokenValue = (settings) => {
     try {
       setisLoading(true);
       setInputValue(timeframe);
-      const time_data = {
-        timeframe: timeframe,
-        node: settings.data[0],
+      let data = {
+        frequency: "daily",
+        timeframe: "",
+        blockchain: settings.data[0].blockchain,
+        nodeId: settings.data[0].nodeId,
+        grouped: "no"
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeValue`,
-        time_data
+        `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        data,
+        config
       );
-      setData(response.data.chart_data);
+      
+      setValueData(response.data.result);
       setisLoading(false);
     } catch (e) {
       console.log(e);
@@ -83,7 +82,7 @@ const TokenValue = (settings) => {
     datasets: [],
   };
 
-  if (data) {
+  if (valueData) {
     let format = "DD MMM YY";
     if (inputValue === "24h") {
       format = "HH:00";
@@ -101,8 +100,7 @@ const TokenValue = (settings) => {
     const uniqueDates = new Set();
     const formattedDates = [];
 
-    data.data
-      .filter((item) => {
+    valueData[0].data.filter((item) => {
         const formattedDate = moment(item.date).format(format);
         // Check if the formatted date is unique
         if (!uniqueDates.has(formattedDate)) {
@@ -121,22 +119,22 @@ const TokenValue = (settings) => {
 
     let border_color;
     let chain_color;
-    for (const item of data.data) {
+    for (const item of valueData[0].data) {
       currentValues.push(item.shareValueCurrent);
       futureValues.push(item.shareValueFuture);
     }
 
     if (
-      settings.data[0].blockchain_name === "NeuroWeb Mainnet" ||
-      settings.data[0].blockchain_name === "NeuroWeb Testnet"
+      settings.data[0].blockchain === "NeuroWeb Mainnet" ||
+      settings.data[0].blockchain === "NeuroWeb Testnet"
     ) {
       border_color = "#fb5deb";
       chain_color = "rgba(251, 93, 235, 0.1)";
     }
 
     if (
-      settings.data[0].blockchain_name === "Gnosis Mainnet" ||
-      settings.data[0].blockchain_name === "Chiado Testnet"
+      settings.data[0].blockchain === "Gnosis Mainnet" ||
+      settings.data[0].blockchain === "Chiado Testnet"
     ) {
       border_color = "#133629";
       chain_color = "rgba(19, 54, 41, 0.1)";
@@ -203,9 +201,9 @@ const TokenValue = (settings) => {
 
   return (
     <div>
-      {data ? (
+      {valueData ? (
         <div className="node-pop-chart-widget">
-          <div className="node-pop-chart-name" style={{fontSize:'24px', paddingTop: '10px', paddingBottom: '10px'}}>{`${data.data[0].tokenName} Share Value`}</div>
+          <div className="node-pop-chart-name" style={{fontSize:'24px', paddingTop: '10px', paddingBottom: '10px'}}>{`${valueData[0].data[0].tokenName} Share Value`}</div>
           <div className="node-pop-chart-port" style={{paddingLeft: '10px'}}>
             <Line
               data={formattedData}

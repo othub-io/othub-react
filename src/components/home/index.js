@@ -8,12 +8,6 @@ import CumEarnings from "./cumEarnings";
 import ActivityFeed from "./activityFeed";
 import Stats from "./stats";
 import NetworkDrop from "../navigation/networkDrop";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const Home = () => {
   const [blockchain, setBlockchain] = useState("");
