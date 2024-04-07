@@ -4,12 +4,6 @@ import { AccountContext } from "../../../AccountContext";
 import Loading from "../../effects/Loading";
 import DKG from "dkg.js";
 import axios from "axios";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
@@ -129,20 +123,26 @@ const InvAction = (txn_info) => {
           });
       }
 
-      const request_data = {
-        completeTxn: txn.txn_id,
-        blockchain: connected_blockchain,
+      let request_data = {
+        txn_id: txn.txn_id,
+        blockchain: connected_blockchain === "Neuroweb Testnet" ? ("otp:20430") : connected_blockchain === "Neuroweb Mainnet" ? ("otp:2043") : connected_blockchain === "Chiado Testnet" ? ("gnosis:10200") : connected_blockchain === "Gnosis Mainnet" ? ("gnosis:100") : "",
         ual: dkg_result.UAL,
         epochs: epochs,
       };
 
-      const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+      await axios.post(
+        `/${process.env.REACT_APP_API_HOST}/txn/complete`,
         request_data,
         config
       );
 
-      setData(response.data);
+      let response = await axios.post(
+        `/${process.env.REACT_APP_API_HOST}/txn/info`,
+        {},
+        config
+      );
+
+      setData(response.data.result);
       let result = {
         status: "success",
         msg: `Asset ${txn.request} succeeded!`,

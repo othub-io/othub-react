@@ -192,7 +192,7 @@ const NodeDashboard = () => {
                 blockchain: blockchain,
                 nodes: nodeFilter,
                 nodeSelected: nodeSelected,
-                public_address: account,
+                account: account,
                 node_data: data,
               },
             ]}
@@ -217,7 +217,7 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
+                    account: account,
                     node_data: data,
                   },
                 ]}
@@ -231,7 +231,7 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
+                    account: account,
                     node_data: data,
                   },
                 ]}
@@ -245,7 +245,7 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
+                    account: account,
                     node_data: data,
                   },
                 ]}
@@ -259,7 +259,7 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
+                    account: account,
                     node_data: data,
                   },
                 ]}
@@ -273,7 +273,7 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
+                    account: account,
                     node_data: data,
                   },
                 ]}
@@ -287,7 +287,7 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
+                    account: account,
                     node_data: data,
                   },
                 ]}

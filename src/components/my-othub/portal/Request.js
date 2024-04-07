@@ -4,20 +4,8 @@ import { AccountContext } from "../../../AccountContext";
 import Loading from "../../effects/Loading";
 import DKG from "dkg.js";
 import axios from "axios";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
-
-const config1 = {
-  headers: {
-    Authorization: localStorage.getItem("token"),
-  },
-};
-
-const config2 = {
+const config = {
   headers: {
     Authorization: localStorage.getItem("token"),
     "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
@@ -93,12 +81,12 @@ const Request = (txn_info) => {
 
         const data = {
           asset: JSON.stringify(dkg_txn_data),
-          network: blockchain,
+          blockchain: blockchain,
           epochs: inputValue,
         };
 
         const dkg_bid_result = await axios
-          .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config2)
+          .post(`${process.env.REACT_APP_API_HOST}/dkg/getBidSuggestion`, data, config)
           .then((response) => {
             // Handle the successful response here
             return response;
@@ -136,7 +124,7 @@ const Request = (txn_info) => {
         contentType: "all",
         keywords: txn.keywords,
         blockchain: {
-          name: txn.network,
+          name: txn.blockchain,
           publicKey: account,
         },
       };
@@ -192,16 +180,16 @@ const Request = (txn_info) => {
       }
 
       const request_data = {
-        completeTxn: txn.txn_id,
-        blockchain: connected_blockchain,
+        txn_id: txn.txn_id,
+        blockchain: blockchain,
         ual: dkg_result.UAL,
         epochs: inputValue,
       };
 
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+        `${process.env.REACT_APP_API_HOST}/txn/complete`,
         request_data,
-        config1
+        config
       );
 
       setData(response.data);
@@ -249,12 +237,12 @@ const Request = (txn_info) => {
         try {
           setIsLoading(true);
           const request_data = {
-            rejectTxn: txn.txn_id,
+            txn_id: txn.txn_id,
           };
           await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+            `${process.env.REACT_APP_API_HOST}/txn/reject`,
             request_data,
-            config1
+            config
           );
           setIsLoading(false);
           window.location.reload();
@@ -290,12 +278,12 @@ const Request = (txn_info) => {
 
   if (
     (connected_blockchain === "NeuroWeb Testnet" &&
-      txn.network !== "otp:20430") ||
+      txn.blockchain !== "otp:20430") ||
     (connected_blockchain === "NeuroWeb Mainnet" &&
-      txn.network !== "otp:2043") ||
+      txn.blockchain !== "otp:2043") ||
     (connected_blockchain === "Chiado Testnet" &&
-      txn.network !== "gnosis:10200") ||
-    (connected_blockchain === "Gnosis Mainnet" && txn.network !== "gnosis:100")
+      txn.blockchain !== "gnosis:10200") ||
+    (connected_blockchain === "Gnosis Mainnet" && txn.blockchain !== "gnosis:100")
   ) {
     return (
       <div className="popup-overlay">

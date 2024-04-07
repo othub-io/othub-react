@@ -43,17 +43,6 @@ const NodeRewards = (settings) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const time_data = {
-        //   timeframe: inputValue,
-        //   network: node_data.data[0].network,
-        //   nodeId: node_data.data[0].nodeId,
-        //   public_address: node_data.data[0].public_address,
-        // };
-        // const response = await axios.post(
-        //   `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
-        //   time_data
-        // );
-        // setData(response.data.chart_data);
         setData(settings.data[0].node_data);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -6,8 +6,6 @@ import moment from "moment";
 import axios from "axios";
 import DKG from "dkg.js";
 import InvAction from "./invAction";
-let ext;
-let explorer_url;
 
 const testnet_node_options = {
   endpoint: process.env.REACT_APP_OTNODE_HOST,
@@ -23,10 +21,12 @@ const mainnet_node_options = {
   maxNumberOfRetries: 100,
 };
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 let asset_data;
 let sub_scan_link;
@@ -116,16 +116,16 @@ const InvAsset = (txn) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const request_data = {
+        let data = {
           ual: asset_data.UAL,
-          blockchain: connected_blockchain,
-        };
-
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
-          request_data
-        );
-        await setAssetHistory(response.data.assetHistory);
+          blockchain: asset_data.chain_name
+        }
+        let response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/assets/history`,
+          data,
+          config
+        )
+        await setAssetHistory(response.data.result)
       } catch (error) {
         console.error("Error fetching data:", error);
       }

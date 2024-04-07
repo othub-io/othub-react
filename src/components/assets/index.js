@@ -34,7 +34,7 @@ const Assets = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        data = {
+        let data = {
           network: network,
           blockchain: blockchain,
         };

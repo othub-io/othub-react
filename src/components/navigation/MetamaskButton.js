@@ -9,7 +9,6 @@ let readable_chain_id;
 const config = {
   headers: {
     Authorization: localStorage.getItem("token"),
-    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
   },
 };
 
@@ -36,7 +35,7 @@ const changeAccounts = async (account) => {
   try {
     const user_record = await axios.post(
       `${process.env.REACT_APP_API_HOST}/auth/register`,
-      { public_address: account },
+      { account: account },
       config
     );
 
@@ -48,7 +47,7 @@ const changeAccounts = async (account) => {
     // Send signature to backend
     const responseSign = await axios.post(
       `${process.env.REACT_APP_API_HOST}/auth/sign`,
-      { public_address: account, signature: signedMessage },
+      { account: account, signature: signedMessage },
       config
     );
 

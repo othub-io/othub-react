@@ -41,16 +41,16 @@ function NavBar() {
 
           if (connected_blockchain === "Gnosis Mainnet") {
             aurl =
-              "https://gnosis.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b/token-balances";
+              `https://gnosis.blockscout.com/api/v2/addresses/${account}/token-balances`;
             burl =
-              "https://gnosis.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b";
+              `https://gnosis.blockscout.com/api/v2/addresses/${account}`;
           }
 
           if (connected_blockchain === "Chiado Testnet") {
             aurl =
-              "https://gnosis-chiado.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b/token-balances";
+              `https://gnosis-chiado.blockscout.com/api/v2/addresses/${account}/token-balances`;
             burl =
-              "https://gnosis-chiado.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b";
+              `https://gnosis-chiado.blockscout.com/api/v2/addresses/${account}`;
           }
         }
 
@@ -109,7 +109,7 @@ function NavBar() {
 
           let trac_balance;
           for (const token of token_balance) {
-            if (token.token.symbol === "TRAC") {
+            if (token.token.symbol === "TRAC" || token.token.symbol === "tgcTRAC") {
               trac_balance = token.value;
             }
           }
