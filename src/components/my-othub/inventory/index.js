@@ -44,7 +44,7 @@ const Inventory = () => {
           };
 
           let response = await axios.post(
-            `${process.env.REACT_APP_API_HOST}/pubs/info`,
+            `${process.env.REACT_APP_API_HOST}/assets/info`,
             data,
             config
           );
@@ -68,7 +68,7 @@ const Inventory = () => {
 
               response = await axios
                 .post(
-                  `${process.env.REACT_APP_API_HOST}/pubs/info`,
+                  `${process.env.REACT_APP_API_HOST}/assets/info`,
                   data,
                   config
                 )
@@ -133,7 +133,7 @@ const Inventory = () => {
 
           let response = await axios
             .post(
-              `${process.env.REACT_APP_API_HOST}/pubs/info`,
+              `${process.env.REACT_APP_API_HOST}/assets/info`,
               data,
               config
             )

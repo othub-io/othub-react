@@ -122,7 +122,7 @@ function NavBar() {
         }
 
         let response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}/sync/status`,
+          `${process.env.REACT_APP_API_HOST}/misc/sync_status`,
           {},
           config
         );

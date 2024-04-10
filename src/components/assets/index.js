@@ -39,7 +39,7 @@ const Assets = () => {
           blockchain: blockchain,
         };
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}/pubs/info`,
+          `${process.env.REACT_APP_API_HOST}/assets/info`,
           data,
           config
         );
@@ -55,7 +55,7 @@ const Assets = () => {
             console.log(`UAL doesn't have correct format: ${provided_ual}`);
           } else {
             const pubs_response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/pubs/info`,
+              `${process.env.REACT_APP_API_HOST}/assets/info`,
               { network: network, ual: provided_ual, blockchain: blockchain },
               config
             );
@@ -109,7 +109,7 @@ const Assets = () => {
             blockchain: blockchain,
           };
           const response = await axios.post(
-            `${process.env.REACT_APP_API_HOST}/pubs/info`,
+            `${process.env.REACT_APP_API_HOST}/assets/info`,
             data,
             config
           );

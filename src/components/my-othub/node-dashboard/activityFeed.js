@@ -36,17 +36,23 @@ const NodeCommits = (settings) => {
     explorer_url = "https://dkg-testnet.origintrail.io";
   }
 
+  let nodeList = "";
+  for (const record of settings.data[0].nodes) {
+      nodeList += record.nodeId + ",";
+  }
+  nodeList = nodeList.slice(0, -1);
+
   useEffect(() => {
     async function fetchData() {
       try {
         const params = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
-          nodes: settings.data[0].nodes,
+          nodeId: nodeList,
         };
 
         const response = await axios.post(
-          `${process.env.REACT_APP_RUNTIME_HOST}/nodes/activity`,
+          `${process.env.REACT_APP_API_HOST}/nodes/activity`,
           params,
           config
         );

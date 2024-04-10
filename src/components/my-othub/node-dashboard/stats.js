@@ -1,19 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../effects/Loading";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 function formatNumberWithSpaces(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const Stats = (settings) => {
-  const [stats, setStats] = useState("");
+  const [stats24h, setStats24h] = useState("");
+  const [statsLatest, setStatsLatest] = useState("");
   const [price, setPrice] = useState("");
   let pubs_commited = 0
   let pubs_commited_24h = 0
@@ -23,23 +18,13 @@ const Stats = (settings) => {
   let payouts_24h = 0
   let totalStake = 0
   let nodes = 0
+  let chain_data = [];
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setStats("")
-        const request_data = {
-          network: settings.data[0].network,
-          blockchain: settings.data[0].blockchain,
-          nodes: settings.data[0].nodes
-        };
-
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeStats`,
-          request_data
-        );
-
-        setStats(response.data);
+        setStats24h(settings.data[0].nodeStats24h);
+        setStatsLatest(settings.data[0].nodeStatsLatest);
 
         const rsp = await axios.get(
             "https://api.coingecko.com/api/v3/coins/origintrail"
@@ -61,25 +46,66 @@ const Stats = (settings) => {
     fetchData();
   }, [settings]);
 
-  if(stats !== ""){
-    for(const blockchain of stats){
-      pubs_commited = pubs_commited + blockchain.pubs_commited
-      pubs_commited_24h = pubs_commited_24h + blockchain.pubs_commited_24h
-      earnings = earnings + blockchain.earnings
-      earnings_24h = earnings_24h + blockchain.earnings_24h
-      payouts = payouts + Number(blockchain.payouts)
-      payouts_24h = payouts_24h + Number(blockchain.payouts_24h)
-      totalStake = totalStake + blockchain.totalStake
-      nodes = nodes + blockchain.nodes
+  if(statsLatest){
+    for(let a = 0; a < statsLatest.length; a++){
+      let chain_pubs = 0
+      let chain_earnings = 0
+      let chain_payouts = 0
+      let chain_stake = 0
+      let chain_nodes = 0
+      let chain_pubs_commited_24h = 0
+      let chain_earnings_24h = 0
+      let chain_payouts_24h = 0
+
+      for(let b = 0; b < statsLatest[a].data.length; b++){
+        pubs_commited = pubs_commited + statsLatest[a].data[b].pubsCommited
+        chain_pubs = chain_pubs + statsLatest[a].data[b].pubsCommited
+
+        earnings = earnings + statsLatest[a].data[b].estimatedEarnings
+        chain_earnings = chain_earnings + statsLatest[a].data[b].estimatedEarnings
+
+        payouts = payouts + Number(statsLatest[a].data[b].cumulativePayouts)
+        chain_payouts = chain_payouts + Number(statsLatest[a].data[b].cumulativePayouts)
+
+        totalStake = totalStake + Number(statsLatest[a].data[b].nodeStake)
+        chain_stake = chain_stake + Number(statsLatest[a].data[b].nodeStake)
+
+        nodes = nodes + 1
+        chain_nodes = chain_nodes + 1
+
+        pubs_commited_24h = pubs_commited_24h + stats24h[a].data[b].pubsCommited
+        chain_pubs_commited_24h = chain_pubs_commited_24h + stats24h[a].data[b].pubsCommited
+
+        earnings_24h = earnings_24h + stats24h[a].data[b].estimatedEarnings
+        chain_earnings_24h = chain_earnings_24h + stats24h[a].data[b].estimatedEarnings
+
+        payouts_24h = payouts_24h + Number(stats24h[a].data[b].cumulativePayouts)
+        chain_payouts_24h = chain_payouts_24h + Number(stats24h[a].data[b].cumulativePayouts)
+      }
+
+      let chain_obj ={
+        blockchain_name: statsLatest[a].blockchain_name,
+        blockchain_id: statsLatest[a].blockchain_id,
+        pubsCommited: chain_pubs,
+        earnings: chain_earnings,
+        payouts: chain_payouts,
+        totalStake: chain_stake,
+        nodes: chain_nodes,
+        pubsCommited_24h: chain_pubs_commited_24h,
+        earnings_24h: chain_earnings_24h,
+        payouts_24h: chain_payouts_24h
+      }
+
+      chain_data.push(chain_obj)
     }
   }
 
-  return stats ? (
+  return stats24h && statsLatest ? (
     <div className="node-stats">
        {!settings.data[0].nodeSelected && !settings.data[0].blockchain && <div key="total_stats" className={`total-stats-node-div`}>
             <div className="chain-logo">
                 <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=origintrail_logo-dark_purple.png`}
+                src={`${process.env.REACT_APP_API_HOST}/images?src=origintrail_logo-dark_purple.png`}
                 alt="Origintrail Network"
                 width="100"
                 ></img><span>{settings.data[0].network.substring(4)}</span>
@@ -117,12 +143,12 @@ const Stats = (settings) => {
                 <span>{`${formatNumberWithSpaces(totalStake.toFixed(0))} ($${formatNumberWithSpaces((totalStake.toFixed(0) * price).toFixed(0))})`}</span>
             </div>
         </div>}
-      {stats.map((blockchain) => (
-        <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-node-div`}>
+      {chain_data.map((blockchain) => (
+        <div key={blockchain.blockchain_name} className={`d${blockchain.blockchain_id}-node-div`}>
             <div className={`d${blockchain.blockchain_id}-chain-logo`}>
                 <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
-                alt={blockchain.chain_name}
+                src={`${process.env.REACT_APP_API_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
+                alt={blockchain.blockchain_name}
                 width="150"
                 height={blockchain.blockchain_id === 100 ? ("15") : blockchain.blockchain_id === 2043 ? ("30") : ("50")}
                 ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}
@@ -133,11 +159,11 @@ const Stats = (settings) => {
             </div>
             <div className="chain-stake">
                 Pubs:<br/>
-                <span>{blockchain.pubs_commited}</span>
+                <span>{blockchain.pubsCommited}</span>
             </div>
             <div className="chain-stake">
                 Pubs Last 24h:<br/>
-                <span>{blockchain.pubs_commited_24h}</span>
+                <span>{blockchain.pubsCommited_24h}</span>
             </div>
             <div className="chain-stake">
                 TRAC Earnings:<br/>

@@ -20,7 +20,7 @@ const NetworkDrop = ({ network, blockchain }) => {
         };
 
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}/othub/blockchains`,
+          `${process.env.REACT_APP_API_HOST}/misc/blockchains`,
           data,
           config
         );
@@ -44,7 +44,7 @@ const NetworkDrop = ({ network, blockchain }) => {
     };
 
     const response = await axios.post(
-      `${process.env.REACT_APP_API_HOST}/othub/blockchains`,
+      `${process.env.REACT_APP_API_HOST}/misc/blockchains`,
       data,
       config
     );

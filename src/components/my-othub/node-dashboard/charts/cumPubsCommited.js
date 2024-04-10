@@ -13,10 +13,11 @@ import {
 } from "chart.js";
 import Loading from "../../../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -38,12 +39,13 @@ function generateRandomColor() {
 const CumPubsCommited = (settings) => {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setisLoading] = useState(false);
-  const [data, setData] = useState("");
+  const [nodeData, setNodeData] = useState("");
+  const [button, setButtonSelect] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setData(settings.data[0].node_data);
+        setNodeData(settings.data[0].nodeStats);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -53,19 +55,44 @@ const CumPubsCommited = (settings) => {
     fetchData();
   }, [settings]);
 
-  const changeTimeFrame = async (timeframe) => {
+  const changeFrequency = async (frequency,button_select) => {
     try {
       setisLoading(true);
-      setInputValue(timeframe);
-      const time_data = {
-        timeframe: timeframe,
-        nodes: settings.data[0].nodes,
-      };
-      const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
-        time_data
-      );
-      setData(response.data.chart_data);
+      setInputValue(frequency);
+      setButtonSelect(button_select)
+
+      console.log(settings.data[0].nodes)
+      let node_stats = [];
+      for(const node of settings.data[0].nodes){
+        let data = {
+          blockchain: node.chainName,
+          nodeId: node.nodeId,
+        };
+    
+        let response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/nodes/info`,
+          data,
+          config
+        );
+  
+        data = {
+          frequency: frequency,
+          timeframe: button_select === "24h" ? (24) : button_select === "7d" ? (168) : button_select === "30d" ? (30) : button_select === "6m" ? (160) : button_select === "1y" ? (12) : null,
+          blockchain: node.chainName,
+          grouped: "no",
+          nodeId: node.nodeId
+        };
+
+        response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+          data,
+          config
+        );
+
+        node_stats.push(response.data.result[0]);
+      }
+
+      setNodeData(node_stats);
       setisLoading(false);
     } catch (e) {
       console.log(e);
@@ -76,28 +103,28 @@ const CumPubsCommited = (settings) => {
     datasets: [],
   };
 
-  if (data) {
+  if (nodeData) {
     let format = "MMM YY";
-    if (inputValue === "24h") {
+    if (button === "24h") {
       format = "HH:00";
     }
-    if (inputValue === "7d") {
+    if (button === "7d") {
       format = "ddd HH:00";
     }
-    if (inputValue === "30d") {
+    if (button === "30d") {
       format = "DD MMM YY";
     }
-    if (inputValue === "6m") {
+    if (button === "6m") {
       format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
     const formattedDates = [];
 
-    for (const blockchain of data) {
+    for (const blockchain of nodeData) {
       blockchain.data
         .filter((item) => {
-          const formattedDate = moment(item.date).format(format);
+          const formattedDate = moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format);
           // Check if the formatted date is unique
           if (!uniqueDates.has(formattedDate)) {
             uniqueDates.add(formattedDate);
@@ -106,10 +133,10 @@ const CumPubsCommited = (settings) => {
           }
           return false;
         })
-        .map((item) => moment(item.date).format(format));
+        .map((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format));
     }
 
-    formattedData.labels = inputValue === "24h" || inputValue === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
+    formattedData.labels = button === "24h" || button === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
     let border_color;
     let chain_color;
@@ -117,17 +144,17 @@ const CumPubsCommited = (settings) => {
     let dates;
     let tokenNames;
 
-    for (const blockchain of data) {
+    for (const blockchain of nodeData) {
       dates = formattedDates
       tokenNames = new Set(blockchain.data.map((item) => item.tokenName));
 
       for (const tokenName of tokenNames) {
         let final_pubs = [];
         for (const obj of dates) {
-          let containsDate = blockchain.data.some((item) => moment(item.date).format(format) === obj && tokenName === item.tokenName);
+          let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj && tokenName === item.tokenName);
           if(containsDate){
             for (const item of blockchain.data) {
-              if (tokenName === item.tokenName && moment(item.date).format(format) === obj) {
+              if (tokenName === item.tokenName && moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj) {
                 final_pubs.push(item.cumulativePubsCommited)
               }
             }
@@ -207,7 +234,7 @@ const CumPubsCommited = (settings) => {
 
   return (
     <div>
-      {data ? (
+      {nodeData ? (
         <div className="chart-widget">
           <div className="chart-name">Cumulative Pubs Commited</div>
           <div className="chart-port">
@@ -249,10 +276,10 @@ const CumPubsCommited = (settings) => {
           <div className="chart-filter">
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("24h")}
-              name="timeframe"
+              onClick={() => changeFrequency("hourly","24h")}
+              name="frequency"
               style={
-                inputValue === "24h"
+                button === "24h"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -261,10 +288,10 @@ const CumPubsCommited = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("7d")}
-              name="timeframe"
+              onClick={() => changeFrequency("hourly", "7d")}
+              name="frequency"
               style={
-                inputValue === "7d"
+                button === "7d"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -273,10 +300,10 @@ const CumPubsCommited = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("30d")}
-              name="timeframe"
+              onClick={() => changeFrequency("daily","30d")}
+              name="frequency"
               style={
-                inputValue === "30d"
+                button === "30d"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -285,10 +312,10 @@ const CumPubsCommited = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("6m")}
-              name="timeframe"
+              onClick={() => changeFrequency("daily","6m")}
+              name="frequency"
               style={
-                inputValue === "6m"
+                button === "6m"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -297,10 +324,10 @@ const CumPubsCommited = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("1y")}
-              name="timeframe"
+              onClick={() => changeFrequency("monthly","1y")}
+              name="frequency"
               style={
-                inputValue === "1y"
+                button === "1y"
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
@@ -309,10 +336,10 @@ const CumPubsCommited = (settings) => {
             </button>
             <button
               className="chart-filter-button"
-              onClick={() => changeTimeFrame("")}
-              name="timeframe"
+              onClick={() => changeFrequency("monthly","")}
+              name="frequency"
               style={
-                inputValue === ""
+                button === ""
                   ? { color: "#FFFFFF", backgroundColor: "#6344df" }
                   : {}
               }
