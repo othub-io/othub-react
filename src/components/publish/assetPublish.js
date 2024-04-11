@@ -127,6 +127,7 @@ const AssetPublish = (selectedFile) => {
             asset: selectedFile.data,
             network: blockchain,
             epochs: inputValue,
+            range: "med"
           };
           const dkg_bid_result = await axios
             .post(`https://api.othub.io/dkg/getBidSuggestion`, data, config)

@@ -83,6 +83,7 @@ const Request = (txn_info) => {
           asset: JSON.stringify(dkg_txn_data),
           blockchain: blockchain,
           epochs: inputValue,
+          range: "med"
         };
 
         const dkg_bid_result = await axios
