@@ -34,14 +34,21 @@ const Nodes = () => {
           nodeName: node_name
         };
 
+        let node_list = []
         const response = await axios.post(
           `${process.env.REACT_APP_API_HOST}/nodes/info`,
           settings,
           config
         );
 
-        setData(response.data.result);
-        setSortedData(response.data.result)
+        for(const blockchain of response.data.result){
+          for(const node of blockchain.data){
+            node_list.push(node)
+          }
+        }
+
+        setData(node_list);
+        setSortedData(node_list)
         //setPrice(rsp.data.market_data.current_price.usd);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -106,7 +113,7 @@ const Nodes = () => {
           <button className="token-name-header" onClick={() => setSort("tokenName")}>Name<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="token-sym-header" onClick={() => setSort("tokenSymbol")}>Symbol<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="stake-header" onClick={() => setSort("nodeStake")}>Stake<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
-          <button className="value-header" onClick={() => setSort("shareValue")}>Share Value<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          {/* <button className="value-header" onClick={() => setSort("shareValue")}>Share Value<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button> */}
           <button className="fee-header" onClick={() => setSort("nodeOperatorFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="ask-header" onClick={() => setSort("nodeAsk")}>Ask<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="age-header" onClick={() => setSort("nodeAgeDays")}>Age<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
@@ -127,9 +134,9 @@ const Nodes = () => {
                 <div className={`stake-record`}>
                   {Number(node.nodeStake).toFixed(0)}
                 </div>
-                <div className={`value-record`}>
+                {/* <div className={`value-record`}>
                   {(node.shareValueCurrent ? (node.shareValueCurrent) : (0)).toFixed(4)}
-                </div>
+                </div> */}
                 <div className={`fee-record`}>
                    {Number(node.nodeOperatorFee)+`%`} 
                 </div>

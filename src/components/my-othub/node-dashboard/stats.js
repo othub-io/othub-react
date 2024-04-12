@@ -46,7 +46,7 @@ const Stats = (settings) => {
     fetchData();
   }, [settings]);
 
-  if(statsLatest){
+  if(statsLatest && stats24h){
     for(let a = 0; a < statsLatest.length; a++){
       let chain_pubs = 0
       let chain_earnings = 0

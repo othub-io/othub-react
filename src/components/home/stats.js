@@ -27,7 +27,7 @@ const Stats = (settings) => {
     async function fetchData() {
       try {
         setStats("")
-        let data = {
+        const data = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
           nodes: settings.data[0].nodes ? (settings.data[0].nodes) : ("")

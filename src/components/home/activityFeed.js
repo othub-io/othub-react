@@ -50,7 +50,6 @@ const NodeCommits = (settings) => {
           config
         );
 
-        console.log(response.data.result)
         setData(response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
