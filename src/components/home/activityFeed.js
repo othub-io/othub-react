@@ -45,7 +45,7 @@ const NodeCommits = (settings) => {
         };
 
         const response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}/assets/activity`,
+          `${process.env.REACT_APP_API_HOST}/pubs/activity`,
           params,
           config
         );
