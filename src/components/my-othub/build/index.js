@@ -54,14 +54,14 @@ const Build = () => {
 
           if(response.data.result){
             response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/txn/info`,
+              `${process.env.REACT_APP_API_HOST}/txns/info`,
               {app_name: response.data.result[0].app_name},
               config
             );
             setTxnInfo(response.data.result);
 
             response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/key/info`,
+              `${process.env.REACT_APP_API_HOST}/keys/info`,
               {},
               config
             );
@@ -118,7 +118,7 @@ const Build = () => {
           setAppInfo(response.data.result[0]);
 
           response = await axios.post(
-            `${process.env.REACT_APP_API_HOST}/key/info`,
+            `${process.env.REACT_APP_API_HOST}/keys/info`,
             {},
             config
           );
@@ -195,13 +195,13 @@ const Build = () => {
     try {
       const fetchData = async () => {
         await axios.post(
-          `${process.env.REACT_APP_API_HOST}/key/create`,
+          `${process.env.REACT_APP_API_HOST}/keys/create`,
           {},
           config
         );
 
         let response = await axios.post(
-          `${process.env.REACT_APP_API_HOST}/key/info`,
+          `${process.env.REACT_APP_API_HOST}/keys/info`,
           {},
           config
         );
@@ -224,13 +224,13 @@ const Build = () => {
             api_key: inputValue,
           };
           await axios.post(
-            `${process.env.REACT_APP_API_HOST}/key/delete`,
+            `${process.env.REACT_APP_API_HOST}/keys/delete`,
             request_data,
             config
           );
 
           let response = await axios.post(
-            `${process.env.REACT_APP_API_HOST}/key/info`,
+            `${process.env.REACT_APP_API_HOST}/keys/info`,
             {},
             config
           );
@@ -818,13 +818,13 @@ const Build = () => {
                 <div className="app-request">{txn.request}</div>
                 <div className={`${txn.progress}-progress`}>{txn.progress}</div>
                 <div className="txn-summary">
-                  {`${txn.app_name}(${txn.txn_id.substring(0, 15)})`}
+                  {`${txn.key_id.substring(0, 15)}${txn.txn_id.substring(0, 15)}`}
                 </div>
                 <div className="txn-ual">{txn.ual}</div>
                 <div className={`txn-${txn.request}-receiver`}>
                   Receiver:
                   <span>
-                    {txn.txn_data ? JSON.parse(txn.txn_data).receiver : ""}
+                    {txn.receiver ? txn.receiver : ""}
                   </span>
                 </div>
                 <div className={`txn-${txn.request}-epochs`}>

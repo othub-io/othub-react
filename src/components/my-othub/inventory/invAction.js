@@ -74,7 +74,7 @@ const InvAction = (txn_info) => {
       setIsLoading(true);
 
       txn.receiver = receiverValue;
-      let new_data = inputValue ? inputValue : txn.txn_data;
+      let new_data = inputValue ? inputValue : txn.asset_data;
       let keywords = keywordValue ? keywordValue : txn.keywords;
       let epochs = epochValue ? epochValue : txn.epochs;
 
@@ -273,7 +273,7 @@ const InvAction = (txn_info) => {
               Data:
             <textarea
               value={
-                inputValue ? inputValue : JSON.stringify(txn.txn_data, null, 2)
+                inputValue ? inputValue : JSON.stringify(txn.asset_data, null, 2)
               }
               onChange={handleDataChange}
               Required

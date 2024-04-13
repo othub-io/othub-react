@@ -10,7 +10,7 @@ import axios from "axios";
 
 const config = {
   headers: {
-    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+    Authorization: localStorage.getItem("token"),
   },
 };
 
@@ -66,7 +66,7 @@ const Portal = () => {
                 : "",
           };
           const response = await axios.post(
-            `${process.env.REACT_APP_API_HOST}/txn/info`,
+            `${process.env.REACT_APP_API_HOST}/txns/info`,
             request_data,
             config
           );
@@ -74,7 +74,7 @@ const Portal = () => {
 
           if (provided_txn_id) {
             const txn_id_response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/txn/info`,
+              `${process.env.REACT_APP_API_HOST}/txns/info`,
               {
                 approver: account,
                 txn_id: provided_txn_id,
@@ -207,7 +207,7 @@ const Portal = () => {
         approver: account,
       };
       const response = await axios.post(
-        `${process.env.REACT_APP_API_HOST}/txn/info`,
+        `${process.env.REACT_APP_API_HOST}/txns/info`,
         request_data,
         config
       );
@@ -244,7 +244,7 @@ const Portal = () => {
           };
 
           const response = await axios.post(
-            `${process.env.REACT_APP_API_HOST}/txn/info`,
+            `${process.env.REACT_APP_API_HOST}/txns/info`,
             request_data,
             config
           );

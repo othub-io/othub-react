@@ -74,13 +74,13 @@ const Request = (txn_info) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        let dkg_txn_data = JSON.parse(txn.txn_data);
+        let dkg_txn_data = JSON.parse(txn.asset_data);
         if (!dkg_txn_data["@context"]) {
           dkg_txn_data["@context"] = "https://schema.org";
         }
 
         const data = {
-          asset: JSON.stringify(dkg_txn_data),
+          asset: dkg_txn_data,
           blockchain: blockchain,
           epochs: inputValue,
           range: "med"
@@ -135,7 +135,7 @@ const Request = (txn_info) => {
       let loc = "inventory";
 
       if (txn.request === "Create") {
-        let dkg_txn_data = JSON.parse(txn.txn_data);
+        let dkg_txn_data = JSON.parse(txn.asset_data);
         if (!dkg_txn_data["@context"]) {
           dkg_txn_data["@context"] = "https://schema.org";
         }
@@ -153,7 +153,7 @@ const Request = (txn_info) => {
       }
 
       if (txn.request === "Update") {
-        let dkg_txn_data = JSON.parse(txn.txn_data);
+        let dkg_txn_data = JSON.parse(txn.asset_data);
         if (!dkg_txn_data["@context"]) {
           dkg_txn_data["@context"] = "https://schema.org";
         }
@@ -188,7 +188,7 @@ const Request = (txn_info) => {
       };
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_HOST}/txn/complete`,
+        `${process.env.REACT_APP_API_HOST}/txns/complete`,
         request_data,
         config
       );
@@ -241,7 +241,7 @@ const Request = (txn_info) => {
             txn_id: txn.txn_id,
           };
           await axios.post(
-            `${process.env.REACT_APP_API_HOST}/txn/reject`,
+            `${process.env.REACT_APP_API_HOST}/txns/reject`,
             request_data,
             config
           );
@@ -337,7 +337,7 @@ const Request = (txn_info) => {
           </div>
           <div className="data-header">Data</div>
           <div className="data-value-pub">
-            <pre>{JSON.stringify(JSON.parse(txn.txn_data), null, 2)}</pre>
+            <pre>{JSON.stringify(JSON.parse(txn.asset_data), null, 2)}</pre>
           </div>
         </div>
       )}
