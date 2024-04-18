@@ -108,6 +108,10 @@ const AssetCost = (settings) => {
     const uniqueDates = new Set();
     const formattedDates = [];
     for (const blockchain of assetData) {
+      if(blockchain.blockchain_name === 'Total'){
+        continue;
+      }
+      
       blockchain.data
         .filter((item) => {
           const formattedDate = moment(
@@ -138,6 +142,10 @@ const AssetCost = (settings) => {
     let border_color;
     let chain_color;
     for (const blockchain of assetData) {
+      if(blockchain.blockchain_name === 'Total'){
+        continue;
+      }
+
       let avgPubPrice = [];
       let avgBid = [];
 
