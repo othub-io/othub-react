@@ -125,7 +125,7 @@ function SideBar() {
             </a>
             <div className="title">
               <a href={item.path} className="title">
-                {item.id === 7 ? (
+                {item.id === 7 || item.id === 8 ? (
                   <a href={item.path} className="title" target="_blank" rel="noreferrer">
                     {item.title}
                   </a>
