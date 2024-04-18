@@ -3,10 +3,12 @@ import '../../css/Asset.css'
 import moment from 'moment';
 import axios from "axios";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 const Asset = (settings) => {
   const [assetHistory, setAssetHistory] = useState("");
@@ -38,15 +40,16 @@ const Asset = (settings) => {
   useEffect(() => {
     async function fetchData () {
       try {
-        const request_data = {
+        const data = {
           ual: asset_data.UAL,
           blockchain: asset_data.chain_name
         }
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/asset/getHistory`,
-          request_data
+          `${process.env.REACT_APP_API_HOST}/assets/history`,
+          data,
+          config
         )
-        await setAssetHistory(response.data.assetHistory)
+        await setAssetHistory(response.data.result)
 
       } catch (error) {
         console.error('Error fetching data:', error)

@@ -11,12 +11,12 @@ let chain;
 let url;
 let aurl;
 let burl;
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 function NavBar() {
   const { balance, setBalance } = useContext(AccountContext);
@@ -41,16 +41,16 @@ function NavBar() {
 
           if (connected_blockchain === "Gnosis Mainnet") {
             aurl =
-              "https://gnosis.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b/token-balances";
+              `https://gnosis.blockscout.com/api/v2/addresses/${account}/token-balances`;
             burl =
-              "https://gnosis.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b";
+              `https://gnosis.blockscout.com/api/v2/addresses/${account}`;
           }
 
           if (connected_blockchain === "Chiado Testnet") {
             aurl =
-              "https://gnosis-chiado.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b/token-balances";
+              `https://gnosis-chiado.blockscout.com/api/v2/addresses/${account}/token-balances`;
             burl =
-              "https://gnosis-chiado.blockscout.com/api/v2/addresses/0x840AF7A83c5fEfA87A360FB98c027a40E7e58F1b";
+              `https://gnosis-chiado.blockscout.com/api/v2/addresses/${account}`;
           }
         }
 
@@ -109,7 +109,7 @@ function NavBar() {
 
           let trac_balance;
           for (const token of token_balance) {
-            if (token.token.symbol === "TRAC") {
+            if (token.token.symbol === "TRAC" || token.token.symbol === "tgcTRAC") {
               trac_balance = token.value;
             }
           }
@@ -122,7 +122,9 @@ function NavBar() {
         }
 
         let response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/sync_status`
+          `${process.env.REACT_APP_API_HOST}/misc/sync_status`,
+          {},
+          config
         );
 
         setSyncData(response.data.sync);
@@ -161,7 +163,7 @@ function NavBar() {
       <div className="navbar">
         <a href="/">
           <img
-            src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=OTHub-Logo.png`}
+            src={`${process.env.REACT_APP_API_HOST}/images?src=OTHub-Logo.png`}
             alt="othub-logo"
             className="othub-logo"
           ></img>

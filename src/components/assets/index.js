@@ -4,30 +4,26 @@ import Loading from "../effects/Loading";
 import Asset from "./Asset";
 import axios from "axios";
 import NetworkDrop from "../navigation/networkDrop";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
     Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
   },
 };
 
 const Assets = () => {
-  const [data, setData] = useState("");
+  const [pubData, setPubData] = useState("");
   const [isAssetOpen, setIsAssetOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",
     publisher: "",
     node_id: "",
-    order: "",
+    order_by: "",
     limit: "100",
   });
+  let data
 
   const [blockchain, setBlockchain] = useState("");
   const [network, setNetwork] = useState("DKG Mainnet");
@@ -38,15 +34,16 @@ const Assets = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const request_data = {
+        let data = {
           network: network,
           blockchain: blockchain,
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
-          request_data
+          `${process.env.REACT_APP_API_HOST}/assets/info`,
+          data,
+          config
         );
-        await setData(response.data);
+        await setPubData(response.data.result);
 
         if (provided_ual) {
           const segments = provided_ual.split(":");
@@ -58,12 +55,13 @@ const Assets = () => {
             console.log(`UAL doesn't have correct format: ${provided_ual}`);
           } else {
             const pubs_response = await axios.post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
-              { network: network, ual: provided_ual, blockchain: blockchain }
+              `${process.env.REACT_APP_API_HOST}/assets/info`,
+              { network: network, ual: provided_ual, blockchain: blockchain },
+              config
             );
 
-            if (pubs_response.data.v_pubs[0] !== "") {
-              await setInputValue(pubs_response.data.v_pubs[0]);
+            if (pubs_response.data.result[0] !== "") {
+              await setInputValue(pubs_response.data.result[0]);
               await setIsAssetOpen(true);
             }
           }
@@ -73,7 +71,7 @@ const Assets = () => {
       }
     }
 
-    setData("");
+    setPubData("");
     fetchData();
   }, [network, blockchain]);
 
@@ -101,21 +99,21 @@ const Assets = () => {
     try {
       const fetchFilteredData = async () => {
         try {
-          const request_data = {
+          data = {
             ual: filterInput.ual,
-            creator: filterInput.creator,
+            publisher: filterInput.creator,
             nodeId: filterInput.node_id,
-            order: filterInput.order,
+            order_by: filterInput.order_by,
             limit: filterInput.limit,
             network: network,
             blockchain: blockchain,
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/assets`,
-            request_data,
+            `${process.env.REACT_APP_API_HOST}/assets/info`,
+            data,
             config
           );
-          setData(response.data);
+          setPubData(response.data.result);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -125,7 +123,7 @@ const Assets = () => {
     } catch (error) {
       console.error(error); // Handle the error case
     }
-    setData("");
+    setPubData("");
   };
 
   if (isAssetOpen && inputValue) {
@@ -197,7 +195,7 @@ const Assets = () => {
             Sort:<br></br>
             <input
               type="radio"
-              name="order"
+              name="order_by"
               value="block_ts_hour"
               onChange={handleFilterInput}
               maxLength="100"
@@ -205,7 +203,7 @@ const Assets = () => {
             Mint Date<br></br>
             <input
               type="radio"
-              name="order"
+              name="order_by"
               value="epochs_number"
               onChange={handleFilterInput}
               maxLength="100"
@@ -213,7 +211,7 @@ const Assets = () => {
             Expire Date<br></br>
             <input
               type="radio"
-              name="order"
+              name="order_by"
               value="size"
               onChange={handleFilterInput}
               maxLength="100"
@@ -221,7 +219,7 @@ const Assets = () => {
             Size<br></br>
             <input
               type="radio"
-              name="order"
+              name="order_by"
               value="token_amount"
               onChange={handleFilterInput}
               maxLength="100"
@@ -231,9 +229,9 @@ const Assets = () => {
           <button type="submit">Apply</button>
         </form>
       </div>
-      {data ? (
+      {pubData ? (
         <div className="asset-card-container">
-          {data.v_pubs.map((pub) => (
+          {pubData.map((pub) => (
             <button
               onClick={() => openAssetPopup(pub)}
               className={`asset-card-id${pub.chain_id}`}
@@ -245,7 +243,7 @@ const Assets = () => {
               <div className={`card-image-id${pub.chain_id}`}>
                 <img
                   className="card-img"
-                  src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`}
+                  src={`${process.env.REACT_APP_API_HOST}/images?src=Knowledge-Asset.jpg`}
                   alt="KA"
                 ></img>
               </div>

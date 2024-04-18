@@ -7,12 +7,6 @@ import AppSettings from "./AppSettings";
 import BarChart from "./gatewayBarChart";
 import BarChartTXNS from ".//gatewayBarChartTXNS";
 import axios from "axios";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
@@ -35,6 +29,7 @@ const Portal = () => {
   const account = localStorage.getItem("account");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
   const [inputValue, setInputValue] = useState("");
+  const [txnData, setTxnData] = useState("");
   const [filterInput, setFilterInput] = useState({
     ual: "",
     txn_id: "",
@@ -56,24 +51,44 @@ const Portal = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        if (
-          account 
-        ) {
+        if (account) {
           const request_data = {
-            network: connected_blockchain,
-            progress: "ALL",
+            approver: account,
+            blockchain:
+              connected_blockchain === "Neuroweb Testnet"
+                ? "otp:20430"
+                : connected_blockchain === "Neuroweb Mainnet"
+                ? "otp:2043"
+                : connected_blockchain === "Chiado Testnet"
+                ? "gnosis:10200"
+                : connected_blockchain === "Gnosis Mainnet"
+                ? "gnosis:100"
+                : "",
           };
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+            `${process.env.REACT_APP_API_HOST}/txns/info`,
             request_data,
             config
           );
-          await setData(response.data);
+          await setTxnData(response.data.result);
 
           if (provided_txn_id) {
             const txn_id_response = await axios.post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
-              { txn_id: provided_txn_id, blockchain: connected_blockchain },
+              `${process.env.REACT_APP_API_HOST}/txns/info`,
+              {
+                approver: account,
+                txn_id: provided_txn_id,
+                blockchain:
+                  connected_blockchain === "Neuroweb Testnet"
+                    ? "otp:20430"
+                    : connected_blockchain === "Neuroweb Mainnet"
+                    ? "otp:2043"
+                    : connected_blockchain === "Chiado Testnet"
+                    ? "gnosis:10200"
+                    : connected_blockchain === "Gnosis Mainnet"
+                    ? "gnosis:100"
+                    : "",
+              },
               config
             );
 
@@ -89,7 +104,7 @@ const Portal = () => {
     setInputValue("");
     setData("");
     fetchData();
-  }, [account,connected_blockchain]);
+  }, [account, connected_blockchain]);
 
   if (!account) {
     return (
@@ -110,11 +125,17 @@ const Portal = () => {
     return (
       <div className="keys">
         <header className="keys-header">
-          {<div>Connected with an unsupported blockchain. <br></br><br></br>Current supported blockchains:<br></br><br></br>
-          NeuroWeb Testnet<br></br>
-          NeuroWeb Mainnet<br></br>
-          Chiado Testnet<br></br>
-          Gnosis Mainnet</div>}
+          {
+            <div>
+              Connected with an unsupported blockchain. <br></br>
+              <br></br>Current supported blockchains:<br></br>
+              <br></br>
+              NeuroWeb Testnet<br></br>
+              NeuroWeb Mainnet<br></br>
+              Chiado Testnet<br></br>
+              Gnosis Mainnet
+            </div>
+          }
         </header>
       </div>
     );
@@ -170,17 +191,27 @@ const Portal = () => {
       // Wait for the state update to complete
       const updatedMobileFilterInput = await updateFilterInputPromise;
       const request_data = {
-        blockchain: connected_blockchain,
+        blockchain:
+          connected_blockchain === "Neuroweb Testnet"
+            ? "otp:20430"
+            : connected_blockchain === "Neuroweb Mainnet"
+            ? "otp:2043"
+            : connected_blockchain === "Chiado Testnet"
+            ? "gnosis:10200"
+            : connected_blockchain === "Gnosis Mainnet"
+            ? "gnosis:100"
+            : "",
         progress: updatedMobileFilterInput.progress,
         request: updatedMobileFilterInput.txn_type,
         limit: updatedMobileFilterInput.limit,
+        approver: account,
       };
       const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+        `${process.env.REACT_APP_API_HOST}/txns/info`,
         request_data,
         config
       );
-      setData(response.data);
+      setTxnData(response.data.result);
     } catch (e) {
       console.error(e);
     }
@@ -193,21 +224,31 @@ const Portal = () => {
       const fetchFilteredData = async () => {
         try {
           const request_data = {
-            network: connected_blockchain,
+            blockchain:
+              connected_blockchain === "Neuroweb Testnet"
+                ? "otp:20430"
+                : connected_blockchain === "Neuroweb Mainnet"
+                ? "otp:2043"
+                : connected_blockchain === "Chiado Testnet"
+                ? "gnosis:10200"
+                : connected_blockchain === "Gnosis Mainnet"
+                ? "gnosis:100"
+                : "",
             ual: filterInput.ual,
             app_name: filterInput.app_name,
             txn_id: filterInput.txn_id,
             progress: filterInput.progress,
             request: filterInput.request,
             limit: filterInput.limit,
+            approver: account,
           };
 
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+            `${process.env.REACT_APP_API_HOST}/txns/info`,
             request_data,
             config
           );
-          setData(response.data);
+          setTxnData(response.data.result);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -219,16 +260,21 @@ const Portal = () => {
     }
   };
 
-  return (
-    <div className="gateway">
-      {isRequestOpen && (
+  if (isRequestOpen) {
+    return (
+      <div className="gateway">
         <div className="popup-overlay">
           <div className="request-popup-content">
             <Request data={JSON.stringify(inputValue)} />
           </div>
         </div>
-      )}
-      {isAppSettingsOpen && (
+      </div>
+    );
+  }
+
+  if (isAppSettingsOpen) {
+    return (
+      <div className="gateway">
         <div className="popup-overlay">
           <div className="app-settings-popup-content">
             <button
@@ -240,8 +286,13 @@ const Portal = () => {
             <AppSettings data={data} />
           </div>
         </div>
-      )}
-      {isResultOpen && (
+      </div>
+    );
+  }
+
+  if (isResultOpen) {
+    return (
+      <div className="gateway">
         <div className="popup-overlay">
           <div className="result-popup-content">
             <button className="keys-close-button" onClick={closeResultPopup}>
@@ -271,8 +322,13 @@ const Portal = () => {
             </div>
           </div>
         </div>
-      )}
-      {data ? (
+      </div>
+    );
+  }
+
+  return (
+    <div className="gateway">
+      {txnData ? (
         <header className="gateway-header">
           <div className="gateway-form">
             <form onSubmit={handleFilterSubmit}>
@@ -482,15 +538,15 @@ const Portal = () => {
             {/* <button type="submit" onClick={openInventory()}>
               <strong>Asset Inventory</strong>
             </button> */}
-            <button type="submit" onClick={openAppSettings}>
+            {/* <button type="submit" onClick={openAppSettings}>
               <strong>Whitelist</strong>
-            </button>
+            </button> */}
           </div>
           <br></br>
 
           <div className="recent-activity"></div>
           <div className="gateway-txn-container">
-            {data.txn_header.map((txn) => (
+            {txnData.map((txn) => (
               <button
                 onClick={() => openRequestPopup(txn)}
                 className="gateway-txn-record"
@@ -502,7 +558,7 @@ const Portal = () => {
                 <div className="txn-summary">
                   {`${txn.app_name}(${txn.txn_id.substring(0, 15)})`}
                 </div>
-                <div className="txn-ual">{txn.ual ? (txn.ual) : ("UAL TBD")}</div>
+                <div className="txn-ual">{txn.ual ? txn.ual : "UAL TBD"}</div>
                 <div className={`txn-${txn.request}-receiver`}>
                   Receiver:<span>{txn.receiver}</span>
                 </div>
@@ -516,12 +572,12 @@ const Portal = () => {
               </button>
             ))}
           </div>
-          <div className="gateway-activity">
+          {/* <div className="gateway-activity">
             <strong>Activity</strong>
             <BarChart data={data.raw_txn_header} />
             <br></br>
             <BarChartTXNS data={data.raw_txn_header} />
-          </div>
+          </div> */}
         </header>
       ) : (
         <div className="assets">

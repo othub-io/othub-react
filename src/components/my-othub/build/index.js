@@ -3,16 +3,11 @@ import "../../../css/build.css";
 import { AccountContext } from "../../../AccountContext";
 import Loading from "../../effects/Loading";
 import axios from "axios";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
     Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
   },
 };
 
@@ -31,6 +26,9 @@ const Build = () => {
   const [inputValue, setInputValue] = useState("");
   const [limit, setLimit] = useState("3");
   const [isLoading, setLoading] = useState(false);
+  const [appInfo, setAppInfo] = useState("");
+  const [txnInfo, setTxnInfo] = useState("");
+  const [keyInfo, setKeyInfo] = useState("");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
   const [isDeleteApp, setIsDeleteApp] = useState(false);
   const [isEditAppOpen, setOpenEditApp] = useState(false);
@@ -47,15 +45,29 @@ const Build = () => {
     async function fetchData() {
       try {
         if (account) {
-          const request_data = {
-            network: chain_id,
-          };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build`,
-            request_data,
+          let response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/app/info`,
+            {account: account},
             config
           );
-          setData(response.data);
+          setAppInfo(response.data.result[0]);
+
+          if(response.data.result){
+            response = await axios.post(
+              `${process.env.REACT_APP_API_HOST}/txns/info`,
+              {app_name: response.data.result[0].app_name},
+              config
+            );
+            setTxnInfo(response.data.result);
+
+            response = await axios.post(
+              `${process.env.REACT_APP_API_HOST}/keys/info`,
+              {},
+              config
+            );
+
+            setKeyInfo(response.data.result);
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -87,17 +99,32 @@ const Build = () => {
             network: chain_id,
             app_name: e.target.app_name.value,
             app_description: e.target.app_description.value,
-            built_by: e.target.built_by.value,
+            alias: e.target.alias.value,
             website: e.target.website.value,
             github: e.target.github.value,
             key_count: e.target.key_count.value,
           };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-app`,
+          await axios.post(
+            `${process.env.REACT_APP_API_HOST}/app/create`,
             request_data,
             config
           );
-          setData(response.data);
+          
+          let response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/app/info`,
+            {account: account},
+            config
+          );
+          setAppInfo(response.data.result[0]);
+
+          response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/keys/info`,
+            {},
+            config
+          );
+
+          setKeyInfo(response.data.result);
+
           setCreateAppPopup(false);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -110,55 +137,9 @@ const Build = () => {
     }
   };
 
-  const clickAppTab = async (app_name, index) => {
-    try {
-      const fetchData = async () => {
-        try {
-          await setAppIndex(index);
-          const request_data = {
-            network: chain_id,
-            app_name: app_name,
-          };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build`,
-            request_data,
-            config
-          );
-          setData(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
-    } catch (error) {
-      console.error(error); // Handle the error case
-    }
-  };
-
-  const handleCreateKey = async (index) => {
-    // Perform the POST request using the entered value
-    try {
-      setLoading(true);
-      const fetchData = async () => {
-        const request_data = {
-          network: chain_id,
-          app_name: data.appNames[app_index].app_name,
-          key_count: 1,
-        };
-        const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/create-key`,
-          request_data,
-          config
-        );
-        setData(response.data);
-        setLoading(false);
-      };
-
-      fetchData();
-    } catch (error) {
-      console.error(error); // Handle the error case
-    }
+  const openPopupDeleteApp = (app_name) => {
+    setInputValue(app_name);
+    setIsDeleteApp(true);
   };
 
   const openPopupDeleteKey = (api_key) => {
@@ -166,18 +147,13 @@ const Build = () => {
     setIsDeleteKey(true);
   };
 
-  const openPopupDeleteApp = (app_name) => {
-    setInputValue(app_name);
-    setIsDeleteApp(true);
+  const closePopupDeleteKey = () => {
+    setIsDeleteKey(false);
   };
 
   const openEditApp = (app_name) => {
     setInputValue(app_name);
     setOpenEditApp(true);
-  };
-
-  const closePopupDeleteKey = () => {
-    setIsDeleteKey(false);
   };
 
   const closePopupDeleteApp = () => {
@@ -188,51 +164,19 @@ const Build = () => {
     setOpenEditApp(false);
   };
 
-  const handleDeleteKey = async (e) => {
-    e.preventDefault();
-    // Perform the POST request using the entered value
-    try {
-      const fetchData = async () => {
-        try {
-          const request_data = {
-            network: chain_id,
-            delete_key: inputValue,
-          };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-key`,
-            request_data,
-            config
-          );
-          setData(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
-      setIsDeleteKey(false);
-      setInputValue("");
-    } catch (error) {
-      console.error(error); // Handle the error case
-    }
-  };
-
   const handleDeleteApp = async (e) => {
     e.preventDefault();
     // Perform the POST request using the entered value
     try {
       const fetchData = async () => {
         try {
-          const request_data = {
-            network: chain_id,
-            app_name: inputValue,
-          };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/delete-app`,
-            request_data,
+          await axios.post(
+            `${process.env.REACT_APP_API_HOST}/app/delete`,
+            {},
             config
           );
-          setData(response.data);
+          setAppInfo("");
+          setTxnInfo("");
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -246,6 +190,64 @@ const Build = () => {
     }
   };
 
+  const handleCreateKey = async () => {
+    // Perform the POST request using the entered value
+    try {
+      const fetchData = async () => {
+        await axios.post(
+          `${process.env.REACT_APP_API_HOST}/keys/create`,
+          {},
+          config
+        );
+
+        let response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/keys/info`,
+          {},
+          config
+        );
+        setKeyInfo(response.data.result);
+      };
+
+      fetchData();
+    } catch (error) {
+      console.error(error); // Handle the error case
+    }
+  };
+
+  const handleDeleteKey = async (e) => {
+    e.preventDefault();
+    // Perform the POST request using the entered value
+    try {
+      const fetchData = async () => {
+        try {
+          const request_data = {
+            api_key: inputValue,
+          };
+          await axios.post(
+            `${process.env.REACT_APP_API_HOST}/keys/delete`,
+            request_data,
+            config
+          );
+
+          let response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/keys/info`,
+            {},
+            config
+          );
+          setKeyInfo(response.data.result);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+      setIsDeleteKey(false);
+      setInputValue("");
+    } catch (error) {
+      console.error(error); // Handle the error case
+    }
+  };
+
   const handleEditApp = async (e) => {
     e.preventDefault();
     // Perform the POST request using the entered value
@@ -253,20 +255,24 @@ const Build = () => {
       const fetchData = async () => {
         try {
           const request_data = {
-            network: chain_id,
-            app_name: data.appNames[app_index].app_name,
             app_description: e.target.app_description.value,
-            built_by: e.target.built_by.value,
+            alias: e.target.alias.value,
             website: e.target.website.value,
             github: e.target.github.value,
-            key_count: e.target.key_count.value,
           };
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/edit-app`,
+          await axios.post(
+            `${process.env.REACT_APP_API_HOST}/app/edit`,
             request_data,
             config
           );
-          setData(response.data);
+          
+          let response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/app/info`,
+            {},
+            config
+          );
+          setAppInfo(response.data.result[0]);
+
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -296,7 +302,7 @@ const Build = () => {
         try {
           const request_data = {
             network: chain_id,
-            app_name: data.appNames[app_index].app_name,
+            app_name: appInfo.app_name,
             ual: filterInput.ual,
             txn_id: filterInput.txn_id,
             progress: filterInput.progress,
@@ -305,7 +311,7 @@ const Build = () => {
           };
 
           const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/build/filter`,
+            `${process.env.REACT_APP_API_HOST}/build/filter`,
             request_data,
             config
           );
@@ -351,17 +357,99 @@ const Build = () => {
     return (
       <div className="keys">
         <header className="keys-header">
-          {<div>Connected with an unsupported blockchain. <br></br><br></br>Current supported blockchains:<br></br><br></br>
-          NeuroWeb Testnet<br></br>
-          NeuroWeb Mainnet<br></br>
-          Chiado Testnet<br></br>
-          Gnosis Mainnet</div>}
+          {
+            <div>
+              Connected with an unsupported blockchain. <br></br>
+              <br></br>Current supported blockchains:<br></br>
+              <br></br>
+              NeuroWeb Testnet<br></br>
+              NeuroWeb Mainnet<br></br>
+              Chiado Testnet<br></br>
+              Gnosis Mainnet
+            </div>
+          }
         </header>
       </div>
     );
   }
 
-  if (data && JSON.stringify(data.appRecords) === "[]") {
+  if (isDeleteApp) {
+    return(
+      <div className="keys">
+      <div className="popup-overlay">
+        <div className="keys-popup-content">
+          <button className="keys-close-button" onClick={closePopupDeleteApp}>
+            X
+          </button>
+          <form onSubmit={handleDeleteApp}>
+            <label>
+              Are you sure you want to delete this App? You will lose all txn
+              data for this app.
+            </label>
+            <button type="submit">Yes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    );
+  }
+
+  if(isOpenDeleteKey){
+    return(
+      <div className="popup-overlay">
+          <div className="keys-popup-content">
+            <button className="keys-close-button" onClick={closePopupDeleteKey}>
+              X
+            </button>
+            <form onSubmit={handleDeleteKey}>
+              <label>Are you sure you want to delete this key?</label>
+              <button type="submit">Yes</button>
+            </form>
+          </div>
+        </div>
+    );
+  }
+
+  if(isEditAppOpen){
+    return(
+      <div className="keys">
+      <div className="popup-overlay">
+          <div className="edit-app-popup-content">
+            <button className="keys-close-button" onClick={closeEditApp}>
+              X
+            </button>
+            <form onSubmit={handleEditApp}>
+              <div className="ea-app-description">
+                App Description
+                <br></br>
+                <textarea type="text" name="app_description" />
+              </div>
+              <div className="ea-built-by">
+                Built by
+                <br></br>
+                <input type="text" name="alias" />
+              </div>
+              <div className="ea-website">
+                Website
+                <br></br>
+                <input type="text" name="website" />
+              </div>
+              <div className="ea-github">
+                Github
+                <br></br>
+                <input type="text" name="github" />
+              </div>
+              <button type="submit" className="ea-save">
+                Save
+              </button>
+            </form>
+          </div>
+        </div>
+    </div>
+    );
+  }
+
+  if (!appInfo) {
     return (
       <div className="keys">
         <header className="keys-header">
@@ -397,7 +485,7 @@ const Build = () => {
                 <div className="cf-built-by">
                   Built by
                   <br></br>
-                  <input type="text" name="built_by" maxlength="50" />
+                  <input type="text" name="alias" maxlength="50" />
                 </div>
                 <div className="cf-website">
                   Project Website
@@ -436,130 +524,13 @@ const Build = () => {
 
   return (
     <div className="keys">
-      {isOpenDeleteKey && (
-        <div className="popup-overlay">
-          <div className="keys-popup-content">
-            <button className="keys-close-button" onClick={closePopupDeleteKey}>
-              X
-            </button>
-            <form onSubmit={handleDeleteKey}>
-              <label>Are you sure you want to delete this key?</label>
-              <button type="submit">Yes</button>
-            </form>
-          </div>
-        </div>
-      )}
-      {isDeleteApp && (
-        <div className="popup-overlay">
-          <div className="keys-popup-content">
-            <button className="keys-close-button" onClick={closePopupDeleteApp}>
-              X
-            </button>
-            <form onSubmit={handleDeleteApp}>
-              <label>
-                Are you sure you want to delete this App? You will lose all txn
-                data for this app.
-              </label>
-              <button type="submit">Yes</button>
-            </form>
-          </div>
-        </div>
-      )}
-      {isEditAppOpen && (
-        <div className="popup-overlay">
-          <div className="edit-app-popup-content">
-            <button className="keys-close-button" onClick={closeEditApp}>
-              X
-            </button>
-            <form onSubmit={handleEditApp}>
-              <div className="ea-app-description">
-                App Description
-                <br></br>
-                <textarea type="text" name="app_description" />
-              </div>
-              <div className="ea-built-by">
-                Built by
-                <br></br>
-                <input type="text" name="built_by" />
-              </div>
-              <div className="ea-website">
-                Website
-                <br></br>
-                <input type="text" name="website" />
-              </div>
-              <div className="ea-github">
-                Github
-                <br></br>
-                <input type="text" name="github" />
-              </div>
-              <button type="submit" className="ea-save">
-                Save
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-      {data && isCreateAppOpen && (
-        <div className="popup-overlay">
-          <div className="create-app-popup-content">
-            <button className="keys-close-button" onClick={closeCreateAppPopup}>
-              X
-            </button>
-            <form className="create-app-form" onSubmit={submitApp}>
-              <div className="cf-app-name">
-                App Name<br></br>
-                <input type="text" required name="app_name" maxLength="20" />
-              </div>
-              <div className="cf-app-description">
-                App Description
-                <br></br>
-                <textarea type="text" name="app_description" maxlength="255" />
-              </div>
-              <div className="cf-built-by">
-                Built by
-                <br></br>
-                <input type="text" name="built_by" maxlength="50" />
-              </div>
-              <div className="cf-website">
-                Project Website
-                <br></br>
-                <input type="text" name="website" maxlength="50" />
-              </div>
-              <div className="cf-github">
-                Github Repo
-                <br></br>
-                <input type="text" name="github" maxlength="50" />
-              </div>
-              <div className="cf-keys-to-create">
-                {`Create ${limit} API Key(s)`}
-                <br></br>
-                <input
-                  name="key_count"
-                  type="range"
-                  min="1"
-                  max="5"
-                  value={limit}
-                  onChange={handleLimitChange}
-                  style={{ cursor: "pointer", width: "350px" }}
-                />
-              </div>
-              <br></br>
-              <button type="submit" className="submit-app-button">
-                Create
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-      {data ? (
+      {appInfo ? (
         <header>
-          {data.appNames.map((record, index) => (
-            <button
-              key={record.app_name}
-              className={`build-settings-header-${index}A`}
-              onClick={() => clickAppTab(record.app_name, index)}
+          <button
+              key={appInfo.app_name}
+              className={`build-settings-header-0A`}
               style={
-                app_index === index
+                app_index === 0
                   ? {
                       border: "1px solid #6344df",
                       borderRight: "1px solid #FFFFFF",
@@ -570,9 +541,8 @@ const Build = () => {
               }
             >
               {/* window.matchMedia('(max-width: 480px)').match */}
-              {record.app_name.substring(0, 16)}
+              {appInfo.app_name.substring(0, 16)}
             </button>
-          ))}
           <div className="build-settings-form">
             <form onSubmit={handleFilterSubmit}>
               <div>
@@ -734,22 +704,13 @@ const Build = () => {
               <br></br>
             </form>
           </div>
-          <div className="app-nav">
-            <button
-              type="submit"
-              onClick={openCreateAppPopup}
-              className="create-app-button"
-            >
-              Create App
-            </button>
-          </div>
           <div
             className="build-settings-header-0B"
             style={app_index >= 0 ? { border: "1px solid #6344df" } : {}}
           >
             <div className="app-details">
               <button
-                onClick={() => openEditApp(data.appNames[app_index].app_name)}
+                onClick={() => openEditApp(appInfo.app_name)}
               >
                 <img
                   alt="pencil"
@@ -763,9 +724,7 @@ const Build = () => {
                 />
               </button>
               <button
-                onClick={() =>
-                  openPopupDeleteApp(data.appNames[app_index].app_name)
-                }
+                onClick={openPopupDeleteApp}
               >
                 <img
                   alt="trash"
@@ -776,46 +735,45 @@ const Build = () => {
               <div className="app-usage">
                 {`Users`}
                 <br></br>{" "}
-                <span>{data.users.length ? data.users.length : 0}</span>
+                <span>{0}</span>
               </div>
               <div className="app-usage">
                 {`Requests`}
                 <br></br>{" "}
-                <span>{data.app_txns.length ? data.app_txns.length : 0}</span>
+                <span>{0}</span>
               </div>
               <div className="app-usage">
                 {`Assets`}
-                <br></br> <span>{data.assets ? data.assets : 0}</span>
+                <br></br> <span>{0}</span>
               </div>
               <br></br>
 
               <div className="app-description">
-                {data.appRecords[0].app_description
-                  ? data.appRecords[0].app_description
+                {appInfo.app_description
+                  ? appInfo.app_description
                   : "No description available."}{" "}
                 <br></br>
               </div>
               <div className="app-built-by">
                 {`Built by:`}{" "}
-                {data.appRecords[0].built_by ? data.appRecords[0].built_by : ""}
+                {appInfo.alias ? appInfo.alias : ""}
               </div>
               <div className="app-website">
                 {`Website:`}{" "}
-                {data.appRecords[0].website ? data.appRecords[0].website : ""}
+                {appInfo.website ? appInfo.website : ""}
               </div>
               <div className="app-github">
                 {`Github:`}{" "}
-                {data.appRecords[0].github ? data.appRecords[0].github : ""}
+                {appInfo.github ? appInfo.github : ""}
               </div>
             </div>
-
             <div className="key-form">
               <div className="key-text">
-                {`${data.keyRecords.length}/5 Active Keys`}
+                {`0/5 Active Keys`}
               </div>
               <div className="msg-text">{data.msg}</div>
               <form
-                onSubmit={() => handleCreateKey(app_index)}
+                onSubmit={() => handleCreateKey()}
                 className="app-text"
               >
                 <button type="submit">Create Key</button>
@@ -826,17 +784,19 @@ const Build = () => {
             <thead>
               <tr>
                 <th>API Token</th>
+                <th>Rights Owner</th>
                 <th>Access</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {data.keyRecords.map((record) => (
+              {keyInfo && keyInfo.map((record) => (
                 <tr key={record.api_key}>
                   <td>{record.api_key}</td>
+                  <td>{record.rights_owner}</td>
                   <td>{record.access}</td>
                   <td>
-                    <button onClick={() => openPopupDeleteKey(record.api_key)}>
+                  <button onClick={() => openPopupDeleteKey(record.api_key)}>
                       <img
                         alt="trashcan"
                         src="https://img.icons8.com/material-rounded/24/000000/trash.png"
@@ -848,7 +808,7 @@ const Build = () => {
             </tbody>
           </table>
           <div className="app-txn-container">
-            {data.app_txns.map((txn) => (
+            {txnInfo && txnInfo.map((txn) => (
               <button
                 // onClick={() => openRequestPopup(txn)}
                 className="app-txn-record"
@@ -858,13 +818,13 @@ const Build = () => {
                 <div className="app-request">{txn.request}</div>
                 <div className={`${txn.progress}-progress`}>{txn.progress}</div>
                 <div className="txn-summary">
-                  {`${txn.app_name}(${txn.txn_id.substring(0, 15)})`}
+                  {`${txn.key_id.substring(0, 15)}${txn.txn_id.substring(0, 15)}`}
                 </div>
                 <div className="txn-ual">{txn.ual}</div>
                 <div className={`txn-${txn.request}-receiver`}>
                   Receiver:
                   <span>
-                    {txn.txn_data ? JSON.parse(txn.txn_data).receiver : ""}
+                    {txn.receiver ? txn.receiver : ""}
                   </span>
                 </div>
                 <div className={`txn-${txn.request}-epochs`}>

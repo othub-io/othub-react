@@ -4,12 +4,12 @@ import Loading from "../effects/Loading";
 import axios from "axios";
 import NetworkDrop from "../navigation/networkDrop";
 import SelectedNode from "./SelectedNode";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 const Nodes = () => {
   const [data, setData] = useState("");
@@ -31,21 +31,24 @@ const Nodes = () => {
         const settings = {
           network: network,
           blockchain: blockchain,
-          order_by: "chainName",
-          node_name: node_name
+          nodeName: node_name
         };
 
+        let node_list = []
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes`,
-          settings
+          `${process.env.REACT_APP_API_HOST}/nodes/info`,
+          settings,
+          config
         );
 
-        // const rsp = await axios.get(
-        //   "https://api.coingecko.com/api/v3/coins/origintrail"
-        // );
+        for(const blockchain of response.data.result){
+          for(const node of blockchain.data){
+            node_list.push(node)
+          }
+        }
 
-        setData(response.data.nodes);
-        setSortedData(response.data.nodes)
+        setData(node_list);
+        setSortedData(node_list)
         //setPrice(rsp.data.market_data.current_price.usd);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -93,7 +96,7 @@ const Nodes = () => {
           >
             X
           </button>
-          <SelectedNode data={[{nodeId: selectedNode.nodeId, blockchain_name: selectedNode.blockchain_name, blockchain_id: selectedNode.blockchain_id, node_name: selectedNode.node_name}]}  />
+          <SelectedNode data={[{nodeId: selectedNode.nodeId, blockchain: selectedNode.blockchain, blockchain_id: selectedNode.blockchain_id, nodeName: selectedNode.tokenName}]}  />
         </div>
       </div>
     );
@@ -110,15 +113,15 @@ const Nodes = () => {
           <button className="token-name-header" onClick={() => setSort("tokenName")}>Name<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="token-sym-header" onClick={() => setSort("tokenSymbol")}>Symbol<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="stake-header" onClick={() => setSort("nodeStake")}>Stake<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
-          <button className="value-header" onClick={() => setSort("shareValue")}>Share Value<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
+          {/* <button className="value-header" onClick={() => setSort("shareValue")}>Share Value<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button> */}
           <button className="fee-header" onClick={() => setSort("nodeOperatorFee")}>Fee<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="ask-header" onClick={() => setSort("nodeAsk")}>Ask<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <button className="age-header" onClick={() => setSort("nodeAgeDays")}>Age<img src="https://img.icons8.com/ios/50/000000/sort.png" alt="id" height="15px"></img></button>
           <div className="node-list">
             {sortedData.map((node) => (
-              <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain_name: node.chainName, blockchain_id: node.chainId, node_name: node.tokenName})}>
+              <button className={`node-list-id${node.chainId}`} onClick={() => setSelectedNode({nodeId: node.nodeId, blockchain: node.chainName, blockchain_id: node.chainId, tokenName: node.tokenName})}>
                 <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=node${node.chainId}-logo.png`}
+                src={`${process.env.REACT_APP_API_HOST}/images?src=node${node.chainId}-logo.png`}
                 alt={node.chainName}
                 ></img>
                 <div className={`node-id-record`}>{node.nodeId}</div>
@@ -131,9 +134,9 @@ const Nodes = () => {
                 <div className={`stake-record`}>
                   {Number(node.nodeStake).toFixed(0)}
                 </div>
-                <div className={`value-record`}>
+                {/* <div className={`value-record`}>
                   {(node.shareValueCurrent ? (node.shareValueCurrent) : (0)).toFixed(4)}
-                </div>
+                </div> */}
                 <div className={`fee-record`}>
                    {Number(node.nodeOperatorFee)+`%`} 
                 </div>

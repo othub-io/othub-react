@@ -11,10 +11,12 @@ import {
 } from "chart.js";
 import Loading from "../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -43,11 +45,12 @@ const NodeCommits = (settings) => {
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/activityFeed`,
-          params
+          `${process.env.REACT_APP_API_HOST}/pubs/activity`,
+          params,
+          config
         );
 
-        setData(response.data.activity_data);
+        setData(response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

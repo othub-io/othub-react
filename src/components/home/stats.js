@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "../effects/Loading";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 function formatNumberWithSpaces(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -27,18 +27,19 @@ const Stats = (settings) => {
     async function fetchData() {
       try {
         setStats("")
-        const request_data = {
+        const data = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
           nodes: settings.data[0].nodes ? (settings.data[0].nodes) : ("")
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/home`,
-          request_data
+          `${process.env.REACT_APP_API_HOST}/othub/home`,
+          data,
+          config
         );
 
-        setStats(response.data);
+        setStats(response.data.result);
   
         if(settings.data[0].network === 'DKG Mainnet'){
             const rsp = await axios.get(
@@ -73,7 +74,7 @@ const Stats = (settings) => {
        {!localStorage.getItem("blockchain") && <div key="total_stats" className={`total-stats-home-div`}>
             <div className="chain-logo">
                 <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=origintrail_logo-dark_purple.png`}
+                src={`${process.env.REACT_APP_API_HOST}/images?src=origintrail_logo-dark_purple.png`}
                 alt="Origintrail Network"
                 width="100"
                 ></img><span>{settings.data[0].network.substring(4)}</span>
@@ -107,7 +108,7 @@ const Stats = (settings) => {
         <div key={blockchain.chain_name} className={`d${blockchain.blockchain_id}-home-div`}>
             <div className={`d${blockchain.blockchain_id}-chain-logo`}>
                 <img
-                src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
+                src={`${process.env.REACT_APP_API_HOST}/images?src=id${blockchain.blockchain_id}-logo.png`}
                 alt={blockchain.chain_name}
                 ></img>{blockchain.blockchain_id === 2043 ? (<span><b>euroWeb Mainnet</b></span>) : blockchain.blockchain_id === 20430 ? (<span><b>euroWeb Testnet</b></span>) : blockchain.blockchain_id === 10200 ? (<span><b>Chiado Testnet</b></span>) : ("")}
             </div>

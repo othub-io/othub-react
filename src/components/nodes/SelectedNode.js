@@ -5,12 +5,12 @@ import PubsCommited from "./charts/pubsCommited";
 import EstimatedEarnings from "./charts/estimatedEarnings";
 import ShareValue from "./charts/shareValue";
 import axios from "axios";
-let ext;
 
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 const NodeSettings = (settings) => {
   const [data, setData] = useState("");
@@ -21,37 +21,36 @@ const NodeSettings = (settings) => {
       try {
         setStats("");
 
-        let request_data = {
-          node: settings.data[0],
-          timeframe: "All",
-        };
-
-        const response = await axios
-          .post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeData`,
-            request_data
-          )
-          .then((response) => {
-            // Handle the successful response here
-            return response.data;
-          })
-          .catch((error) => {
-            // Handle errors here
-            console.error(error);
-          });
-        setData(response.chart_data);
-
-        const request_data1 = {
-          blockchain: settings.data[0].blockchain_name,
+        let data = {
+          timeframe: "",
+          frequency: "daily",
+          blockchain: settings.data[0].blockchain,
           nodeId: settings.data[0].nodeId,
+          grouped: "no"
         };
 
-        const response1 = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/nodes/nodeStats`,
-          request_data1
+        let response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+          data, 
+          config
         );
+        setData(response.data.result);
 
-        setStats(response1.data);
+        // data = {
+        //   timeframe: "",
+        //   frequency: "last24h",
+        //   blockchain: settings.data[0].blockchain,
+        //   nodeId: settings.data[0].nodeId,
+        //   grouped: "no"
+        // };
+
+        // response = await axios.post(
+        //   `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        //   data, 
+        //   config
+        // );
+
+        // setStats(response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,16 +60,16 @@ const NodeSettings = (settings) => {
     fetchData();
   }, []);
 
-  return (
+  return data ? (
     <div className="node-pop">
       <div className="node-pop-div-large" style={{marginBottom: '-5px'}}>
         <ShareValue
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
-              blockchain_name: settings.data[0].blockchain_name,
+              blockchain: settings.data[0].blockchain,
               nodeId: settings.data[0].nodeId,
-              node_name: settings.data[0].node_name,
+              nodeName: settings.data[0].nodeName,
               node_data: data,
             },
           ]}
@@ -81,9 +80,10 @@ const NodeSettings = (settings) => {
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
-              blockchain_name: settings.data[0].blockchain_name,
+              blockchain: settings.data[0].blockchain,
               nodeId: settings.data[0].nodeId,
-              node_name: settings.data[0].node_name,
+              nodeName: settings.data[0].nodeName,
+              node_data: data,
             },
           ]}
         />
@@ -93,10 +93,10 @@ const NodeSettings = (settings) => {
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
-              blockchain_name: settings.data[0].blockchain_name,
+              blockchain: settings.data[0].blockchain,
               nodeId: settings.data[0].nodeId,
-              node_name: settings.data[0].node_name,
-              node_data: data,
+              nodeName: settings.data[0].nodeName,
+              node_data: data
             },
           ]}
         />
@@ -106,9 +106,9 @@ const NodeSettings = (settings) => {
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
-              blockchain_name: settings.data[0].blockchain_name,
+              blockchain: settings.data[0].blockchain,
               nodeId: settings.data[0].nodeId,
-              node_name: settings.data[0].node_name,
+              nodeName: settings.data[0].nodeName,
               node_data: data,
             },
           ]}
@@ -119,16 +119,16 @@ const NodeSettings = (settings) => {
           data={[
             {
               blockchain_id: settings.data[0].blockchain_id,
-              blockchain_name: settings.data[0].blockchain_name,
+              blockchain: settings.data[0].blockchain,
               nodeId: settings.data[0].nodeId,
-              node_name: settings.data[0].node_name,
+              nodeName: settings.data[0].nodeName,
               node_data: data,
             },
           ]}
         />
       </div>
     </div>
-  );
+  ): (<div></div>);
 };
 
 export default NodeSettings;

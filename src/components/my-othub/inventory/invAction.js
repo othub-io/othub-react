@@ -4,12 +4,6 @@ import { AccountContext } from "../../../AccountContext";
 import Loading from "../../effects/Loading";
 import DKG from "dkg.js";
 import axios from "axios";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
@@ -80,7 +74,7 @@ const InvAction = (txn_info) => {
       setIsLoading(true);
 
       txn.receiver = receiverValue;
-      let new_data = inputValue ? inputValue : txn.txn_data;
+      let new_data = inputValue ? inputValue : txn.asset_data;
       let keywords = keywordValue ? keywordValue : txn.keywords;
       let epochs = epochValue ? epochValue : txn.epochs;
 
@@ -129,20 +123,26 @@ const InvAction = (txn_info) => {
           });
       }
 
-      const request_data = {
-        completeTxn: txn.txn_id,
-        blockchain: connected_blockchain,
+      let request_data = {
+        txn_id: txn.txn_id,
+        blockchain: connected_blockchain === "Neuroweb Testnet" ? ("otp:20430") : connected_blockchain === "Neuroweb Mainnet" ? ("otp:2043") : connected_blockchain === "Chiado Testnet" ? ("gnosis:10200") : connected_blockchain === "Gnosis Mainnet" ? ("gnosis:100") : "",
         ual: dkg_result.UAL,
         epochs: epochs,
       };
 
-      const response = await axios.post(
-        `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/portal`,
+      await axios.post(
+        `/${process.env.REACT_APP_API_HOST}/txn/complete`,
         request_data,
         config
       );
 
-      setData(response.data);
+      let response = await axios.post(
+        `/${process.env.REACT_APP_API_HOST}/txn/info`,
+        {},
+        config
+      );
+
+      setData(response.data.result);
       let result = {
         status: "success",
         msg: `Asset ${txn.request} succeeded!`,
@@ -273,7 +273,7 @@ const InvAction = (txn_info) => {
               Data:
             <textarea
               value={
-                inputValue ? inputValue : JSON.stringify(txn.txn_data, null, 2)
+                inputValue ? inputValue : JSON.stringify(txn.asset_data, null, 2)
               }
               onChange={handleDataChange}
               Required

@@ -13,10 +13,11 @@ import {
 } from "chart.js";
 import Loading from "../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -29,55 +30,89 @@ ChartJS.register(
 
 const CumPubs = (settings) => {
   const [inputValue, setInputValue] = useState("");
-  const [data, setData] = useState("");
+  const [button, setButtonSelect] = useState("");
+  const [isLoading, setisLoading] = useState(false);
+  const [assetData, setAssetData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
+        let data = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
+          frequency: "monthly",
+          timeframe: "",
+          grouped: "yes"
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/cumPubs`,
-          time_data
+          `${process.env.REACT_APP_API_HOST}/pubs/stats`,
+          data,
+          config
         );
 
-        setData(response.data.chart_data);
+        setAssetData(response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setData("");
+    setAssetData("");
     setInputValue("");
     fetchData();
   }, [settings]);
 
-  let cumulativePubs_obj = [];
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const changeFrequency = async (frequency,button_select) => {
+    try {
+      setisLoading(true);
+      setInputValue(frequency);
+      setButtonSelect(button_select)
+      let data = {
+        frequency: frequency,
+        timeframe: button_select === "24h" ? (24) : button_select === "7d" ? (168) : button_select === "30d" ? (30) : button_select === "6m" ? (180) : button_select === "1y" ? (12) : null,
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
+      };
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}/pubs/stats`,
+        data, 
+        config
+      );
+      setAssetData(response.data.result);
+      setisLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const formattedData = {
     datasets: [],
   };
 
-  if (data) {
+  if (assetData) {
     let format = "MMM YY";
-    if (inputValue === "24h") {
+    if (button === "24h") {
       format = "HH:00";
     }
-    if (inputValue === "7d") {
+    if (button === "7d") {
       format = "ddd HH:00";
     }
-    if (inputValue === "30d") {
-      format = "DD MMM";
+    if (button === "30d") {
+      format = "DD MMM YY";
+    }
+    if (button === "6m") {
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
     const formattedDates = [];
-    for (const blockchain of data) {
-      blockchain.cum_total
+    for (const blockchain of assetData) {
+      blockchain.data
         .filter((item) => {
-          const formattedDate = moment(item.date).format(format);
+          const formattedDate = moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format);
           // Check if the formatted date is unique
           if (!uniqueDates.has(formattedDate)) {
             uniqueDates.add(formattedDate);
@@ -86,13 +121,14 @@ const CumPubs = (settings) => {
           }
           return false;
         })
-        .map((item) => moment(item.date).format(format));
+        .map((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format));
     }
 
-    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
+    formattedData.labels = button === "24h" || button === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
+    let border_color;
     let chain_color;
-    for (const blockchain of data) {
+    for (const blockchain of assetData) {
       if (
         blockchain.blockchain_name === "Total" &&
         settings.data[0].blockchain
@@ -103,10 +139,10 @@ const CumPubs = (settings) => {
       let cumPubs = []
 
       for (const obj of formattedData.labels) {
-        let containsDate = blockchain.cum_total.some((item) => moment(item.date).format(format) === obj);
+        let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj);
         if(containsDate){
-          for (const item of blockchain.cum_total) {
-            if (moment(item.date).format(format) === obj) {
+          for (const item of blockchain.data) {
+            if (moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj) {
               cumPubs.push(item.cumulativePubs)
             }
           }
@@ -135,7 +171,7 @@ const CumPubs = (settings) => {
         chain_color = "#6344df";
       }
 
-      cumulativePubs_obj = {
+      let cumulativePubs_obj = {
         label: blockchain.blockchain_name,
         data: cumPubs,
         fill: false,
@@ -186,7 +222,7 @@ const CumPubs = (settings) => {
 
   return (
     <div>
-      {data ? (
+      {assetData ? (
         <div className="chart-widget">
           <div className="home-chart-name">
             Cumulative number of published assets

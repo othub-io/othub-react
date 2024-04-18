@@ -13,16 +13,10 @@ import Rewards from "./charts/rewards";
 import CumPubsCommited from "./charts/cumPubsCommited";
 import EstimatedEarnings from "./charts/estimatedEarnings";
 import NodeStake from "./charts/nodeStake";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
-    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
   },
 };
 
@@ -32,65 +26,76 @@ const NodeDashboard = () => {
   const [isNodeSettingsOpen, setIsNodeSettingsOpen] = useState(false);
   const account = localStorage.getItem("account");
   const [nodeList, setNodeList] = useState("");
+  const [nodeStats, setNodeStats] = useState("");
+  const [nodeStats24h, setNodeStats24h] = useState("");
+  const [nodeStatsLatest, setNodeStatsLatest] = useState("");
   const [nodeFilter, setNodeFilter] = useState("");
   const [nodeSelected, setNodeSelected] = useState(false);
-  let [data, setData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
         if (account && network) {
           setNodeFilter("");
-          const request_data = {
+          let data = {
+            owner: account,
             network: network,
             blockchain: blockchain,
           };
 
-          const response = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodes`,
-            request_data,
+          let response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/nodes/info`,
+            data,
             config
           );
 
-          let nodes = [];
-          // nodes.push({
-          //   nodeId: 8,
-          //   tokenName: 'Test',
-          //   blockchain_name: 'Gnosis Mainnet',
-          //   blockchain_id: 100
-          // })
+          setNodeFilter(response.data.result);
+          setNodeList(response.data.result);
 
-          for (const blockchain of response.data.nodes) {
-            if (blockchain.nodes.length > 0) {
-              for (let node of blockchain.nodes) {
-                node.blockchain_name = blockchain.blockchain_name;
-                node.blockchain_id = blockchain.blockchain_id;
-                nodes.push(node);
+          let node_stats = [];
+          let node_stats_24h = [];
+          let node_stats_latest = [];
+          for (const node of response.data.result) {
+            data = {
+              frequency: "monthly",
+              nodeId: node.nodeId,
+              blockchain: node.chainName,
+            };
+            response = await axios.post(
+              `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+              data,
+              config
+            );
+            node_stats.push(response.data.result[0]);
 
-                // nodes.push({
-                //   nodeId: 89,
-                //   tokenName: 'Test2',
-                //   blockchain_name: blockchain.blockchain_name,
-                //   blockchain_id: blockchain.blockchain_id
-                // })
-              }
-            }
+            data = {
+              frequency: "last24h",
+              nodeId: node.nodeId,
+              blockchain: node.chainName,
+            };
+            response = await axios.post(
+              `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+              data,
+              config
+            );
+            node_stats_24h.push(response.data.result[0]);
+
+            data = {
+              frequency: "latest",
+              nodeId: node.nodeId,
+              blockchain: node.chainName,
+            };
+            response = await axios.post(
+              `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+              data,
+              config
+            );
+            node_stats_latest.push(response.data.result[0]);
           }
 
-          // Now set the state after processing the
-          setNodeFilter(nodes);
-          setNodeList(nodes);
-
-          const time_data = {
-            timeframe: "All",
-            nodes: nodes,
-          };
-          const response1 = await axios.post(
-            `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
-            time_data,
-            config
-          );
-          setData(response1.data.chart_data);
+          setNodeStats(node_stats);
+          setNodeStats24h(node_stats_24h);
+          setNodeStatsLatest(node_stats_latest);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -118,17 +123,66 @@ const NodeDashboard = () => {
       setNodeSelected(true);
     }
 
-    console.log(node_selection);
-    const time_data = {
-      timeframe: "All",
-      nodes: node_selection,
+    let data = {
+      owner: account,
+      network: network,
+      blockchain: blockchain,
+      nodeId: node_selection.nodeId,
     };
-    const response1 = await axios.post(
-      `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/nodeData`,
-      time_data,
+
+    let response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/nodes/info`,
+      data,
       config
     );
-    setData(response1.data.chart_data);
+
+    setNodeFilter(response.data.result);
+    setNodeList(response.data.result);
+
+    let node_stats = [];
+    let node_stats_24h = [];
+    let node_stats_latest = [];
+    for (const node of response.data.result) {
+      data = {
+        frequency: "monthly",
+        nodeId: node.nodeId,
+        blockchain: node.chainName,
+      };
+      response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        data,
+        config
+      );
+      node_stats.push(response.data.result[0]);
+
+      data = {
+        frequency: "last24h",
+        nodeId: node.nodeId,
+        blockchain: node.chainName,
+      };
+      response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        data,
+        config
+      );
+      node_stats_24h.push(response.data.result[0]);
+
+      data = {
+        frequency: "latest",
+        nodeId: node.nodeId,
+        blockchain: node.chainName,
+      };
+      response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        data,
+        config
+      );
+      node_stats_latest.push(response.data.result[0]);
+    }
+
+    setNodeStats(node_stats);
+    setNodeStats24h(node_stats_24h);
+    setNodeStatsLatest(node_stats_latest);
   };
 
   if (isNodeSettingsOpen) {
@@ -141,7 +195,7 @@ const NodeDashboard = () => {
           >
             X
           </button>
-          <NodeSettings data={nodeList} />
+          <NodeSettings data={nodeFilter} />
         </div>
       </div>
     );
@@ -191,9 +245,6 @@ const NodeDashboard = () => {
                 network: network,
                 blockchain: blockchain,
                 nodes: nodeFilter,
-                nodeSelected: nodeSelected,
-                public_address: account,
-                node_data: data,
               },
             ]}
           />
@@ -205,6 +256,9 @@ const NodeDashboard = () => {
                 blockchain: blockchain,
                 nodes: nodeFilter,
                 nodeSelected: nodeSelected,
+                nodeStats: nodeStats,
+                nodeStats24h: nodeStats24h,
+                nodeStatsLatest: nodeStatsLatest,
               },
             ]}
           />
@@ -217,8 +271,8 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
-                    node_data: data,
+                    account: account,
+                    nodeStats: nodeStats,
                   },
                 ]}
               />
@@ -231,8 +285,8 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
-                    node_data: data,
+                    account: account,
+                    nodeStats: nodeStats,
                   },
                 ]}
               />
@@ -245,8 +299,8 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
-                    node_data: data,
+                    account: account,
+                    nodeStats: nodeStats,
                   },
                 ]}
               />
@@ -259,8 +313,8 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
-                    node_data: data,
+                    account: account,
+                    nodeStats: nodeStats,
                   },
                 ]}
               />
@@ -273,8 +327,8 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
-                    node_data: data,
+                    account: account,
+                    nodeStats: nodeStats,
                   },
                 ]}
               />
@@ -287,8 +341,8 @@ const NodeDashboard = () => {
                     blockchain: blockchain,
                     nodes: nodeFilter,
                     nodeSelected: nodeSelected,
-                    public_address: account,
-                    node_data: data,
+                    account: account,
+                    nodeStats: nodeStats,
                   },
                 ]}
               />

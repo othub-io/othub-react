@@ -1,19 +1,14 @@
-import React, { useState } from "react";
-import "../../../css/home.css";
-import "../../../css/main.css";
-import Stats from "./stats";
+import React from "react";
+import "../../../css/notFound.css";
 
-const Staking = () => {
+const notFound = () => {
   return (
-    <div className="main">
-      <div className="header">
-        {/* <NetworkDrop network={setNetwork} blockchain={setBlockchain} /> */}
-      </div>
-      <div className="staking-body">
-        <div className="about-title">Staking Dashboard coming #soon</div>
-      </div>
+    <div className="keys">
+      <header className="keys-header">
+        This page is still under development. Come back #soon!
+      </header>
     </div>
   );
 };
 
-export default Staking;
+export default notFound;

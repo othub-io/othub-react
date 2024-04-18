@@ -13,10 +13,11 @@ import {
 } from "chart.js";
 import Loading from "../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -29,55 +30,85 @@ ChartJS.register(
 
 const CumPay = (settings) => {
   const [inputValue, setInputValue] = useState("");
-  const [data, setData] = useState("");
+  const [button, setButtonSelect] = useState("");
+  const [isLoading, setisLoading] = useState(false);
+  const [earningData, setEarningData] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const time_data = {
+        let data = {
+          frequency: "monthly",
+          timeframe: "",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
+          grouped: "yes"
         };
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/charts/cumPay`,
-          time_data
+          `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+          data,
+          config
         );
-
-        setData(response.data.chart_data);
+        setEarningData(response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
 
-    setData("");
+    setEarningData("");
     setInputValue("");
     fetchData();
   }, [settings]);
 
-  let cumulativePayout_obj = [];
+  const changeFrequency = async (frequency,button_select) => {
+    try {
+      setisLoading(true);
+      setInputValue(frequency);
+      setButtonSelect(button_select)
+      let data = {
+        frequency: frequency,
+        timeframe: button_select === "24h" ? (24) : button_select === "7d" ? (168) : button_select === "30d" ? (30) : button_select === "6m" ? (160) : button_select === "1y" ? (12) : null,
+        network: settings.data[0].network,
+        blockchain: settings.data[0].blockchain,
+        grouped: "yes"
+      };
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+        data,
+        config
+      );
+      setEarningData(response.data.result);
+      setisLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const formattedData = {
     datasets: [],
   };
 
-  if (data) {
+  if (earningData) {
     let format = "MMM YY";
-    if (inputValue === "24h") {
+    if (button === "24h") {
       format = "HH:00";
     }
-    if (inputValue === "7d") {
+    if (button === "7d") {
       format = "ddd HH:00";
     }
-    if (inputValue === "30d") {
-      format = "DD MMM";
+    if (button === "30d") {
+      format = "DD MMM YY";
+    }
+    if (button === "6m") {
+      format = "DD MMM YY";
     }
 
     const uniqueDates = new Set();
     const formattedDates = [];
-    for (const blockchain of data) {
-      blockchain.cum_total
+    for (const blockchain of earningData) {
+      blockchain.data
         .filter((item) => {
-          const formattedDate = moment(item.date).format(format);
+          const formattedDate = moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format);
           // Check if the formatted date is unique
           if (!uniqueDates.has(formattedDate)) {
             uniqueDates.add(formattedDate);
@@ -86,13 +117,14 @@ const CumPay = (settings) => {
           }
           return false;
         })
-        .map((item) => moment(item.date).format(format));
+        .map((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format));
     }
 
-    formattedData.labels = formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate());
+    formattedData.labels = button === "24h" || button === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
+    let border_color;
     let chain_color;
-    for (const blockchain of data) {
+    for (const blockchain of earningData) {
       if (
         blockchain.blockchain_name === "Total" &&
         settings.data[0].blockchain
@@ -103,10 +135,10 @@ const CumPay = (settings) => {
       let cumPay = []
 
       for (const obj of formattedData.labels) {
-        let containsDate = blockchain.cum_total.some((item) => moment(item.date).format(format) === obj);
+        let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj);
         if(containsDate){
-          for (const item of blockchain.cum_total) {
-            if (moment(item.date).format(format) === obj) {
+          for (const item of blockchain.data) {
+            if (moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj) {
               cumPay.push(item.cumulativePayouts)
             }
           }
@@ -135,7 +167,7 @@ const CumPay = (settings) => {
         chain_color = "#6344df";
       }
 
-      cumulativePayout_obj = {
+      let cumulativePayout_obj = {
         label: blockchain.blockchain_name,
         data: cumPay,
         fill: false,
@@ -187,7 +219,7 @@ const CumPay = (settings) => {
 
   return (
     <div>
-      {data ? (
+      {earningData ? (
         <div className="chart-widget">
           <div className="home-chart-name">Cumulative TRAC rewarded for publishing</div>
           <div className="home-chart-port">

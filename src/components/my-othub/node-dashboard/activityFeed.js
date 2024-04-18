@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
-import moment from "moment";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -13,10 +11,12 @@ import {
 } from "chart.js";
 import Loading from "../../effects/Loading";
 
-let ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
+const config = {
+  headers: {
+    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
+  },
+};
 
 ChartJS.register(
   CategoryScale,
@@ -36,21 +36,28 @@ const NodeCommits = (settings) => {
     explorer_url = "https://dkg-testnet.origintrail.io";
   }
 
+  let nodeList = "";
+  for (const record of settings.data[0].nodes) {
+      nodeList += record.nodeId + ",";
+  }
+  nodeList = nodeList.slice(0, -1);
+
   useEffect(() => {
     async function fetchData() {
       try {
         const params = {
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
-          nodes: settings.data[0].nodes,
+          nodeId: nodeList,
         };
 
         const response = await axios.post(
-          `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/node-dashboard/activityFeed`,
-          params
+          `${process.env.REACT_APP_API_HOST}/nodes/activity`,
+          params,
+          config
         );
 
-        setData(response.data.activity_data);
+        setData(response.data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

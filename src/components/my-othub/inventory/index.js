@@ -3,21 +3,15 @@ import "../../../css/inventory.css";
 import Loading from "../../effects/Loading";
 import axios from "axios";
 import InvAsset from "./invAsset";
-let ext;
-
-ext = "http";
-if (process.env.REACT_APP_RUNTIME_HTTPS === "true") {
-  ext = "https";
-}
 
 const config = {
   headers: {
-    Authorization: localStorage.getItem("token"),
+    "X-API-Key": process.env.REACT_APP_OTHUB_KEY,
   },
 };
 
 const Inventory = () => {
-  const [data, setData] = useState("");
+  const [assetData, setAssetData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const account = localStorage.getItem("account");
   const connected_blockchain = localStorage.getItem("connected_blockchain");
@@ -40,28 +34,22 @@ const Inventory = () => {
         if (
           account &&
           (connected_blockchain === "NeuroWeb Testnet" ||
-            connected_blockchain === "NeuroWeb Mainnet")
+            connected_blockchain === "NeuroWeb Mainnet" ||
+            connected_blockchain === "Chiado Testnet" ||
+            connected_blockchain === "Gnosis Mainnet")
         ) {
-          const request_data = {
+          let data = {
             blockchain: connected_blockchain,
+            owner: account
           };
 
-          const response = await axios
-            .post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/inventory`,
-              request_data,
-              config
-            )
-            .then((response) => {
-              // Handle the successful response here
-              return response;
-            })
-            .catch((error) => {
-              // Handle errors here
-              console.error(error);
-            });
+          let response = await axios.post(
+            `${process.env.REACT_APP_API_HOST}/assets/info`,
+            data,
+            config
+          );
 
-          await setData(response.data);
+          await setAssetData(response.data.result);
 
           if (provided_ual) {
             const segments = provided_ual.split(":");
@@ -72,15 +60,16 @@ const Inventory = () => {
             if (args.length !== 3) {
               console.log(`UAL doesn't have correct format: ${provided_ual}`);
             } else {
-              const request_data = {
+              data = {
                 blockchain: connected_blockchain,
                 ual: provided_ual,
+                owner: account
               };
 
-              const ual_response = await axios
+              response = await axios
                 .post(
-                  `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/inventory`,
-                  request_data,
+                  `${process.env.REACT_APP_API_HOST}/assets/info`,
+                  data,
                   config
                 )
                 .then((response) => {
@@ -92,8 +81,8 @@ const Inventory = () => {
                   console.error(error);
                 });
 
-              if (ual_response.data.v_pubs[0]) {
-                await setInputValue(ual_response.data.v_pubs[0]);
+              if (response.data.result[0]) {
+                await setInputValue(response.data.result[0]);
                 await setIsAssetOpen(true);
               }
             }
@@ -105,7 +94,7 @@ const Inventory = () => {
     }
 
     setIsLoading(true);
-    setData("");
+    setAssetData("");
     fetchData();
     setIsLoading(false);
   }, [account]);
@@ -134,17 +123,18 @@ const Inventory = () => {
     try {
       const fetchFilteredData = async () => {
         try {
-          const request_data = {
+          let data = {
             ual: filterInput.ual,
-            order: filterInput.order,
+            order_by: filterInput.order,
             limit: filterInput.limit,
             blockchain: connected_blockchain,
+            owner: account
           };
 
-          const response = await axios
+          let response = await axios
             .post(
-              `${ext}://${process.env.REACT_APP_RUNTIME_HOST}/inventory`,
-              request_data,
+              `${process.env.REACT_APP_API_HOST}/assets/info`,
+              data,
               config
             )
             .then((response) => {
@@ -155,7 +145,7 @@ const Inventory = () => {
               // Handle errors here
               console.error(error);
             });
-          setData(response.data);
+            setAssetData(response.data.result);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -165,7 +155,7 @@ const Inventory = () => {
     } catch (error) {
       console.error(error); // Handle the error case
     }
-    setData("");
+    setAssetData("");
   };
 
   if (!account) {
@@ -261,9 +251,9 @@ const Inventory = () => {
           <button type="submit">Apply</button>
         </form>
       </div>
-      {data ? (
+      {assetData ? (
         <div className="asset-card-container">
-          {data.v_pubs.map((pub) => (
+          {assetData.map((pub) => (
             <button
               onClick={() => openAssetPopup(pub)}
               className={`asset-card-id${pub.chain_id}`}
@@ -273,7 +263,7 @@ const Inventory = () => {
               <div className={`card-image-id${pub.chain_id}`}>
                 <img
                   className="card-img"
-                  src={`${ext}://${process.env.REACT_APP_RUNTIME_HOST}/images?src=Knowledge-Asset.jpg`}
+                  src={`${process.env.REACT_APP_API_HOST}/images?src=Knowledge-Asset.jpg`}
                   alt="KA"
                 ></img>
               </div>
