@@ -94,25 +94,10 @@ function SideBar() {
     },
     {
       id: 8,
+      path: "https://app.swaggerhub.com/apis-docs/OTHUB/othub-api/1.0.0",
       title: "API Docs",
       icon: "https://img.icons8.com/ios/50/000000/api.png",
       isOpen: true,
-      submenu: [
-        {
-          id: 9,
-          path: "https://www.postman.com/crimson-crescent-721757/workspace/othub-api",
-          title: "Postman",
-          icon: "https://img.icons8.com/ios/50/000000/astronaut.png",
-          isOpen: true,
-        },
-        {
-          id: 10,
-          path: "https://app.swaggerhub.com/apis-docs/OTHUB/othub-api/1.0.0",
-          title: "SwaggerHub",
-          icon: "https://img.icons8.com/ios/50/000000/swag.png",
-          isOpen: true,
-        }
-      ],
     }
     // Rest of the menu items
   ]);
