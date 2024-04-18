@@ -108,6 +108,10 @@ const Epochs = (settings) => {
     const uniqueDates = new Set();
     const formattedDates = [];
     for (const blockchain of assetData) {
+      if(blockchain.blockchain_name === 'Total'){
+        continue;
+      }
+
       blockchain.data
         .filter((item) => {
           const formattedDate = moment(
@@ -139,6 +143,10 @@ const Epochs = (settings) => {
     let chain_color;
     let epochs_obj;
     for (const blockchain of assetData) {
+      if(blockchain.blockchain_name === 'Total'){
+        continue;
+      }
+      
       let epochs = [];
 
       for (const obj of formattedData.labels) {

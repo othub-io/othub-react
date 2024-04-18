@@ -97,6 +97,10 @@ const AssetsMinted = (settings) => {
     const uniqueDates = new Set();
     const formattedDates = [];
     for (const blockchain of assetData) {
+      if(blockchain.blockchain_name === 'Total'){
+        continue;
+      }
+      
       blockchain.data
         .filter((item) => {
           const formattedDate = moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format);
@@ -118,6 +122,10 @@ const AssetsMinted = (settings) => {
     let pubCounts_obj;
 
     for (const blockchain of assetData) {
+      if(blockchain.blockchain_name === 'Total'){
+        continue;
+      }
+
       let pubCounts = []
 
       for (const obj of formattedData.labels) {
