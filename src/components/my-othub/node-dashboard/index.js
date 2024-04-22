@@ -31,68 +31,74 @@ const NodeDashboard = () => {
   const [nodeStatsLatest, setNodeStatsLatest] = useState("");
   const [nodeFilter, setNodeFilter] = useState("");
   const [nodeSelected, setNodeSelected] = useState(false);
+  let data;
+  let response;
 
   useEffect(() => {
     async function fetchData() {
       try {
         if (account && network) {
           setNodeFilter("");
-          let data = {
+          data = {
             owner: account,
             network: network,
             blockchain: blockchain,
           };
 
-          let response = await axios.post(
+          response = await axios.post(
             `${process.env.REACT_APP_API_HOST}/nodes/info`,
             data,
             config
           );
 
-          setNodeFilter(response.data.result);
-          setNodeList(response.data.result);
-
           let node_stats = [];
           let node_stats_24h = [];
           let node_stats_latest = [];
-          for (const node of response.data.result) {
-            data = {
-              frequency: "monthly",
-              nodeId: node.nodeId,
-              blockchain: node.chainName,
-            };
-            response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/nodes/stats`,
-              data,
-              config
-            );
-            node_stats.push(response.data.result[0]);
+          let node_list = [];
 
-            data = {
-              frequency: "last24h",
-              nodeId: node.nodeId,
-              blockchain: node.chainName,
-            };
-            response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/nodes/stats`,
-              data,
-              config
-            );
-            node_stats_24h.push(response.data.result[0]);
+          for (const blockchain of response.data.result) {
+            for (const node of blockchain.data) {
+              node_list.push(node);
+              data = {
+                frequency: "monthly",
+                nodeId: node.nodeId,
+                blockchain: blockchain.blockchain_name,
+              };
+              response = await axios.post(
+                `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+                data,
+                config
+              );
+              node_stats.push(response.data.result[0]);
 
-            data = {
-              frequency: "latest",
-              nodeId: node.nodeId,
-              blockchain: node.chainName,
-            };
-            response = await axios.post(
-              `${process.env.REACT_APP_API_HOST}/nodes/stats`,
-              data,
-              config
-            );
-            node_stats_latest.push(response.data.result[0]);
+              data = {
+                frequency: "last24h",
+                nodeId: node.nodeId,
+                blockchain: blockchain.blockchain_name,
+              };
+              response = await axios.post(
+                `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+                data,
+                config
+              );
+              node_stats_24h.push(response.data.result[0]);
+
+              data = {
+                frequency: "latest",
+                nodeId: node.nodeId,
+                blockchain: blockchain.blockchain_name,
+              };
+              response = await axios.post(
+                `${process.env.REACT_APP_API_HOST}/nodes/stats`,
+                data,
+                config
+              );
+              node_stats_latest.push(response.data.result[0]);
+            }
           }
 
+          setNodeFilter(node_list);
+          setNodeList(node_list);
           setNodeStats(node_stats);
           setNodeStats24h(node_stats_24h);
           setNodeStatsLatest(node_stats_latest);
@@ -123,66 +129,42 @@ const NodeDashboard = () => {
       setNodeSelected(true);
     }
 
-    let data = {
-      owner: account,
-      network: network,
-      blockchain: blockchain,
-      nodeId: node_selection.nodeId,
-    };
-
-    let response = await axios.post(
-      `${process.env.REACT_APP_API_HOST}/nodes/info`,
-      data,
-      config
-    );
-
-    setNodeFilter(response.data.result);
-    setNodeList(response.data.result);
-
-    let node_stats = [];
-    let node_stats_24h = [];
-    let node_stats_latest = [];
-    for (const node of response.data.result) {
       data = {
         frequency: "monthly",
-        nodeId: node.nodeId,
-        blockchain: node.chainName,
+        nodeId: node_selection[0].nodeId,
+        blockchain: node_selection[0].chainName,
       };
       response = await axios.post(
         `${process.env.REACT_APP_API_HOST}/nodes/stats`,
         data,
         config
       );
-      node_stats.push(response.data.result[0]);
+      setNodeStats(response.data.result[0]);
 
       data = {
         frequency: "last24h",
-        nodeId: node.nodeId,
-        blockchain: node.chainName,
+        nodeId: node_selection[0].nodeId,
+        blockchain: node_selection[0].chainName,
       };
       response = await axios.post(
         `${process.env.REACT_APP_API_HOST}/nodes/stats`,
         data,
         config
       );
-      node_stats_24h.push(response.data.result[0]);
+      setNodeStats24h(response.data.result[0]);
 
       data = {
         frequency: "latest",
-        nodeId: node.nodeId,
-        blockchain: node.chainName,
+        nodeId: node_selection[0].nodeId,
+        blockchain: node_selection[0].chainName,
       };
       response = await axios.post(
         `${process.env.REACT_APP_API_HOST}/nodes/stats`,
         data,
         config
       );
-      node_stats_latest.push(response.data.result[0]);
-    }
-
-    setNodeStats(node_stats);
-    setNodeStats24h(node_stats_24h);
-    setNodeStatsLatest(node_stats_latest);
+      setNodeStatsLatest(response.data.result[0]);
+    
   };
 
   if (isNodeSettingsOpen) {

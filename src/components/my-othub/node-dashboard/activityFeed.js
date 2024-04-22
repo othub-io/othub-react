@@ -75,11 +75,11 @@ const NodeCommits = (settings) => {
   }
 
   return (
-    data && (
+    (
       <div className="node-activity-feed">
         <div className="activity-feed-title"></div>
         <div className="node-activity-feed-list">
-          {data.map((blockchain) => (
+          {data.length > 0 && data.map((blockchain) => (
             blockchain.data.map((record) => <div className="activity-feed-list-item">
             <div className="activity-feed-timestamp">
               {record.datetime ? (record.datetime.slice(0, -5)) : ("")}
