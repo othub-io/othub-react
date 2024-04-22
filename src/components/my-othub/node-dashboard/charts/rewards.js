@@ -61,7 +61,6 @@ const NodeRewards = (settings) => {
       setInputValue(frequency);
       setButtonSelect(button_select)
 
-      console.log(settings.data[0].nodes)
       let node_stats = [];
       for(const node of settings.data[0].nodes){
         let data = {
