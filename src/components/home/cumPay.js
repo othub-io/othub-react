@@ -39,7 +39,7 @@ const CumPay = (settings) => {
       try {
         let data = {
           frequency: "monthly",
-          timeframe: "",
+          timeframe: "1000",
           network: settings.data[0].network,
           blockchain: settings.data[0].blockchain,
           grouped: "yes"
@@ -122,26 +122,22 @@ const CumPay = (settings) => {
 
     formattedData.labels = button === "24h" || button === "7d" ? formattedDates : formattedDates.sort((a, b) => moment(a, format).toDate() - moment(b, format).toDate())
 
-    let border_color;
     let chain_color;
     for (const blockchain of earningData) {
-      if (
-        blockchain.blockchain_name === "Total" &&
-        settings.data[0].blockchain
-      ) {
-        continue;
-      }
 
       let cumPay = []
 
       for (const obj of formattedData.labels) {
         let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj);
+
         if(containsDate){
+          let cumulativePayouts = 0;
           for (const item of blockchain.data) {
             if (moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj) {
-              cumPay.push(item.cumulativePayouts)
+              cumulativePayouts = item.cumulativePayouts + cumulativePayouts
             }
           }
+          cumPay.push(cumulativePayouts)
         }else{
           cumPay.push(null)
         }

@@ -114,6 +114,9 @@ const Payouts = (settings) => {
     let chain_color;
     for (const blockchain of earningData) {
       let payouts = []
+      if(blockchain.blockchain_name === "Total"){
+        continue;
+      }
 
       for (const obj of formattedData.labels) {
         let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj);
