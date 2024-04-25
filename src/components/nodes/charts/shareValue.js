@@ -60,7 +60,7 @@ const TokenValue = (settings) => {
       setInputValue(timeframe);
       let data = {
         frequency: "daily",
-        timeframe: "",
+        timeframe: "1000",
         blockchain: settings.data[0].blockchain,
         nodeId: settings.data[0].nodeId,
         grouped: "no"
@@ -203,6 +203,7 @@ const TokenValue = (settings) => {
     <div>
       {valueData ? (
         <div className="node-pop-chart-widget">
+          {console.log(valueData)}
           <div className="node-pop-chart-name" style={{fontSize:'24px', paddingTop: '10px', paddingBottom: '10px'}}>{`${valueData[0].data[0].tokenName} Share Value`}</div>
           <div className="node-pop-chart-port" style={{paddingLeft: '10px'}}>
             <Line
