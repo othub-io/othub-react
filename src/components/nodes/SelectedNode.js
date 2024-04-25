@@ -22,7 +22,7 @@ const NodeSettings = (settings) => {
         setStats("");
 
         let data = {
-          timeframe: "",
+          timeframe: "1000",
           frequency: "daily",
           blockchain: settings.data[0].blockchain,
           nodeId: settings.data[0].nodeId,
