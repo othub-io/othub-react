@@ -29,7 +29,7 @@ const Charts = () => {
     async function fetchData() {
       try {
         let data = {
-          timeframe: "",
+          timeframe: "1000",
           frequency: "monthly",
           network: network,
           blockchain: blockchain,

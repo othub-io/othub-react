@@ -116,6 +116,10 @@ const Earnings = (settings) => {
       let estimatedEarnings1stEpochOnly = []
       let estimatedEarnings2plusEpochs = []
 
+      if(blockchain.blockchain_name === "Total"){
+        continue;
+      }
+
       for (const obj of formattedData.labels) {
         let containsDate = blockchain.data.some((item) => moment(button === "24h" || button === "7d" ? (item.datetime) : (item.date)).format(format) === obj);
         if(containsDate){
