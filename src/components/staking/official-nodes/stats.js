@@ -24,18 +24,39 @@ const Stats = (settings) => {
       try {
         setStats("")
 
+        let nodes = []
         let data = {
           blockchain: "Gnosis Mainnet",
           nodeId: "26,27,37"
         };
 
-        const response = await axios.post(
+        let response = await axios.post(
           `${process.env.REACT_APP_API_HOST}/nodes/info`,
           data,
           config
         );
 
-        setStats(response.data.result);
+        for(let i = 0; i < response.data.result[0].data.length; i++){
+          nodes.push(response.data.result[0].data[i])
+        }
+
+        data = {
+          blockchain: "NeuroWeb Mainnet",
+          nodeId: "139"
+        };
+
+        response = await axios.post(
+          `${process.env.REACT_APP_API_HOST}/nodes/info`,
+          data,
+          config
+        );
+
+        for(let i = 0; i < response.data.result[0].data.length; i++){
+          nodes.push(response.data.result[0].data[i])
+        }
+
+
+        setStats(nodes);
 
         const rsp = await axios.get(
           "https://api.coingecko.com/api/v3/coins/origintrail"
@@ -76,14 +97,6 @@ const Stats = (settings) => {
             <div className="chain-stake">
                 Ask:<br/>
                 <span>{blockchain.nodeAsk}</span>
-            </div>
-            <div className="chain-stake">
-                {`Current Share Value (in Trac):`}<br/>
-                <span>{blockchain.shareValueCurrent.toFixed(5)}</span>
-            </div>
-            <div className="chain-stake">
-                {`Future Share Value (in Trac):`}<br/>
-                <span>{blockchain.shareValueFuture.toFixed(5)}</span>
             </div>
             <div className="chain-stake">
                 Age:<br/>
