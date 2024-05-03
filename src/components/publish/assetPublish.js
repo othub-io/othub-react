@@ -102,8 +102,9 @@ const AssetPublish = (selectedFile) => {
 
             const data = {
               asset: content,
-              network: blockchain,
+              blockchain: blockchain,
               epochs: inputValue,
+              range: "med"
             };
             
             const dkg_bid_result = await axios
@@ -117,6 +118,7 @@ const AssetPublish = (selectedFile) => {
                 console.error(error);
               });
 
+              console.log(dkg_bid_result)
             setCost(Number(dkg_bid_result.data) / 1e18);
           };
           reader.readAsText(selectedFile.data);
@@ -125,7 +127,7 @@ const AssetPublish = (selectedFile) => {
 
           const data = {
             asset: selectedFile.data,
-            network: blockchain,
+            blockchain: blockchain,
             epochs: inputValue,
             range: "med"
           };
